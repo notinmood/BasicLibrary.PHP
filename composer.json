@@ -13,5 +13,10 @@
         "branch-alias": {
             "dev-master": "10.0.x-dev"
         }
+    },
+    "autoload": {
+        "psr-4": {
+            "Hiland\\": "/"
+        }
     }
 }
