@@ -1,0 +1,25 @@
+ <script type="text/javascript">
+    // 得到航班信息查询结果后的回调函数
+    var flightHandler = function(data){
+        alert('你查询的航班['+ data.code +']结果是：票价 ' + data.price + ' 元，' + '余票 ' + data.tickets + ' 张。');
+    };
+    
+    var url = "http://6.shanzhihun.applinzi.com/?code=CA1998&callback=flightHandler";
+    // 创建script标签，设置其属性
+    var script = document.createElement('script');
+    script.setAttribute('src', url);
+    // 把script标签加入head，此时调用开始
+    document.getElementsByTagName('head')[0].appendChild(script);
+</script>
+
+
+-----以下是页面运行后，实际显示的情形：------------------------------------------------------
+
+<script type="text/javascript">
+    // 得到航班信息查询结果后的回调函数
+    var flightHandler = function(data){
+        alert('你查询的航班['+ data.code +']结果是：票价 ' + data.price + ' 元，' + '余票 ' + data.tickets + ' 张。');
+    };
+
+</script>
+<script src="http://6.shanzhihun.applinzi.com/?code=CA1998&amp;callback=flightHandler"></script>
