@@ -8,5 +8,10 @@
     "version": "1.0.0",
     "require": {
         "php": "^5.3.3 || ^7.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "10.0.x-dev"
+        }
     }
 }
