@@ -1,4 +1,5 @@
 <?php
+
 namespace Hiland\Utils\Data;
 
 class ArrayHelper
@@ -369,5 +370,4 @@ class ArrayHelper
             }
         }
     }
-
 }
