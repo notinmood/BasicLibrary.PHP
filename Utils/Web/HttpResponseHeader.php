@@ -56,8 +56,8 @@ class HttpResponseHeader
 
             $tempArray = explode("<br/>", $pHeader);
             foreach ($tempArray as $item) {
-                $key = StringHelper::getSeperatorBeforeString($item, ":");
-                $value = StringHelper::getSeperatorAfterString($item, ":");
+                $key = StringHelper::getStringBeforeSeperator($item, ":");
+                $value = StringHelper::getStringAfterSeperator($item, ":");
                 $data[$key] = trim($value);
             }
         }

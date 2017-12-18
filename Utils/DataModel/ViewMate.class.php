@@ -45,10 +45,10 @@ class ViewMate extends ModelMate
 //            $cn = __CLASS__;
 //
 //            if ($ns) {
-//                $cn = StringHelper::getSeperatorAfterString($cn, $ns);
+//                $cn = StringHelper::getStringAfterSeperator($cn, $ns);
 //            }
-//            $cn = StringHelper::getSeperatorBeforeString($cn, 'ViewMate');
-//            $cn = StringHelper::getSeperatorAfterString($cn, "\\");
+//            $cn = StringHelper::getStringBeforeSeperator($cn, 'ViewMate');
+//            $cn = StringHelper::getStringAfterSeperator($cn, "\\");
 //
 //            $model= $cn;
 //        }

@@ -312,8 +312,8 @@ class ArrayHelper
                     if (strpos($func, '|') < 0) {
                         $result = call_user_func($func, $row[$col]);
                     } else {
-                        $className = StringHelper::getSeperatorBeforeString($func, '|');
-                        $methodName = StringHelper::getSeperatorAfterString($func, '|');
+                        $className = StringHelper::getStringBeforeSeperator($func, '|');
+                        $methodName = StringHelper::getStringAfterSeperator($func, '|');
 
                         $result = ReflectionHelper::executeMethod($className, $methodName, null, array(
                             $row[$col]
