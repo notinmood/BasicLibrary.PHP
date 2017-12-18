@@ -3,7 +3,6 @@ namespace Hiland\Utils\Data;
 
 class ByteHelper
 {
-
     /**
      * 格式化（友好的显示）字节大小
      *
