@@ -1,4 +1,5 @@
 <?php
+
 namespace Hiland\Utils\IO;
 
 use Hiland\Utils\Web\MimeHelper;
@@ -571,13 +572,15 @@ class ImageHelper
 
         if (function_exists($functionName)) {
             switch ($paramCount) {
-                case 3: {
-                    $functionName($image, $filePhysicalFullName, $imageDisplayQuality);
-                    break;
-                }
-                default: {
-                    $functionName($image, $filePhysicalFullName);
-                }
+                case 3:
+                    {
+                        $functionName($image, $filePhysicalFullName, $imageDisplayQuality);
+                        break;
+                    }
+                default:
+                    {
+                        $functionName($image, $filePhysicalFullName);
+                    }
             }
         }
 
@@ -796,5 +799,3 @@ class ImageHelper
         }
     }
 }
-
-?>

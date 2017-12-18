@@ -1,4 +1,5 @@
 <?php
+
 namespace Hiland\Utils\Data;
 
 /**
@@ -9,7 +10,6 @@ namespace Hiland\Utils\Data;
  */
 class CipherHelper
 {
-
     /**
      * 为内容生成签名
      * @param string $content 签名内容
@@ -166,5 +166,3 @@ class CipherHelper
         return self::cipherCode($string, 'DECODE', $key, $expiry);
     }
 }
-
-?>

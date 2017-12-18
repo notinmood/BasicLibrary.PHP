@@ -1,11 +1,11 @@
 <?php
+
 namespace Hiland\Utils\Web;
 
 use Hiland\Utils\IO\FileHelper;
 
 class MimeHelper
 {
-
     /**
      * 文件mime类型数组
      *
@@ -458,5 +458,3 @@ class MimeHelper
         }
     }
 }
-
-?>

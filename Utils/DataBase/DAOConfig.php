@@ -1,4 +1,5 @@
 <?php
+
 namespace Hiland\Utils\DataBase;
 
 class DAOConfig
@@ -11,5 +12,3 @@ class DAOConfig
 
     const DBCODING = 'UTF8';
 }
-
-?>

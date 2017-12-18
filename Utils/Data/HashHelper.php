@@ -4,7 +4,6 @@ namespace Hiland\Utils\Data;
 
 class HashHelper
 {
-
     /**
      * 计算给定字符串的哈希值（转换为数字的值），或者取模的结果（如果设定$maxremainder的话）
      *
@@ -33,5 +32,3 @@ class HashHelper
         return $data;
     }
 }
-
-?>

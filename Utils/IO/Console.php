@@ -51,5 +51,3 @@ class Console
         return $result;
     }
 }
-
-?>

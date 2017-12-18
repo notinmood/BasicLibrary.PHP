@@ -2,24 +2,24 @@
 
 namespace Hiland\Utils\IO\Drawing;
 
-    /**
-     *  基本图片处理，用于完成图片缩入，水印添加
-     *  当水印图超过目标图片尺寸时，水印图能自动适应目标图片而缩小
-     *  水印图可以设置跟背景的合并度
-     *
-     *  Copyright(c) 2005 by ustb99. All rights reserved
-     *
-     *  To contact the author write to {@link mailto:ustb80@163.com}
-     *
-     * @author 偶然
-     * @version $Id: thumb.class.php,v 1.9 2006/09/30 09:31:56 zengjian Exp $
-     * @package system
-     */
+/**
+ *  基本图片处理，用于完成图片缩入，水印添加
+ *  当水印图超过目标图片尺寸时，水印图能自动适应目标图片而缩小
+ *  水印图可以设置跟背景的合并度
+ *
+ *  Copyright(c) 2005 by ustb99. All rights reserved
+ *
+ *  To contact the author write to {@link mailto:ustb80@163.com}
+ *
+ * @author 偶然
+ * @version $Id: thumb.class.php,v 1.9 2006/09/30 09:31:56 zengjian Exp $
+ * @package system
+ */
 
-    /**
-     * ThumbHandler
-     * @access public
-     */
+/**
+ * ThumbHandler
+ * @access public
+ */
 
 /*
  使用方法:
@@ -1023,5 +1023,3 @@ class ThumbHandler
         }
     }
 }
-
-?>

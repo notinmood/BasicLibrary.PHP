@@ -1,4 +1,5 @@
 <?php
+
 namespace Hiland\Utils\DataBase;
 
 /**
@@ -8,7 +9,6 @@ namespace Hiland\Utils\DataBase;
  */
 class Mysql extends DAO
 {
-
     protected function connectInner()
     {
         $dbHost = $this->dbHostName . ":" . $this->dbHostPort;
@@ -101,5 +101,3 @@ class Mysql extends DAO
         return $result;
     }
 }
-
-?>

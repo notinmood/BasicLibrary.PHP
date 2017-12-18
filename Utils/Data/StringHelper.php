@@ -1,11 +1,11 @@
 <?php
+
 namespace Hiland\Utils\Data;
 
 use Hiland\Utils\Web\EnvironmentHelper;
 
 class StringHelper
 {
-
     /**
      * 获取文本文件的回车换行符
      *
@@ -48,7 +48,7 @@ class StringHelper
             $length = $originalStringLength - $startPosition;
         }
 
-        if($length==0){
+        if ($length == 0) {
             $length = $originalStringLength - $startPosition;
         }
 
@@ -193,5 +193,3 @@ class StringHelper
         }
     }
 }
-
-?>

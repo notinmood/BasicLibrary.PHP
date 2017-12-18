@@ -1,4 +1,5 @@
 <?php
+
 namespace Hiland\Utils\IO;
 
 use Hiland\Utils\Data\ColorHelper;
@@ -508,83 +509,86 @@ class Images
 
             switch ($this->cutType) {
                 // 自动裁切 1：Y方向保持全图缩放，不裁切
-                case 1: {
-                    // 如果图片是缩小剪切才进行操作
-                    if ($rate_w >= 1 && $rate_h >= 1) {
-                        if ($this->sourceImageWidth > $this->sourceImageHeight) {
-                            $src_x = round($this->sourceImageWidth - $this->sourceImageHeight) / 2;
-                            $this->setCutPositionOnSourceImage($src_x, 0);
-                            $this->setCutRectangle($tempFillHeight, $tempFillHeight);
+                case 1:
+                    {
+                        // 如果图片是缩小剪切才进行操作
+                        if ($rate_w >= 1 && $rate_h >= 1) {
+                            if ($this->sourceImageWidth > $this->sourceImageHeight) {
+                                $src_x = round($this->sourceImageWidth - $this->sourceImageHeight) / 2;
+                                $this->setCutPositionOnSourceImage($src_x, 0);
+                                $this->setCutRectangle($tempFillHeight, $tempFillHeight);
 
-                            $this->copyedImageWidth = $this->sourceImageHeight;
-                            $this->copyedImageHeight = $this->sourceImageHeight;
-                        } elseif ($this->sourceImageWidth < $this->sourceImageHeight) {
-                            $src_y = round($this->sourceImageHeight - $this->sourceImageWidth) / 2;
-                            $this->setCutPositionOnSourceImage(0, $src_y);
-                            $this->setCutRectangle($tempFillWidth, $tempFillHeight);
+                                $this->copyedImageWidth = $this->sourceImageHeight;
+                                $this->copyedImageHeight = $this->sourceImageHeight;
+                            } elseif ($this->sourceImageWidth < $this->sourceImageHeight) {
+                                $src_y = round($this->sourceImageHeight - $this->sourceImageWidth) / 2;
+                                $this->setCutPositionOnSourceImage(0, $src_y);
+                                $this->setCutRectangle($tempFillWidth, $tempFillHeight);
 
-                            $this->copyedImageWidth = $this->sourceImageWidth;
-                            $this->copyedImageHeight = $this->sourceImageWidth;
+                                $this->copyedImageWidth = $this->sourceImageWidth;
+                                $this->copyedImageHeight = $this->sourceImageWidth;
+                            } else {
+                                $this->setCutPositionOnSourceImage(0, 0);
+                                $this->copyedImageWidth = $this->sourceImageWidth;
+                                $this->copyedImageHeight = $this->sourceImageWidth;
+                                $this->setCutRectangle($tempFillWidth, $tempFillHeight);
+                            }
                         } else {
                             $this->setCutPositionOnSourceImage(0, 0);
+                            $this->setCutRectangle($this->sourceImageWidth, $this->sourceImageHeight);
+
                             $this->copyedImageWidth = $this->sourceImageWidth;
-                            $this->copyedImageHeight = $this->sourceImageWidth;
-                            $this->setCutRectangle($tempFillWidth, $tempFillHeight);
+                            $this->copyedImageHeight = $this->sourceImageHeight;
                         }
-                    } else {
-                        $this->setCutPositionOnSourceImage(0, 0);
-                        $this->setCutRectangle($this->sourceImageWidth, $this->sourceImageHeight);
+
+                        // 目标尺寸
+                        $this->destImageWidth = $this->filledImageWidth + $this->imageBorderSize * 2;
+                        $this->destImageHeight = $this->filledImageHeight + $this->imageBorderSize * 2;
+
+                        break;
+                    }
+
+                // 手工裁切 2：指定位置和大小后后手工裁切，X、Y方向均取得部分图像
+                case 2:
+                    {
+                        $this->copyedImageWidth = $this->filledImageWidth;
+                        $this->copyedImageHeight = $this->filledImageHeight;
+
+                        // 目标尺寸
+                        $this->destImageWidth = $this->filledImageWidth + $this->imageBorderSize * 2;
+                        $this->destImageHeight = $this->filledImageHeight + $this->imageBorderSize * 2;
+
+                        break;
+                    }
+                // 自动裁切0：X方向保持全图缩放，不裁切
+                case 0:
+                default:
+                    {
+                        // 如果原图大于缩略图，产生缩小，否则不缩小
+                        if ($rate_w < 1 && $rate_h < 1) {
+                            $this->filledImageWidth = (int)$this->sourceImageWidth;
+                            $this->filledImageHeight = (int)$this->sourceImageHeight;
+                        } else {
+                            if ($rate_w >= $rate_h) {
+                                $this->filledImageWidth = (int)$tempFillWidth;
+                                $this->filledImageHeight = round($this->sourceImageHeight / $rate_w);
+                            } else {
+                                $this->filledImageWidth = round($this->sourceImageWidth / $rate_h);
+                                $this->filledImageHeight = (int)$tempFillHeight;
+                            }
+                        }
+
+                        $this->sourceImagePaintX = 0;
+                        $this->sourceImagePaintY = 0;
 
                         $this->copyedImageWidth = $this->sourceImageWidth;
                         $this->copyedImageHeight = $this->sourceImageHeight;
+
+                        // 目标尺寸
+                        $this->destImageWidth = $this->filledImageWidth + $this->imageBorderSize * 2;
+                        $this->destImageHeight = $this->filledImageHeight + $this->imageBorderSize * 2;
+                        break;
                     }
-
-                    // 目标尺寸
-                    $this->destImageWidth = $this->filledImageWidth + $this->imageBorderSize * 2;
-                    $this->destImageHeight = $this->filledImageHeight + $this->imageBorderSize * 2;
-
-                    break;
-                }
-
-                // 手工裁切 2：指定位置和大小后后手工裁切，X、Y方向均取得部分图像
-                case 2: {
-                    $this->copyedImageWidth = $this->filledImageWidth;
-                    $this->copyedImageHeight = $this->filledImageHeight;
-
-                    // 目标尺寸
-                    $this->destImageWidth = $this->filledImageWidth + $this->imageBorderSize * 2;
-                    $this->destImageHeight = $this->filledImageHeight + $this->imageBorderSize * 2;
-
-                    break;
-                }
-                // 自动裁切0：X方向保持全图缩放，不裁切
-                case 0:
-                default: {
-                    // 如果原图大于缩略图，产生缩小，否则不缩小
-                    if ($rate_w < 1 && $rate_h < 1) {
-                        $this->filledImageWidth = (int)$this->sourceImageWidth;
-                        $this->filledImageHeight = (int)$this->sourceImageHeight;
-                    } else {
-                        if ($rate_w >= $rate_h) {
-                            $this->filledImageWidth = (int)$tempFillWidth;
-                            $this->filledImageHeight = round($this->sourceImageHeight / $rate_w);
-                        } else {
-                            $this->filledImageWidth = round($this->sourceImageWidth / $rate_h);
-                            $this->filledImageHeight = (int)$tempFillHeight;
-                        }
-                    }
-
-                    $this->sourceImagePaintX = 0;
-                    $this->sourceImagePaintY = 0;
-
-                    $this->copyedImageWidth = $this->sourceImageWidth;
-                    $this->copyedImageHeight = $this->sourceImageHeight;
-
-                    // 目标尺寸
-                    $this->destImageWidth = $this->filledImageWidth + $this->imageBorderSize * 2;
-                    $this->destImageHeight = $this->filledImageHeight + $this->imageBorderSize * 2;
-                    break;
-                }
             }
         }
 
@@ -845,5 +849,3 @@ class Images
         imagedestroy($this->maskImage);
     }
 }
-
-?>

@@ -1,9 +1,9 @@
 <?php
+
 namespace Hiland\Utils\IO;
 
 class FileHelper
 {
-
     /**
      * 获取文件所在的目录信息
      *
@@ -56,5 +56,3 @@ class FileHelper
         return $extensionname;
     }
 }
-
-?>

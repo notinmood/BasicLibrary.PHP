@@ -1,9 +1,9 @@
 <?php
+
 namespace Hiland\Utils\Data;
 
 class ColorHelper
 {
-
     /**
      * 将16进制的颜色值转变为RGB数组
      *
@@ -45,5 +45,3 @@ class ColorHelper
         return $dexColor;
     }
 }
-
-?>

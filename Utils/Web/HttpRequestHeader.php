@@ -1,4 +1,5 @@
 <?php
+
 namespace Hiland\Utils\Web;
 
 class HttpRequestHeader
@@ -122,7 +123,4 @@ class HttpRequestHeader
         self::set("Expires: Mon, 26 Jul 1997 05:00:00 GMT");// Date in the past
         self::set("Pragma: no-cache");
     }
-
 }
-
-?>

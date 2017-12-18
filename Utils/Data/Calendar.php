@@ -1,4 +1,5 @@
 <?php
+
 namespace Hiland\Utils\Data;
 
 /**

@@ -1,9 +1,9 @@
 <?php
+
 namespace Hiland\Utils\Data;
 
 class ExtentibleRepository
 {
-
     private $keys = '';
     private $values = '';
     private $isParserd = false;
@@ -161,5 +161,3 @@ class ExtentibleRepository
         );
     }
 }
-
-?>

@@ -1,9 +1,9 @@
 <?php
+
 namespace Hiland\Utils\Data;
 
 class ReflectionHelper
 {
-
     /**
      * 通过反射创建对象实例
      *
@@ -68,5 +68,3 @@ class ReflectionHelper
         return $result;
     }
 }
-
-?>

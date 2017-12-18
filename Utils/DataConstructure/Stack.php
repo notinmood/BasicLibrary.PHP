@@ -1,9 +1,9 @@
 <?php
+
 namespace Hiland\Utils\DataConstructure;
 
 class Stack extends BasicQueueStack
 {
-
     /**
      * （尾部）出队*
      * @return Null|mixed
@@ -38,5 +38,3 @@ class Stack extends BasicQueueStack
         }
     }
 }
-
-?>

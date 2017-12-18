@@ -1,4 +1,5 @@
 <?php
+
 namespace Hiland\Utils\Data;
 
 class ObjectHelper
@@ -185,5 +186,3 @@ class ObjectHelper
         return $result;
     }
 }
-
-?>

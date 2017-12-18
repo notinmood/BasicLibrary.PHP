@@ -1,9 +1,9 @@
 <?php
+
 namespace Hiland\Utils\Data;
 
 class DateHelper
 {
-
     /**
      * 获取从1970年1月1日以来总共的毫秒数
      *
@@ -210,53 +210,51 @@ class DateHelper
      * @param string $postfixstring 后缀信息
      * @return string
      */
-    public static function getMonthChineseName($month=null,$postfixstring=''){
-        if($month==null){
-            $month= date("n");
+    public static function getMonthChineseName($month = null, $postfixstring = '')
+    {
+        if ($month == null) {
+            $month = date("n");
         }
 
-        switch ($month){
+        switch ($month) {
             case 1:
-                $result= '一';
+                $result = '一';
                 break;
             case 2:
-                $result= '二';
+                $result = '二';
                 break;
             case 3:
-                $result= '三';
+                $result = '三';
                 break;
             case 4:
-                $result= '四';
+                $result = '四';
                 break;
             case 5:
-                $result= '五';
+                $result = '五';
                 break;
             case 6:
-                $result= '六';
+                $result = '六';
                 break;
             case 7:
-                $result= '七';
+                $result = '七';
                 break;
             case 8:
-                $result= '八';
+                $result = '八';
                 break;
             case 9:
-                $result= '九';
+                $result = '九';
                 break;
             case 10:
-                $result= '十';
+                $result = '十';
                 break;
             case 11:
-                $result= '十一';
+                $result = '十一';
                 break;
             case 12:
-                $result= '十二';
+                $result = '十二';
                 break;
         }
 
-        return $result.$postfixstring;
+        return $result . $postfixstring;
     }
-
 }
-
-?>

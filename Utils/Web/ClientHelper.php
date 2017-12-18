@@ -9,7 +9,6 @@ namespace Hiland\Utils\Web;
  */
 class ClientHelper
 {
-
     /**
      * 获得访客浏览器类型
      */
@@ -170,5 +169,3 @@ class ClientHelper
         return $ip_arr['code'] == 0 ? $ip_arr['data']['ip'] : '';
     }
 }
-
-?>

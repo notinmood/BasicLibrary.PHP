@@ -1,4 +1,5 @@
 <?php
+
 namespace Hiland\Utils\Data;
 
 /**
@@ -9,7 +10,6 @@ namespace Hiland\Utils\Data;
  */
 class DBSetHelper
 {
-
     /**
      * 获取数据集中第0行中的某个字段值
      *
@@ -71,4 +71,3 @@ class DBSetHelper
         return ArrayHelper::friendlyDisplayDbSet($dbSet, $mapArray, $funcArray);
     }
 }
-?>

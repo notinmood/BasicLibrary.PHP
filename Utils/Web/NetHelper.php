@@ -1,4 +1,5 @@
 <?php
+
 namespace Hiland\Utils\Web;
 
 use Hiland\Biz\Tencent\Common\WechatException;
@@ -7,7 +8,6 @@ use Hiland\Utils\IO\FileHelper;
 
 class NetHelper
 {
-
     /**
      * 模拟网络POST请求
      *
@@ -152,5 +152,3 @@ class NetHelper
         }
     }
 }
-
-?>

@@ -1,4 +1,5 @@
 <?php
+
 namespace Hiland\Utils\Data;
 
 if (defined("TWOZEROZEROZEROYEAR") == false) {
@@ -14,7 +15,6 @@ if (defined("TWOZEROZEROZEROYEAR") == false) {
  */
 class GuidHelper
 {
-
     /**
      * 空值guid
      *
@@ -118,5 +118,3 @@ class GuidHelper
         }
     }
 }
-
-?>

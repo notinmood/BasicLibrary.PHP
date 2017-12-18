@@ -1,4 +1,5 @@
 <?php
+
 namespace Hiland\Utils\DataConstructure;
 
 class Queue extends BasicQueueStack
@@ -35,7 +36,4 @@ class Queue extends BasicQueueStack
             return $data[0];
         }
     }
-
 }
-
-?>

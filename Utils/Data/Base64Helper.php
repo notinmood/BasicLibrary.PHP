@@ -19,7 +19,8 @@ class Base64Helper
      * @param $data
      * @return mixed|string
      */
-    public static function getSafeBase64($data){
+    public static function getSafeBase64($data)
+    {
         $string = str_replace(array('-', '_'), array('+', '/'), $data);
         $mod4 = strlen($string) % 4;
         if ($mod4) {
@@ -34,7 +35,8 @@ class Base64Helper
      * @param $data
      * @return mixed
      */
-    public static function getOriginalBase64($data){
+    public static function getOriginalBase64($data)
+    {
         $result = str_replace(array('+', '/', '='), array('-', '_', ''), $data);
         return $result;
     }

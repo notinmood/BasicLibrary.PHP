@@ -1,4 +1,5 @@
 <?php
+
 namespace Hiland\Utils\Data;
 
 class FontHelper
@@ -58,5 +59,3 @@ class FontHelper
         return $array[1];
     }
 }
-
-?>

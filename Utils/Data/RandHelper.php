@@ -1,9 +1,9 @@
 <?php
+
 namespace Hiland\Utils\Data;
 
 class RandHelper
 {
-
     /**
      * 生成随机字符串
      *
@@ -54,5 +54,3 @@ class RandHelper
         return $result;
     }
 }
-
-?>

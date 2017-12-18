@@ -1,4 +1,5 @@
 <?php
+
 namespace Hiland\Utils\Data;
 
 /**
@@ -15,7 +16,6 @@ namespace Hiland\Utils\Data;
  */
 abstract class Enum
 {
-
     /**
      * Constant with default value for creating enum object
      */
@@ -121,5 +121,3 @@ abstract class Enum
         return $this->strict ? ($this->value === $object->value) : ($this->value == $object->value);
     }
 }
-
-?>

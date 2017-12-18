@@ -1,9 +1,9 @@
 <?php
+
 namespace Hiland\Utils\DataBase;
 
 class DAOHelper
 {
-
     public static function Instance($driver = 'mysqli')
     {
         $dbHostName = C('DBHOSTNAME');
@@ -49,5 +49,3 @@ class DAOHelper
         }
     }
 }
-
-?>

@@ -44,10 +44,11 @@ class BoolHelper
      * @param $value
      * @return string
      */
-    public static function getText($value){
-        if($value){
+    public static function getText($value)
+    {
+        if ($value) {
             return "true";
-        }else{
+        } else {
             return "false";
         }
     }

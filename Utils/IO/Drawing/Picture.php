@@ -425,5 +425,3 @@ class Picture
     }
     // nd of class
 }
-
-?>

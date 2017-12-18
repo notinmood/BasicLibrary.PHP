@@ -1,4 +1,5 @@
 <?php
+
 namespace Hiland\Utils\Web;
 
 use Hiland\Utils\IO\FileHelper;
@@ -81,7 +82,7 @@ class SaeHelper
                 imagegif($image);
                 break;
             case 'bmp':
-                imagexbm($image,null);
+                imagexbm($image, null);
                 break;
             default:
                 imagejpeg($image);
@@ -141,5 +142,3 @@ class SaeHelper
         return $result;
     }
 }
-
-?>

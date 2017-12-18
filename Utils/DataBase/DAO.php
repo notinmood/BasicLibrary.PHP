@@ -1,4 +1,5 @@
 <?php
+
 namespace Hiland\Utils\DataBase;
 
 use Hiland\Utils\Web\ClientHelper;
@@ -544,5 +545,3 @@ class DAO
         }
     }
 }
-
-?>

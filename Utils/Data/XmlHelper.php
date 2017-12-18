@@ -1,9 +1,9 @@
 <?php
+
 namespace Hiland\Utils\Data;
 
 class XmlHelper
 {
-
     /**
      * 将xml转换成json
      *
@@ -49,5 +49,3 @@ class XmlHelper
         return $xml;
     }
 }
-
-?>

@@ -114,5 +114,3 @@ class EnvironmentHelper
         return $result;
     }
 }
-
-?>

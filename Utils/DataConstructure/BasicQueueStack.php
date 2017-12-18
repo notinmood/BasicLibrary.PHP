@@ -1,4 +1,5 @@
 <?php
+
 namespace Hiland\Utils\DataConstructure;
 
 abstract class BasicQueueStack
@@ -60,5 +61,3 @@ abstract class BasicQueueStack
         return count($this->dataArray);
     }
 }
-
-?>

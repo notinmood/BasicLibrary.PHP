@@ -1,9 +1,9 @@
 <?php
+
 namespace Hiland\Utils\DataBase;
 
 class Mysqli extends DAO
 {
-
     protected function connectInner()
     {
         // 1.设置连接
@@ -94,5 +94,3 @@ class Mysqli extends DAO
         return $result;
     }
 }
-
-?>

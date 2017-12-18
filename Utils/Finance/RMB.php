@@ -68,5 +68,3 @@ class RMB
         return $retval;
     }
 }
-
-?>

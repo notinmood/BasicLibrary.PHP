@@ -1,4 +1,5 @@
 <?php
+
 namespace Hiland\Utils\Data;
 
 class VerifyHelper
@@ -233,5 +234,3 @@ class VerifyHelper
         return false;
     }
 }
-
-?>

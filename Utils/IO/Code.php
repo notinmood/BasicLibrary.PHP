@@ -64,5 +64,3 @@ class Code
         return $content;
     }
 }
-
-?>

@@ -47,7 +47,7 @@ class DirHelper
         $files = scandir($dir);
         $count = 0;
         foreach ($files as $file) {
-            if ($file == '.' || $file == '..' || is_dir($dir.'/'.$file)) {
+            if ($file == '.' || $file == '..' || is_dir($dir . '/' . $file)) {
                 //print_r($file.'|');
             } else {
                 $count++;

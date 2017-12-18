@@ -33,7 +33,4 @@ class Device
             return false;
         }
     }
-
 }
-
-?>

@@ -1,4 +1,5 @@
 <?php
+
 namespace Hiland\Utils\Data;
 
 use Think\Model;
@@ -155,5 +156,3 @@ class OperationHelper
         return json_decode($errorResult, true);
     }
 }
-
-?>
