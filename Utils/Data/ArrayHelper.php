@@ -371,5 +371,3 @@ class ArrayHelper
     }
 
 }
-
-?>
