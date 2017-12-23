@@ -10,7 +10,6 @@ namespace Hiland\Biz\Tencent\Pay\WxPayData;
  */
 class WxPayDataBaseReport extends WxPayDataBase
 {
-
     /**
      * 设置微信分配的公众账号ID
      *
@@ -473,5 +472,3 @@ class WxPayDataBaseReport extends WxPayDataBase
         return array_key_exists('time', $this->values);
     }
 }
-
-?>

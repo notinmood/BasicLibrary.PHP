@@ -67,5 +67,3 @@ class WxPayDataBaseNotify extends WxPayDataBase
         $this->values[$key] = $value;
     }
 }
-
-?>

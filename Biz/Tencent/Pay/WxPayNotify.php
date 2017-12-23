@@ -12,7 +12,6 @@ use Hiland\Biz\Tencent\Pay\WxPayData\WxPayDataBaseNotify;
  */
 class WxPayNotify extends WxPayDataBaseNotify
 {
-
     /**
      *
      * 回调入口

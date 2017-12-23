@@ -374,5 +374,3 @@ class WxPayDataBaseRefund extends WxPayDataBase
         return array_key_exists('op_user_id', $this->values);
     }
 }
-
-?>

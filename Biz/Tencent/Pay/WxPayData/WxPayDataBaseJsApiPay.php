@@ -209,5 +209,3 @@ class WxPayDataBaseJsApiPay extends WxPayDataBase
         return array_key_exists('paySign', $this->values);
     }
 }
-
-?>

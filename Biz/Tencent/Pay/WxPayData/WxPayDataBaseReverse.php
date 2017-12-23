@@ -176,5 +176,3 @@ class WxPayDataBaseReverse extends WxPayDataBase
         return array_key_exists('nonce_str', $this->values);
     }
 }
-
-?>

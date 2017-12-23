@@ -138,5 +138,3 @@ class WxPayDataBase
         return $this->values;
     }
 }
-
-?>

@@ -209,5 +209,3 @@ class WxPayDataBaseDownloadBill extends WxPayDataBase
         return array_key_exists('bill_type', $this->values);
     }
 }
-
-?>

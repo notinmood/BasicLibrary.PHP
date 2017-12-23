@@ -22,5 +22,3 @@ class WechatException extends \Exception
      * }
      */
 }
-
-?>

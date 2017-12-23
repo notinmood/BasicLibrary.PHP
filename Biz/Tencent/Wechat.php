@@ -15,7 +15,6 @@ use Hiland\Biz\Tencent\Common\WechatConfig;
  */
 class Wechat
 {
-
     /**
      * 从微信服务器发送过来的原始的请求数据
      *
@@ -567,5 +566,3 @@ XML;
         return sprintf($this->template, $this->toUserName, $this->fromUserName, time(), $this->mediaId, $this->funcFlag);
     }
 }
-
-?>

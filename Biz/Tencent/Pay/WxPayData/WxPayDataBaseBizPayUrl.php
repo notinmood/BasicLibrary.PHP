@@ -176,5 +176,3 @@ class WxPayDataBaseBizPayUrl extends WxPayDataBase
         return array_key_exists('product_id', $this->values);
     }
 }
-
-?>

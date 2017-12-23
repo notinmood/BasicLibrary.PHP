@@ -605,5 +605,3 @@ class WxPayDataBaseUnifiedOrder extends WxPayDataBase
         return array_key_exists('openid', $this->values);
     }
 }
-
-?>

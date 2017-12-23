@@ -143,5 +143,3 @@ class WxPayDataBaseShortUrl extends WxPayDataBase
         return array_key_exists('nonce_str', $this->values);
     }
 }
-
-?>

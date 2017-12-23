@@ -275,5 +275,3 @@ class WxPayDataBaseRefundQuery extends WxPayDataBase
         return array_key_exists('refund_id', $this->values);
     }
 }
-
-?>

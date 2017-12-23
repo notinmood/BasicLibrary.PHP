@@ -9,7 +9,6 @@ use Hiland\Utils\Web\NetHelper;
 
 class WechatHelper
 {
-
     /**
      * 获取要生成带参数的二维码所需要的票据
      *
@@ -745,5 +744,3 @@ class WechatHelper
         }
     }
 }
-
-?>

@@ -506,5 +506,3 @@ class WxPayDataBaseMicroPay extends WxPayDataBase
         return array_key_exists('auth_code', $this->values);
     }
 }
-
-?>

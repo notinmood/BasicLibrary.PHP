@@ -97,5 +97,3 @@ class WechatConfig
         return $path;
     }
 }
-
-?>

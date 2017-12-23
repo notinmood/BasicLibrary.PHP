@@ -91,5 +91,3 @@ class WxPayDataBaseResults extends WxPayDataBase
         $this->values[$key] = $value;
     }
 }
-
-?>
