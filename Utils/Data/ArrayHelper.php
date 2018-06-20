@@ -403,7 +403,7 @@ class ArrayHelper
 
      */
     public static function multiColumnSort($array,$columnName,$sortType=SORT_ASC){
-        array_multisort(array_column($array,'age'),$sortType,$array);
+        array_multisort(array_column($array,$columnName),$sortType,$array);
         return $array;
     }
 }
