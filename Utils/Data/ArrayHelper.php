@@ -370,4 +370,40 @@ class ArrayHelper
             }
         }
     }
+
+    /** 在多维度数组中，根据某一个维度进行排序
+     * @param $array 目标数组
+     * @param $columnName 目标维度名称
+     * @param int $sortType 排序类型 SORT_ASC 或者 SORT_DESC
+     * @return mixed
+     * @example 对类似如下数组中，根据“2010年”年排序
+     * array(31) {
+    [0] => array(5) {
+    ["地区"] => string(6) "河南"
+    ["2010年"] => float(5437.1)
+    ["2011年"] => float(5542.5)
+    ["2012年"] => float(5638.6)
+    [""] => NULL
+    }
+    [1] => array(5) {
+    ["地区"] => string(9) "黑龙江"
+    ["2010年"] => float(5012.8)
+    ["2011年"] => float(5570.6)
+    ["2012年"] => float(5761.5)
+    [""] => NULL
+    }
+    [2] => array(5) {
+    ["地区"] => string(6) "山东"
+    ["2010年"] => float(4335.7)
+    ["2011年"] => float(4426.3)
+    ["2012年"] => float(4511.4)
+    [""] => NULL
+    }
+     }
+
+     */
+    public static function multiColumnSort($array,$columnName,$sortType=SORT_ASC){
+        array_multisort(array_column($array,'age'),$sortType,$array);
+        return $array;
+    }
 }
