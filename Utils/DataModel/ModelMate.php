@@ -2,6 +2,8 @@
 
 namespace Hiland\Utils\DataModel;
 
+use think\Config;
+use think\Db;
 use Think\Model;
 
 /**
@@ -23,7 +25,13 @@ class ModelMate
     public function __construct($model)
     {
         if (is_string($model)) {
-            $this->model = M($model);
+            $thinkVersion= (int)THINK_VERSION;
+            if($thinkVersion<5){
+                $this->model = M($model);
+            }else{
+                $prefix= Config::get("database.prefix");
+                $this->model = Db::table($prefix.$model);
+            }
         } else {
             $this->model = $model;
         }
@@ -40,7 +48,7 @@ class ModelMate
      */
     public function get($key, $keyName = 'id')
     {
-        return self::getModel_Get()->find($key, $keyName);
+        return self::getModel_Get($key, $keyName)->find();
     }
 
     /**
