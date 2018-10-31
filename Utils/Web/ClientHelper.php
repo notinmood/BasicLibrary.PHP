@@ -11,6 +11,8 @@ class ClientHelper
 {
     /**
      * 获得访客浏览器类型
+     * 返回类型为以下字符串：
+     * MSIE、Weixin、Firefox、Chrome、Safari、Opera、Other
      */
     public static function getBrowser()
     {
@@ -18,6 +20,8 @@ class ClientHelper
             $br = $_SERVER['HTTP_USER_AGENT'];
             if (preg_match('/MSIE/i', $br)) {
                 $br = 'MSIE';
+            } elseif (preg_match('/MicroMessenger/i', $br)) { //因为微信浏览器使用的chrome，因此判断微信浏览器要放在判断Chrome前面
+                $br = 'Weixin';
             } elseif (preg_match('/Firefox/i', $br)) {
                 $br = 'Firefox';
             } elseif (preg_match('/Chrome/i', $br)) {
@@ -33,6 +37,17 @@ class ClientHelper
         } else {
             return "unknow";
         }
+    }
+
+    /**判断是不是微信浏览器
+     * @return bool
+     */
+    public static function isWeixinBrowser()
+    {
+        if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) {
+            return true;
+        }
+        return false;
     }
 
     /**
