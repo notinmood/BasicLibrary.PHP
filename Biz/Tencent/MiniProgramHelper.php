@@ -8,8 +8,8 @@
 
 namespace Hiland\Biz\Tencent;
 
-use Vendor\Hiland\Biz\Tencent\Common\MiniProgramConfig;
-use Vendor\Hiland\Utils\Web\NetHelper;
+use Hiland\Biz\Tencent\Common\MiniProgramConfig;
+use Hiland\Utils\Web\NetHelper;
 
 class MiniProgramHelper
 {
@@ -18,8 +18,8 @@ class MiniProgramHelper
      * @return json
      */
     private static function getUserSession($code){
-        $APPID= MiniProgramConfig::APPID;
-        $SECRET= MiniProgramConfig::SECRET;
+        $APPID= MiniProgramConfig::getAPPID();
+        $SECRET= MiniProgramConfig::getSECRET();
         $url= "https://api.weixin.qq.com/sns/jscode2session?appid=$APPID&secret=$SECRET&js_code=$code&grant_type=authorization_code";
         $result= NetHelper::request($url);
         return $result;
