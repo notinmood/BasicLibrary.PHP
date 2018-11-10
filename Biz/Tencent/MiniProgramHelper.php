@@ -17,16 +17,27 @@ class MiniProgramHelper
      * @param $code
      * @return json
      */
-    private static function getUserSession($code){
+    public static function getUserSession($code){
         $APPID= MiniProgramConfig::getAPPID();
         $SECRET= MiniProgramConfig::getSECRET();
         $url= "https://api.weixin.qq.com/sns/jscode2session?appid=$APPID&secret=$SECRET&js_code=$code&grant_type=authorization_code";
         $result= NetHelper::request($url);
+        //dump($result);
         return $result;
     }
+
+    /**
+     * 获取微信小程序用户的openid
+     * @param $code
+     * @return mixed
+     */
     public static function getOpenID($code){
         $sessionJSON= self::getUserSession($code);
         $sessionObject= json_decode($sessionJSON);
         return $sessionObject->openid;
+    }
+
+    public static function getDecryptData(){
+
     }
 }
