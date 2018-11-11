@@ -2,6 +2,7 @@
 
 namespace Hiland\Utils\Web;
 
+use Hiland\Biz\ThinkAddon\TPCompatibleHelper;
 use Hiland\Utils\Data\StringHelper;
 
 /**
@@ -149,7 +150,8 @@ class WebHelper
             case 'JSONP':
                 // 返回JSON数据格式到客户端 包含状态信息
                 header('Content-Type:application/json; charset=utf-8');
-                $handler = isset($_GET[C('VAR_JSONP_HANDLER')]) ? $_GET[C('VAR_JSONP_HANDLER')] : C('DEFAULT_JSONP_HANDLER');
+                
+                $handler = isset($_GET[TPCompatibleHelper::config('VAR_JSONP_HANDLER')]) ? $_GET[TPCompatibleHelper::config('VAR_JSONP_HANDLER')] : TPCompatibleHelper::config('DEFAULT_JSONP_HANDLER');
                 $data = $handler . '(' . json_encode($data, $json_option) . ');';
                 break;
             case 'EVAL' :

@@ -9,6 +9,7 @@
 namespace Hiland\Utils\Web;
 
 
+use Hiland\Biz\ThinkAddon\TPCompatibleHelper;
 use Hiland\Utils\Data\StringHelper;
 
 /**
@@ -35,7 +36,7 @@ class HttpResponseHeader
     public static function getAll($url)
     {
         $cacheKey = "HttpResponseHeader20160709-url-$url";
-        $dataCached = S($cacheKey);
+        $dataCached = TPCompatibleHelper::cache($cacheKey);
         if (!empty($dataCached)) {
             return $dataCached;
         }
@@ -62,7 +63,7 @@ class HttpResponseHeader
             }
         }
 
-        S($cacheKey, $data);
+        TPCompatibleHelper::cache($cacheKey, $data);
 
         return $data;
     }

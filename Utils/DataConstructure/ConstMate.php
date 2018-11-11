@@ -8,6 +8,7 @@
 
 namespace Hiland\Utils\DataConstructure;
 
+use Hiland\Biz\ThinkAddon\TPCompatibleHelper;
 use Hiland\Utils\Data\ReflectionHelper;
 use Hiland\Utils\Data\StringHelper;
 
@@ -72,12 +73,12 @@ class ConstMate
         if (APP_DEBUG) {
             return self::getConstsDetail($prefix, $withText);
         } else {
-            $dataCached = S($cacheKey);
+            $dataCached = TPCompatibleHelper::cache($cacheKey);
             if ($dataCached) {
                 return $dataCached;
             } else {
                 $dataCached = self::getConstsDetail($prefix, $withText);
-                S($cacheKey, $dataCached);
+                TPCompatibleHelper::cache($cacheKey, $dataCached);
                 return $dataCached;
             }
         }

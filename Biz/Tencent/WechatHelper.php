@@ -3,6 +3,7 @@ namespace Hiland\Biz\Tencent;
 
 use Hiland\Biz\Loger\CommonLoger;
 use Hiland\Biz\Tencent\Common\WechatConfig;
+use Hiland\Biz\ThinkAddon\TPCompatibleHelper;
 use Hiland\Utils\Data\RandHelper;
 use Hiland\Utils\DataModel\ModelMate;
 use Hiland\Utils\Web\NetHelper;
@@ -62,7 +63,7 @@ class WechatHelper
     public static function cleanAccessTokenCache(){
         //CommonLoger::log("cleanAccessTokenCache","sssssssssssssssssss");
         $cacheKey= self::getAccessTokenCacheKey();
-        S($cacheKey,null);
+        TPCompatibleHelper::cache($cacheKey,null);
     }
 
     private static function getAccessTokenCacheKey(){
@@ -95,7 +96,7 @@ class WechatHelper
         $result = false;
         $cachekey = self::getAccessTokenCacheKey();
         if ($useCache == true) {
-            $result = S($cachekey);
+            $result = TPCompatibleHelper::cache($cachekey);
             if ($result != false && $result != "") {
                 return $result;
             }
@@ -113,7 +114,7 @@ class WechatHelper
             $result = $result["access_token"];
 
             if ($useCache == true) {
-                S($cachekey, $result, $cacheSeconds);
+                TPCompatibleHelper::cache($cachekey, $result, $cacheSeconds);
             }
         }
 
@@ -403,7 +404,7 @@ class WechatHelper
         $result = false;
         $cachekey = sprintf("oath2accesstoken20160108-appid:%s-secret:%s-code:%s", $appID, $appSecret, $code);
         if ($useCache == true) {
-            $result = S($cachekey);
+            $result = TPCompatibleHelper::cache($cachekey);
             if ($result != false && $result != "") {
                 return $result;
             }
@@ -422,7 +423,7 @@ class WechatHelper
             $result['openid'] = $output['openid'];
 
             if ($useCache == true) {
-                S($cachekey, $result, $cacheSeconds);
+                TPCompatibleHelper::cache($cachekey, $result, $cacheSeconds);
             }
         }
 

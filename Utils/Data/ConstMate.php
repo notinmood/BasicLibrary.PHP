@@ -8,6 +8,8 @@
 
 namespace Hiland\Utils\Data;
 
+use Hiland\Biz\ThinkAddon\TPCompatibleHelper;
+
 /**
  * Class ConstMate
  * @package Vendor\Hiland\Utils\Data
@@ -68,12 +70,12 @@ class ConstMate
         if (APP_DEBUG) {
             return self::getConstsDetail($prefix, $withText);
         } else {
-            $dataCached = S($cacheKey);
+            $dataCached = TPCompatibleHelper::cache($cacheKey);
             if ($dataCached) {
                 return $dataCached;
             } else {
                 $dataCached = self::getConstsDetail($prefix, $withText);
-                S($cacheKey, $dataCached);
+                TPCompatibleHelper::cache($cacheKey, $dataCached);
                 return $dataCached;
             }
         }

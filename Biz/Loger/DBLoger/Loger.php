@@ -1,7 +1,9 @@
 <?php
 namespace Hiland\Biz\Loger\DBLoger;
 
+use Hiland\Biz\ThinkAddon\TPCompatibleHelper;
 use Hiland\Utils\Data\GuidHelper;
+use Hiland\Utils\DataModel\ModelMate;
 
 /**
  * Created by PhpStorm.
@@ -58,8 +60,8 @@ class Loger
     {
         $result = true;
 
-        if (C("WEIXIN_LOG_MODE") == null || C("WEIXIN_LOG_MODE") >= 0) {
-            $model = D("systemInfolog");
+        if (TPCompatibleHelper::config("WEIXIN_LOG_MODE") == null || TPCompatibleHelper::config("WEIXIN_LOG_MODE") >= 0) {
+            $model = new ModelMate("infolog");
 
             $data['guid'] = GuidHelper::newGuid();
             $data['title'] = (string)$title;
@@ -70,7 +72,7 @@ class Loger
             $data['status'] = $status;
             $data['createtime'] = date('Y-m-d H:i:s',time());
 
-            if ($model->add($data)) {
+            if ($model->interact($data)) {
                 $result = true;
             } else {
                 $result = false;
