@@ -106,6 +106,7 @@ class ModelMate
      * @param int $pageIndex 页面序号
      * @param int $itemCountPerPage 每页显示的信息条目数
      * @param int $limit 查询信息的条目数
+     * @param string $fields 需要在查询结果中显示的字段信息，缺省情况下显示全部字段
      * @return array 符合条件的结果，多维数组
      * @example
      * $where= array();
@@ -113,7 +114,7 @@ class ModelMate
      * $where['openid'] = $openId;
      * $relation = $buyerShopMate->select($where);
      */
-    public function select($condition = array(), $orderBy = "", $pageIndex = 0, $itemCountPerPage = 0, $limit = 0)
+    public function select($condition = array(), $orderBy = "", $pageIndex = 0, $itemCountPerPage = 0, $limit = 0, $fields = '')
     {
         if (empty($orderBy)) {
             $orderBy = "id desc";
@@ -121,7 +122,11 @@ class ModelMate
 
         $model = $this->getModel_Select($condition, $orderBy, $pageIndex, $itemCountPerPage, $limit);
 
-        return $model->select();
+        if($fields){
+            return $model->field($fields)->select();
+        }else{
+            return $model->select();
+        }
     }
 
     /**
