@@ -4,7 +4,7 @@
     "homepage": "http://www.hilandsoft.com/",
     "keywords": ["php","tags","codecs"],
     "type": "library",
-    "version": "1.0.0",
+    "license": "GPL",
     "require": {
         "php": "^5.3.3 || ^7.0"
     },
