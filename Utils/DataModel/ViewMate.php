@@ -40,19 +40,6 @@ class ViewMate extends ModelMate
      */
     public function __construct($model, $link = array())
     {
-//        if (empty($model)) {
-//            $ns = __NAMESPACE__;
-//            $cn = __CLASS__;
-//
-//            if ($ns) {
-//                $cn = StringHelper::getStringAfterSeperator($cn, $ns);
-//            }
-//            $cn = StringHelper::getStringBeforeSeperator($cn, 'ViewMate');
-//            $cn = StringHelper::getStringAfterSeperator($cn, "\\");
-//
-//            $model= $cn;
-//        }
-
         if (is_string($model)) {
             $this->model = new RelationModel($model);
         } else {
