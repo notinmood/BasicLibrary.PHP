@@ -10,7 +10,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "10.0.5"
+            "dev-master": "10.0.4"
         }
     },
     "autoload": {
