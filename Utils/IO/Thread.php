@@ -11,6 +11,12 @@ namespace Hiland\Utils\IO;
 
 use Hiland\Utils\Web\WebHelper;
 
+/**
+ * 关于线程调用的常用方法
+ * 
+ * 方法asynExec调用的参数为一个url地址
+ * 方法
+ */
 class Thread
 {
     /**
@@ -42,4 +48,47 @@ class Thread
             fclose($fp);
         }
     }
+
+
+    //--以下代码属于hook的逻辑----------------------------------------------------------------
+    private static $hook_list = array();
+    private static $hooked = false;
+ 
+ 
+    /**
+     * hook函数fastcgi_finish_request执行
+     * 本方法在Windows 下因为没有php-fpm而无法执行。
+     * @param callback $callback
+     * @param array $params
+     * 
+     * @example location description
+     * 调用方式     
+     * AsyncHook::hook(array($this, 'sendEmail'), array());//面向对象调用
+     * AsyncHook::hook('SmsService::sendSMS', array(trim($phone), $noticeWords));//面向过程方式调用
+     */
+    public static function hook($callback, $params) {
+        self::$hook_list[] = array('callback' => $callback, 'params' => $params);
+        if(self::$hooked == false) {
+            self::$hooked = true;
+            register_shutdown_function(array(__CLASS__, '__run'));
+        }
+    }
+     
+    /**
+     * 由系统调用
+     *
+     * @return void
+     */
+    public static function __run() {
+        fastcgi_finish_request();
+        if(empty(self::$hook_list)) {
+            return;
+        }
+        foreach(self::$hook_list as $hook) {
+            $callback = $hook['callback'];
+            $params = $hook['params'];
+            call_user_func_array($callback, $params);
+        }
+    }
+    //--以上代码属于hook的逻辑----------------------------------------------------------------
 }
