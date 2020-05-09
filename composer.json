@@ -8,11 +8,6 @@
     "require": {
         "php": "^5.3.3 || ^7.0"
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "10.0.5"
-        }
-    },
     "autoload": {
         "psr-4": {
             "Hiland\\": ""
