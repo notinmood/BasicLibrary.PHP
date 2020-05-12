@@ -4,6 +4,7 @@ namespace Hiland\Utils\DataModel;
 
 use Hiland\Utils\Data\ThinkHelper;
 use think\Config;
+use think\Db;
 use Think\Model;
 
 /**
@@ -30,8 +31,8 @@ class ModelMate
             if ($thinkVersion < 5) {
                 $this->modelObject = $this->queryObject = M($model);
             } else {
-                $this->modelObject = $this->queryObject = new CommonModel($model);
-                //$this->queryObject = Db::name($model);
+                $this->modelObject = new CommonModel($model);
+                $this->queryObject = Db::name($model);
             }
         } else {
             $this->modelObject = $model;
@@ -115,7 +116,7 @@ class ModelMate
 
         $model = $this->getModel_Select($condition, $orderBy, $pageIndex, $itemCountPerPage, $limit);
 
-        if ($fields) {
+        if($fields){
             return $model->field($fields)->select();
         } else {
             return $model->select();
