@@ -9,6 +9,7 @@
 namespace Hiland\Utils\DataModel;
 
 
+use Hiland\Utils\Data\ThinkHelper;
 use think\Config;
 use think\Model;
 
@@ -25,13 +26,13 @@ class CommonModel extends Model
         $this->origin = $this->data;
 
         // 当前类名
-        $this->class = "Hiland\\Utils\\DataModel\\".$modelName;//get_called_class();
+        $this->class = "Hiland\\Utils\\DataModel\\".$modelName;
 
         if (empty($this->name)) {
             // 当前模型名
             $name       = str_replace('\\', '/', $this->class);
             $this->name = basename($name);
-            if (Config::get('class_suffix')) {
+            if ( ThinkHelper::config('class_suffix')) {
                 $suffix     = basename(dirname($name));
                 $this->name = substr($this->name, 0, -strlen($suffix));
             }
@@ -50,7 +51,9 @@ class CommonModel extends Model
         if (is_null($this->resultSetType)) {
             $this->resultSetType = $this->getQuery()->getConfig('resultset_type');
         }
-        // 执行初始化操作
+
+
+        // 执行初始化操作 //TODO:这个地方这么注释掉可以吗？？20200510
         $this->initialize();
     }
 }

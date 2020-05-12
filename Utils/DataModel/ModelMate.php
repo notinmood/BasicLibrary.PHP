@@ -2,8 +2,8 @@
 
 namespace Hiland\Utils\DataModel;
 
+use Hiland\Utils\Data\ThinkHelper;
 use think\Config;
-use think\Db;
 use Think\Model;
 
 /**
@@ -26,25 +26,18 @@ class ModelMate
     public function __construct($model)
     {
         if (is_string($model)) {
-            $thinkVersion= $this->getThinkVersion();
-            if($thinkVersion<5){
-                $this->modelObject= $this->queryObject = M($model);
-            }else{
-                $this->modelObject= new CommonModel($model);
-                $this->queryObject = Db::name($model);
+            $thinkVersion = ThinkHelper::getMainVersion();
+            if ($thinkVersion < 5) {
+                $this->modelObject = $this->queryObject = M($model);
+            } else {
+                $this->modelObject = $this->queryObject = new CommonModel($model);
+                //$this->queryObject = Db::name($model);
             }
         } else {
             $this->modelObject = $model;
         }
     }
 
-    /**
-     * 获取当前使用thinkphp的版本
-     * @return int
-     */
-    private function getThinkVersion(){
-        return (int)THINK_VERSION;
-    }
 
     /**
      * 按照主键获取信息
@@ -122,9 +115,9 @@ class ModelMate
 
         $model = $this->getModel_Select($condition, $orderBy, $pageIndex, $itemCountPerPage, $limit);
 
-        if($fields){
+        if ($fields) {
             return $model->field($fields)->select();
-        }else{
+        } else {
             return $model->select();
         }
     }
@@ -191,11 +184,11 @@ class ModelMate
         $condition[$keyName] = $key;
         $model = $this->getModel_Where($condition);
 
-        $thinkVersion= $this->getThinkVersion();
-        if($thinkVersion<5){
+        $thinkVersion = ThinkHelper::getMainVersion();
+        if ($thinkVersion < 5) {
             return $model->getField($feildName);
-        }else{
-            $model= $model->find();
+        } else {
+            $model = $model->find();
             return $model[$feildName];
         }
     }
@@ -223,13 +216,13 @@ class ModelMate
      */
     public function queryValue($searcher, $whereClause = null)
     {
-        $tableName='';
+        $tableName = '';
 
-        $thinkVersion= $this->getThinkVersion();
-        if($thinkVersion<5){
+        $thinkVersion = ThinkHelper::getMainVersion();
+        if ($thinkVersion < 5) {
             $tableName = $this->modelObject->getTableName();
-        }else{
-            $tableName= $this->queryObject->getTable();
+        } else {
+            $tableName = $this->queryObject->getTable();
         }
 
         $sql = "SELECT $searcher FROM $tableName";
@@ -253,13 +246,13 @@ class ModelMate
      */
     public function query($sql)
     {
-        $tableName='';
+        $tableName = '';
 
-        $thinkVersion= $this->getThinkVersion();
-        if($thinkVersion<5){
+        $thinkVersion = ThinkHelper::getMainVersion();
+        if ($thinkVersion < 5) {
             $tableName = $this->modelObject->getTableName();
-        }else{
-            $tableName= $this->queryObject->getTable();
+        } else {
+            $tableName = $this->queryObject->getTable();
         }
 
         if (strstr($sql, '__MODELTABLENAME__')) {
@@ -307,14 +300,14 @@ class ModelMate
         $recordID = 0;
         $isAddOperation = true;
 
-        $thinkVersion= $this->getThinkVersion();
+        $thinkVersion = ThinkHelper::getMainVersion();
         /* 添加或新增基础内容 */
         if (empty($data[$keyName])) { // 新增数据
-            if($thinkVersion<5){
+            if ($thinkVersion < 5) {
                 $recordID = $this->modelObject->data($data)->add(); // 添加基础内容
-            }else{
-                $recordID= $this->queryObject->insert($data,false,true);
-                $recordID= (int)$recordID;
+            } else {
+                $recordID = $this->queryObject->insert($data, false, true);
+                $recordID = (int)$recordID;
             }
 
             if (!$recordID) {
@@ -325,10 +318,10 @@ class ModelMate
             $recordID = $data[$keyName];
             $isAddOperation = false;
 
-            if($thinkVersion<5){
+            if ($thinkVersion < 5) {
                 $status = $this->modelObject->data($data)->save(); // 更新基础内容
-            }else{
-                $status= $this->queryObject->update($data);
+            } else {
+                $status = $this->queryObject->update($data);
             }
 
             if (false === $status) {
