@@ -117,6 +117,47 @@ class ObjectHelper
 
     }
 
+    /**判断一个对象是否为空
+     * @param $data
+     * @return bool
+     */
+    public static function isEmpty($data)
+    {
+        if ($data == null) {
+            return true;
+        }
+
+        $type = self::getType($data);
+
+        if ($type == ObjectTypes::STRING && $data == "") {
+            return true;
+        }
+
+        if ($type == ObjectTypes::BOOLEAN && $data == false) {
+            return true;
+        }
+
+        if (self::isNumberic($data) && $data == 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /** 判断一个数据是否为数值类型
+     * @param $data
+     * @return bool
+     */
+    public static function isNumberic($data)
+    {
+        $type = self::getType($data);
+        if ($type == ObjectTypes::INTEGER || $type == ObjectTypes::DOUBLE || $type == ObjectTypes::FLOAT) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * 判断数据类型（由于php本身的gettype函数有可能改变，此处使用自定义的函数进行判断）
      * @param $data

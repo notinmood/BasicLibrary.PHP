@@ -138,6 +138,15 @@ class StringHelper
         }
     }
 
+    /**将一个字符串按照某个分隔符分隔成数组
+     * @param $wholeString 字符串全串
+     * @param $delimiterString 分隔符
+     * @return false|string[]
+     */
+    public static function explode($wholeString, $delimiterString){
+        return explode($delimiterString, $wholeString);
+    }
+
     /**
      * 将一个字符串按照字符个数分组进行格式化
      * @param string $data

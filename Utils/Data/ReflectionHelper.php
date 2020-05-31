@@ -67,4 +67,20 @@ class ReflectionHelper
         }
         return $result;
     }
+
+    /**动态调用方法
+     *  这个方法1、即可以一个普通的function，那么第一个直接传入function的名称就可以了
+     *         2、也可以是一个对象的method，那么第一个参数要传入一个数组array(实体对象, 方法名称字符串)，例如array($this, "getUser");
+     * @param $funcName
+     * @param null $funcParam
+     * @return mixed
+     */
+    public static function executeFunction($funcName, $funcParam = null)
+    {
+        if (is_array($funcParam)) {
+            return call_user_func_array($funcName, $funcParam);
+        } else {
+            return call_user_func($funcName, $funcParam);
+        }
+    }
 }
