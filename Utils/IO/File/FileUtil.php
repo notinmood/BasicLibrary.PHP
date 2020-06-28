@@ -4,17 +4,17 @@
 */
 namespace Hiland\Utils\IO\File;
 
-use Hiland\Utils\IO\File\FileUtilDriver\File;
+//use Hiland\Utils\IO\File\FileUtilDriver\File;
 
 /**
  * Class FileUtil
- * @package Vendor\Hiland\Utils\IO\File
+ * @package Hiland\Utils\IO\File
  * @example 使用示例
  *         $file = new FileUtil('Sae');
  *         dump($file->getList('Uploads/Picture'));
  * @see  http://www.thinkphp.cn/extend/555.html
  */
-class FileUtil
+class FileUtil implements IFile
 {
     private $handler;
 
@@ -25,7 +25,7 @@ class FileUtil
     */
     public function __construct($type = 'File')
     {
-        $class = '\\Vendor\\Hiland\\Utils\\IO\\File\\FileUtilDriver\\' . ucwords($type);
+        $class = '\\Hiland\\Utils\\IO\\File\\FileUtilDriver\\' . ucwords($type);
 
         $this->handler = new $class();
         if (empty($this->handler)) {
@@ -93,6 +93,15 @@ class FileUtil
     public function readFile($fileUrl)
     {
         return $this->handler->readFile($fileUrl);
+    }
+
+    /**按行的方式讀取文本文件
+     * @param string $fileUrl 要读取的文件地址。
+     * @param $afterReadLineCallback 每次讀取一行後，可以執行的回調函數
+     * @return mixed 成功返回TRUE，失败返回FALSE
+     */
+    public function readLineOfText($fileUrl,$afterReadLineCallback){
+        return $this->handler->readLineOfText($fileUrl,$afterReadLineCallback);
     }
 
     /*

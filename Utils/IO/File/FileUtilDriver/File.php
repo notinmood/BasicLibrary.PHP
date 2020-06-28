@@ -1,7 +1,11 @@
 <?php
 namespace Hiland\Utils\IO\File\FileUtilDriver;
-class File
+use Hiland\Utils\IO\File\IFile;
+
+class File implements IFile
 {
+    use FileTrait;
+
     public function moveFile($fileUrl, $aimUrl, $overWrite = true)
     {
         if (!is_file($fileUrl)) {

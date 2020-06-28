@@ -1,7 +1,10 @@
 <?php
 namespace Hiland\Utils\IO\File\FileUtilDriver;
-class Sae
+use Hiland\Utils\IO\File\IFile;
+
+class Sae implements IFile
 {
+    use FileTrait;
     private $sae;
 
     public function __construct()
