@@ -117,47 +117,6 @@ class ObjectHelper
 
     }
 
-    /**判断一个对象是否为空
-     * @param $data
-     * @return bool
-     */
-    public static function isEmpty($data)
-    {
-        if ($data == null) {
-            return true;
-        }
-
-        $type = self::getType($data);
-
-        if ($type == ObjectTypes::STRING && $data == "") {
-            return true;
-        }
-
-        if ($type == ObjectTypes::BOOLEAN && $data == false) {
-            return true;
-        }
-
-        if (self::isNumberic($data) && $data == 0) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /** 判断一个数据是否为数值类型
-     * @param $data
-     * @return bool
-     */
-    public static function isNumberic($data)
-    {
-        $type = self::getType($data);
-        if ($type == ObjectTypes::INTEGER || $type == ObjectTypes::DOUBLE || $type == ObjectTypes::FLOAT) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     /**
      * 判断数据类型（由于php本身的gettype函数有可能改变，此处使用自定义的函数进行判断）
      * @param $data
@@ -222,6 +181,83 @@ class ObjectHelper
                 break;
             default:
                 $result = (string)$data;
+        }
+
+        return $result;
+    }
+
+    /**判断一个对象是否为空判断一个对象是否为空。
+     *以下的东西被认为是空的：
+     * "" (空字符串)
+     * 0 (作为整数的0)
+     * 0.0 (作为浮点数的0)
+     * "0" (作为字符串的0)
+     * NULL
+     * FALSE
+     * array() (一个空数组)
+     * $var; (一个声明了，但是没有值的变量)
+     * 另外 一个没有内部成员的对象Object也是空的
+     * @param $data
+     * @return bool
+     */
+    public static function isEmpty($data)
+    {
+        if ($data == null) {
+            return true;
+        }
+
+        $type = self::getType($data);
+
+        $result = false;
+        switch ($type) {
+            case ObjectTypes::OBJECT:
+                $emptyObject = new \stdClass();
+                if ($data == $emptyObject) {
+                    $result = true;
+                }
+                break;
+            default:
+                $result = empty($data);
+        }
+
+        return $result;
+    }
+
+    /**判断一个对象是否存在
+     * @param $data
+     * @return bool
+     */
+    public static function isExist($data){
+        return !self::isEmpty($data);
+    }
+
+    /** 判断一个数据是否为数值类型
+     * @param $data
+     * @return bool
+     */
+    public static function isNumberic($data)
+    {
+        $type = self::getType($data);
+        if ($type == ObjectTypes::INTEGER || $type == ObjectTypes::DOUBLE || $type == ObjectTypes::FLOAT) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function isMember($targetObject, $memberName)
+    {
+        $result = false;
+        $type = self::getType($targetObject);
+        switch ($type) {
+            case ObjectTypes::ARRAYS:
+                $result = array_key_exists($memberName, $targetObject);
+                break;
+            case ObjectTypes::OBJECT:
+                $result = property_exists($targetObject, $memberName);
+                break;
+            default:
+                $result = false;
         }
 
         return $result;

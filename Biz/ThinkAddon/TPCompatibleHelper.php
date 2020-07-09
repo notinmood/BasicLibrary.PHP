@@ -14,9 +14,19 @@ class TPCompatibleHelper
     /**读取配置节点的信息
      * @param $setingName 配置节点的名称
      */
-    public static  function config($setingName){
+    public static function config($setingName)
+    {
+        $result = '';
         if (TPVersionHelper::getPrimaryVersion() > 3) {
-            $result = config($setingName);
+            $nameNodes = explode(".", $setingName);
+
+            if ($nameNodes[0]) {
+                $result = config($nameNodes[0]);
+            }
+
+            for ($i = 1; $i < count($nameNodes); $i++) {
+                $result = $result[$nameNodes[$i]];
+            }
         } else {
             $result = C($setingName);
         }
@@ -32,11 +42,12 @@ class TPCompatibleHelper
      * @param null $tags
      * @return mixed
      */
-    public static function cache($name,$value='',$options=null,$tags=null){
+    public static function cache($name, $value = '', $options = null, $tags = null)
+    {
         if (TPVersionHelper::getPrimaryVersion() > 3) {
-            $result = cache($name,$value,$options,$tags);
+            $result = cache($name, $value, $options, $tags);
         } else {
-            $result = S($name,$value,$options,$tags);
+            $result = S($name, $value, $options, $tags);
         }
 
         return $result;

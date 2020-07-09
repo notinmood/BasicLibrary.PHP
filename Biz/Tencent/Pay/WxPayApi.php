@@ -1,4 +1,5 @@
 <?php
+
 namespace Hiland\Biz\Tencent\Pay;
 
 use Hiland\Biz\Tencent\Common\WechatConfig;
@@ -34,8 +35,8 @@ class WxPayApi
      *
      * @param WxPayDataBaseUnifiedOrder $inputObj
      * @param int $timeOut
-     * @throws WechatException
      * @return bool 成功时返回，其他抛异常
+     * @throws WechatException
      */
     public static function unifiedOrder($inputObj, $timeOut = 10)
     {
@@ -43,16 +44,19 @@ class WxPayApi
         // 检测必填参数
         if (!$inputObj->IsOut_trade_noSet()) {
             throw new WechatException("缺少统一支付接口必填参数out_trade_no！");
-        } else
+        } else {
             if (!$inputObj->IsBodySet()) {
                 throw new WechatException("缺少统一支付接口必填参数body！");
-            } else
+            } else {
                 if (!$inputObj->IsTotal_feeSet()) {
                     throw new WechatException("缺少统一支付接口必填参数total_fee！");
-                } else
+                } else {
                     if (!$inputObj->IsTrade_typeSet()) {
                         throw new WechatException("缺少统一支付接口必填参数trade_type！");
                     }
+                }
+            }
+        }
 
         // 关联参数
         if ($inputObj->GetTrade_type() == "JSAPI" && !$inputObj->IsOpenidSet()) {
@@ -133,7 +137,9 @@ class WxPayApi
             return;
         }
         // 如果仅失败上报
-        if (WechatConfig::REPORT_LEVENL == 1 && array_key_exists("return_code", $data) && $data["return_code"] == "SUCCESS" && array_key_exists("result_code", $data) && $data["result_code"] == "SUCCESS") {
+        if (WechatConfig::REPORT_LEVENL == 1 && array_key_exists("return_code",
+                $data) && $data["return_code"] == "SUCCESS" && array_key_exists("result_code",
+                $data) && $data["result_code"] == "SUCCESS") {
             return;
         }
 
@@ -186,8 +192,8 @@ class WxPayApi
      *
      * @param WxPayDataBaseReport $inputObj
      * @param int $timeOut
-     * @throws WechatException
      * @return bool 成功时返回，其他抛异常
+     * @throws WechatException
      */
     public static function report($inputObj, $timeOut = 1)
     {
@@ -230,8 +236,8 @@ class WxPayApi
      *
      * @param WxPayDataBaseOrderQuery $inputObj
      * @param int $timeOut
-     * @throws WechatException
      * @return bool 成功时返回，其他抛异常
+     * @throws WechatException
      */
     public static function orderQuery($inputObj, $timeOut = 6)
     {
@@ -263,8 +269,8 @@ class WxPayApi
      *
      * @param WxPayDataBaseCloseOrder $inputObj
      * @param int $timeOut
-     * @throws WechatException
      * @return bool 成功时返回，其他抛异常
+     * @throws WechatException
      */
     public static function closeOrder($inputObj, $timeOut = 6)
     {
@@ -297,8 +303,8 @@ class WxPayApi
      *
      * @param WxPayDataBaseRefund $inputObj
      * @param int $timeOut
-     * @throws WechatException
      * @return bool 成功时返回，其他抛异常
+     * @throws WechatException
      */
     public static function refund($inputObj, $timeOut = 6)
     {
@@ -306,19 +312,23 @@ class WxPayApi
         // 检测必填参数
         if (!$inputObj->IsOut_trade_noSet() && !$inputObj->IsTransaction_idSet()) {
             throw new WechatException("退款申请接口中，out_trade_no、transaction_id至少填一个！");
-        } else
+        } else {
             if (!$inputObj->IsOut_refund_noSet()) {
                 throw new WechatException("退款申请接口中，缺少必填参数out_refund_no！");
-            } else
+            } else {
                 if (!$inputObj->IsTotal_feeSet()) {
                     throw new WechatException("退款申请接口中，缺少必填参数total_fee！");
-                } else
+                } else {
                     if (!$inputObj->IsRefund_feeSet()) {
                         throw new WechatException("退款申请接口中，缺少必填参数refund_fee！");
-                    } else
+                    } else {
                         if (!$inputObj->IsOp_user_idSet()) {
                             throw new WechatException("退款申请接口中，缺少必填参数op_user_id！");
                         }
+                    }
+                }
+            }
+        }
         $inputObj->SetAppid(WechatConfig::APPID); // 公众账号ID
         $inputObj->SetMch_id(WechatConfig::MCHID); // 商户号
         $inputObj->SetNonce_str(self::getNonceStr()); // 随机字符串
@@ -353,8 +363,8 @@ class WxPayApi
      *
      * @param WxPayDataBaseRefundQuery $inputObj
      * @param int $timeOut
-     * @throws WechatException
      * @return bool 成功时返回，其他抛异常
+     * @throws WechatException
      */
     public static function refundQuery($inputObj, $timeOut = 6)
     {
@@ -385,8 +395,8 @@ class WxPayApi
      *
      * @param WxPayDataBaseDownloadBill $inputObj
      * @param int $timeOut
-     * @throws WechatException
      * @return bool 成功时返回，其他抛异常
+     * @throws WechatException
      */
     public static function downloadBill($inputObj, $timeOut = 6)
     {
@@ -428,16 +438,19 @@ class WxPayApi
         // 检测必填参数
         if (!$inputObj->IsBodySet()) {
             throw new WechatException("提交被扫支付API接口中，缺少必填参数body！");
-        } else
+        } else {
             if (!$inputObj->IsOut_trade_noSet()) {
                 throw new WechatException("提交被扫支付API接口中，缺少必填参数out_trade_no！");
-            } else
+            } else {
                 if (!$inputObj->IsTotal_feeSet()) {
                     throw new WechatException("提交被扫支付API接口中，缺少必填参数total_fee！");
-                } else
+                } else {
                     if (!$inputObj->IsAuth_codeSet()) {
                         throw new WechatException("提交被扫支付API接口中，缺少必填参数auth_code！");
                     }
+                }
+            }
+        }
 
         $inputObj->SetSpbill_create_ip($_SERVER['REMOTE_ADDR']); // 终端ip
         $inputObj->SetAppid(WechatConfig::APPID); // 公众账号ID
@@ -532,8 +545,8 @@ class WxPayApi
      *
      * @param WxPayDataBaseShortUrl $inputObj
      * @param int $timeOut
-     * @throws WechatException
      * @return bool 成功时返回，其他抛异常
+     * @throws WechatException
      */
     public static function shorturl($inputObj, $timeOut = 6)
     {
@@ -573,8 +586,8 @@ class WxPayApi
     {
         // 获取通知的数据
         $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
-        if(empty($xml)){
-            $xml= file_get_contents("php://input");
+        if (empty($xml)) {
+            $xml = file_get_contents("php://input");
         }
         // 如果返回成功则验证签名
         try {
