@@ -11,6 +11,29 @@ namespace Hiland\Utils\IO;
 class Console
 {
     /**
+     * 控制台输出
+     * @param $data
+     * @param string $level
+     */
+    public static function console($data, $level = 'log')
+    {
+        if (is_array($data) || is_object($data)) {
+            $output = json_encode($data);
+            $jsonDecode = json_decode($output);
+            if (empty($jsonDecode) && !empty($data)) {
+                echo "<script>console.{$level}('不支持输出')</script>";
+                return;
+            }
+        } elseif (is_string($data)) {
+            $output = '"' . $data . '"';
+        } else {
+            $output = $data;
+        }
+        echo "<script>console.{$level}({$output})</script>";
+        return;
+    }
+
+    /**
      * 带换行功能的echo (本函数将取消，请使用echoLine)
      * @param mixed $data 待输出信息
      */

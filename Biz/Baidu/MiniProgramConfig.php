@@ -13,7 +13,7 @@ class MiniProgramConfig
 {
     public static function getAPPID()
     {
-        $result = TPCompatibleHelper::config("baidu-mimiprogram-appid");
+        $result = TPCompatibleHelper::config("anlianMachine.BaiDu.mimiprogram-appid");
 
         if (empty($result)) {
             $result = "14768308";
@@ -24,7 +24,7 @@ class MiniProgramConfig
 
     public static function getAPPKEY()
     {
-        $result = TPCompatibleHelper::config("baidu-mimiprogram-appkey");
+        $result = TPCompatibleHelper::config("anlianMachine.BaiDu.mimiprogram-appkey");
 
         if (empty($result)) {
             $result = "zHempCohziKG7AkGZ3kGVDFIbKjyvMgV";
@@ -35,7 +35,7 @@ class MiniProgramConfig
 
     public static function getSECRET()
     {
-        $result = TPCompatibleHelper::config("baidu-mimiprogram-secret");
+        $result = TPCompatibleHelper::config("anlianMachine.BaiDu.mimiprogram-secret");
 
         if (empty($result)) {
             $result = "auIuVIChGE80HNgUU5kjcMp0CFtNMcla";

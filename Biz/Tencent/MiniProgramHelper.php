@@ -85,11 +85,6 @@ class MiniProgramHelper
             $appID = MiniProgramConfig::getAPPID();
         }
 
-//        CommonLoger::log("sessionKey",$sessionKey);
-//        CommonLoger::log("appid",$appID);
-//        CommonLoger::log("iv",$iv);
-//        CommonLoger::log("encryptedData",$encryptedData);
-
         $pc = new WXBizDataCrypt($appID, $sessionKey);
         $errCode = $pc->decryptData($encryptedData, $iv, $data);
 

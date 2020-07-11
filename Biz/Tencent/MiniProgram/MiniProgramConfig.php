@@ -22,7 +22,7 @@ class MiniProgramConfig
 {
     public static function getAPPID()
     {
-        $result = TPCompatibleHelper::config("mimiprogram-appid");
+        $result = TPCompatibleHelper::config("anlianMachine.WeiXin.mimiprogram-appid");
 
         if (empty($result)) {
             $result = "wxa37839e8d0954603";
@@ -33,7 +33,7 @@ class MiniProgramConfig
 
     public static function getSECRET()
     {
-        $result = TPCompatibleHelper::config("mimiprogram-secret");
+        $result = TPCompatibleHelper::config("anlianMachine.WeiXin.mimiprogram-secret");
 
         if (empty($result)) {
             $result = "96acf4487c365efb37edd16f5bf1b496";
