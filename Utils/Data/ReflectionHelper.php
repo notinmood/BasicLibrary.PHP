@@ -77,6 +77,8 @@ class ReflectionHelper
      */
     public static function executeFunction($funcName, $funcParam = null)
     {
+//        dump("00000000000000000000000");
+//        dump($funcParam);
         if (is_array($funcParam)) {
             return call_user_func_array($funcName, $funcParam);
         } else {

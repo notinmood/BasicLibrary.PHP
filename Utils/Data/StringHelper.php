@@ -7,6 +7,42 @@ use Hiland\Utils\Web\EnvironmentHelper;
 class StringHelper
 {
     /**
+     * @param $data
+     * @param string $targetEncoding
+     * @return false|string|string[]|null
+     */
+    public static function getEncodingContent($data, $targetEncoding = 'UTF-8')
+    {
+        $originalEncoding = self::getEncoding($data);
+
+        $result = "";
+        if ($originalEncoding) {
+            $result = mb_convert_encoding($data, $targetEncoding, $originalEncoding);
+        }
+
+        return $result;
+    }
+
+    /**
+     * 获取内容的编码
+     * @param string $data
+     * @return bool|string
+     */
+    public static function getEncoding($data = "")
+    {
+//        $list = array('GBK', 'UTF-8', 'UTF-16LE', 'UTF-16BE', 'ISO-8859-1', 'ASCII', 'GB2312', 'BIG5');
+//        foreach ($list as $item) {
+//            $tmp = mb_convert_encoding($data, $item, $item);
+//            if (md5($tmp) == md5($data)) {
+//                return $item;
+//            }
+//        }
+//        return false;
+
+        return mb_detect_encoding($data);
+    }
+
+    /**
      * 获取文本文件的回车换行符
      *
      * @return string
@@ -52,9 +88,9 @@ class StringHelper
             $length = $originalStringLength - $startPosition;
         }
 
-        if (function_exists("mb_substr"))
+        if (function_exists("mb_substr")) {
             $slice = mb_substr($originalString, $startPosition, $length, $charset);
-        elseif (function_exists('iconv_substr')) {
+        } elseif (function_exists('iconv_substr')) {
             $slice = iconv_substr($originalString, $startPosition, $length, $charset);
         } else {
             $re['utf-8'] = "/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xff][\x80-\xbf]{3}/";
@@ -143,7 +179,8 @@ class StringHelper
      * @param $delimiterString 分隔符
      * @return false|string[]
      */
-    public static function explode($wholeString, $delimiterString){
+    public static function explode($wholeString, $delimiterString)
+    {
         return explode($delimiterString, $wholeString);
     }
 
