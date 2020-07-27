@@ -124,6 +124,10 @@ class ObjectHelper
      */
     public static function getType($data)
     {
+        if ($data instanceof \DateTime) {
+            return ObjectTypes::DATETIME;
+        }
+
         if (is_bool($data)) {
             return ObjectTypes::BOOLEAN;
         }
@@ -186,6 +190,25 @@ class ObjectHelper
         return $result;
     }
 
+    public static function isJson($data)
+    {
+        if (self::getType($data) == ObjectTypes::STRING) {
+            json_decode($data);
+            return (json_last_error() == JSON_ERROR_NONE);
+        } else {
+            return false;
+        }
+    }
+
+    /**判断一个对象是否存在
+     * @param $data
+     * @return bool
+     */
+    public static function isExist($data)
+    {
+        return !self::isEmpty($data);
+    }
+
     /**判断一个对象是否为空判断一个对象是否为空。
      *以下的东西被认为是空的：
      * "" (空字符串)
@@ -221,14 +244,6 @@ class ObjectHelper
         }
 
         return $result;
-    }
-
-    /**判断一个对象是否存在
-     * @param $data
-     * @return bool
-     */
-    public static function isExist($data){
-        return !self::isEmpty($data);
     }
 
     /** 判断一个数据是否为数值类型

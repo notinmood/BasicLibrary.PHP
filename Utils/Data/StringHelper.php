@@ -30,15 +30,6 @@ class StringHelper
      */
     public static function getEncoding($data = "")
     {
-//        $list = array('GBK', 'UTF-8', 'UTF-16LE', 'UTF-16BE', 'ISO-8859-1', 'ASCII', 'GB2312', 'BIG5');
-//        foreach ($list as $item) {
-//            $tmp = mb_convert_encoding($data, $item, $item);
-//            if (md5($tmp) == md5($data)) {
-//                return $item;
-//            }
-//        }
-//        return false;
-
         return mb_detect_encoding($data);
     }
 

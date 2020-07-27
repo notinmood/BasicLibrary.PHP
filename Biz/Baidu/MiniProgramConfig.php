@@ -8,12 +8,19 @@
 
 namespace Hiland\Biz\Baidu;
 use Hiland\Biz\ThinkAddon\TPCompatibleHelper;
+use Hiland\Utils\Data\ObjectHelper;
 
 class MiniProgramConfig
 {
     public static function getAPPID()
     {
-        $result = TPCompatibleHelper::config("anlianMachine.BaiDu.mimiprogram-appid");
+        $projectName = input("PN");
+        if (ObjectHelper::isEmpty($projectName)) {
+            $projectName = "";
+        } else {
+            $projectName .= "_";
+        }
+        $result = TPCompatibleHelper::config("{$projectName}Machine.BaiDu.mimiprogram-appid");
 
         if (empty($result)) {
             $result = "14768308";
@@ -24,7 +31,13 @@ class MiniProgramConfig
 
     public static function getAPPKEY()
     {
-        $result = TPCompatibleHelper::config("anlianMachine.BaiDu.mimiprogram-appkey");
+        $projectName = input("PN");
+        if (ObjectHelper::isEmpty($projectName)) {
+            $projectName = "";
+        } else {
+            $projectName .= "_";
+        }
+        $result = TPCompatibleHelper::config("{$projectName}Machine.BaiDu.mimiprogram-appkey");
 
         if (empty($result)) {
             $result = "zHempCohziKG7AkGZ3kGVDFIbKjyvMgV";
@@ -35,7 +48,13 @@ class MiniProgramConfig
 
     public static function getSECRET()
     {
-        $result = TPCompatibleHelper::config("anlianMachine.BaiDu.mimiprogram-secret");
+        $projectName = input("PN");
+        if (ObjectHelper::isEmpty($projectName)) {
+            $projectName = "";
+        } else {
+            $projectName .= "_";
+        }
+        $result = TPCompatibleHelper::config("{$projectName}Machine.BaiDu.mimiprogram-secret");
 
         if (empty($result)) {
             $result = "auIuVIChGE80HNgUU5kjcMp0CFtNMcla";

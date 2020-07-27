@@ -4,15 +4,113 @@ namespace Hiland\Utils\Data;
 
 class DateHelper
 {
+    /** 比较两个日期的大小
+     * @param $dateMain
+     * @param $dateSecondary
+     * @return int 如果$dateMain大于$dateSecondary返回1；小于返回-1；等于返回0.
+     */
+    public static function compare($dateMain, $dateSecondary)
+    {
+        $dateMain = self::parseDateTimeSafely($dateMain);
+        $dateSecondary = self::parseDateTimeSafely($dateSecondary);
+
+        if ($dateMain == false || $dateSecondary == false) {
+            return 0;
+        } else {
+            if ($dateMain == $dateSecondary) {
+                return 0;
+            }
+
+            if ($dateMain > $dateSecondary) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+    }
+
+    /**从字符串解析出日期时间
+     * @param $dateString
+     * @return bool|\DateTime，成功时返回正确的日期时间格式；失败时返回false；
+     */
+    public static function parseDateTimeSafely($dateString)
+    {
+        $result = false;
+        $type = ObjectHelper::getType($dateString);
+        switch ($type) {
+            case ObjectTypes::STRING:
+                try {
+                    $result = new \DateTime($dateString);
+                } catch (\Exception $e) {
+                    $result = false;
+                }
+                break;
+            case ObjectTypes::DATETIME:
+                $result = $dateString;
+                break;
+            default:
+                $result = false;
+        }
+
+        return $result;
+    }
+
+    /**获取两个日期之间的差值（秒或者毫秒）
+     * @param $dateMain
+     * @param $dateSecondary
+     * @param string $intervalType “s”表示秒；“ms”表示毫秒
+     * @return float|int
+     */
+    public static function diffInterval($dateMain, $dateSecondary, $intervalType = "s")
+    {
+        $ms4Main = self::getTotalMilliSeconds($dateMain);
+        $ms4Secondary = self::getTotalMilliSeconds($dateSecondary);
+
+        $ms4Diff = $ms4Main - $ms4Secondary;
+
+        $result = null;
+        switch ($intervalType) {
+            case "ms":
+                $result = $ms4Diff;
+                break;
+            default :
+                $result = $ms4Diff / 1000;
+        }
+
+        return $result;
+    }
+
     /**
      * 获取从1970年1月1日以来总共的毫秒数
      *
      * @return float
      */
-    public static function getTotalMilliSeconds()
+    public static function getTotalMilliSeconds($dateValue = null)
     {
-        list ($s1, $s2) = explode(' ', microtime());
-        return (float)sprintf('%.0f', (floatval($s1) + floatval($s2)) * 1000);
+        if (ObjectHelper::isEmpty($dateValue)) {
+            $dateValue = new \DateTime();
+        }
+
+        if (ObjectHelper::getType($dateValue) == ObjectTypes::STRING) {
+            $dateValue = new \DateTime($dateValue);
+        }
+
+        //以下代码修复php中2038年问题（32位php的int无法表示2038年01月19日星期二凌晨03:14:07之后的时间秒数。
+        //超过 2^31 – 1，2^31 – 1 就是0x7FFFFFFF）
+        $year20380101 = new \DateTime("2038-1-1 0:0:0");
+        if ($dateValue <= $year20380101) {
+            $result = $dateValue->getTimestamp();
+        } else {
+            $dateDiff = $dateValue->diff($year20380101);
+            $days = floatval($dateDiff->days);
+            $year20380101Seconds = $year20380101->getTimestamp();
+            $totalSeconds = floatval($days * 86400)
+                + $dateDiff->h * 3600 + $dateDiff->m * 60 + $dateDiff->s;
+
+            $result = $year20380101Seconds + $totalSeconds;
+        }
+
+        return $result * 1000;
     }
 
     /**
@@ -22,8 +120,7 @@ class DateHelper
      */
     public static function getCurrentMilliSecond()
     {
-        list ($s1, $s2) = explode(' ', microtime());
-        return (float)sprintf('%.0f', (floatval($s1)) * 1000);
+        return microtime(true) * 1000;
     }
 
     /**
@@ -46,7 +143,7 @@ class DateHelper
      *
      * @param int $intervalValue
      *            时间间隔值
-     * @return int int类型的时间戳
+     * @return string string类型的时间
      */
     public static function addInterval($originalTimestamp = null, $intervalType = "d", $intervalValue = 1)
     {
@@ -94,8 +191,12 @@ class DateHelper
                 $seconds += $intervalValue;
                 break;
         }
-        $timestamp = mktime($hours, $minutes, $seconds, $month, $day, $year);
-        return $timestamp;
+
+        //$timestamp = mktime($hours, $minutes, $seconds, $month, $day, $year);
+        //return $timestamp;
+
+        $dateTimeString = "$year-$month-$day $hours:$minutes:$seconds";
+        return $dateTimeString;
     }
 
     /**
@@ -104,9 +205,9 @@ class DateHelper
      * @param string $formatString 格式化字符串
      * @return string
      */
-    public static function format($time = NULL, $formatString = 'Y-m-d H:i:s')
+    public static function format($time = null, $formatString = 'Y-m-d H:i:s')
     {
-        $time = $time === NULL ? time() : intval($time);
+        $time = $time === null ? time() : intval($time);
 
         return date($formatString, $time);
     }

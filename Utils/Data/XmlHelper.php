@@ -45,7 +45,7 @@ class XmlHelper
         }
 
         $array = json_decode($json); // php5，以及以上，如果是更早版本，請下載JSON.php
-        $xml = ArrayHelper::Toxml($array, 'myxml', true, $charset);
+        $xml = ArrayHelper::ToXml($array, 'myxml', true, $charset);
         return $xml;
     }
 }

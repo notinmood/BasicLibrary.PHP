@@ -20,4 +20,5 @@ class ObjectTypes
     const ARRAYS = "array";
     const OBJECT = "object";
     const NULL = "null";
+    const DATETIME="datetime";
 }

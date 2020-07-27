@@ -16,6 +16,19 @@ class ArrayHelper
     }
 
     /**
+     * 将xml转为array
+     * @param string $xml xml字符串
+     * @return array    转换得到的数组
+     */
+    public static function xml2array($xml)
+    {
+        //禁止引用外部xml实体
+        libxml_disable_entity_loader(true);
+        $result = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
+        return $result;
+    }
+
+    /**
      * 将数组转变为xml数据
      *
      * @param array $array
@@ -27,7 +40,7 @@ class ArrayHelper
      * @param bool $includeHeader 是否在生成的xml文档中包含xml头部声明
      * @return string
      */
-    public static function Toxml($array, $rootname = 'myxml', $includeHeader = true, $charset = 'utf8')
+    public static function ToXml($array, $rootname = 'myxml', $includeHeader = true, $charset = 'utf8')
     {
         $xml = '';
         if ($includeHeader) {
@@ -65,6 +78,17 @@ class ArrayHelper
         }
 
         return $xml;
+    }
+
+    /**
+     * 将一个数组转换为 XML 结构的字符串
+     * @param array $arr 要转换的数组
+     * @param int $level 节点层级, 1 为 Root.
+     * @return string XML 结构的字符串
+     */
+    public static function ToXml2($arr, $level = 1)
+    {
+        //
     }
 
     /**
@@ -330,7 +354,7 @@ class ArrayHelper
 
     /**
      * 返回数组的维度
-     * @param  array $array [description]
+     * @param array $array [description]
      * @return int      [description]
      */
     public static function getLevel($array)
@@ -378,32 +402,32 @@ class ArrayHelper
      * @return mixed
      * @example 对类似如下数组中，根据“2010年”年排序
      * array(31) {
-    [0] => array(5) {
-    ["地区"] => string(6) "河南"
-    ["2010年"] => float(5437.1)
-    ["2011年"] => float(5542.5)
-    ["2012年"] => float(5638.6)
-    [""] => NULL
-    }
-    [1] => array(5) {
-    ["地区"] => string(9) "黑龙江"
-    ["2010年"] => float(5012.8)
-    ["2011年"] => float(5570.6)
-    ["2012年"] => float(5761.5)
-    [""] => NULL
-    }
-    [2] => array(5) {
-    ["地区"] => string(6) "山东"
-    ["2010年"] => float(4335.7)
-    ["2011年"] => float(4426.3)
-    ["2012年"] => float(4511.4)
-    [""] => NULL
-    }
-     }
-
+     * [0] => array(5) {
+     * ["地区"] => string(6) "河南"
+     * ["2010年"] => float(5437.1)
+     * ["2011年"] => float(5542.5)
+     * ["2012年"] => float(5638.6)
+     * [""] => NULL
+     * }
+     * [1] => array(5) {
+     * ["地区"] => string(9) "黑龙江"
+     * ["2010年"] => float(5012.8)
+     * ["2011年"] => float(5570.6)
+     * ["2012年"] => float(5761.5)
+     * [""] => NULL
+     * }
+     * [2] => array(5) {
+     * ["地区"] => string(6) "山东"
+     * ["2010年"] => float(4335.7)
+     * ["2011年"] => float(4426.3)
+     * ["2012年"] => float(4511.4)
+     * [""] => NULL
+     * }
+     * }
      */
-    public static function multiColumnSort($array,$columnName,$sortType=SORT_ASC){
-        array_multisort(array_column($array,$columnName),$sortType,$array);
+    public static function multiColumnSort($array, $columnName, $sortType = SORT_ASC)
+    {
+        array_multisort(array_column($array, $columnName), $sortType, $array);
         return $array;
     }
 }

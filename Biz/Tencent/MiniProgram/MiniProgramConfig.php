@@ -9,6 +9,7 @@
 namespace Hiland\Biz\Tencent\MiniProgram;
 
 use Hiland\Biz\ThinkAddon\TPCompatibleHelper;
+use Hiland\Utils\Data\ObjectHelper;
 
 /**
  * 说明，需要在项目的主配置文件内设置以下两个节点
@@ -22,7 +23,21 @@ class MiniProgramConfig
 {
     public static function getAPPID()
     {
-        $result = TPCompatibleHelper::config("anlianMachine.WeiXin.mimiprogram-appid");
+        $projectName = input("PN");
+        if (ObjectHelper::isEmpty($projectName)) {
+            $projectName = "";
+        } else {
+            $projectName .= "_";
+        }
+
+        $wxMiniAppName = input("MAN");//MiniAppName
+        if (ObjectHelper::isEmpty($wxMiniAppName)) {
+            $wxMiniAppName = "";
+        } else {
+            $wxMiniAppName .= "_";
+        }
+
+        $result = TPCompatibleHelper::config("{$projectName}Machine.WeiXin.{$wxMiniAppName}mimiprogram-appid");
 
         if (empty($result)) {
             $result = "wxa37839e8d0954603";
@@ -33,7 +48,21 @@ class MiniProgramConfig
 
     public static function getSECRET()
     {
-        $result = TPCompatibleHelper::config("anlianMachine.WeiXin.mimiprogram-secret");
+        $projectName = input("PN");
+        if (ObjectHelper::isEmpty($projectName)) {
+            $projectName = "";
+        } else {
+            $projectName .= "_";
+        }
+
+        $wxMiniAppName = input("MAN");//MiniAppName
+        if (ObjectHelper::isEmpty($wxMiniAppName)) {
+            $wxMiniAppName = "";
+        } else {
+            $wxMiniAppName .= "_";
+        }
+
+        $result = TPCompatibleHelper::config("{$projectName}Machine.WeiXin.{$wxMiniAppName}mimiprogram-secret");
 
         if (empty($result)) {
             $result = "96acf4487c365efb37edd16f5bf1b496";

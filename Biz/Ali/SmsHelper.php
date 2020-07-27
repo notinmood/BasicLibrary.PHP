@@ -6,6 +6,7 @@ use AlibabaCloud\Client\AlibabaCloud;
 use AlibabaCloud\Client\Exception\ClientException;
 use AlibabaCloud\Client\Exception\ServerException;
 use Hiland\Biz\ThinkAddon\TPCompatibleHelper;
+use Hiland\Utils\Data\ObjectHelper;
 
 /**
  * Class SmsHelper
@@ -15,11 +16,18 @@ class SmsHelper
 {
     public static function send($phoneNumbers, $templateParamJson, $identificationNumber = "", &$returnValue)
     {
-        $accessKeyID = TPCompatibleHelper::config("anlianMachine.AliSMS.accessKeyID");
-        $accessKeySecret = TPCompatibleHelper::config("anlianMachine.AliSMS.accessKeySecret");
-        $smsServerName = TPCompatibleHelper::config("anlianMachine.AliSMS.smsServerName");
-        $signName = TPCompatibleHelper::config("anlianMachine.AliSMS.signName");
-        $templateCode = TPCompatibleHelper::config("anlianMachine.AliSMS.templateCode");
+        $projectName = input("PN");
+        if (ObjectHelper::isEmpty($projectName)) {
+            $projectName = "";
+        } else {
+            $projectName .= "_";
+        }
+
+        $accessKeyID = TPCompatibleHelper::config("{$projectName}Machine.AliSMS.accessKeyID");
+        $accessKeySecret = TPCompatibleHelper::config("{$projectName}Machine.AliSMS.accessKeySecret");
+        $smsServerName = TPCompatibleHelper::config("{$projectName}Machine.AliSMS.smsServerName");
+        $signName = TPCompatibleHelper::config("{$projectName}Machine.AliSMS.signName");
+        $templateCode = TPCompatibleHelper::config("{$projectName}Machine.AliSMS.templateCode");
 
         AlibabaCloud::accessKeyClient($accessKeyID, $accessKeySecret)
             ->regionId($smsServerName)

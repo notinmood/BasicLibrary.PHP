@@ -77,12 +77,41 @@ class ReflectionHelper
      */
     public static function executeFunction($funcName, $funcParam = null)
     {
-//        dump("00000000000000000000000");
-//        dump($funcParam);
         if (is_array($funcParam)) {
             return call_user_func_array($funcName, $funcParam);
         } else {
             return call_user_func($funcName, $funcParam);
         }
     }
+
+    /**
+     * @param $className 带命名空间的类型名称
+     * @param $funcName 类型的方法名称
+     * @param null $funcParam 传递给方法的参数（多个参数之间用^^分隔（主要用于通过url的多个参数的传递））
+     * @param bool $returnJson 是否返回JSON格式的数据（缺省为false）
+     * @return false|mixed|string
+     */
+    public static function executeFunctionEx($className ,$funcName, $funcParam = null,  $returnJson = false)
+    {
+        $object = new $className();
+        $targetArray = array($object, $funcName);
+
+        $params = $funcParam;
+        if (StringHelper::isContains($funcParam, "^^")) {
+            $params = StringHelper::explode($funcParam, "^^");
+        }
+
+        if ($funcParam == null) {
+            $params = input("funcParam");
+        }
+
+        $result = self::executeFunction($targetArray, $params);
+
+        if ($returnJson) {
+            return json_encode($result);
+        } else {
+            return $result;
+        }
+    }
+
 }
