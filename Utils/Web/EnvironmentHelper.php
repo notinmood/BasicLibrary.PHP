@@ -68,6 +68,11 @@ class EnvironmentHelper
      */
     public static function isLocalServer($domainNameOrIP)
     {
+        //去掉后面的端口信息
+        if(StringHelper::isContains($domainNameOrIP,":")){
+            $domainNameOrIP= StringHelper::getStringBeforeSeperator($domainNameOrIP,":");
+        }
+
         $isIP = preg_match(RegexHelper::IP, $domainNameOrIP);
         $isLocal = false;
         if ($isIP) {

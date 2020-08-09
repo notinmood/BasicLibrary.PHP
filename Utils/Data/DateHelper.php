@@ -55,6 +55,25 @@ class DateHelper
         return $result;
     }
 
+    /** 将timestamp转换成日期字符串
+     * @param null $timestamp
+     * @param string $format
+     * @return false|string
+     */
+    public static function getDateTimeString($timestamp = null, $format = "Y-m-d H:i:s")
+    {
+        return date($format, $timestamp);
+    }
+
+    /**将timestamp转换成日期
+     * @param null $timestamp
+     * @return array
+     */
+    public static function getDateTime($timestamp = null)
+    {
+        return getdate($timestamp);
+    }
+
     /**获取两个日期之间的差值（秒或者毫秒）
      * @param $dateMain
      * @param $dateSecondary
@@ -87,6 +106,16 @@ class DateHelper
      */
     public static function getTotalMilliSeconds($dateValue = null)
     {
+        return self::getTimestamp($dateValue) * 1000;
+    }
+
+    /**
+     * 获取一个指定时间点的timestamp(即从1970年1月1日以来总共的秒数)
+     * @param string $dateValue 指定的时间点 ，可以是“201603161312”格式，也可以是“2016-03-16 13:12:25”
+     * @return int
+     */
+    public static function getTimestamp($dateValue = null)
+    {
         if (ObjectHelper::isEmpty($dateValue)) {
             $dateValue = new \DateTime();
         }
@@ -110,7 +139,7 @@ class DateHelper
             $result = $year20380101Seconds + $totalSeconds;
         }
 
-        return $result * 1000;
+        return $result;
     }
 
     /**
@@ -192,11 +221,8 @@ class DateHelper
                 break;
         }
 
-        //$timestamp = mktime($hours, $minutes, $seconds, $month, $day, $year);
-        //return $timestamp;
-
         $dateTimeString = "$year-$month-$day $hours:$minutes:$seconds";
-        return $dateTimeString;
+        return self::getTimestamp($dateTimeString);
     }
 
     /**
@@ -210,36 +236,6 @@ class DateHelper
         $time = $time === null ? time() : intval($time);
 
         return date($formatString, $time);
-    }
-
-    /**
-     * 获取一个指定时间点的timestamp
-     * @param string $date 指定的时间点 ，可以是“201603161312”格式，也可以是“2016-03-16 13:12:25”
-     * @return int
-     */
-    public static function getTimestamp($date)
-    {
-        if (StringHelper::isContains($date, ' ')) {
-            $datePart = StringHelper::getStringBeforeSeperator($date, ' ');
-            $timePart = StringHelper::getStringAfterSeperator($date, ' ');
-        } else {
-            $datePart = $date;
-            $timePart = '';
-        }
-
-        if (!StringHelper::isContains($datePart, '-')) {
-            $temp = $datePart;
-            $datePart = substr($temp, 0, 8);
-            $timePart = substr($temp, 8);
-            if (strlen($timePart) < 6) {
-                $timePart = str_pad($timePart, 6, '0', STR_PAD_RIGHT);
-            }
-            $datePart = StringHelper::format($datePart, '{4}-{2}-{2}');
-            $timePart = StringHelper::format($timePart, '{2}:{2}:{2}');
-        }
-
-        $date = "$datePart $timePart";
-        return strtotime($date);
     }
 
     /**
