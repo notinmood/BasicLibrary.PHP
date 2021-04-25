@@ -172,57 +172,71 @@ class DateHelper
      *
      * @param int $intervalValue
      *            时间间隔值
-     * @return string string类型的时间
+     * @return int int类型的时间戳
+     * @throws \Exception
      */
     public static function addInterval($originalTimestamp = null, $intervalType = "d", $intervalValue = 1)
     {
         if (empty($originalTimestamp)) {
             $originalTimestamp = time();
         }
-        $datetimearray = getdate($originalTimestamp);
-        $hours = $datetimearray["hours"];
-        $minutes = $datetimearray["minutes"];
-        $seconds = $datetimearray["seconds"];
-        $month = $datetimearray["mon"];
-        $day = $datetimearray["mday"];
-        $year = $datetimearray["year"];
+        $originalTimestamp = "@" . $originalTimestamp;
+
+
+        $y = $M = $d = $h = $i = $s = 0;
+        $invert = 0;
+        if ($intervalValue < 0) {
+            $invert = 1;
+        }
+        $intervalValue = abs($intervalValue);
+
+        //$formatString = "P0Y0M0DT0H0M0S";
+
         switch ($intervalType) {
             case "y":
             case "Y":
-                $year += $intervalValue;
+                $y = $intervalValue;
                 break;
             case "q":
             case "Q":
-                $month += ($intervalValue * 3);
+                $M = $intervalValue * 3;
                 break;
             case "M":
-                $month += $intervalValue;
+                $M = $intervalValue;
                 break;
             case "d":
             case "D":
-                $day += $intervalValue;
+                $d = $intervalValue;
                 break;
             case "w":
             case "W":
-                $day += ($intervalValue * 7);
+                $d = $intervalValue * 7;
                 break;
             case "h":
             case "H":
-                $hours += $intervalValue;
+                $h = $intervalValue;
                 break;
             case "m":
             case "i":
             case "I":
-                $minutes += $intervalValue;
+                $i = $intervalValue;
                 break;
             case "s":
             case "S":
-                $seconds += $intervalValue;
+                $s = $intervalValue;
                 break;
         }
 
-        $dateTimeString = "$year-$month-$day $hours:$minutes:$seconds";
-        return self::getTimestamp($dateTimeString);
+        $formatString = "P|$y|Y|$M|M|$d|DT|$h|H|$i|M|$s|S";
+        $formatString = str_replace("|", "", $formatString);
+
+        $interval = new \DateInterval($formatString);
+        $interval->invert = $invert;
+
+        $source = new \DateTime($originalTimestamp, new \DateTimeZone("PRC"));
+        $target = $source->add($interval);
+
+        return $target->getTimestamp();
     }
 
     /**
@@ -233,7 +247,7 @@ class DateHelper
      */
     public static function format($time = null, $formatString = 'Y-m-d H:i:s')
     {
-        $time = $time === null ? time() : intval($time);
+        $time = $time === null ? time() : floatval($time);
 
         return date($formatString, $time);
     }

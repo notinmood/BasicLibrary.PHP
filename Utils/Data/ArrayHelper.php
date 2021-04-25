@@ -359,21 +359,21 @@ class ArrayHelper
      */
     public static function getLevel($array)
     {
-        $levels = array(0);
+        // scalar value has depth 0
+        if(!is_array($array)) return 0;
 
-        function analyse($arr, &$al, $level = 0)
-        {
-            if (is_array($arr)) {
-                $level++;
-                $al[] = $level;
-                foreach ($arr as $v) {
-                    analyse($v, $al, $level);
+        // array has min depth of 1
+        $depth = 1;
+        foreach ($array as $element) {
+            if (is_array($element)) {
+                // is the sub array deeper than already known?
+                $sub_depth = self::getLevel($element);
+                if ($sub_depth >= $depth) {
+                    $depth += $sub_depth;
                 }
             }
         }
-
-        analyse($array, $levels);
-        return max($levels);
+        return $depth;
     }
 
     /**

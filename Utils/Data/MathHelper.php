@@ -32,4 +32,48 @@ class MathHelper
         $format = "%01." . $precisionNumber . "f";
         return sprintf($format, $data * 100) . '%';
     }
+
+    /**获取一个数列的简单的移动平均值
+     * @param $sourceArray
+     * @param $period
+     * @param string $targetFeildName 如果是一维数组可以忽略本参数；如果是二维数组，请指定需要进行计算的字段名称。
+     * @return int
+     */
+    public static function sma($sourceArray, $period, $targetFeildName = '')
+    {
+        $result = null;
+        $level = ArrayHelper::getLevel($sourceArray);
+        $pIndex = $period - 1;
+        $data = array_values($sourceArray);
+        $sum = 0;
+        if ($level == 1) {
+            //计算移动平均值
+            foreach ($data as $k => $v) {
+                $sum += $v;
+                if ($k < $pIndex) {
+                    $item = 0;
+                } else {
+                    $item = sprintf("%.2f", ($sum / $period));
+                    $sum -= $data[$k - $pIndex] ? $data[$k - $pIndex] : 0;
+                }
+
+                $result[] = $item;
+            }
+        } else {
+            //计算移动平均值
+            foreach ($data as $k => $v) {
+                $sum += $v[$targetFeildName];
+                if ($k < $pIndex) {
+                    $item = 0;
+                } else {
+                    $item = sprintf("%.2f", ($sum / $period));
+                    $sum -= $data[$k - $pIndex][$targetFeildName] ? $data[$k - $pIndex][$targetFeildName] : 0;
+                }
+
+                $result[] = $item;
+            }
+        }
+
+        return $result;
+    }
 }

@@ -52,10 +52,11 @@ class StringHelper
      *
      * @param string $originalString
      *            要截取的字符串
-     * @param int $length
-     *            要截取的长度(超过总长度 按总长度计算)
      * @param int $startPosition
      *            开始位置(第一个字符的位置为0)
+     * @param int $length
+     *            要截取的长度(超过总长度 按总长度计算)
+     * @param string $charset
      * @return string
      * @author 小墨 244349067@qq.com
      */
@@ -67,9 +68,9 @@ class StringHelper
             return '';
         }
 
-        $content = '';
-        $sing = 0;
-        $count = 0;
+//        $content = '';
+//        $sing = 0;
+//        $count = 0;
 
         if ($length > $originalStringLength - $startPosition) {
             $length = $originalStringLength - $startPosition;
@@ -91,9 +92,8 @@ class StringHelper
             preg_match_all($re[$charset], $originalString, $match);
             $slice = join("", array_slice($match[0], $startPosition, $length));
         }
-        $content = $slice;
 
-        return $content;
+        return $slice;
     }
 
     /**
@@ -166,8 +166,8 @@ class StringHelper
     }
 
     /**将一个字符串按照某个分隔符分隔成数组
-     * @param $wholeString 字符串全串
-     * @param $delimiterString 分隔符
+     * @param $wholeString string 字符串全串
+     * @param $delimiterString string 分隔符
      * @return false|string[]
      */
     public static function explode($wholeString, $delimiterString)
@@ -177,25 +177,25 @@ class StringHelper
 
     /**
      * 将一个字符串按照字符个数分组进行格式化
-     * @param string $data
-     * @param string $formater 字符串字符个数分组的格式，同一个分组内字符的个数用{}包围，各个分组之间可以自定义分隔符，例如
+     * @param string $data string
+     * @param string $formator string 字符串字符个数分组的格式，同一个分组内字符的个数用{}包围，各个分组之间可以自定义分隔符，例如
      *  '{4}-{2}-{2}'，或者'{4} {2} {2}'(中间用空格表示);
      * @return string
      */
-    public static function format($data, $formater)
+    public static function grouping($data, $formator)
     {
         $content = '';
-        $partten = '/\{\d*\}/';
+        $pattern = '/\{\d*\}/';
         $matches = null;
-        $result = preg_match_all($partten, $formater, $matches);
+        $result = preg_match_all($pattern, $formator, $matches);
         if ($result) {
             foreach ($matches[0] as $matchedWithQuotation) {
-                $matchedWithQuotationStartPosition = strpos($formater, $matchedWithQuotation);
+                $matchedWithQuotationStartPosition = strpos($formator, $matchedWithQuotation);
                 $matchedWithQuotationLength = strlen($matchedWithQuotation);
-                $seperator = substr($formater, 0, $matchedWithQuotationStartPosition);
+                $seperator = substr($formator, 0, $matchedWithQuotationStartPosition);
                 $content .= $seperator;
                 $seperatorLength = strlen($seperator);
-                $formater = substr($formater, $matchedWithQuotationLength + $seperatorLength);
+                $formator = substr($formator, $matchedWithQuotationLength + $seperatorLength);
 
                 $matchedNumber = StringHelper::getStringAfterSeperator($matchedWithQuotation, '{');
                 $matchedNumber = StringHelper::getStringBeforeSeperator($matchedNumber, '}');
@@ -211,6 +211,29 @@ class StringHelper
             }
         }
         return $content;
+    }
+
+
+    /** 对带有占位符的字符串信息，进行格式化填充，形成完整的字符串
+     * @param $data string 带有占位符的字符串信息（占位符用{?}表示），例如 "i like this {?},do you known {?}"
+     * @param $realValueList string[] 待填入的真实信息，用字符串数值表示，例如["qingdao","beijing"]
+     * @return string
+     */
+    public static function format($data, $realValueList)
+    {
+        $needle = "{?}";
+        // 查找?位置
+        $p = strpos($data, $needle);
+        // 替换字符的数组下标
+        $i = 0;
+        while ($p !== false) {
+            // substr_replace ( mixed $string , mixed $replacement , mixed $start [, mixed $length ] ) : mixed
+            $data = substr_replace($data, $realValueList[$i++], $p, 3);
+            // 查找下一个?位置  没有时会退出循环
+            $p = strpos($data, $needle, ++$p);
+        }
+
+        return $data;
     }
 
     /**
@@ -269,4 +292,6 @@ class StringHelper
     {
         return mb_strtolower($data);
     }
+
+
 }

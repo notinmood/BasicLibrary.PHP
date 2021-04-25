@@ -45,7 +45,7 @@ class RandHelper
                 break;
         }
 
-        $charCount = strlen($chars);
+        $charCount = strlen($chars) - 1;
         for ($i = 0; $i < $length; $i++) {
             $position = mt_rand(0, $charCount);
             $result .= $chars[$position];
