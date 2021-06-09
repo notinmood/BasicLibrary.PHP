@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Hiland\Utils\DataConstructure;
+namespace Hiland\Utils\DataConstruct;
 
 
 use Hiland\Utils\Data\BoolHelper;

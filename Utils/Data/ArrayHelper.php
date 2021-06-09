@@ -5,6 +5,17 @@ namespace Hiland\Utils\Data;
 class ArrayHelper
 {
     /**
+     * 判断一个项目是否存在array中。
+     * @param $array array
+     * @param $item mixed
+     * @return bool
+     */
+    public static function contains($array, $item)
+    {
+        return in_array($item,$array);
+    }
+
+    /**
      * 数组转简单对象
      *
      * @param array $array 名值对类型的一维或者多维数组
@@ -24,8 +35,7 @@ class ArrayHelper
     {
         //禁止引用外部xml实体
         libxml_disable_entity_loader(true);
-        $result = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
-        return $result;
+        return json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
     }
 
     /**

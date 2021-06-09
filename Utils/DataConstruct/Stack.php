@@ -1,6 +1,6 @@
 <?php
 
-namespace Hiland\Utils\DataConstructure;
+namespace Hiland\Utils\DataConstruct;
 
 class Stack extends BasicQueueStack
 {

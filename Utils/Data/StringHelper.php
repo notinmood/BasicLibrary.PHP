@@ -214,21 +214,31 @@ class StringHelper
     }
 
 
-    /** 对带有占位符的字符串信息，进行格式化填充，形成完整的字符串
+    /**
+     * 对带有占位符的字符串信息，进行格式化填充，形成完整的字符串
+     * >>>>>建议直接使用PHP自己的 "something{$varname}something"这种占位符格式化方式（必须是双引号）<<<<<<
      * @param $data string 带有占位符的字符串信息（占位符用{?}表示），例如 "i like this {?},do you known {?}"
-     * @param $realValueList string[] 待填入的真实信息，用字符串数值表示，例如["qingdao","beijing"]
+     * @param $realValues mixed 待填入的真实信息，用字符串数值表示。即可以是数组，例如["qingdao","beijing"]，也可以是php5.6之后的剩余参数列表，即直接写“qingdao”，“beijing”
      * @return string
      */
-    public static function format($data, $realValueList)
+    public static function format($data, ...$realValues)
     {
         $needle = "{?}";
         // 查找?位置
         $p = strpos($data, $needle);
+
+        /**
+         *对传入的 是参数数组[],还是剩余参数列表，做兼容处理
+         */
+        $count = count($realValues);
+        if ($count == 1 && TypeHelper::getTypeName($realValues[0]) == TypeHelper::ARRAY) {
+            $realValues = $realValues[0];
+        }
+
         // 替换字符的数组下标
         $i = 0;
         while ($p !== false) {
-            // substr_replace ( mixed $string , mixed $replacement , mixed $start [, mixed $length ] ) : mixed
-            $data = substr_replace($data, $realValueList[$i++], $p, 3);
+            $data = substr_replace($data, $realValues[$i++], $p, 3);
             // 查找下一个?位置  没有时会退出循环
             $p = strpos($data, $needle, ++$p);
         }

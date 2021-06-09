@@ -6,7 +6,7 @@
  * Time: 10:21
  */
 
-namespace Hiland\Utils\DataConstructure;
+namespace Hiland\Utils\DataConstruct;
 
 use Hiland\Biz\ThinkAddon\TPCompatibleHelper;
 use Hiland\Utils\Data\ReflectionHelper;
