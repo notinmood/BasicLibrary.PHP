@@ -74,13 +74,11 @@ class ConstMate
             return self::getConstsDetail($prefix, $withText);
         } else {
             $dataCached = TPCompatibleHelper::cache($cacheKey);
-            if ($dataCached) {
-                return $dataCached;
-            } else {
+            if (!$dataCached) {
                 $dataCached = self::getConstsDetail($prefix, $withText);
                 TPCompatibleHelper::cache($cacheKey, $dataCached);
-                return $dataCached;
             }
+            return $dataCached;
         }
     }
 

@@ -5,7 +5,7 @@ namespace Hiland\Utils\Data;
 class ArrayHelper
 {
     /**
-     * 判断一个项目是否存在array中。
+     * 判断一个项目是否存在array中。(其实是判断这个item的value是否存在于$array内)
      * @param $array array
      * @param $item mixed
      * @return bool
@@ -13,6 +13,25 @@ class ArrayHelper
     public static function contains($array, $item)
     {
         return in_array($item,$array);
+    }
+
+    /**判断某个键是否存在于某个数组内
+     * @param $array
+     * @param $key
+     * @return bool
+     */
+    public static function containsKey($array, $key)
+    {
+        return array_key_exists($key, $array);
+    }
+
+
+    /**获取数组内元素的个数
+     * @param $array
+     * @return int
+     */
+    public static function getLength($array){
+        return count($array);
     }
 
     /**
@@ -110,12 +129,12 @@ class ArrayHelper
      */
     public static function exchangeKeyValue($originalArray)
     {
-        $newarray = array();
+        $newArray = array();
         foreach ($originalArray as $key => $value) {
-            $newarray[$value] = $key;
+            $newArray[$value] = $key;
         }
 
-        return $newarray;
+        return $newArray;
     }
 
     /**

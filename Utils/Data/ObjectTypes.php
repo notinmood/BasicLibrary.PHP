@@ -8,11 +8,7 @@
 
 namespace Hiland\Utils\Data;
 
-/**
- * 本类型内容废弃，已经迁移到TypeHelper中
- * Class ObjectTypes
- * @package Hiland\Utils\Data
- */
+
 class ObjectTypes
 {
     const STRING = "string";
@@ -23,6 +19,6 @@ class ObjectTypes
     const RESOURCE = "resource";
     const ARRAYS = "array";
     const OBJECT = "object";
-    const NULL = "NULL";
+    const NULL = "null";
     const DATETIME="datetime";
 }

@@ -4,11 +4,6 @@
 namespace Hiland\Utils\DataConstruct;
 
 
-use Hiland\Utils\Data\BoolHelper;
-use Hiland\Utils\Data\ObjectHelper;
-use Hiland\Utils\Data\ObjectTypes;
-use Hiland\Utils\Data\StringHelper;
-
 /**类型包括3个常用的属性和一个备用属性
  * 1.resultType,bool类型,表示返回的结果是成功还是失败
  * 2.title, string类型,表示
@@ -49,7 +44,7 @@ class Returns
      * @param string $dataString 给定json格式的字符串
      * @return Returns 结构化表示的Returns对象
      */
-    public static function resolve($dataString)
+    public static function parse($dataString)
     {
         $stdObject = json_decode($dataString);
 
