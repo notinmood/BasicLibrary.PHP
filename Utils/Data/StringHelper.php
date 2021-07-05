@@ -129,23 +129,6 @@ class StringHelper
     }
 
     /**
-     * 获取字符串分隔符前面的内容
-     *
-     * @param string $data
-     * @param string $seperator
-     * @return string
-     */
-    public static function getStringBeforeSeperator($data, $seperator)
-    {
-        if (self::isContains($data, $seperator)) {
-            $array = explode($seperator, $data);
-            return $array[0];
-        } else {
-            return $data;
-        }
-    }
-
-    /**
      * 判断一个字符串是否被包含在另外一个字符串内
      *
      * @param string $subString
@@ -259,19 +242,36 @@ class StringHelper
     }
 
     /**
-     * 获取字符串分隔符后面的内容
+     * 获取字符串分隔符前面的内容
      *
-     * @param string $data
+     * @param string $whole
      * @param string $seperator
      * @return string
      */
-    public static function getStringAfterSeperator($data, $seperator)
+    public static function getStringBeforeSeperator($whole, $seperator)
     {
-        if (self::isContains($data, $seperator)) {
-            $array = explode($seperator, $data);
+        if (self::isContains($whole, $seperator)) {
+            $array = explode($seperator, $whole);
+            return $array[0];
+        } else {
+            return $whole;
+        }
+    }
+
+    /**
+     * 获取字符串分隔符后面的内容
+     *
+     * @param string $whole
+     * @param string $seperator
+     * @return string
+     */
+    public static function getStringAfterSeperator($whole, $seperator)
+    {
+        if (self::isContains($whole, $seperator)) {
+            $array = explode($seperator, $whole);
             return $array[1];
         } else {
-            return $data;
+            return $whole;
         }
     }
 

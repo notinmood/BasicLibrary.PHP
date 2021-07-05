@@ -24,7 +24,7 @@
  * floatObject.multiply(19.9, 100) >> 1990
  *
  */
-var floatObject = function () {
+const floatObject = function () {
 
     /*
      * 判断obj是否为一个整数
@@ -40,24 +40,24 @@ var floatObject = function () {
      *   {times:100, num: 314}
      */
     function toInteger(floatNum) {
-        var ret = {times: 1, num: 0};
+        const ret = {times: 1, num: 0};
         if (isInteger(floatNum)) {
             ret.num = floatNum;
             return ret
         }
-        var strfi = floatNum + '';
-        var dotPos = strfi.indexOf('.');
-        var len = strfi.substr(dotPos + 1).length;
-        var times = Math.pow(10, len);
-        var intNum = parseInt(floatNum * times + 0.5, 10);
+        const strfi = floatNum + '';
+        const dotPos = strfi.indexOf('.');
+        const len = strfi.substr(dotPos + 1).length;
+        const times = Math.pow(10, len);
+        const intNum = parseInt(floatNum * times + 0.5, 10);
         ret.times = times;
         ret.num = intNum;
         return ret
     }
 
     function toFixed(num, s) {
-        var times = Math.pow(10, s);
-        var des = num * times + 0.5;
+        const times = Math.pow(10, s);
+        const des = num * times + 0.5;
         des = parseInt(des, 10) / times;
         return des + ''
     }
@@ -73,16 +73,16 @@ var floatObject = function () {
      *
      */
     function operation(a, b, digits, op) {
-        var o1 = toInteger(a);
-        var o2 = toInteger(b);
-        var n1 = o1.num;
-        var n2 = o2.num;
+        const o1 = toInteger(a);
+        const o2 = toInteger(b);
+        const n1 = o1.num;
+        const n2 = o2.num;
 
-        var t1 = o1.times;
-        var t2 = o2.times;
+        const t1 = o1.times;
+        const t2 = o2.times;
 
-        var max = t1 > t2 ? t1 : t2;
-        var result = null;
+        const max = t1 > t2 ? t1 : t2;
+        let result = null;
 
         switch (op) {
             case 'add':
