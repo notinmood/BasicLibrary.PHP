@@ -3,7 +3,7 @@
 namespace Hiland\Utils\Environment;
 
 
-class Env
+class EnvHelper
 {
     /**获取系统信息
      * @return array
@@ -14,7 +14,7 @@ class Env
             '操作系统' => PHP_OS,
             '运行环境' => $_SERVER["SERVER_SOFTWARE"],
             '主机名' => $_SERVER['SERVER_NAME'],
-            '服务器CPU信息'=>$_SERVER['PROCESSOR_IDENTIFIER'],
+            '服务器CPU信息' => $_SERVER['PROCESSOR_IDENTIFIER'],
             '服务器系统目录' => $_SERVER['SystemRoot'],
             'WEB服务端口' => $_SERVER['SERVER_PORT'],
             '网站文档目录' => $_SERVER["DOCUMENT_ROOT"],
@@ -34,5 +34,45 @@ class Env
             '脚本运行占用最大内存' => get_cfg_var("memory_limit") ? get_cfg_var("memory_limit") : "无",
             '当前进程用户名' => Get_Current_User(),
         ];
+    }
+
+    /**
+     * 是否运行在浏览器/服务器模式下
+     * @return bool
+     */
+    public static function isCGI()
+    {
+        if (0 === strpos(PHP_SAPI, 'cgi') || false !== strpos(PHP_SAPI, 'fcgi')) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 是否运行在命令行模式下
+     * @return bool
+     */
+    public static function isCLI()
+    {
+        $sapi_type = php_sapi_name();
+        if (isset($sapi_type) && substr($sapi_type, 0, 3) == 'cli') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 是否运行在windows系统内
+     * @return bool
+     */
+    public static function isWIN()
+    {
+        if (strpos(PHP_OS, 'WIN')) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

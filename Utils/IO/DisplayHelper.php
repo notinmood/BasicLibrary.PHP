@@ -2,13 +2,15 @@
 
 namespace Hiland\Utils\IO;
 
+use Hiland\Utils\Environment\EnvHelper;
+
 /**
  * 控制台操作类
  * 处理用户界面的输入输出逻辑
  * @author 解然
  * @version v20131224
  */
-class Console
+class DisplayHelper
 {
     /**
      * 控制台输出
@@ -39,7 +41,11 @@ class Console
      */
     public static function echos($data)
     {
-        echo $data, "<br/>";
+        if(EnvHelper::isCLI()){
+            echo $d,"\r\n";
+        }else{
+            echo $data, "<br/>";
+        }
     }
 
     /**
@@ -48,7 +54,11 @@ class Console
      */
     public static function echoLine($data)
     {
-        echo $data, "<br/>";
+        if(EnvHelper::isCLI()){
+            echo $d,"\r\n";
+        }else{
+            echo $data, "<br/>";
+        }
     }
 
     /**
