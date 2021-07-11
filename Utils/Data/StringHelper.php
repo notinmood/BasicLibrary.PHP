@@ -221,18 +221,23 @@ class StringHelper
     /** 对带有占位符的字符串信息，进行格式化填充，形成完整的字符串。
      * 现在推荐直接使用 PHP系统自带的格式化方式,例如:"k的值为{$k}；v的值为{$v}"
      * @param $data string 带有占位符的字符串信息（占位符用{?}表示），例如 "i like this {?},do you known {?}"
-     * @param $realValueList string[] 待填入的真实信息，用字符串数值表示，例如["qingdao","beijing"]
+     * @param $realValueList string[] 待填入的真实信息，用字符串数组表示，例如["qingdao","beijing"];
+     *  或者使用用逗号分隔的各个独立的字符串表示,比如"qingdao","beijing"
      * @return string
      */
-    public static function format($data, $realValueList)
+    public static function format($data, ...$realValueList)
     {
         $needle = "{?}";
         // 查找?位置
         $p = strpos($data, $needle);
         // 替换字符的数组下标
         $i = 0;
+
+        if (ObjectHelper::getLength($realValueList) == 1 && ObjectHelper::getType($realValueList[0]) == ObjectTypes::ARRAYS) {
+            $realValueList = $realValueList[0];
+        }
+
         while ($p !== false) {
-            // substr_replace ( mixed $string , mixed $replacement , mixed $start [, mixed $length ] ) : mixed
             $data = substr_replace($data, $realValueList[$i++], $p, 3);
             // 查找下一个?位置  没有时会退出循环
             $p = strpos($data, $needle, ++$p);

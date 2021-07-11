@@ -69,7 +69,9 @@ class EnvHelper
      */
     public static function isWIN()
     {
-        if (strpos(PHP_OS, 'WIN')) {
+        $pos = strpos(PHP_OS, 'WIN');
+
+        if ($pos >= 0) {
             return true;
         } else {
             return false;

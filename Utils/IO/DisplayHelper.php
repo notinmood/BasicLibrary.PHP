@@ -41,9 +41,9 @@ class DisplayHelper
      */
     public static function echos($data)
     {
-        if(EnvHelper::isCLI()){
-            echo $d,"\r\n";
-        }else{
+        if (EnvHelper::isCLI()) {
+            echo $data, "\r\n";
+        } else {
             echo $data, "<br/>";
         }
     }
@@ -54,9 +54,9 @@ class DisplayHelper
      */
     public static function echoLine($data)
     {
-        if(EnvHelper::isCLI()){
-            echo $d,"\r\n";
-        }else{
+        if (EnvHelper::isCLI()) {
+            echo $data, "\r\n";
+        } else {
             echo $data, "<br/>";
         }
     }
