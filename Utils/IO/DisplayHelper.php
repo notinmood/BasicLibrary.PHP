@@ -42,7 +42,7 @@ class DisplayHelper
     public static function echos($data)
     {
         if (EnvHelper::isCLI()) {
-            echo $data, "\r\n";
+            echo $data, PHP_EOL;
         } else {
             echo $data, "<br/>";
         }
@@ -55,7 +55,7 @@ class DisplayHelper
     public static function echoLine($data)
     {
         if (EnvHelper::isCLI()) {
-            echo $data, "\r\n";
+            echo $data, PHP_EOL;
         } else {
             echo $data, "<br/>";
         }
