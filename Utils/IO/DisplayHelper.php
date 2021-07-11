@@ -36,19 +36,6 @@ class DisplayHelper
     }
 
     /**
-     * 带换行功能的echo (本函数将取消，请使用echoLine)
-     * @param mixed $data 待输出信息
-     */
-    public static function echos($data)
-    {
-        if (EnvHelper::isCLI()) {
-            echo $data, PHP_EOL;
-        } else {
-            echo $data, "<br/>";
-        }
-    }
-
-    /**
      * 带换行功能的echo
      * @param mixed $data 待输出信息
      */
