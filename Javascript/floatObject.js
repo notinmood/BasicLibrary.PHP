@@ -35,29 +35,29 @@ const floatObject = function () {
 
     /*
      * 将一个浮点数转成整数，返回整数和倍数。如 3.14 >> 314，倍数是 100
-     * @param floatNum {number} 小数
+     * @param floatNumber {number} 小数
      * @return {object}
      *   {times:100, num: 314}
      */
-    function toInteger(floatNum) {
-        const ret = {times: 1, num: 0};
-        if (isInteger(floatNum)) {
-            ret.num = floatNum;
-            return ret
+    function toInteger(floatNumber) {
+        let result = {times: 1, num: 0};
+        if (isInteger(floatNumber)) {
+            result.num = floatNumber;
+            return result
         }
-        const strfi = floatNum + '';
-        const dotPos = strfi.indexOf('.');
-        const len = strfi.substr(dotPos + 1).length;
+        const strNumber = floatNumber + '';
+        const dotPos = strNumber.indexOf('.');
+        const len = strNumber.substr(dotPos + 1).length;
         const times = Math.pow(10, len);
-        const intNum = parseInt(floatNum * times + 0.5, 10);
-        ret.times = times;
-        ret.num = intNum;
-        return ret
+        const intNumber = parseInt(floatNumber * times + 0.5, 10);
+        result.times = times;
+        result.num = intNumber;
+        return result
     }
 
     function toFixed(num, s) {
         const times = Math.pow(10, s);
-        const des = num * times + 0.5;
+        let des = num * times + 0.5;
         des = parseInt(des, 10) / times;
         return des + ''
     }
