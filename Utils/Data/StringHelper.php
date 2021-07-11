@@ -2,7 +2,7 @@
 
 namespace Hiland\Utils\Data;
 
-use Hiland\Utils\Web\EnvironmentHelper;
+use Hiland\Utils\Environment\EnvHelper;
 
 class StringHelper
 {
@@ -40,7 +40,7 @@ class StringHelper
      */
     public static function getNewLineSymbol()
     {
-        if (EnvironmentHelper::getOS() == 'Windows') {
+        if (EnvHelper::getOS() == 'Windows') {
             return "\r\n";
         } else {
             return "\n";
