@@ -62,6 +62,10 @@ class DateHelper
      */
     public static function getDateTimeString($timestamp = null, $format = "Y-m-d H:i:s")
     {
+        if (!$timestamp) {
+            $timestamp = self::getTimestamp();
+        }
+
         return date($format, $timestamp);
     }
 
@@ -71,6 +75,10 @@ class DateHelper
      */
     public static function getDateTime($timestamp = null)
     {
+        if (!$timestamp) {
+            $timestamp = self::getTimestamp();
+        }
+
         return getdate($timestamp);
     }
 
