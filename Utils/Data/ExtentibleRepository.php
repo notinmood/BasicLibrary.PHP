@@ -2,6 +2,10 @@
 
 namespace Hiland\Utils\Data;
 
+/**TODO: 需要写一个demo
+ * Class ExtentibleRepository
+ * @package Hiland\Utils\Data
+ */
 class ExtentibleRepository
 {
     private $keys = '';
@@ -48,12 +52,7 @@ class ExtentibleRepository
         return $returnValue;
     }
 
-    // / <summary>
-    // / 设置可扩展属性的值
-    // / </summary>
-    // / <param name="settingName"></param>
-    // / <param name="name"></param>
-    // / <param name="value"></param>
+
 
     private function GetNVC()
     {
@@ -96,6 +95,11 @@ class ExtentibleRepository
         return $nvc;
     }
 
+    /**
+     * 设置可扩展的属性
+     * @param $name
+     * @param $value
+     */
     public function SetExtentibleProperty($name, $value)
     {
         $this->GetNVC();
