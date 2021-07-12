@@ -250,7 +250,7 @@ class ObjectHelper
      * @param $data
      * @return bool
      */
-    public static function isNumberic($data)
+    public static function isNumber($data)
     {
         $type = self::getType($data);
         if ($type == ObjectTypes::INTEGER || $type == ObjectTypes::DOUBLE || $type == ObjectTypes::FLOAT) {
