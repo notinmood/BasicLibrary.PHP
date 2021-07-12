@@ -1,6 +1,6 @@
 {
     "name": "hiland/basiclibrary.php",
-    "description": "rainytop's php basic libary.",
+    "description": "rainytop's php basic library.",
     "homepage": "http://www.hilandsoft.com/",
     "keywords": ["php","basic library","codecs"],
     "type": "library",
@@ -8,11 +8,6 @@
     "require": {
         "php": "^5.4||^7.0",
         "alibabacloud/sdk": "^1.8"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "10.0.x-dev"
-        }
     },
     "autoload": {
         "psr-4": {
