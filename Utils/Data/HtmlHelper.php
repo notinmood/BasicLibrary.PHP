@@ -18,7 +18,7 @@ class HtmlHelper
      */
     public static function cleanComment($html)
     {
-
+        //TODO:这个需要处理.
         return $html;
     }
 }
