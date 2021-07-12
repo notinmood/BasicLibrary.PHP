@@ -2,11 +2,11 @@
     "name": "rainytop/phpbasiclibary",
     "description": "rainytop's php basic libary.",
     "homepage": "http://www.hilandsoft.com/",
-    "keywords": ["php","tags","codecs"],
+    "keywords": ["php","basiclibary","codecs"],
     "type": "library",
     "license": "Apache-2.0",
     "require": {
-        "php": "^5.3.3 || ^7.0",
+        "php": "^5.6",
         "alibabacloud/sdk": "^1.8"
     },
     "extra": {
