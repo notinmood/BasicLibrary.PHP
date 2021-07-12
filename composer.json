@@ -1,6 +1,6 @@
 {
-    "name": "hiland/basiclibary.php",
-    "description": "rainytop's php basic library.",
+    "name": "rainytop/phpbasiclibary",
+    "description": "rainytop's php basic libary.",
     "homepage": "http://www.hilandsoft.com/",
     "keywords": ["php","tags","codecs"],
     "type": "library",

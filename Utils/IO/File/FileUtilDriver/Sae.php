@@ -43,8 +43,8 @@ class Sae implements IFile
     private function getDomain($url)
     {
         $url = trim($url, './');
-        if (preg_match('|^http://\S+sinaapp\.com|iU', $url, $field)) {
-            preg_match('|-\S+\.|iU', $field[0], $match);
+        if (preg_match('|^http://\S+sinaapp\.com|iU', $url, $feild)) {
+            preg_match('|-\S+\.|iU', $feild[0], $match);
             $domain = trim($match[0], "-.");
         } else {
             $sp = strpos($url, '/');

@@ -36,10 +36,10 @@ class MathHelper
     /**获取一个数列的简单的移动平均值
      * @param $sourceArray
      * @param $period
-     * @param string $targetFieldName 如果是一维数组可以忽略本参数；如果是二维数组，请指定需要进行计算的字段名称。
+     * @param string $targetFeildName 如果是一维数组可以忽略本参数；如果是二维数组，请指定需要进行计算的字段名称。
      * @return int
      */
-    public static function sma($sourceArray, $period, $targetFieldName = '')
+    public static function sma($sourceArray, $period, $targetFeildName = '')
     {
         $result = null;
         $level = ArrayHelper::getLevel($sourceArray);
@@ -62,12 +62,12 @@ class MathHelper
         } else {
             //计算移动平均值
             foreach ($data as $k => $v) {
-                $sum += $v[$targetFieldName];
+                $sum += $v[$targetFeildName];
                 if ($k < $pIndex) {
                     $item = 0;
                 } else {
                     $item = sprintf("%.2f", ($sum / $period));
-                    $sum -= $data[$k - $pIndex][$targetFieldName] ? $data[$k - $pIndex][$targetFieldName] : 0;
+                    $sum -= $data[$k - $pIndex][$targetFeildName] ? $data[$k - $pIndex][$targetFeildName] : 0;
                 }
 
                 $result[] = $item;

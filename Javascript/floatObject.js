@@ -24,7 +24,7 @@
  * floatObject.multiply(19.9, 100) >> 1990
  *
  */
-const floatObject = function () {
+var floatObject = function () {
 
     /*
      * 判断obj是否为一个整数
@@ -35,29 +35,29 @@ const floatObject = function () {
 
     /*
      * 将一个浮点数转成整数，返回整数和倍数。如 3.14 >> 314，倍数是 100
-     * @param floatNumber {number} 小数
+     * @param floatNum {number} 小数
      * @return {object}
      *   {times:100, num: 314}
      */
-    function toInteger(floatNumber) {
-        let result = {times: 1, num: 0};
-        if (isInteger(floatNumber)) {
-            result.num = floatNumber;
-            return result
+    function toInteger(floatNum) {
+        var ret = {times: 1, num: 0};
+        if (isInteger(floatNum)) {
+            ret.num = floatNum;
+            return ret
         }
-        const strNumber = floatNumber + '';
-        const dotPos = strNumber.indexOf('.');
-        const len = strNumber.substr(dotPos + 1).length;
-        const times = Math.pow(10, len);
-        const intNumber = parseInt(floatNumber * times + 0.5, 10);
-        result.times = times;
-        result.num = intNumber;
-        return result
+        var strfi = floatNum + '';
+        var dotPos = strfi.indexOf('.');
+        var len = strfi.substr(dotPos + 1).length;
+        var times = Math.pow(10, len);
+        var intNum = parseInt(floatNum * times + 0.5, 10);
+        ret.times = times;
+        ret.num = intNum;
+        return ret
     }
 
     function toFixed(num, s) {
-        const times = Math.pow(10, s);
-        let des = num * times + 0.5;
+        var times = Math.pow(10, s);
+        var des = num * times + 0.5;
         des = parseInt(des, 10) / times;
         return des + ''
     }
@@ -73,16 +73,16 @@ const floatObject = function () {
      *
      */
     function operation(a, b, digits, op) {
-        const o1 = toInteger(a);
-        const o2 = toInteger(b);
-        const n1 = o1.num;
-        const n2 = o2.num;
+        var o1 = toInteger(a);
+        var o2 = toInteger(b);
+        var n1 = o1.num;
+        var n2 = o2.num;
 
-        const t1 = o1.times;
-        const t2 = o2.times;
+        var t1 = o1.times;
+        var t2 = o2.times;
 
-        const max = t1 > t2 ? t1 : t2;
-        let result = null;
+        var max = t1 > t2 ? t1 : t2;
+        var result = null;
 
         switch (op) {
             case 'add':

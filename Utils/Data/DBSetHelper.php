@@ -14,18 +14,18 @@ class DBSetHelper
      * 获取数据集中第0行中的某个字段值
      *
      * @param array $dbSet
-     * @param string $fieldName
+     * @param string $feildName
      * @return mixed
      */
-    public static function getFirstValueFromDBSet($dbSet, $fieldName)
+    public static function getFirstValueFromDBSet($dbSet, $feildName)
     {
-        $fieldValue = null;
+        $feildValue = null;
         $rowData = self::getRowFromDBSet($dbSet, 0);
         if ($rowData != null) {
-            $fieldValue = $rowData[$fieldName];
+            $feildValue = $rowData[$feildName];
         }
 
-        return $fieldValue;
+        return $feildValue;
     }
 
     /**

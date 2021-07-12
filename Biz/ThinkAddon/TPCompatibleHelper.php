@@ -12,7 +12,7 @@ namespace Hiland\Biz\ThinkAddon;
 class TPCompatibleHelper
 {
     /**读取配置节点的信息
-     * @param $setingName string 配置节点的名称
+     * @param $setingName 配置节点的名称
      */
     public static function config($setingName)
     {

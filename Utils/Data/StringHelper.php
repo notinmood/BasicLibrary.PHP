@@ -2,7 +2,7 @@
 
 namespace Hiland\Utils\Data;
 
-use Hiland\Utils\Environment\EnvHelper;
+use Hiland\Utils\Web\EnvironmentHelper;
 
 class StringHelper
 {
@@ -40,7 +40,7 @@ class StringHelper
      */
     public static function getNewLineSymbol()
     {
-        if (EnvHelper::getOS() == 'Windows') {
+        if (EnvironmentHelper::getOS() == 'Windows') {
             return "\r\n";
         } else {
             return "\n";
@@ -129,6 +129,23 @@ class StringHelper
     }
 
     /**
+     * 获取字符串分隔符前面的内容
+     *
+     * @param string $data
+     * @param string $seperator
+     * @return string
+     */
+    public static function getStringBeforeSeperator($data, $seperator)
+    {
+        if (self::isContains($data, $seperator)) {
+            $array = explode($seperator, $data);
+            return $array[0];
+        } else {
+            return $data;
+        }
+    }
+
+    /**
      * 判断一个字符串是否被包含在另外一个字符串内
      *
      * @param string $subString
@@ -146,27 +163,6 @@ class StringHelper
         } else {
             return true;
         }
-    }
-
-    /**获取字符串长度
-     * @param $strData
-     * @param string $encoding
-     * @return false|int
-     */
-    public static function getLength($strData, $encoding = "utf-8")
-    {
-        return mb_strlen($strData, $encoding);
-    }
-
-    /**包装php的字符串替换(将各个参数名称进一步明确化)
-     * @param $whole
-     * @param $old
-     * @param $new
-     * @return array|string|string[]
-     */
-    public static function replace($whole, $old, $new)
-    {
-        return str_replace($old, $new, $whole);
     }
 
     /**将一个字符串按照某个分隔符分隔成数组
@@ -218,26 +214,20 @@ class StringHelper
     }
 
 
-    /** 对带有占位符的字符串信息，进行格式化填充，形成完整的字符串。
-     * 现在推荐直接使用 PHP系统自带的格式化方式,例如:"k的值为{$k}；v的值为{$v}"
+    /** 对带有占位符的字符串信息，进行格式化填充，形成完整的字符串
      * @param $data string 带有占位符的字符串信息（占位符用{?}表示），例如 "i like this {?},do you known {?}"
-     * @param $realValueList string[] 待填入的真实信息，用字符串数组表示，例如["qingdao","beijing"];
-     *  或者使用用逗号分隔的各个独立的字符串表示,比如"qingdao","beijing"
+     * @param $realValueList string[] 待填入的真实信息，用字符串数值表示，例如["qingdao","beijing"]
      * @return string
      */
-    public static function format($data, ...$realValueList)
+    public static function format($data, $realValueList)
     {
         $needle = "{?}";
         // 查找?位置
         $p = strpos($data, $needle);
         // 替换字符的数组下标
         $i = 0;
-
-        if (ObjectHelper::getLength($realValueList) == 1 && ObjectHelper::getType($realValueList[0]) == ObjectTypes::ARRAYS) {
-            $realValueList = $realValueList[0];
-        }
-
         while ($p !== false) {
+            // substr_replace ( mixed $string , mixed $replacement , mixed $start [, mixed $length ] ) : mixed
             $data = substr_replace($data, $realValueList[$i++], $p, 3);
             // 查找下一个?位置  没有时会退出循环
             $p = strpos($data, $needle, ++$p);
@@ -247,36 +237,19 @@ class StringHelper
     }
 
     /**
-     * 获取字符串分隔符前面的内容
-     *
-     * @param string $whole
-     * @param string $seperator
-     * @return string
-     */
-    public static function getStringBeforeSeperator($whole, $seperator)
-    {
-        if (self::isContains($whole, $seperator)) {
-            $array = explode($seperator, $whole);
-            return $array[0];
-        } else {
-            return $whole;
-        }
-    }
-
-    /**
      * 获取字符串分隔符后面的内容
      *
-     * @param string $whole
+     * @param string $data
      * @param string $seperator
      * @return string
      */
-    public static function getStringAfterSeperator($whole, $seperator)
+    public static function getStringAfterSeperator($data, $seperator)
     {
-        if (self::isContains($whole, $seperator)) {
-            $array = explode($seperator, $whole);
+        if (self::isContains($data, $seperator)) {
+            $array = explode($seperator, $data);
             return $array[1];
         } else {
-            return $whole;
+            return $data;
         }
     }
 

@@ -34,7 +34,9 @@ class FileHelper
 
     /**
      * 获取文件的基本名称信息（不带路径不带扩张名的文件名称）
-     * @param string $fileName 带路径的全文件名
+     *
+     * @param string $fileName
+     *            带路径的全文件名
      */
     public static function getFileBaseNameWithoutExtension($fileName)
     {
@@ -45,7 +47,9 @@ class FileHelper
 
     /**
      * 获取文件扩张名称信息（扩张名不带点（“.”））
-     * @param string $fileName 带路径的全文件名
+     *
+     * @param string $fileName
+     *            带路径的全文件名
      */
     public static function getFileExtensionName($fileName)
     {
@@ -87,10 +91,9 @@ class FileHelper
      * @param $fileName
      * @return bool|string
      */
-    public static function getFileEncoding($fileName)
-    {
+    public static function getFileEncoding($fileName){
         $content = file_get_contents($fileName);
-        return StringHelper::getEncoding($content);
+        return StringHelper::getEncoding ($content);
     }
 
     /**
@@ -98,10 +101,9 @@ class FileHelper
      * @param string $targetEncoding
      * @return false|string|string[]|null
      */
-    public static function getEncodingContent($fileName, $targetEncoding = 'UTF-8')
-    {
+    public static function getEncodingContent($fileName,$targetEncoding='UTF-8'){
         $content = file_get_contents($fileName);
-        return StringHelper::getEncodingContent($content, $targetEncoding);
+        return StringHelper::getEncodingContent($content,$targetEncoding);
     }
 
 }

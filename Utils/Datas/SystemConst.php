@@ -8,7 +8,7 @@
 
 namespace Hiland\Utils\Datas;
 
-use Hiland\Utils\DataConstruct\ConstMate;
+use Hiland\Utils\DataConstructure\ConstMate;
 
 /**
  * 常量命名有3部分（或4部分组成）

@@ -176,37 +176,37 @@ class ModelMate
     /**
      * 获取某记录的字段的值
      * @param int|string $key
-     * @param string $fieldName
+     * @param string $feildName
      * @param string $keyName
      * @return mixed 字段的值
      */
-    public function getValue($key, $fieldName, $keyName = 'id')
+    public function getValue($key, $feildName, $keyName = 'id')
     {
         $condition[$keyName] = $key;
         $model = $this->getModel_Where($condition);
 
         $thinkVersion = ThinkHelper::getMainVersion();
         if ($thinkVersion < 5) {
-            return $model->getField($fieldName);
+            return $model->getField($feildName);
         } else {
             $model = $model->find();
-            return $model[$fieldName];
+            return $model[$feildName];
         }
     }
 
     /**
      * 设置某记录的字段的值
      * @param int|string $key
-     * @param string $fieldName
-     * @param mixed $fieldValue
+     * @param string $feildName
+     * @param mixed $feildValue
      * @param string $keyName
      * @return bool|int 成功时返回受影响的行数，失败时返回false
      */
-    public function setValue($key, $fieldName, $fieldValue, $keyName = 'id')
+    public function setValue($key, $feildName, $feildValue, $keyName = 'id')
     {
         $condition[$keyName] = $key;
         $model = $this->getModel_Where($condition);
-        return $model->setField($fieldName, $fieldValue);
+        return $model->setField($feildName, $feildValue);
     }
 
     /**
@@ -231,10 +231,10 @@ class ModelMate
             $sql .= ' where ' . $whereClause;
         }
 
-        $dbSet = $this->query($sql);
+        $dbset = $this->query($sql);
 
-        if ($dbSet) {
-            return $dbSet[0][$searcher];
+        if ($dbset) {
+            return $dbset[0][$searcher];
         } else {
             return null;
         }
