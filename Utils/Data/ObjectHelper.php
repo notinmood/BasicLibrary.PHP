@@ -221,9 +221,10 @@ class ObjectHelper
      * $var; (一个声明了，但是没有值的变量)
      * 另外 一个没有内部成员的对象Object也是空的
      * @param $data
+     * @param null $memberName
      * @return bool
      */
-    public static function isEmpty($data)
+    public static function isEmpty($data, $memberName = null)
     {
         if ($data == null) {
             return true;
@@ -232,16 +233,31 @@ class ObjectHelper
         $type = self::getType($data);
 
         $result = false;
-        switch ($type) {
-            case ObjectTypes::OBJECT:
-                $emptyObject = new \stdClass();
-                if ($data == $emptyObject) {
+        if ($memberName) {
+            $isMember = self::isMember($data, $memberName);
+            if ($isMember) {
+                $memberValue = self::getMember($data, $memberName);
+                if (self::isEmpty($memberValue)) {
                     $result = true;
+                } else {
+                    $result = false;
                 }
-                break;
-            default:
-                $result = empty($data);
+            } else {
+                $result = true;
+            }
+        } else {
+            switch ($type) {
+                case ObjectTypes::OBJECT:
+                    $emptyObject = new \stdClass();
+                    if ($data == $emptyObject) {
+                        $result = true;
+                    }
+                    break;
+                default:
+                    $result = empty($data);
+            }
         }
+
 
         return $result;
     }
@@ -250,7 +266,7 @@ class ObjectHelper
      * @param $data
      * @return bool
      */
-    public static function isNumber($data)
+    public static function isNumeric($data)
     {
         $type = self::getType($data);
         if ($type == ObjectTypes::INTEGER || $type == ObjectTypes::DOUBLE || $type == ObjectTypes::FLOAT) {
@@ -260,6 +276,11 @@ class ObjectHelper
         }
     }
 
+    /**判断一个成员是否属于某个对象
+     * @param $targetObject
+     * @param $memberName
+     * @return bool
+     */
     public static function isMember($targetObject, $memberName)
     {
         $result = false;
@@ -273,6 +294,67 @@ class ObjectHelper
                 break;
             default:
                 $result = false;
+        }
+
+        return $result;
+    }
+
+    public static function getMember($targetObject, $memberName, $defaultValue = null)
+    {
+        if ($targetObject) {
+            if (self::isMember($targetObject, $memberName)) {
+                $type = self::getType($targetObject);
+                switch ($type) {
+                    case ObjectTypes::ARRAYS:
+                        $result = $targetObject[$memberName];
+                        break;
+                    case ObjectTypes::OBJECT:
+                        $result = $targetObject->$memberName;
+                        break;
+                    default:
+                        $result = $defaultValue;
+                }
+
+                return $result;
+            } else {
+                return $defaultValue;
+            }
+        } else {
+            return $defaultValue;
+        }
+    }
+
+    /**判断某个对象是否为某个类型的实例
+     * 跟 运算符 a instanceof B 效果相同
+     * @param $entity
+     * @param $classFullName string 带命名空间的类型名称全名（调用的时候，获取某个类型的全名称可以使用::class关键字，即AAA::class）
+     * @return bool
+     * @example
+     * ObjectHelper::isInstance($entity1,ActiveCode::class);
+     */
+    public static function isInstance($entity, $classFullName)
+    {
+        return is_a($entity, $classFullName);
+    }
+
+    /**获取给定对象的元素长度（目前仅支持字符串和数组的长度求取）
+     * @param $data
+     * @return false|int
+     */
+    public static function getLength($data)
+    {
+        $type = self::getType($data);
+        $result = 0;
+
+        switch ($type) {
+            case ObjectTypes::ARRAYS:
+                $result = ArrayHelper::getLength($data);
+                break;
+            case ObjectTypes::STRING:
+                $result = StringHelper::getLength($data);
+                break;
+            default:
+                $result = 0;
         }
 
         return $result;

@@ -2,8 +2,43 @@
 
 namespace Hiland\Utils\Data;
 
+use DateInterval;
+use DateTime;
+use DateTimeZone;
+use Exception;
+
+/** 2038年问题的核心是 timestamp最大支持2^31 - 1(即2,147,483,641)，超过这个值都会出现问题。
+ * Class DateHelper
+ * @package Hiland\Utils\Data
+ */
 class DateHelper
 {
+    /**获取2038年1月1日0时0分0秒的 时间戳
+     * @return int
+     */
+    private static function get20380101Timestamp()
+    {
+        return 2145888000;
+    }
+
+    /**20380101的时间表示格式
+     * @return DateTime
+     * @throws Exception
+     */
+    private static function get20380101DateTime()
+    {
+        return new DateTime("2038-1-1 0:0:0", self::getDateTimeZone());
+    }
+
+    /**统一设置时区为PRC
+     * @return DateTimeZone
+     */
+    private static function getDateTimeZone()
+    {
+        return new DateTimeZone("PRC");
+    }
+
+
     /** 比较两个日期的大小
      * @param $dateMain
      * @param $dateSecondary
@@ -40,8 +75,8 @@ class DateHelper
         switch ($type) {
             case ObjectTypes::STRING:
                 try {
-                    $result = new \DateTime($dateString);
-                } catch (\Exception $e) {
+                    $result = new DateTime($dateString, self::getDateTimeZone());
+                } catch (Exception $e) {
                     $result = false;
                 }
                 break;
@@ -55,31 +90,40 @@ class DateHelper
         return $result;
     }
 
-    /** 将timestamp转换成日期字符串
+    /** 将timestamp转换成日期字符串(format函数的别名)
      * @param null $timestamp
      * @param string $format
-     * @return false|string
+     * @return string
+     * @throws Exception
      */
     public static function getDateTimeString($timestamp = null, $format = "Y-m-d H:i:s")
     {
-        if (!$timestamp) {
-            $timestamp = self::getTimestamp();
-        }
-
-        return date($format, $timestamp);
+        return self::format($timestamp, $format);
     }
 
     /**将timestamp转换成日期
      * @param null $timestamp
-     * @return array
+     * @return DateTime
+     * @throws Exception
      */
     public static function getDateTime($timestamp = null)
     {
-        if (!$timestamp) {
-            $timestamp = self::getTimestamp();
-        }
+        $timestamp = $timestamp === null ? time() : floatval($timestamp);
 
-        return getdate($timestamp);
+        if ($timestamp <= self::get20380101Timestamp()) {
+            $targetArray = getdate($timestamp);
+
+            $targetString = "{$targetArray['year']}-{$targetArray['mon']}-{$targetArray['mday']} {$targetArray['hours']}:{$targetArray['minutes']}:{$targetArray['seconds']}";
+            return new DateTime($targetString, self::getDateTimeZone());
+        } else {
+            $ts2038 = self::get20380101Timestamp();
+            $diffArray = self::getDiff($ts2038, $timestamp);
+
+            $targetDateTime = self::addInterval($ts2038, 'd', $diffArray->d, 'dt');
+            $targetDateTime = self::addInterval($targetDateTime, 'h', $diffArray->h, 'dt');
+            $targetDateTime = self::addInterval($targetDateTime, 'm', $diffArray->i, 'dt');
+            return self::addInterval($targetDateTime, 's', $diffArray->s, 'dt');
+        }
     }
 
     /**获取两个日期之间的差值（秒或者毫秒）
@@ -87,6 +131,7 @@ class DateHelper
      * @param $dateSecondary
      * @param string $intervalType “s”表示秒；“ms”表示毫秒
      * @return float|int
+     * @throws Exception
      */
     public static function diffInterval($dateMain, $dateSecondary, $intervalType = "s")
     {
@@ -107,10 +152,41 @@ class DateHelper
         return $result;
     }
 
+
+    /**
+     * @param $startValue DateTime|int|float 开始时间(即可以是DateTime类型也可以是timestamp类型)
+     * @param $endValue DateTime|int|float 结束时间(即可以是DateTime类型也可以是timestamp类型)
+     * @return DateInterval
+     * @throws Exception
+     */
+    public static function getDiff($startValue, $endValue)
+    {
+        if (ObjectHelper::getType($startValue) == ObjectTypes::DATETIME) {
+            $startValue = self::getTimestamp($startValue);
+        }
+
+        if (ObjectHelper::getType($endValue) == ObjectTypes::DATETIME) {
+            $endValue = self::getTimestamp($endValue);
+        }
+
+        $timeDiff = $endValue - $startValue;
+        $days = intval($timeDiff / 86400);
+        $remain = $timeDiff % 86400;
+        $hours = intval($remain / 3600);
+        $remain = $remain % 3600;
+        $mins = intval($remain / 60);
+        $secs = $remain % 60;
+
+        $p = "P{$days}DT{$hours}H{$mins}M{$secs}S";
+        return new DateInterval($p);
+    }
+
     /**
      * 获取从1970年1月1日以来总共的毫秒数
      *
+     * @param null $dateValue
      * @return float
+     * @throws Exception
      */
     public static function getTotalMilliSeconds($dateValue = null)
     {
@@ -121,28 +197,31 @@ class DateHelper
      * 获取一个指定时间点的timestamp(即从1970年1月1日以来总共的秒数)
      * @param string $dateValue 指定的时间点 ，可以是“201603161312”格式，也可以是“2016-03-16 13:12:25”
      * @return int
+     * @throws Exception
      */
     public static function getTimestamp($dateValue = null)
     {
         if (ObjectHelper::isEmpty($dateValue)) {
-            $dateValue = new \DateTime();
+            $dateValue = new DateTime();
         }
 
         if (ObjectHelper::getType($dateValue) == ObjectTypes::STRING) {
-            $dateValue = new \DateTime($dateValue);
+            $dateValue = new DateTime($dateValue);
         }
+        $dateValue->setTimezone(self::getDateTimeZone());
 
         //以下代码修复php中2038年问题（32位php的int无法表示2038年01月19日星期二凌晨03:14:07之后的时间秒数。
         //超过 2^31 – 1，2^31 – 1 就是0x7FFFFFFF）
-        $year20380101 = new \DateTime("2038-1-1 0:0:0");
+        $year20380101 = new DateTime("2038-1-1 0:0:0", self::getDateTimeZone());
         if ($dateValue <= $year20380101) {
             $result = $dateValue->getTimestamp();
         } else {
             $dateDiff = $dateValue->diff($year20380101);
             $days = floatval($dateDiff->days);
-            $year20380101Seconds = $year20380101->getTimestamp();
             $totalSeconds = floatval($days * 86400)
-                + $dateDiff->h * 3600 + $dateDiff->m * 60 + $dateDiff->s;
+                + $dateDiff->h * 3600 + $dateDiff->i * 60 + $dateDiff->s;
+
+            $year20380101Seconds = $year20380101->getTimestamp();
 
             $result = $year20380101Seconds + $totalSeconds;
         }
@@ -163,8 +242,7 @@ class DateHelper
     /**
      * 对日期进行时间间隔处理
      *
-     * @param int $originalTimestamp
-     *            int类型的时间戳
+     * @param int|DateTime $originalValue int类型的时间戳或者是DateTime时间
      * @param string $intervalType
      *            时间间隔类型，具体如下：
      *            y:年
@@ -178,17 +256,23 @@ class DateHelper
      *            m或者i:分钟
      *            s:秒钟
      *
-     * @param int $intervalValue
-     *            时间间隔值
-     * @return int int类型的时间戳
-     * @throws \Exception
+     * @param int $intervalValue 时间间隔值
+     * @param string $returnType 返回值类型--dt:返回DateTime时间类型；ts(默认):返回timestamp类型。
+     * @return int|DateTime int类型的时间戳或者是DateTime时间
+     * @throws Exception
      */
-    public static function addInterval($originalTimestamp = null, $intervalType = "d", $intervalValue = 1)
+    public static function addInterval($originalValue = null, $intervalType = "d", $intervalValue = 1, $returnType = "ts")
     {
-        if (empty($originalTimestamp)) {
-            $originalTimestamp = time();
+        if (ObjectHelper::getType($originalValue) == ObjectTypes::DATETIME) {
+            $source = $originalValue;
+        } else {
+            if ($originalValue) {
+                $originalValue = "@" . $originalValue;
+            }
+
+            $source = new DateTime($originalValue);
+            $source->setTimezone(self::getDateTimeZone());
         }
-        $originalTimestamp = "@" . $originalTimestamp;
 
 
         $y = $M = $d = $h = $i = $s = 0;
@@ -197,8 +281,6 @@ class DateHelper
             $invert = 1;
         }
         $intervalValue = abs($intervalValue);
-
-        //$formatString = "P0Y0M0DT0H0M0S";
 
         switch ($intervalType) {
             case "y":
@@ -235,16 +317,18 @@ class DateHelper
                 break;
         }
 
-        $formatString = "P|$y|Y|$M|M|$d|DT|$h|H|$i|M|$s|S";
-        $formatString = str_replace("|", "", $formatString);
+        $formatString = "P{$y}Y{$M}M{$d}DT{$h}H{$i}M{$s}S";
 
-        $interval = new \DateInterval($formatString);
+        $interval = new DateInterval($formatString);
         $interval->invert = $invert;
 
-        $source = new \DateTime($originalTimestamp, new \DateTimeZone("PRC"));
         $target = $source->add($interval);
 
-        return $target->getTimestamp();
+        if ($returnType == "timestamp" || $returnType == "ts") {
+            return self::getTimestamp($target);
+        } else {
+            return $target;
+        }
     }
 
     /**
@@ -252,12 +336,14 @@ class DateHelper
      * @param int $time timestamp格式的时间
      * @param string $formatString 格式化字符串
      * @return string
+     * @throws Exception
      */
     public static function format($time = null, $formatString = 'Y-m-d H:i:s')
     {
         $time = $time === null ? time() : floatval($time);
 
-        return date($formatString, $time);
+        $targetDateTime = self::getDateTime($time);
+        return $targetDateTime->format($formatString);
     }
 
     /**
@@ -326,10 +412,10 @@ class DateHelper
     /**
      * 获取日期中月份的中文叫法
      * @param null|int $month
-     * @param string $postfixstring 后缀信息
+     * @param string $postfixes 后缀信息
      * @return string
      */
-    public static function getMonthChineseName($month = null, $postfixstring = '')
+    public static function getMonthChineseName($month = null, $postfixes = '')
     {
         if ($month == null) {
             $month = date("n");
@@ -369,11 +455,11 @@ class DateHelper
             case 11:
                 $result = '十一';
                 break;
-            case 12:
+            default:
                 $result = '十二';
                 break;
         }
 
-        return $result . $postfixstring;
+        return $result . $postfixes;
     }
 }

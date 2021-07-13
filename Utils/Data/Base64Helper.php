@@ -16,6 +16,8 @@ namespace Hiland\Utils\Data;
 class Base64Helper
 {
     /**获取安全的base64编码（用于在url中传递等工作）
+     * Base64编码中使用了 两个特殊字符 + / （加除，加粗）    可以谐音为 “贝斯是加粗”的吉他
+     * 为了安全起见,(在url等场景中)需要将这两个字符进行合理的替换
      * @param $data
      * @return mixed|string
      */

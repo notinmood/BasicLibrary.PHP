@@ -2,7 +2,8 @@
 
 namespace Hiland\Utils\Environment;
 
-
+use Hiland\Utils\Data\ArrayHelper;
+use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\RegexHelper;
 use Hiland\Utils\Data\StringHelper;
 use Hiland\Utils\Web\HttpResponseHeader;
@@ -39,7 +40,49 @@ class EnvHelper
             '当前进程用户名' => Get_Current_User(),
         ];
     }
-    
+
+    /**
+     * 是否运行在浏览器/服务器模式下
+     * @return bool
+     */
+    public static function isCGI()
+    {
+        if (0 === strpos(PHP_SAPI, 'cgi') || false !== strpos(PHP_SAPI, 'fcgi')) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 是否运行在命令行模式下
+     * @return bool
+     */
+    public static function isCLI()
+    {
+        $sapi_type = php_sapi_name();
+        if (isset($sapi_type) && substr($sapi_type, 0, 3) == 'cli') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 是否运行在windows系统内
+     * @return bool
+     */
+    public static function isWIN()
+    {
+        $pos = strpos(PHP_OS, 'WIN');
+
+        if ($pos >= 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * 判断当前服务器系统
      * @return string
@@ -151,5 +194,52 @@ class EnvHelper
         $result = HttpResponseHeader::get($url, "Content-Encoding");
 
         return $result;
+    }
+
+    /**
+     * 获取web项目的根目录物理路径
+     * ————————————————————
+     *因为当前文件属于类库文件(假定名称为a),
+     *客户浏览器请求的页面(假定为b)
+     *当用composer加载的时候a的时候,
+     *a、b两个文件对应的物理文件,在根目录基本是并列的存在的两个分支子目录.
+     *因此可以通过以下逻辑获取到项目的根目录物理路径
+     * @return string
+     */
+    public static function getRootPhysicalPath()
+    {
+        //当前文件的全物理路径文件名称
+        $current_path = __FILE__;
+        $current_path = str_replace("/", "\\", $current_path);
+
+        //在客户浏览器里面,请求的页面的全物理路径文件名称
+        $request_path = $_SERVER['SCRIPT_FILENAME'];
+        $request_path = str_replace("/", "\\", $request_path);
+
+        $current_path_array = StringHelper::explode($current_path, "\\");
+        $request_path_array = StringHelper::explode($request_path, "\\");
+
+        $current_path_length = ObjectHelper::getLength($current_path_array);
+        $request_path_length = ObjectHelper::getLength($request_path_array);
+
+        $min_length = $current_path_length < $request_path_length ? $current_path_length : $request_path_length;
+        
+        $root_array=[];
+        for ($i=0;$i<$min_length;$i++){
+            if($current_path_array[$i]== $request_path_array[$i]){
+                $root_array[]= $current_path_array[$i];
+            }else{
+                break;
+            }
+        }
+        
+        $root = StringHelper::implode($root_array,"\\");
+
+//        $php_self = str_replace("/", "\\", $_SERVER['PHP_SELF']);
+//        $root = str_ireplace($php_self, '', $current_path);
+//        dump("__FILE__的值为{$current_path}");
+//        dump("_SERVER['PHP_SELF']的值为{$php_self}");
+//        dump("_SERVER['SCRIPT_FILENAME']值为{$request_path}");
+        return $root;
     }
 }

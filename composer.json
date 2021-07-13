@@ -6,7 +6,7 @@
     "type": "library",
     "license": "Apache-2.0",
     "require": {
-        "php": "^5.4|^7.0",
+        "php": "^5.3.3 || ^7.0",
         "alibabacloud/sdk": "^1.8"
     },
     "autoload": {

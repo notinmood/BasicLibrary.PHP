@@ -4,6 +4,7 @@ namespace Hiland\Utils\Web;
 
 use Hiland\Biz\ThinkAddon\TPCompatibleHelper;
 use Hiland\Utils\Data\StringHelper;
+use Hiland\Utils\Environment\EnvHelper;
 
 /**
  *
@@ -186,7 +187,7 @@ class WebHelper
      */
     public static function getHostName()
     {
-        return EnvironmentHelper::getServerHostName();
+        return EnvHelper::getServerHostName();
     }
 
     /**

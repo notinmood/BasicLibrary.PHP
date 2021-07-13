@@ -2,7 +2,7 @@
 
 namespace Hiland\Utils\Data;
 
-use Hiland\Utils\Web\EnvironmentHelper;
+use Hiland\Utils\Environment\EnvHelper;
 
 class StringHelper
 {
@@ -40,17 +40,18 @@ class StringHelper
      */
     public static function getNewLineSymbol()
     {
-        if (EnvironmentHelper::getOS() == 'Windows') {
-            return "\r\n";
-        } else {
-            return "\n";
-        }
+        return PHP_EOL;
+//        if (EnvironmentHelper::getOS() == 'Windows') {
+//            return "\r\n";
+//        } else {
+//            return "\n";
+//        }
     }
 
     /**
      * 截取全角和半角（汉字和英文）混合的字符串以避免乱码
      *
-     * @param string $originalString
+     * @param string $original
      *            要截取的字符串
      * @param int $startPosition
      *            开始位置(第一个字符的位置为0)
@@ -60,17 +61,13 @@ class StringHelper
      * @return string
      * @author 小墨 244349067@qq.com
      */
-    public static function subString($originalString, $startPosition, $length = 0, $charset = "utf-8")
+    public static function subString($original, $startPosition, $length = 0, $charset = "utf-8")
     {
-        $originalStringLength = strlen($originalString);
+        $originalStringLength = strlen($original);
 
         if ($startPosition >= $originalStringLength) {
             return '';
         }
-
-//        $content = '';
-//        $sing = 0;
-//        $count = 0;
 
         if ($length > $originalStringLength - $startPosition) {
             $length = $originalStringLength - $startPosition;
@@ -81,15 +78,15 @@ class StringHelper
         }
 
         if (function_exists("mb_substr")) {
-            $slice = mb_substr($originalString, $startPosition, $length, $charset);
+            $slice = mb_substr($original, $startPosition, $length, $charset);
         } elseif (function_exists('iconv_substr')) {
-            $slice = iconv_substr($originalString, $startPosition, $length, $charset);
+            $slice = iconv_substr($original, $startPosition, $length, $charset);
         } else {
             $re['utf-8'] = "/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xff][\x80-\xbf]{3}/";
             $re['gb2312'] = "/[\x01-\x7f]|[\xb0-\xf7][\xa0-\xfe]/";
             $re['gbk'] = "/[\x01-\x7f]|[\x81-\xfe][\x40-\xfe]/";
             $re['big5'] = "/[\x01-\x7f]|[\x81-\xfe]([\x40-\x7e]|\xa1-\xfe])/";
-            preg_match_all($re[$charset], $originalString, $match);
+            preg_match_all($re[$charset], $original, $match);
             $slice = join("", array_slice($match[0], $startPosition, $length));
         }
 
@@ -98,14 +95,14 @@ class StringHelper
 
     /**
      * @param string $padding 待测试的结尾字符
-     * @param string $wholeString 全句
+     * @param string $whole 全句
      * @return bool
      */
-    public static function isEndWith($wholeString, $padding)
+    public static function isEndWith($whole, $padding)
     {
         $paddingLength = strlen($padding);
-        $fullLength = strlen($wholeString);
-        $subString = substr($wholeString, $fullLength - $paddingLength);
+        $fullLength = strlen($whole);
+        $subString = substr($whole, $fullLength - $paddingLength);
         if ($subString == $padding) {
             return true;
         } else {
@@ -115,12 +112,12 @@ class StringHelper
 
     /**
      * @param string $padding 待测试的开始字符
-     * @param string $wholeString 全句
+     * @param string $whole 全句
      * @return bool
      */
-    public static function isStartWith($wholeString, $padding)
+    public static function isStartWith($whole, $padding)
     {
-        $before = self::getStringBeforeSeperator($wholeString, $padding);
+        $before = self::getStringBeforeSeperator($whole, $padding);
         if ($before == '') {
             return true;
         } else {
@@ -129,34 +126,17 @@ class StringHelper
     }
 
     /**
-     * 获取字符串分隔符前面的内容
-     *
-     * @param string $data
-     * @param string $seperator
-     * @return string
-     */
-    public static function getStringBeforeSeperator($data, $seperator)
-    {
-        if (self::isContains($data, $seperator)) {
-            $array = explode($seperator, $data);
-            return $array[0];
-        } else {
-            return $data;
-        }
-    }
-
-    /**
      * 判断一个字符串是否被包含在另外一个字符串内
      *
      * @param string $subString
      *            被查找的子字符串
-     * @param string $wholeString
+     * @param string $whole
      *            查找的母体字符串
      * @return boolean
      */
-    public static function isContains($wholeString, $subString)
+    public static function isContains($whole, $subString)
     {
-        $result = strstr($wholeString, $subString);
+        $result = strstr($whole, $subString);
 
         if ($result === false) {
             return false;
@@ -165,14 +145,47 @@ class StringHelper
         }
     }
 
-    /**将一个字符串按照某个分隔符分隔成数组
-     * @param $wholeString string 字符串全串
-     * @param $delimiterString string 分隔符
+    /**获取字符串长度
+     * @param $strData
+     * @param string $encoding
+     * @return false|int
+     */
+    public static function getLength($strData, $encoding = "utf-8")
+    {
+        return mb_strlen($strData, $encoding);
+    }
+
+    /**包装php的字符串替换(将各个参数名称进一步明确化)
+     * @param $whole
+     * @param $old
+     * @param $new
+     * @return array|string|string[]
+     */
+    public static function replace($whole, $old, $new)
+    {
+        return str_replace($old, $new, $whole);
+    }
+
+    /**
+     * 将一个字符串按照某个分隔符分隔成数组
+     * @param $whole string 字符串全串
+     * @param $delimiter string 分隔符
      * @return false|string[]
      */
-    public static function explode($wholeString, $delimiterString)
+    public static function explode($whole, $delimiter)
     {
-        return explode($delimiterString, $wholeString);
+        return explode($delimiter, $whole);
+    }
+
+    /**
+     * 将一个数组的各个元素串联成一个字符串
+     * @param $arrData
+     * @param $delimiter
+     * @return string
+     */
+    public static function implode($arrData, $delimiter="")
+    {
+        return  implode($delimiter, $arrData);
     }
 
     /**
@@ -214,20 +227,26 @@ class StringHelper
     }
 
 
-    /** 对带有占位符的字符串信息，进行格式化填充，形成完整的字符串
+    /** 对带有占位符的字符串信息，进行格式化填充，形成完整的字符串。
+     * 现在推荐直接使用 PHP系统自带的格式化方式,例如:"k的值为{$k}；v的值为{$v}"
      * @param $data string 带有占位符的字符串信息（占位符用{?}表示），例如 "i like this {?},do you known {?}"
-     * @param $realValueList string[] 待填入的真实信息，用字符串数值表示，例如["qingdao","beijing"]
+     * @param $realValueList string[] 待填入的真实信息，用字符串数组表示，例如["qingdao","beijing"];
+     *  或者使用用逗号分隔的各个独立的字符串表示,比如"qingdao","beijing"
      * @return string
      */
-    public static function format($data, $realValueList)
+    public static function format($data, ...$realValueList)
     {
         $needle = "{?}";
         // 查找?位置
         $p = strpos($data, $needle);
         // 替换字符的数组下标
         $i = 0;
+
+        if (ObjectHelper::getLength($realValueList) == 1 && ObjectHelper::getType($realValueList[0]) == ObjectTypes::ARRAYS) {
+            $realValueList = $realValueList[0];
+        }
+
         while ($p !== false) {
-            // substr_replace ( mixed $string , mixed $replacement , mixed $start [, mixed $length ] ) : mixed
             $data = substr_replace($data, $realValueList[$i++], $p, 3);
             // 查找下一个?位置  没有时会退出循环
             $p = strpos($data, $needle, ++$p);
@@ -235,21 +254,39 @@ class StringHelper
 
         return $data;
     }
+    
+    
+     /**
+     * 获取字符串分隔符前面的内容
+     *
+     * @param string $whole
+     * @param string $seperator
+     * @return string
+     */
+    public static function getStringBeforeSeperator($whole, $seperator)
+    {
+        if (self::isContains($whole, $seperator)) {
+            $array = explode($seperator, $whole);
+            return $array[0];
+        } else {
+            return $whole;
+        }
+    }
 
     /**
      * 获取字符串分隔符后面的内容
      *
-     * @param string $data
+     * @param string $whole
      * @param string $seperator
      * @return string
      */
-    public static function getStringAfterSeperator($data, $seperator)
+    public static function getStringAfterSeperator($whole, $seperator)
     {
-        if (self::isContains($data, $seperator)) {
-            $array = explode($seperator, $data);
+        if (self::isContains($whole, $seperator)) {
+            $array = explode($seperator, $whole);
             return $array[1];
         } else {
-            return $data;
+            return $whole;
         }
     }
 
