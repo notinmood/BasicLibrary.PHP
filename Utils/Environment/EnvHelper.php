@@ -223,17 +223,17 @@ class EnvHelper
         $request_path_length = ObjectHelper::getLength($request_path_array);
 
         $min_length = $current_path_length < $request_path_length ? $current_path_length : $request_path_length;
-        
-        $root_array=[];
-        for ($i=0;$i<$min_length;$i++){
-            if($current_path_array[$i]== $request_path_array[$i]){
-                $root_array[]= $current_path_array[$i];
-            }else{
+
+        $root_array = [];
+        for ($i = 0; $i < $min_length; $i++) {
+            if ($current_path_array[$i] == $request_path_array[$i]) {
+                $root_array[] = $current_path_array[$i];
+            } else {
                 break;
             }
         }
-        
-        $root = StringHelper::implode($root_array,"\\");
+
+        $root = StringHelper::implode($root_array, "\\");
 
 //        $php_self = str_replace("/", "\\", $_SERVER['PHP_SELF']);
 //        $root = str_ireplace($php_self, '', $current_path);
