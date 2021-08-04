@@ -4,9 +4,7 @@ namespace Hiland\Utils\Data;
 
 /**
  * 数据集辅助类
- *
  * @author devel
- *
  */
 class DBSetHelper
 {

@@ -2,6 +2,7 @@
 
 namespace Hiland\Utils\IO;
 
+use Hiland\Utils\Data\BoolHelper;
 use Hiland\Utils\Environment\EnvHelper;
 
 /**
@@ -54,20 +55,6 @@ class ConsoleHelper
      */
     public static function echoBool($data)
     {
-        echo self::getBoolString($data);
-    }
-
-    /**
-     * 将bool类型转换成字符串
-     * @param bool $data
-     * @return string
-     */
-    public static function getBoolString($data)
-    {
-        $result = "false";
-        if ($data == true) {
-            $result = "true";
-        }
-        return $result;
+        echo BoolHelper::getText($data);
     }
 }

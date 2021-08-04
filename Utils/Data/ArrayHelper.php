@@ -12,7 +12,7 @@ class ArrayHelper
      */
     public static function contains($array, $item)
     {
-        return in_array($item,$array);
+        return in_array($item, $array);
     }
 
     /**判断某个键是否存在于某个数组内
@@ -30,7 +30,8 @@ class ArrayHelper
      * @param $array
      * @return int
      */
-    public static function getLength($array){
+    public static function getLength($array)
+    {
         return count($array);
     }
 
@@ -389,7 +390,7 @@ class ArrayHelper
     public static function getLevel($array)
     {
         // scalar value has depth 0
-        if(!is_array($array)) return 0;
+        if (!is_array($array)) return 0;
 
         // array has min depth of 1
         $depth = 1;
