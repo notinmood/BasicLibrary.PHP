@@ -234,12 +234,6 @@ class EnvHelper
         }
 
         $root = StringHelper::implode($root_array, "\\");
-
-//        $php_self = str_replace("/", "\\", $_SERVER['PHP_SELF']);
-//        $root = str_ireplace($php_self, '', $current_path);
-//        dump("__FILE__的值为{$current_path}");
-//        dump("_SERVER['PHP_SELF']的值为{$php_self}");
-//        dump("_SERVER['SCRIPT_FILENAME']值为{$request_path}");
         return $root;
     }
 }

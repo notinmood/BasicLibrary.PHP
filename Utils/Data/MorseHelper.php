@@ -8,10 +8,10 @@ namespace Hiland\Utils\Data;
  * @package Hiland\Utils\Data
  * https://gitee.com/fubinwei/morse-php/blob/master/morse.php#
  * 例子：
-    $data= MorseHelper::encode("这是一个伟大的时代，nihao！");
-    dump($data);
-    $data= MorseHelper::decode($data);
-    dump($data);
+ * $data= MorseHelper::encode("这是一个伟大的时代，nihao！");
+ * dump($data);
+ * $data= MorseHelper::decode($data);
+ * dump($data);
  */
 class MorseHelper
 {

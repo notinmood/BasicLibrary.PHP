@@ -44,7 +44,7 @@ class XmlHelper
             return false;
         }
 
-        $array = json_decode($json); // php5，以及以上，如果是更早版本，請下載JSON.php
+        $array = json_decode($json); // php5以及以上;如果是更早版本，請下載JSON.php
         $xml = ArrayHelper::ToXml($array, 'myxml', true, $charset);
         return $xml;
     }

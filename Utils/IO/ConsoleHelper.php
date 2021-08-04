@@ -10,7 +10,7 @@ use Hiland\Utils\Environment\EnvHelper;
  * @author 解然
  * @version v20131224
  */
-class DisplayHelper
+class ConsoleHelper
 {
     /**
      * 控制台输出
