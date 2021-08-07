@@ -35,17 +35,11 @@ class StringHelper
 
     /**
      * 获取文本文件的回车换行符
-     *
      * @return string
      */
     public static function getNewLineSymbol()
     {
         return PHP_EOL;
-//        if (EnvironmentHelper::getOS() == 'Windows') {
-//            return "\r\n";
-//        } else {
-//            return "\n";
-//        }
     }
 
     /**
@@ -329,6 +323,4 @@ class StringHelper
     {
         return mb_strtolower($data);
     }
-
-
 }
