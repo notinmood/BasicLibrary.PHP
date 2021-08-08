@@ -21,8 +21,9 @@ class CodingHelper
     /**
      * js escape php 实现
      * @param $string           the sting want to be escaped
-     * @param $in_encoding
-     * @param $out_encoding
+     * @param string $in_encoding
+     * @param string $out_encoding
+     * @return string
      */
     public static function escape($string, $in_encoding = 'UTF-8', $out_encoding = 'UCS-2')
     {

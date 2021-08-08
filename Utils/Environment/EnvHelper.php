@@ -185,15 +185,12 @@ class EnvHelper
      */
     public static function getServerHostName()
     {
-        $host = isset($_SERVER['HTTP_X_FORWARDED_HOST']) ? $_SERVER['HTTP_X_FORWARDED_HOST'] : (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '');
-        return $host;
+        return isset($_SERVER['HTTP_X_FORWARDED_HOST']) ? $_SERVER['HTTP_X_FORWARDED_HOST'] : (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '');
     }
 
     public static function getServerCompressType($url)
     {
-        $result = HttpResponseHeader::get($url, "Content-Encoding");
-
-        return $result;
+        return HttpResponseHeader::get($url, "Content-Encoding");
     }
 
     /**
@@ -233,7 +230,6 @@ class EnvHelper
             }
         }
 
-        $root = StringHelper::implode($root_array, "\\");
-        return $root;
+        return StringHelper::implode($root_array, "\\");
     }
 }

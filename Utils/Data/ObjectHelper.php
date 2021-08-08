@@ -15,7 +15,7 @@ class ObjectHelper
      *            目标对象
      * @return object 赋值后的对象
      */
-    public static function arrayToComplexOjbect($array, $object)
+    public static function arrayToComplexObject($array, $object)
     {
         foreach ($array as $k => $v) {
             $object->$k = $v;
@@ -61,7 +61,7 @@ class ObjectHelper
      *            符号的作用域是与活动符号表相关联的。因此，同一时间，只有一个活动符号表。
      *            要获取到当前活动符号表可以通过 get_defined_vars 方法来获取。
      *            http://blog.csdn.net/fdipzone/article/details/14643331
-     * @return mixed
+     * @return false|int|string
      */
     public static function getVarName(&$var, $scope = null)
     {

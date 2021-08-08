@@ -2,8 +2,6 @@
 
 namespace Hiland\Utils\Data;
 
-use Hiland\Utils\Environment\EnvHelper;
-
 class StringHelper
 {
     /**

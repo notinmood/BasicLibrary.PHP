@@ -48,8 +48,8 @@ class GuidHelper
         // 左侧通过添加0补齐11位
         $totalMillisecondsHex = str_pad($totalMillisecondsHex, 11, 0, STR_PAD_LEFT);
 
-        $charid = md5(uniqid(mt_rand(), true));
-        $totalMillisecondsHex = strtoupper($totalMillisecondsHex . substr($charid, 0, 21));
+        $charID = md5(uniqid(mt_rand(), true));
+        $totalMillisecondsHex = strtoupper($totalMillisecondsHex . substr($charID, 0, 21));
 
         $hyphen = chr(45); // "-"
         $guid = substr($totalMillisecondsHex, 0, 8) . $hyphen
@@ -75,8 +75,7 @@ class GuidHelper
     public static function cleanHyphen($guidWithHyphen)
     {
         $hyphen = chr(45); // "-"
-        $result = str_replace($hyphen, '', $guidWithHyphen);
-        return $result;
+        return str_replace($hyphen, '', $guidWithHyphen);
     }
 
     /**
@@ -92,13 +91,11 @@ class GuidHelper
         $guidWithoutHyphen = StringHelper::getStringBeforeSeperator($guidWithoutHyphen, chr(125)); // "}"
 
         $hyphen = chr(45); // "-"
-        $guid = substr($guidWithoutHyphen, 0, 8) . $hyphen
+        return substr($guidWithoutHyphen, 0, 8) . $hyphen
             . substr($guidWithoutHyphen, 8, 4) . $hyphen
             . substr($guidWithoutHyphen, 12, 4) . $hyphen
             . substr($guidWithoutHyphen, 16, 4) . $hyphen
             . substr($guidWithoutHyphen, 20, 12);
-
-        return $guid;
     }
 
     /**

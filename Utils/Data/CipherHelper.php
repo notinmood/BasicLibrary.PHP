@@ -15,8 +15,8 @@ class CipherHelper
      * @param string $content 签名内容
      * @param string $key 签名秘钥
      * @param string $algorithm 签名算法（默认使用md5）
-     * @throws \Exception
      * @return string
+     * @throws \Exception
      */
     public static function signature($content, $key = '', $algorithm = 'md5')
     {

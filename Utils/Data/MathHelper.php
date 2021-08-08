@@ -35,9 +35,9 @@ class MathHelper
 
     /**获取一个数列的简单的移动平均值
      * @param $sourceArray
-     * @param $period
+     * @param $period int 滑动时间周期(比如每5天作为一个周期计算一次平均值)
      * @param string $targetFieldName 如果是一维数组可以忽略本参数；如果是二维数组，请指定需要进行计算的字段名称。
-     * @return int
+     * @return array
      */
     public static function sma($sourceArray, $period, $targetFieldName = '')
     {
@@ -46,32 +46,25 @@ class MathHelper
         $pIndex = $period - 1;
         $data = array_values($sourceArray);
         $sum = 0;
-        if ($level == 1) {
-            //计算移动平均值
-            foreach ($data as $k => $v) {
-                $sum += $v;
-                if ($k < $pIndex) {
-                    $item = 0;
-                } else {
-                    $item = sprintf("%.2f", ($sum / $period));
-                    $sum -= $data[$k - $pIndex] ? $data[$k - $pIndex] : 0;
-                }
 
-                $result[] = $item;
+        foreach ($data as $k => $v) {
+            if ($level == 1) {
+                $currentValue = $v;
+                $needRemoveValue = $data[$k - $pIndex] ? $data[$k - $pIndex] : 0;
+            } else {
+                $currentValue = $v[$targetFieldName];
+                $needRemoveValue = $data[$k - $pIndex][$targetFieldName] ? $data[$k - $pIndex][$targetFieldName] : 0;
             }
-        } else {
-            //计算移动平均值
-            foreach ($data as $k => $v) {
-                $sum += $v[$targetFieldName];
-                if ($k < $pIndex) {
-                    $item = 0;
-                } else {
-                    $item = sprintf("%.2f", ($sum / $period));
-                    $sum -= $data[$k - $pIndex][$targetFieldName] ? $data[$k - $pIndex][$targetFieldName] : 0;
-                }
 
-                $result[] = $item;
+            $sum += $currentValue;
+            if ($k < $pIndex) {
+                $item = 0;
+            } else {
+                $item = sprintf("%.2f", ($sum / $period));
+                $sum -= $needRemoveValue;
             }
+
+            $result[] = $item;
         }
 
         return $result;
