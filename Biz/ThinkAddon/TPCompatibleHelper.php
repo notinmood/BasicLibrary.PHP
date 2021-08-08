@@ -12,13 +12,13 @@ namespace Hiland\Biz\ThinkAddon;
 class TPCompatibleHelper
 {
     /**读取配置节点的信息
-     * @param $setingName string 配置节点的名称
+     * @param $settingName string 配置节点的名称
      */
-    public static function config($setingName)
+    public static function config($settingName)
     {
         $result = '';
         if (TPVersionHelper::getPrimaryVersion() > 3) {
-            $nameNodes = explode(".", $setingName);
+            $nameNodes = explode(".", $settingName);
 
             if ($nameNodes[0]) {
                 $result = config($nameNodes[0]);
@@ -28,7 +28,7 @@ class TPCompatibleHelper
                 $result = $result[$nameNodes[$i]];
             }
         } else {
-            $result = C($setingName);
+            $result = C($settingName);
         }
 
         return $result;
