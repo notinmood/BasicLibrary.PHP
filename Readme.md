@@ -3,3 +3,8 @@
 
 里面发送短信使用的aliyun的短信接口，其中composer.json里面引入了"alibabacloud/sdk": "^1.8"，这个库还会引入其他的库，被引入的库guzzle如果是7.X版本，需要手动修改为6.3。因为7.X版本是php7的语法。
 （先删除掉guzzlehttp目录，然后把composer.json,composer.lock中涉及的guzzle从 6.3|7.0,改为6.3；最后在composer update）
+
+或者暂时先把这个功能去掉
+"require": {
+        "alibabacloud/sdk": "^1.8"
+},
