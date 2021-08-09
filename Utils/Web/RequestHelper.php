@@ -4,13 +4,14 @@
 namespace Hiland\Utils\Web;
 
 
+use think\Container;
 use think\Request;
 
 class RequestHelper
 {
     public static function isPost()
     {
-        if (Request::instance()->isPost()) {
+        if (Container::get("request")->isPost()) {
             return true;
         } else {
             return false;
@@ -18,10 +19,11 @@ class RequestHelper
     }
 
     public static function isGet(){
-        if (Request::instance()->isGet()) {
+        if (Container::get("request")->isGet()) {
             return true;
         } else {
             return false;
         }
     }
+
 }

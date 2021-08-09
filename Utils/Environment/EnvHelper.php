@@ -207,11 +207,11 @@ class EnvHelper
     {
         //当前文件的全物理路径文件名称
         $current_path = __FILE__;
-        $current_path = str_replace("/", "\\", $current_path);
+        $current_path = realpath($current_path);
 
         //在客户浏览器里面,请求的页面的全物理路径文件名称
         $request_path = $_SERVER['SCRIPT_FILENAME'];
-        $request_path = str_replace("/", "\\", $request_path);
+        $request_path = realpath($request_path);
 
         $current_path_array = StringHelper::explode($current_path, "\\");
         $request_path_array = StringHelper::explode($request_path, "\\");

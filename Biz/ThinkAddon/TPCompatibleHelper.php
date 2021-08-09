@@ -9,6 +9,8 @@
 namespace Hiland\Biz\ThinkAddon;
 
 
+use Hiland\Utils\Data\ThinkHelper;
+
 class TPCompatibleHelper
 {
     /**读取配置节点的信息
@@ -17,7 +19,7 @@ class TPCompatibleHelper
     public static function config($settingName)
     {
         $result = '';
-        if (TPVersionHelper::getPrimaryVersion() > 3) {
+        if (ThinkHelper::getPrimaryVersion() > 3) {
             $nameNodes = explode(".", $settingName);
 
             if ($nameNodes[0]) {
@@ -44,7 +46,7 @@ class TPCompatibleHelper
      */
     public static function cache($name, $value = '', $options = null, $tags = null)
     {
-        if (TPVersionHelper::getPrimaryVersion() > 3) {
+        if (ThinkHelper::getPrimaryVersion() > 3) {
             $result = cache($name, $value, $options, $tags);
         } else {
             $result = S($name, $value, $options, $tags);

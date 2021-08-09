@@ -9,6 +9,7 @@
 namespace Hiland\Utils\DataModel;
 
 
+use Hiland\Biz\ThinkAddon\TPCompatibleHelper;
 use Hiland\Utils\Data\ThinkHelper;
 use think\Config;
 use think\Model;
@@ -32,7 +33,7 @@ class CommonModel extends Model
             // 当前模型名
             $name       = str_replace('\\', '/', $this->class);
             $this->name = basename($name);
-            if (ThinkHelper::config ('class_suffix')) {
+            if (TPCompatibleHelper::config ('class_suffix')) {
                 $suffix     = basename(dirname($name));
                 $this->name = substr($this->name, 0, -strlen($suffix));
             }

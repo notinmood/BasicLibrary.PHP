@@ -27,7 +27,7 @@ class ModelMate
     public function __construct($model)
     {
         if (is_string($model)) {
-            $thinkVersion = ThinkHelper::getMainVersion();
+            $thinkVersion = ThinkHelper::getPrimaryVersion();
             if ($thinkVersion < 5) {
                 $this->modelObject = $this->queryObject = M($model);
             } else {
@@ -185,7 +185,7 @@ class ModelMate
         $condition[$keyName] = $key;
         $model = $this->getModel_Where($condition);
 
-        $thinkVersion = ThinkHelper::getMainVersion();
+        $thinkVersion = ThinkHelper::getPrimaryVersion();
         if ($thinkVersion < 5) {
             return $model->getField($fieldName);
         } else {
@@ -219,7 +219,7 @@ class ModelMate
     {
         $tableName = '';
 
-        $thinkVersion = ThinkHelper::getMainVersion();
+        $thinkVersion = ThinkHelper::getPrimaryVersion();
         if ($thinkVersion < 5) {
             $tableName = $this->modelObject->getTableName();
         } else {
@@ -249,7 +249,7 @@ class ModelMate
     {
         $tableName = '';
 
-        $thinkVersion = ThinkHelper::getMainVersion();
+        $thinkVersion = ThinkHelper::getPrimaryVersion();
         if ($thinkVersion < 5) {
             $tableName = $this->modelObject->getTableName();
         } else {
@@ -301,7 +301,7 @@ class ModelMate
         $recordID = 0;
         $isAddOperation = true;
 
-        $thinkVersion = ThinkHelper::getMainVersion();
+        $thinkVersion = ThinkHelper::getPrimaryVersion();
         /* 添加或新增基础内容 */
         if (empty($data[$keyName])) { // 新增数据
             if ($thinkVersion < 5) {

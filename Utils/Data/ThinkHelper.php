@@ -3,7 +3,8 @@
 
 namespace Hiland\Utils\Data;
 
-use think\Config;
+use think\App;
+use think\facade\Config;
 
 /**
  * 对thinkphp的包装，主要用于thinkphp各个版本的兼容
@@ -18,42 +19,64 @@ class ThinkHelper
      */
     public static function getVersion()
     {
-        $verion = "0";
-
         //---------------------------------------------
-        // thinkphp3和5中，版本号保存在THINK_VERSION里面；
-        // thinkphp6中，版本号保存在think\App::VERSION里面；
+        // thinkphp3和5.0中，版本号保存在THINK_VERSION里面；
+        // thinkphp5.1和6中，版本号保存在think\App::VERSION里面；
         //---------------------------------------------
         if (defined('think\App::VERSION')) {
-            $verion = \think\App::VERSION;
+            $version = \think\App::VERSION;
         } else {
-            $verion = THINK_VERSION;
+            $version = THINK_VERSION;
         }
 
-        return $verion;
+        return $version;
     }
 
-    /**
-     * 获取当前使用thinkphp的主版本
+    /**获取thinkphp的主版本号
      * @return int
      */
-    public static function getMainVersion()
+    public static function getPrimaryVersion()
     {
-        return (int)self::getVersion();
+        return self::getSomeSubVersion(0);
     }
 
-    /**对配置节点的读取进行包装（主要是兼容thinkphp的各个版本）
-     * @param string|null $name
+    /**获取thinkphp的次版本号
+     * @return int
      */
-    public static function config($name = null)
+    public static function getSecondaryVersion()
     {
-        $value = null;
-        if (self::getMainVersion() < 6) {
-            $value = Config::get($name);
-        } else {
-            $value = \config($name);
+        return self::getSomeSubVersion(1);
+    }
+
+
+    /**获取thinkphp的修订版本号
+     * @return int
+     */
+    public static function getRevisionVersion()
+    {
+        return self::getSomeSubVersion(2);
+    }
+
+    public static function getVersionAddon()
+    {
+        return self::getSomeSubVersion(3);
+    }
+
+
+    private static function getSomeSubVersion($pos)
+    {
+        $result = 0;
+
+        $version = self::getVersion();
+        $firstNode = StringHelper::getStringBeforeSeperator($version, " ");
+        $secondNode = StringHelper::getStringAfterSeperator($version, " ");
+        $arr = explode(".", $firstNode);
+        $arr[] = $secondNode;
+
+        if (ArrayHelper::containsKey($arr, $pos)) {
+            $result = $arr[$pos];
         }
 
-        return $value;
+        return $result;
     }
 }
