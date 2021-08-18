@@ -84,6 +84,13 @@ class EnvHelper
     }
 
     /**
+     * 是否在ThinkPHP环境内
+     */
+    public function isThinkPHP(){
+
+    }
+
+    /**
      * 判断当前服务器系统
      * @return string
      */

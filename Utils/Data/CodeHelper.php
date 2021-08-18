@@ -1,6 +1,6 @@
 <?php
 
-namespace Hiland\Utils\IO;
+namespace Hiland\Utils\Data;
 
 /**
  * PHP代码处理逻辑
@@ -8,7 +8,7 @@ namespace Hiland\Utils\IO;
  * @author 然
  * @version 20131226
  */
-class Code
+class CodeHelper
 {
     /**
      * 去除代码中的注释，空格等对代码进行压缩

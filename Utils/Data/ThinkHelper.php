@@ -14,6 +14,24 @@ use think\facade\Config;
 class ThinkHelper
 {
     /**
+     * 判断当前是否运行在ThinkPHP环境下
+     * (目前是通过判断是否存在类型think\App或者think\Controller来判定的)
+     * @return bool
+     */
+    public static function isThinkPHP()
+    {
+        if (class_exists("think\App")) {
+            return true;
+        }
+
+        if (class_exists("think\Controller")) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * 获取当前使用thinkphp的版本
      * @return string
      */

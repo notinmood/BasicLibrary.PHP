@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Hiland\Utils\Web;
 
 
@@ -11,19 +10,36 @@ class RequestHelper
 {
     public static function isPost()
     {
-        if (Container::get("request")->isPost()) {
+        $requestEntity = self::getRequestEntity();
+
+        if ($requestEntity->isPost()) {
             return true;
         } else {
             return false;
         }
     }
 
-    public static function isGet(){
-        if (Container::get("request")->isGet()) {
+    public static function isGet()
+    {
+        $requestEntity = self::getRequestEntity();
+
+        if ($requestEntity->isGet()) {
             return true;
         } else {
             return false;
         }
     }
 
+    /**
+     * @return mixed
+     */
+    private static function getRequestEntity()
+    {
+        if (class_exists("thinkContainer")) {
+            $requestEntity = Container::get("request");
+        } else {
+            $requestEntity = Request::instance();
+        }
+        return $requestEntity;
+    }
 }
