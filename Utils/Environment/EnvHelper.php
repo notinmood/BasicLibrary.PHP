@@ -111,14 +111,23 @@ class EnvHelper
     {
         $version = '';
         $array = explode('.', PHP_VERSION);
-        foreach ($array as $k) {
+        foreach ($array as $item) {
             if (!StringHelper::isContains($version, '.')) {
-                $version .= $k . '.';
+                $version .= $item . '.';
             } else {
-                $version .= $k;
+                $version .= $item;
             }
         }
         return (float)$version;
+    }
+
+    /**
+     * 用int类型表示的php版本,所有的各个子版本号都用两位取整数,然后依次排列
+     * 比如,5.3.6版本的返回值为 50306
+     * @return int
+     */
+    public static function getPHPWholeVersion(){
+        return PHP_VERSION_ID;
     }
 
     /**
@@ -135,7 +144,7 @@ class EnvHelper
      * 获取托管平台的名称
      * @return string
      */
-    public static function getDepositoryPlateformName()
+    public static function getDepositoryPlatformName()
     {
         // 自动识别SAE环境
         if (function_exists('saeAutoLoader')) {

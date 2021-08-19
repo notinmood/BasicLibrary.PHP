@@ -15,7 +15,6 @@ use PHPUnit\Framework\TestCase;
 
 class StringHelperTest extends TestCase
 {
-
     public function testIsEndWith()
     {
         $whole= "吴军信息传";
