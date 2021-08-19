@@ -8,14 +8,14 @@ use Hiland\Utils\Environment\EnvHelper;
 /**
  * 控制台操作类
  * 处理用户界面的输入输出逻辑
- * @author 解然
+ * @author  解然
  * @version v20131224
  */
 class ConsoleHelper
 {
     /**
      * 控制台输出
-     * @param $data
+     * @param        $data
      * @param string $level
      */
     public static function console($data, $level = 'log')
@@ -42,15 +42,10 @@ class ConsoleHelper
      */
     public static function echoLine($data)
     {
-        if (EnvHelper::isCLI()) {
-            echo $data, PHP_EOL;
-        } else {
-            echo $data, "<br/>";
-        }
+        echo "$data", EnvHelper::getNewLineSymbol();
     }
 
     /**
-     *
      * @param string $data
      */
     public static function echoBool($data)

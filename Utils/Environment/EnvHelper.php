@@ -6,6 +6,7 @@ use Hiland\Utils\Data\ArrayHelper;
 use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\RegexHelper;
 use Hiland\Utils\Data\StringHelper;
+use Hiland\Utils\Data\ThinkHelper;
 use Hiland\Utils\Web\HttpResponseHeader;
 
 class EnvHelper
@@ -86,8 +87,20 @@ class EnvHelper
     /**
      * 是否在ThinkPHP环境内
      */
-    public function isThinkPHP(){
+    public static function isThinkPHP(){
+        return ThinkHelper::isThinkPHP();
+    }
 
+    /**
+     * 获取换行标志
+     * @return string
+     */
+    public static function getNewLineSymbol(){
+        if (self::isCLI()) {
+            return PHP_EOL;
+        } else {
+            return "<br/>";
+        }
     }
 
     /**
