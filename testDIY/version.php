@@ -16,5 +16,5 @@ echo phpversion() . PHP_EOL;
 echo PHP_VERSION . PHP_EOL;
 echo PHP_EXTRA_VERSION;
 
-echo EnvHelper::getPHPVersion() . PHP_EOL;
+echo EnvHelper::getPHPFloatVersion() . PHP_EOL;
 echo EnvHelper::getPHPWholeVersion() . PHP_EOL;

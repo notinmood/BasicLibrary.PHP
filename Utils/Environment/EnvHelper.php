@@ -87,15 +87,17 @@ class EnvHelper
     /**
      * 是否在ThinkPHP环境内
      */
-    public static function isThinkPHP(){
+    public static function isThinkPHP()
+    {
         return ThinkHelper::isThinkPHP();
     }
 
     /**
-     * 获取换行标志
+     * 获取换行标志(能兼容web,window本地,linux本地情形)
      * @return string
      */
-    public static function getNewLineSymbol(){
+    public static function getNewLineSymbol()
+    {
         if (self::isCLI()) {
             return PHP_EOL;
         } else {
@@ -105,7 +107,7 @@ class EnvHelper
 
     /**
      * 判断当前服务器系统
-     * @return string
+     * @return string (返回值为Linux或者Windows)
      */
     public static function getOS()
     {
@@ -118,9 +120,9 @@ class EnvHelper
 
     /**
      * 获取数字表示的php版本号（主版本号用整数表示，其他版本号在小数点后面排列）
-     * @return number
+     * @return float
      */
-    public static function getPHPVersion()
+    public static function getPHPFloatVersion()
     {
         $version = '';
         $array = explode('.', PHP_VERSION);
@@ -139,7 +141,8 @@ class EnvHelper
      * 比如,5.3.6版本的返回值为 50306
      * @return int
      */
-    public static function getPHPWholeVersion(){
+    public static function getPHPWholeVersion()
+    {
         return PHP_VERSION_ID;
     }
 
