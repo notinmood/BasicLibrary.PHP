@@ -15,6 +15,9 @@
         "psr-4": {
             "Hiland\\Test\\": "",
             "Hiland\\": ""
-        }
+        },
+        "files": [
+            "Utils/Common/functions.php"
+        ]
     }
 }

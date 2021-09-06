@@ -17,15 +17,19 @@ class ConfigHelper
         ConfigMate::Instance()->loadFile($fileName);
     }
 
+    /**
+     * @param string $key
+     * @param null   $default
+     * @param null   $fileName 配置文件(携带有相对于网站根目录的相对路径)
+     *                         (目前支持的文件类型有:.php(内部返回Array)、.ini和.json3种格式)
+     * @return mixed|null
+     */
     public static function get($key, $default = null, $fileName = null)
     {
-        $configMate = null;
-        if ($fileName) {
-            $configMate = ConfigMate::Instance()->loadFile($fileName);
-        }
+        $configMate = ConfigMate::Instance();
 
-        if (!$configMate) {
-            $configMate = ConfigMate::Instance();
+        if ($fileName) {
+            $configMate->loadFile($fileName);
         }
 
         return $configMate->get($key, $default);

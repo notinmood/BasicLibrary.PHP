@@ -2,7 +2,10 @@
 
 namespace Hiland\Utils\DataConstruct;
 
-abstract class BasicQueueStack
+/**
+ * 简单的线性数据结构
+ */
+abstract class SimpleLinearConstruct
 {
 
     protected $dataArray = array();

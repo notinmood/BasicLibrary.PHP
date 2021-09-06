@@ -2,7 +2,7 @@
 
 namespace Hiland\Utils\DataConstruct;
 
-class Queue extends BasicQueueStack
+class Queue extends SimpleLinearConstruct
 {
     /**
      * （尾部）入队 *
