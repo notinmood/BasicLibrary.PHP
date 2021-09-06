@@ -29,6 +29,24 @@ class LinkedListTest extends TestCase
         return $linkedList;
     }
 
+    public function testGet()
+    {
+        $linkedList = $this->prepareData();
+
+        $actual = $linkedList->get(0);
+        $expect = "beijing";
+        self::assertEquals($expect, $actual);
+    }
+
+    public function testGetNode()
+    {
+        $linkedList = $this->prepareData();
+
+        $actual = $linkedList->getNode(0);
+        $expect = "beijing";
+        self::assertEquals($expect, $actual->value);
+    }
+
     public function testIsContains()
     {
         $linkedList = $this->prepareData();
@@ -54,10 +72,11 @@ class LinkedListTest extends TestCase
 
 
         $value1 = "beijing";
-        $linkedList->addHead($value1);
+        $newNode = $linkedList->addHead($value1);
 
         $actual = $linkedList->get(0);
         self::assertEquals($value1, $actual);
+        self::assertEquals($value1, $newNode->value);
 
 
         $value2 = "shanghai";
@@ -130,5 +149,10 @@ class LinkedListTest extends TestCase
         $actual = $linkedList->get($index);
         // dump($actual);
         self::assertNotEquals("shanghai", $actual);
+
+        $index = 0;
+        $linkedList->remove($index);
+        $actual = $linkedList->get($index);
+        self::assertNotEquals("beijing", $actual);
     }
 }
