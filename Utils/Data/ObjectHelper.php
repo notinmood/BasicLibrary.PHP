@@ -230,10 +230,6 @@ class ObjectHelper
             return true;
         }
 
-        if (!defined($data)) {
-            return true;
-        }
-
         if ($data == null) {
             return true;
         }

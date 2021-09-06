@@ -2,15 +2,17 @@
 
 namespace Hiland\Utils\Data;
 
+use ReflectionException;
+
 class ReflectionHelper
 {
     /**
      * 通过反射创建对象实例
-     *
      * @param string $className
      *            类名称字符串（如果有命名空间的话带命名空间，例如Tencent\Model\Foo2）
-     * @param array $args
+     * @param array  $args
      * @return object
+     * @throws ReflectionException
      */
     public static function createInstance($className, array $args = null)
     {
@@ -25,7 +27,7 @@ class ReflectionHelper
     /**
      * 获取类型的反射信息
      * @param string $className 类名称（如果有命名空间，请携带命名空间，如：'Tencent\Model\Bar'）
-     * @param array $args 类构造器参数数组
+     * @param array  $args      类构造器参数数组
      * @return \ReflectionClass
      */
     public static function getReflectionClass($className, &$args = null)
@@ -47,31 +49,71 @@ class ReflectionHelper
     }
 
     /**
-     * 执行某个类里面的方法
-     * @param string $className 类名称（如果有命名空间，请携带命名空间，如：'Tencent\Model\Bar'）
-     * @param string $methodName 类内部的方法名称（可用是实例方法也可以是静态方法）
-     * @param array $constructArgs 类构造器参数数组
-     * @param array $methodArgs 待调用方法的参数数组
+     * 执行某个类里面的实例方法
+     * @param string $className     类名称（如果有命名空间，请携带命名空间，如：'Tencent\Model\Bar'）
+     * @param string $methodName    类内部的方法名称（可用是实例方法也可以是静态方法）
+     * @param null   $instance      具体的类型实例
+     * @param array  $constructArgs 类构造器参数数组(如果没有指定$instance,那么便可以通过本参数进行实例化一个对象;如果已经指定了$instance,本参数将忽略.)
+     * @param array  $methodArgs    待调用方法的参数数组
      * @return mixed 调用方法的返回值
+     * @throws ReflectionException
      */
-    public static function executeMethod($className, $methodName, array $constructArgs = null, array $methodArgs = null)
+    public static function executeInstanceMethod($className, $methodName, $instance = null, array $constructArgs = null, array $methodArgs = null)
     {
+        $result = null;
         $class = self::getReflectionClass($className, $constructArgs);
-        $instance = $class->newInstanceArgs((array)$constructArgs);
-
         $method = $class->getMethod($methodName);
-        if (empty($methodArgs)) {
-            $result = $method->invoke($instance);
-        } else {
-            $result = $method->invokeArgs($instance, $methodArgs);
+
+        if ($method) {
+            //如果是私有方法,通过此处访问设置可见性,依然可以从外表访问
+            $method->setAccessible(TRUE);
+
+            if (!$instance) {
+                $instance = $class->newInstanceArgs((array)$constructArgs);
+            }
+
+            if (empty($methodArgs)) {
+                $result = $method->invoke($instance);
+            } else {
+                $result = $method->invokeArgs($instance, $methodArgs);
+            }
         }
+
+        return $result;
+    }
+
+    /**
+     * 执行某个类里面的静态方法
+     * @param $className
+     * @param $methodName
+     * @param ...$methodArgs
+     * @return mixed|null
+     */
+    public static function executeStaticMethod($className, $methodName, ...$methodArgs)
+    {
+        $result = null;
+        $method = null;
+        try {
+            $method = new \ReflectionMethod($className, $methodName);
+        } catch (ReflectionException $e) {
+        }
+
+        if ($method) {
+            //如果是私有方法,通过此处访问设置可见性,依然可以从外表访问
+            $method->setAccessible(TRUE);
+            try {
+                $result = $method->invoke(null, ...$methodArgs);
+            } catch (\ReflectionException $e) {
+            }
+        }
+
         return $result;
     }
 
     /**动态调用方法 (相比較ExcuteMethod，這個方法更常用)
      *  这个方法1、即可以一个普通的function，那么第一个直接传入function的名称就可以了
      *         2、也可以是一个对象的method，那么第一个参数要传入一个数组array(实体对象, 方法名称字符串)，例如array($this, "getUser");
-     * @param $funcName
+     * @param      $funcName
      * @param null $funcParam
      * @return mixed
      */
@@ -85,13 +127,13 @@ class ReflectionHelper
     }
 
     /**
-     * @param $className 带命名空间的类型名称
-     * @param $funcName 类型的方法名称
-     * @param null $funcParam 传递给方法的参数（多个参数之间用^^分隔（主要用于通过url的多个参数的传递））
-     * @param bool $returnJson 是否返回JSON格式的数据（缺省为false）
+     * @param string $className  带命名空间的类型名称
+     * @param string $funcName   类型的方法名称
+     * @param null   $funcParam  传递给方法的参数（多个参数之间用^^分隔（主要用于通过url的多个参数的传递））
+     * @param bool   $returnJson 是否返回JSON格式的数据（缺省为false）
      * @return false|mixed|string
      */
-    public static function executeFunctionEx($className ,$funcName, $funcParam = null,  $returnJson = false)
+    public static function executeFunctionEx($className, $funcName, $funcParam = null, $returnJson = false)
     {
         $object = new $className();
         $targetArray = array($object, $funcName);

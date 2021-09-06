@@ -1,0 +1,5 @@
+使用反射的方式,访问private成员:
+ReflectionHelper::executeInstanceMethod()
+ReflectionHelper::executeStaticMethod()
+
+具体参见 ReflectionHelperTest.php内的示例

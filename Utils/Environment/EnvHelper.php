@@ -84,6 +84,13 @@ class EnvHelper
         }
     }
 
+    public static function isDebug(){
+        $result= true;
+        // ConfigH
+
+        return $result;
+    }
+
     /**
      * 是否在ThinkPHP环境内
      */

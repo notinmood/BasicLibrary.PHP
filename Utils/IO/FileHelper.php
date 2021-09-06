@@ -15,8 +15,7 @@ class FileHelper
     public static function getFileDirName($fileName)
     {
         $path = pathinfo($fileName);
-        $dirname = $path['dirname'];
-        return $dirname;
+        return $path['dirname'];
     }
 
     /**
@@ -28,8 +27,7 @@ class FileHelper
     public static function getFileBaseName($fileName)
     {
         $path = pathinfo($fileName);
-        $basename = $path['basename'];
-        return $basename;
+        return $path['basename'];
     }
 
     /**
@@ -39,19 +37,17 @@ class FileHelper
     public static function getFileBaseNameWithoutExtension($fileName)
     {
         $path = pathinfo($fileName);
-        $basename = $path['filename'];
-        return $basename;
+        return $path['filename'];
     }
 
     /**
-     * 获取文件扩张名称信息（扩张名不带点（“.”））
+     * 获取文件扩展名称信息（扩展名不带点（“.”））
      * @param string $fileName 带路径的全文件名
      */
     public static function getFileExtensionName($fileName)
     {
         $path = pathinfo($fileName);
-        $extensionname = $path['extension'];
-        return $extensionname;
+        return $path['extension'];
     }
 
     /**在页面通过form上传文件后，服务器获得的文件信息。
@@ -84,6 +80,7 @@ class FileHelper
     }
 
     /**
+     * 获取文件编码名称
      * @param $fileName
      * @return bool|string
      */
@@ -94,6 +91,7 @@ class FileHelper
     }
 
     /**
+     * 获取目标编码类型的文本
      * @param $fileName
      * @param string $targetEncoding
      * @return false|string|string[]|null
@@ -103,5 +101,4 @@ class FileHelper
         $content = file_get_contents($fileName);
         return StringHelper::getEncodingContent($content, $targetEncoding);
     }
-
 }

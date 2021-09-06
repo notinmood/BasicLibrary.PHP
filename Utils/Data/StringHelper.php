@@ -5,7 +5,8 @@ namespace Hiland\Utils\Data;
 class StringHelper
 {
     /**
-     * @param $data
+     * 获取目标编码类型的文本
+     * @param        $data
      * @param string $targetEncoding
      * @return false|string|string[]|null
      */
@@ -25,10 +26,14 @@ class StringHelper
      * 获取内容的编码
      * @param string $data
      * @return bool|string
+     * 备注1：php中用mb_detect_encoding测出来的euc-cn是gb2312编码：
+     * EUC-CN是GB2312最常用的表示方法。浏览器编码表上的“GB2312”，通常都是指“EUC-CN”表示法。
+     * 备注2：用mb_detect_encoding函数进行编码识别时，很多人都碰到过识别编码有误问题的说明
+     * https://www.jb51.net/article/27282.htm
      */
     public static function getEncoding($data = "")
     {
-        return mb_detect_encoding($data);
+        return mb_detect_encoding($data, array("ASCII", "GB2312", "GBK", "UTF-8"));
     }
 
     /**
@@ -42,12 +47,11 @@ class StringHelper
 
     /**
      * 截取全角和半角（汉字和英文）混合的字符串以避免乱码
-     *
      * @param string $original
      *            要截取的字符串
-     * @param int $startPosition
+     * @param int    $startPosition
      *            开始位置(第一个字符的位置为0)
-     * @param int $length
+     * @param int    $length
      *            要截取的长度(超过总长度 按总长度计算)
      * @param string $charset
      * @return string
@@ -87,7 +91,7 @@ class StringHelper
 
     /**
      * @param string $padding 待测试的结尾字符
-     * @param string $whole 全句
+     * @param string $whole   全句
      * @return bool
      */
     public static function isEndWith($whole, $padding)
@@ -104,7 +108,7 @@ class StringHelper
 
     /**
      * @param string $padding 待测试的开始字符
-     * @param string $whole 全句
+     * @param string $whole   全句
      * @return bool
      */
     public static function isStartWith($whole, $padding)
@@ -119,7 +123,6 @@ class StringHelper
 
     /**
      * 判断一个字符串是否被包含在另外一个字符串内
-     *
      * @param string $subString
      *            被查找的子字符串
      * @param string $whole
@@ -138,7 +141,7 @@ class StringHelper
     }
 
     /**获取字符串长度
-     * @param $strData
+     * @param        $strData
      * @param string $encoding
      * @return false|int
      */
@@ -160,7 +163,7 @@ class StringHelper
 
     /**
      * 将一个字符串按照某个分隔符分隔成数组
-     * @param $whole string 字符串全串
+     * @param $whole     string 字符串全串
      * @param $delimiter string 分隔符
      * @return false|string[]
      */
@@ -175,16 +178,16 @@ class StringHelper
      * @param $delimiter
      * @return string
      */
-    public static function implode($arrData, $delimiter="")
+    public static function implode($arrData, $delimiter = "")
     {
-        return  implode($delimiter, $arrData);
+        return implode($delimiter, $arrData);
     }
 
     /**
      * 将一个字符串按照字符个数分组进行格式化
-     * @param string $data string
+     * @param string $data     string
      * @param string $formator string 字符串字符个数分组的格式，同一个分组内字符的个数用{}包围，各个分组之间可以自定义分隔符，例如
-     *  '{4}-{2}-{2}'，或者'{4} {2} {2}'(中间用空格表示);
+     *                         '{4}-{2}-{2}'，或者'{4} {2} {2}'(中间用空格表示);
      * @return string
      */
     public static function grouping($data, $formator)
@@ -221,9 +224,9 @@ class StringHelper
 
     /** 对带有占位符的字符串信息，进行格式化填充，形成完整的字符串。
      * 现在推荐直接使用 PHP系统自带的格式化方式,例如:"k的值为{$k}；v的值为{$v}"
-     * @param $data string 带有占位符的字符串信息（占位符用{?}表示），例如 "i like this {?},do you known {?}"
+     * @param $data          string 带有占位符的字符串信息（占位符用{?}表示），例如 "i like this {?},do you known {?}"
      * @param $realValueList string[] 待填入的真实信息，用字符串数组表示，例如["qingdao","beijing"];
-     *  或者使用用逗号分隔的各个独立的字符串表示,比如"qingdao","beijing"
+     *                       或者使用用逗号分隔的各个独立的字符串表示,比如"qingdao","beijing"
      * @return string
      */
     public static function format($data, ...$realValueList)
@@ -246,11 +249,10 @@ class StringHelper
 
         return $data;
     }
-    
-    
-     /**
+
+
+    /**
      * 获取字符串分隔符前面的内容
-     *
      * @param string $whole
      * @param string $seperator
      * @return string
@@ -267,7 +269,6 @@ class StringHelper
 
     /**
      * 获取字符串分隔符后面的内容
-     *
      * @param string $whole
      * @param string $seperator
      * @return string

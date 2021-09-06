@@ -51,7 +51,7 @@ class ArrayHelper
      * @param string $xml xml字符串
      * @return array    转换得到的数组
      */
-    public static function xml2array($xml)
+    public static function xmlToArray($xml)
     {
         //禁止引用外部xml实体
         libxml_disable_entity_loader(true);
@@ -77,7 +77,7 @@ class ArrayHelper
             $xml .= '<?xml version="1.0" encoding="' . $charset . '" ?>';
         }
         $xml .= "<$rootname>";
-        $xml .= self::convert2xml($array);
+        $xml .= self::convertToxml($array);
         $xml .= "</$rootname>";
         return $xml;
     }
@@ -86,7 +86,7 @@ class ArrayHelper
      * @param $value
      * @return string
      */
-    private static function convert2xml($value)
+    private static function convertToxml($value)
     {
         $xml = '';
         if ((!is_array($value) && !is_object($value)) || count($value) <= 0) {
@@ -95,7 +95,7 @@ class ArrayHelper
             foreach ($value as $key => $val) {
                 if (is_array($val) || is_object($val)) { // 判断是否是数组，或者，对像
                     $xml .= "<" . $key . ">";
-                    $xml .= self::convert2xml($val); // 是数组或者对像就的递归调用
+                    $xml .= self::convertToxml($val); // 是数组或者对像就的递归调用
                     $xml .= "</" . $key . ">";
                 } else {
                     if (is_numeric($val)) {
@@ -369,7 +369,7 @@ class ArrayHelper
                         $className = StringHelper::getStringBeforeSeperator($func, '|');
                         $methodName = StringHelper::getStringAfterSeperator($func, '|');
 
-                        $result = ReflectionHelper::executeMethod($className, $methodName, null, array(
+                        $result = ReflectionHelper::executeInstanceMethod($className, $methodName, null,null, array(
                             $row[$col]
                         ));
                     }
