@@ -14,7 +14,7 @@ class RandHelper
      *            ALL 包括大写小写字符、数字、特殊字符
      *            LETTER 大写小写字符
      *            NUMBER 数字
-     *            SEPCIAL 特殊字符
+     *            SPECIAL 特殊字符
      *            [任意值] 大写小写字符、数字（不包含特殊字符）
      * @return string
      */
@@ -25,11 +25,11 @@ class RandHelper
         $upperLetter = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $lowerLetter = 'abcdefghijklmnopqrstuvwxyz';
         $digital = '0123456789';
-        $sepcial = '~!@#$%^&*()_+|}{<>?-=\/,.';
+        $special = '~!@#$%^&*()_+|}{<>?-=\/,.';
 
         switch ($format) {
             case 'ALL':
-                $chars = $upperLetter . $lowerLetter . $digital . $sepcial;
+                $chars = $upperLetter . $lowerLetter . $digital . $special;
                 break;
             case 'LETTER':
                 $chars = $upperLetter . $lowerLetter;
@@ -37,8 +37,8 @@ class RandHelper
             case 'NUMBER':
                 $chars = $digital;
                 break;
-            case 'SEPCIAL':
-                $chars = $sepcial;
+            case 'SPECIAL':
+                $chars = $special;
                 break;
             default:
                 $chars = $upperLetter . $lowerLetter . $digital;

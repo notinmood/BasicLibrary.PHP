@@ -14,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 
 class PathHelperTest extends TestCase
 {
-
     public function testCombine()
     {
         $p1= "aa\\";

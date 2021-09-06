@@ -14,9 +14,9 @@ class VerifyHelper
     {
         if (!self::isEmpty($data)) return false;
         if (strtolower($flag) == 'int') {
-            return ((string)(int)$data === (string)$data) ? true : false;
+            return (string)(int)$data === (string)$data;
         } else {
-            return ((string)(float)$data === (string)$data) ? true : false;
+            return (string)(float)$data === (string)$data;
         }
     }
 
@@ -50,7 +50,7 @@ class VerifyHelper
         } else {
             $match = '/^[A-za-z0-9_-]+$/';
         }
-        return preg_match($match, $data) ? true : false;
+        return (bool)preg_match($match, $data);
     }
 
     /**
@@ -61,7 +61,7 @@ class VerifyHelper
     public static function isEmail($data)
     {
         if (!self::isEmpty($data)) return false;
-        return preg_match(RegexHelper::EMAIL, $data) ? true : false;
+        return (bool)preg_match(RegexHelper::EMAIL, $data);
     }
 
     /**
@@ -87,7 +87,7 @@ class VerifyHelper
     public static function isUrl($data)
     {
         if (!self::isEmpty($data)) return false;
-        return preg_match(RegexHelper::URL, $data) ? true : false;
+        return (bool)preg_match(RegexHelper::URL, $data);
     }
 
     /**
@@ -101,7 +101,7 @@ class VerifyHelper
         if (!self::isEmpty($data)) return false;
         $match = (strtolower($charset) == 'gb2312') ? "/^[" . chr(0xa1) . "-" . chr(0xff) . "]+$/"
             : "/^[x{4e00}-x{9fa5}]+$/u";
-        return preg_match($match, $data) ? true : false;
+        return (bool)preg_match($match, $data);
     }
 
     /**
@@ -133,13 +133,13 @@ class VerifyHelper
         $len = mb_strlen($data, $charset);
         switch ($type) {
             case 1: //只匹配最小值
-                return ($len >= $min) ? true : false;
+                return $len >= $min;
                 break;
             case 2: //只匹配最大值
-                return ($max >= $len) ? true : false;
+                return $max >= $len;
                 break;
             default: //min <= $str <= max
-                return (($min <= $len) && ($len <= $max)) ? true : false;
+                return ($min <= $len) && ($len <= $max);
         }
     }
 

@@ -15,11 +15,11 @@ namespace Hiland\Utils\Data;
  */
 class MorseHelper
 {
-//加密代码
+    //加密代码
     protected static $option = array(
         'space' => '/',
         'short' => '.',
-        'long' => '-'
+        'long' => '-',
     );
     protected static $standard = array(
         /* Letters                               */
@@ -70,7 +70,7 @@ class MorseHelper
         '(' => '10110',   /* Left parenthesis    */
         ')' => '101101',  /* Right parenthesis   */
         '&' => '01000',   /* Ampersand           */
-        ' =>' => '111000',  /* Colon               */
+        '=>' => '111000', /* Colon               */
         ';' => '101010',  /* Semicolon           */
         '=' => '10001',   /* Equal sign          */
         '+' => '01010',   /* Plus sign           */
@@ -106,7 +106,7 @@ class MorseHelper
         return [
             isset($option['space']) ? $option['space'] : self::$option['space'],
             isset($option['short']) ? $option['short'] : self::$option['short'],
-            isset($option['long']) ? $option['long'] : self::$option['long']
+            isset($option['long']) ? $option['long'] : self::$option['long'],
         ];
     }
 
@@ -236,7 +236,7 @@ class MorseHelper
     /**
      * Unicode字符转换成utf8字符
      * @param  [type] $unicode_str Unicode字符
-     * @return [type]              Utf-8字符
+     * @return string [type]              Utf-8字符
      */
     protected static function unicodeToUtf8($unicode_str)
     {

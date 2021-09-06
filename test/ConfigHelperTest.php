@@ -14,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 
 class ConfigHelperTest extends TestCase
 {
-
     public function testGet()
     {
         $key = "d.dA";

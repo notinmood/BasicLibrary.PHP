@@ -7,7 +7,7 @@ class ArrayHelper
     /**
      * 判断一个项目是否存在array中。(其实是判断这个item的value是否存在于$array内)
      * @param $array array
-     * @param $item mixed
+     * @param $item  mixed
      * @return bool
      */
     public static function contains($array, $item)
@@ -37,7 +37,6 @@ class ArrayHelper
 
     /**
      * 数组转简单对象
-     *
      * @param array $array 名值对类型的一维或者多维数组
      * @return object
      */
@@ -60,25 +59,21 @@ class ArrayHelper
 
     /**
      * 将数组转变为xml数据
-     *
-     * @param array $array
-     *            有名值对类型的数组
-     * @param string $charset
-     *            xml数据的编码（缺省情况下为utf-8）
-     * @param string $rootname
-     *            xml数据的跟节点名称
-     * @param bool $includeHeader 是否在生成的xml文档中包含xml头部声明
+     * @param array  $array         有名值对类型的数组
+     * @param string $charset       xml数据的编码（缺省情况下为utf-8）
+     * @param string $rootName      xml数据的跟节点名称
+     * @param bool   $includeHeader 是否在生成的xml文档中包含xml头部声明
      * @return string
      */
-    public static function ToXml($array, $rootname = 'myxml', $includeHeader = true, $charset = 'utf8')
+    public static function ToXml($array, $rootName = 'myXml', $includeHeader = true, $charset = 'utf8')
     {
         $xml = '';
         if ($includeHeader) {
             $xml .= '<?xml version="1.0" encoding="' . $charset . '" ?>';
         }
-        $xml .= "<$rootname>";
-        $xml .= self::convertToxml($array);
-        $xml .= "</$rootname>";
+        $xml .= "<$rootName>";
+        $xml .= self::convertToXml($array);
+        $xml .= "</$rootName>";
         return $xml;
     }
 
@@ -86,7 +81,7 @@ class ArrayHelper
      * @param $value
      * @return string
      */
-    private static function convertToxml($value)
+    private static function convertToXml($value)
     {
         $xml = '';
         if ((!is_array($value) && !is_object($value)) || count($value) <= 0) {
@@ -95,7 +90,7 @@ class ArrayHelper
             foreach ($value as $key => $val) {
                 if (is_array($val) || is_object($val)) { // 判断是否是数组，或者，对像
                     $xml .= "<" . $key . ">";
-                    $xml .= self::convertToxml($val); // 是数组或者对像就的递归调用
+                    $xml .= self::convertToXml($val); // 是数组或者对像就的递归调用
                     $xml .= "</" . $key . ">";
                 } else {
                     if (is_numeric($val)) {
@@ -110,22 +105,20 @@ class ArrayHelper
         return $xml;
     }
 
-    /**
-     * 将一个数组转换为 XML 结构的字符串
-     * @param array $arr 要转换的数组
-     * @param int $level 节点层级, 1 为 Root.
-     * @return string XML 结构的字符串
-     */
-    public static function ToXml2($arr, $level = 1)
-    {
-        //
-    }
+    // /**
+    //  * 将一个数组转换为 XML 结构的字符串
+    //  * @param array $arr   要转换的数组
+    //  * @param int   $level 节点层级, 1 为 Root.
+    //  * @return string XML 结构的字符串
+    //  */
+    // public static function ToXml2($arr, $level = 1)
+    // {
+    //     //
+    // }
 
     /**
      * 对数组的key和value进行翻转
-     *
-     * @param array $originalArray
-     *            有简单值构成key和value的名值对一维数组
+     * @param array $originalArray 有简单值构成key和value的名值对一维数组
      * @return array
      */
     public static function exchangeKeyValue($originalArray)
@@ -140,8 +133,7 @@ class ArrayHelper
 
     /**
      * 将有别名标示的二维数组转换为一维数组
-     *
-     * @param array $originalArray
+     * @param array  $originalArray
      *            原始的二维数组
      * @param string $newKeyName
      *            二维数组中的某个元素的名称，其对应的值将作为一维数组的key
@@ -151,50 +143,44 @@ class ArrayHelper
      *            如果这个值为空，那么将会把一维数组的key作为此值
      * @return array 转换后的一维数组
      * @example 待转换的有别名的二维数组类似如下：
-     *          $originalarray => array(
-     *          'UNOUT' => array(
-     *          'value' => 0,
-     *          'display' => '未出局'
-     *          ),
-     *          'PARTIALOUTASLOCK' => array(
-     *          'value' => 1,
-     *          'display' => '锁定未出局'
-     *          ),
-     *          'OUT' => array(
-     *          'value' => 10,
-     *          'display' => '出局'
-     *          )
-     *          )
-     *
-     *
-     *          1、extract2DTo1D($originalarray, 'value', 'display')的结果为
-     *          array(3) {
-     *          [0] => string(9) "未出局"
-     *          [1] => string(15) "锁定未出局"
-     *          [10] => string(6) "出局"
-     *          }
-     *
-     *          2、extract2DTo1D($originalarray, 'value')的结果为
-     *          array(3) {
-     *          [0] => string(5) "UNOUT"
-     *          [1] => string(16) "PARTIALOUTASLOCK"
-     *          [10] => string(3) "OUT"
-     *          }
-     *
-     *          3、extract2DTo1D($originalarray,'','display')的结果为
-     *          array(3) {
-     *          ["UNOUT"] => string(9) "未出局"
-     *          ["PARTIALOUTASLOCK"] => string(15) "锁定未出局"
-     *          ["OUT"] => string(6) "出局"
-     *          }
-     *
-     *          4、extract2DTo1D($originalarray)的结果为
-     *          array(3) {
-     *          ["UNOUT"] => string(5) "UNOUT"
-     *          ["PARTIALOUTASLOCK"] => string(16) "PARTIALOUTASLOCK"
-     *          ["OUT"] => string(3) "OUT"
-     *          }
-     *
+     *            $originalarray => array(
+     *            'UNOUT' => array(
+     *            'value' => 0,
+     *            'display' => '未出局'
+     *            ),
+     *            'PARTIALOUTASLOCK' => array(
+     *            'value' => 1,
+     *            'display' => '锁定未出局'
+     *            ),
+     *            'OUT' => array(
+     *            'value' => 10,
+     *            'display' => '出局'
+     *            )
+     *            )
+     *            1、extract2DTo1D($originalarray, 'value', 'display')的结果为
+     *            array(3) {
+     *            [0] => string(9) "未出局"
+     *            [1] => string(15) "锁定未出局"
+     *            [10] => string(6) "出局"
+     *            }
+     *            2、extract2DTo1D($originalarray, 'value')的结果为
+     *            array(3) {
+     *            [0] => string(5) "UNOUT"
+     *            [1] => string(16) "PARTIALOUTASLOCK"
+     *            [10] => string(3) "OUT"
+     *            }
+     *            3、extract2DTo1D($originalarray,'','display')的结果为
+     *            array(3) {
+     *            ["UNOUT"] => string(9) "未出局"
+     *            ["PARTIALOUTASLOCK"] => string(15) "锁定未出局"
+     *            ["OUT"] => string(6) "出局"
+     *            }
+     *            4、extract2DTo1D($originalarray)的结果为
+     *            array(3) {
+     *            ["UNOUT"] => string(5) "UNOUT"
+     *            ["PARTIALOUTASLOCK"] => string(16) "PARTIALOUTASLOCK"
+     *            ["OUT"] => string(3) "OUT"
+     *            }
      */
     public static function extract2DTo1D($originalArray, $newKeyName = '', $newValueName = '')
     {
@@ -220,7 +206,7 @@ class ArrayHelper
 
     /**
      * 把第二维度中的value为名值对的 二维数组，转换为一维数组
-     * @param $originalArray
+     * @param        $originalArray
      * @param string $convertNodeName
      * @return mixed
      * @example
@@ -237,7 +223,6 @@ class ArrayHelper
      * }
      * }
      * 经过转换后为
-     *
      * {
      * ["id"] => "82"
      * ["remark"] => 'hello',
@@ -246,7 +231,6 @@ class ArrayHelper
      * ["contact__name"] => "解然",
      * ["contact__phone"] =>"18888888888",
      * }
-     *
      */
     public static function convert2DTo1D(&$originalArray, $convertNodeName = '')
     {
@@ -289,7 +273,6 @@ class ArrayHelper
 
     /**
      * 友好的显示数据集信息
-     *
      * @param array $dbSet
      *            数据集
      * @param array $mapArray
@@ -303,7 +286,6 @@ class ArrayHelper
      *            1、如果是全局函数可以直接写函数的名称，
      *            2、如果是类的方法，请使用如下格式进行书写 nameSpace/className|methodName,
      *            其中如果是直接使用调用方类内的其他某个方法,nameSpace/className可以直接用__CLASS__表示
-     *
      * @return array 友好显示的数据集信息
      */
     public static function friendlyDisplayDbSet(&$dbSet, $mapArray = null, $funcArray = null)
@@ -323,7 +305,6 @@ class ArrayHelper
 
     /**
      * 友好的显示数据集信息
-     *
      * @param array $dataEntity
      *            数据实体
      * @param array $mapArray
@@ -337,7 +318,6 @@ class ArrayHelper
      *            1、如果是全局函数可以直接写函数的名称，
      *            2、如果是类的方法，请使用如下格式进行书写 nameSpace/className|methodName,
      *            其中如果是直接使用调用方类内的其他某个方法,nameSpace/className可以直接用__CLASS__表示
-     *
      * @return array 友好显示的数据实体
      */
     public static function friendlyDisplayEntity(&$dataEntity, $mapArray = null, $funcArray = null)
@@ -369,8 +349,8 @@ class ArrayHelper
                         $className = StringHelper::getStringBeforeSeperator($func, '|');
                         $methodName = StringHelper::getStringAfterSeperator($func, '|');
 
-                        $result = ReflectionHelper::executeInstanceMethod($className, $methodName, null,null, array(
-                            $row[$col]
+                        $result = ReflectionHelper::executeInstanceMethod($className, $methodName, null, null, array(
+                            $row[$col],
                         ));
                     }
 
@@ -426,34 +406,34 @@ class ArrayHelper
     }
 
     /** 在多维度数组中，根据某一个维度进行排序
-     * @param $array 目标数组
-     * @param $columnName 目标维度名称
-     * @param int $sortType 排序类型 SORT_ASC 或者 SORT_DESC
+     * @param     $array      目标数组
+     * @param     $columnName 目标维度名称
+     * @param int $sortType   排序类型 SORT_ASC 或者 SORT_DESC
      * @return mixed
      * @example 对类似如下数组中，根据“2010年”年排序
-     * array(31) {
-     * [0] => array(5) {
-     * ["地区"] => string(6) "河南"
-     * ["2010年"] => float(5437.1)
-     * ["2011年"] => float(5542.5)
-     * ["2012年"] => float(5638.6)
-     * [""] => NULL
-     * }
-     * [1] => array(5) {
-     * ["地区"] => string(9) "黑龙江"
-     * ["2010年"] => float(5012.8)
-     * ["2011年"] => float(5570.6)
-     * ["2012年"] => float(5761.5)
-     * [""] => NULL
-     * }
-     * [2] => array(5) {
-     * ["地区"] => string(6) "山东"
-     * ["2010年"] => float(4335.7)
-     * ["2011年"] => float(4426.3)
-     * ["2012年"] => float(4511.4)
-     * [""] => NULL
-     * }
-     * }
+     *                        array(31) {
+     *                        [0] => array(5) {
+     *                        ["地区"] => string(6) "河南"
+     *                        ["2010年"] => float(5437.1)
+     *                        ["2011年"] => float(5542.5)
+     *                        ["2012年"] => float(5638.6)
+     *                        [""] => NULL
+     *                        }
+     *                        [1] => array(5) {
+     *                        ["地区"] => string(9) "黑龙江"
+     *                        ["2010年"] => float(5012.8)
+     *                        ["2011年"] => float(5570.6)
+     *                        ["2012年"] => float(5761.5)
+     *                        [""] => NULL
+     *                        }
+     *                        [2] => array(5) {
+     *                        ["地区"] => string(6) "山东"
+     *                        ["2010年"] => float(4335.7)
+     *                        ["2011年"] => float(4426.3)
+     *                        ["2012年"] => float(4511.4)
+     *                        [""] => NULL
+     *                        }
+     *                        }
      */
     public static function multiColumnSort($array, $columnName, $sortType = SORT_ASC)
     {
