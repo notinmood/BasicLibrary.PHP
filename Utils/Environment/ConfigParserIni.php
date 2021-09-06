@@ -16,10 +16,10 @@ namespace Hiland\Utils\Environment;
  */
 class ConfigParserIni extends ConfigParser
 {
-    public function get($key)
-    {
-
-    }
+    // public function get($key)
+    // {
+    //
+    // }
 
     public function loadFileToArray($fileFullName)
     {
