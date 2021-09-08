@@ -65,22 +65,16 @@ class ArrayHelperTest extends TestCase
         self::assertEquals($expect0, $actual);
 
         /**
-         * 目标数组中有单个元素符合的情况(把多个值都清除掉)
+         * 目标数组中有单个元素符合的情况(把多个值中第一个清除掉)
          */
         $data = $this->prepareAssociateArray1();
         $data['d'] = "1B";
         $actual = ArrayHelper::remove($data, "1B");
         $expect1['a'] = "1A";
         $expect1['c'] = "1C";
-        self::assertEquals($expect1, $actual);
+        $expect1['d'] = "1B";
 
-        /**
-         * 移除一批元素
-         */
-        $data = $this->prepareAssociateArray1();
-        $actual = ArrayHelper::remove($data, "1B", "1C");
-        $expect2['a'] = "1A";
-        self::assertEquals($expect2, $actual);
+        self::assertEquals($expect1, $actual);
     }
 
     public function testMerge()

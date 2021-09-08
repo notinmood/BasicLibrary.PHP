@@ -41,15 +41,21 @@ class ArrayHelper
      * @param $items
      * @return array
      */
-    public static function remove($array, ...$items)
+    public static function remove($array, $items)
     {
-        if (ObjectHelper::getType($items) == ObjectTypes::ARRAYS) {
-            $target = $items;
-        } else {
-            $target[] = $items;
+        // if (ObjectHelper::getType($items) == ObjectTypes::ARRAYS) {
+        //     $target = $items;
+        // } else {
+        //     $target[] = $items;
+        // }
+        //
+        // return array_diff($array, $target);
+
+        if($idx = array_search($items,$array,true)) {
+            unset($array[$idx]);
         }
 
-        return array_diff($array, $target);
+        return $array;
     }
 
     /**
