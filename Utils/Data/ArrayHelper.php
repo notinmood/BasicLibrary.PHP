@@ -25,6 +25,75 @@ class ArrayHelper
         return array_key_exists($key, $array);
     }
 
+    /**
+     * @param $array
+     * @param $item
+     * @return int
+     */
+    public static function push($array, $item)
+    {
+        return array_push($array, $item);
+    }
+
+    /**
+     * 移除数组中的某个元素
+     * @param $array
+     * @param $items
+     * @return array
+     */
+    public static function remove($array, ...$items)
+    {
+        if (ObjectHelper::getType($items) == ObjectTypes::ARRAYS) {
+            $target = $items;
+        } else {
+            $target[] = $items;
+        }
+
+        return array_diff($array, $target);
+    }
+
+    /**
+     * 判断当前是否为关联数组
+     * @param $array
+     * @return bool
+     */
+    public static function isAssociateArray($array)
+    {
+        if (ObjectHelper::isEmpty($array)) {
+            return false;
+        }
+
+        $result = array_keys($array);
+        if ($result && isset($result[0])) {
+            if (ObjectHelper::getType($result[0]) == ObjectTypes::STRING) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * 判断当前是否为索引数组
+     * @param $array
+     * @return bool
+     */
+    public static function isIndexArray($array)
+    {
+        if (ObjectHelper::isEmpty($array)) {
+            return false;
+        }
+
+        $result = array_keys($array);
+        if ($result && isset($result[0]) ) {
+            if (ObjectHelper::getType($result[0]) == ObjectTypes::INTEGER) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     /**获取数组内元素的个数
      * @param $array
@@ -105,16 +174,6 @@ class ArrayHelper
         return $xml;
     }
 
-    // /**
-    //  * 将一个数组转换为 XML 结构的字符串
-    //  * @param array $arr   要转换的数组
-    //  * @param int   $level 节点层级, 1 为 Root.
-    //  * @return string XML 结构的字符串
-    //  */
-    // public static function ToXml2($arr, $level = 1)
-    // {
-    //     //
-    // }
 
     /**
      * 对数组的key和value进行翻转
@@ -388,21 +447,19 @@ class ArrayHelper
 
     /**
      * 合并array,如果有一个为null，则返回另外一个值（与array_merge的区别是，array_merge中如果有一个为null，则结果为null）
-     * @param array $array1
-     * @param array $array2
+     * @param mixed ...$arrays
      * @return array
      */
-    public static function merge($array1, $array2)
+    public static function merge(...$arrays)
     {
-        if (empty($array1)) {
-            return $array2;
-        } else {
-            if (empty($array2)) {
-                return $array1;
-            } else {
-                return array_merge($array1, $array2);
+        $targetArrays = [];
+        foreach ($arrays as $item) {
+            if ($item) {
+                array_push($targetArrays, $item);
             }
         }
+
+        return array_merge(...$targetArrays);
     }
 
     /** 在多维度数组中，根据某一个维度进行排序

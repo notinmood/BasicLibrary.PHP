@@ -58,13 +58,13 @@ class BoolHelper
      *  $string = 'false';
      * var_dump(settype($string, 'boolean'));
      * 得到的结果都是true。因此使用本方法进行操作。
-     * @param mixed $value 待转换的数据
-     * @param bool $return_null 转换失败是否返回null（默认false不转换null）
+     * @param mixed $value       待转换的数据
+     * @param bool  $return_null 转换失败是否返回null（默认false不转换null）
      * @return bool|mixed|null
      */
     public static function isTrue($value, $return_null = false)
     {
-        $boolval = (is_string($value) ? filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) : (bool)$value);
-        return ($boolval === null && !$return_null ? false : $boolval);
+        $boolVal = (is_string($value) ? filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) : (bool)$value);
+        return ($boolVal === null && !$return_null ? false : $boolVal);
     }
 }

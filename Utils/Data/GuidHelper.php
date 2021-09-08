@@ -9,15 +9,12 @@ if (defined("TWOZEROZEROZEROYEAR") == false) {
 
 /**
  * GUID类型辅助器
- *
  * @author devel
- *
  */
 class GuidHelper
 {
     /**
      * 空值guid
-     *
      * @param bool $isBracket
      *            是否在guid两端加入括号
      * @return string
@@ -35,7 +32,6 @@ class GuidHelper
 
     /**
      * 生成新的guid
-     *
      * @param bool $isBracket
      *            是否在guid两端加入括号
      * @return string
@@ -67,7 +63,6 @@ class GuidHelper
 
     /**
      * 清除guid内部的分隔符“-”
-     *
      * @param string $guidWithHyphen
      *            带有分隔符“-”的guid字符串
      * @return string 清除后不带有分隔符“-”的guid字符串
@@ -80,7 +75,6 @@ class GuidHelper
 
     /**
      * 对没有分隔符的guid字符串，通过分隔符“-”进行格式化
-     *
      * @param string $guidWithoutHyphen
      *            没有分隔符的guid字符串
      * @return string 通过分隔符“-”格式化的guid字符串

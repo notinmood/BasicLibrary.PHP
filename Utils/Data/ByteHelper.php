@@ -6,11 +6,8 @@ class ByteHelper
 {
     /**
      * 格式化（友好地显示）字节大小
-     *
-     * @param number $size
-     *            字节数
-     * @param string $delimiter
-     *            数字和单位分隔符
+     * @param number $size      字节数
+     * @param string $delimiter 数字和单位分隔符
      * @return string 格式化后的带单位的大小
      */
     public static function friendlyDisplay($size, $delimiter = '')
@@ -21,7 +18,7 @@ class ByteHelper
             'MB',
             'GB',
             'TB',
-            'PB'
+            'PB',
         );
         for ($i = 0; $size >= 1024 && $i < 5; $i++)
             $size /= 1024;
@@ -29,13 +26,10 @@ class ByteHelper
     }
 
     /**
-     *
      * 转换一个String字符串为byte数组
-     *
      * @param string $string 需要转换的字符串
      * @return array 目标byte数组
      * @author Zikie
-     *
      */
     public static function convertToBytes($string)
     {
@@ -48,13 +42,9 @@ class ByteHelper
     }
 
     /**
-     *
      * 将字节数组转化为String类型的数据
-     *
      * @param array $bytes 字节数组
-     *
      * @return string 一个String类型的数据
-     *
      */
     public static function convertToString($bytes)
     {

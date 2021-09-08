@@ -9,7 +9,7 @@ use Hiland\Utils\Data\ReflectionHelper;
 
 /**
  * Created by PhpStorm.
- * User: xiedalie
+ * User: xiedali
  * Date: 2016/6/30
  * Time: 7:31
  * 说明: 如果启用第三方的loger，请在配置文件中设置LogProviderName
