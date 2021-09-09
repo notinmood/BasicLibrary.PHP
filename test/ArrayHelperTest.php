@@ -52,24 +52,66 @@ class ArrayHelperTest extends TestCase
         self::assertEquals(false, $actual);
     }
 
+    public function testRemoveHead()
+    {
+        $data = $this->prepareAssociateArray1();
+        $expected['b'] = "1B";
+        $expected['c'] = "1C";
+
+        $actual = ArrayHelper::removeHead($data);
+        self::assertEquals($expected, $actual);
+    }
+
+    public function testRemoveTail()
+    {
+        $data = $this->prepareAssociateArray1();
+        $expected['a'] = "1A";
+        $expected['b'] = "1B";
+
+        $actual= ArrayHelper::removeTail($data);
+
+        self::assertEquals($expected, $actual);
+    }
+
+    public function testRemoveIndex()
+    {
+        $data = $this->prepareAssociateArray1();
+        $expected['a'] = "1A";
+        $expected['b'] = "1B";
+
+        $actual= ArrayHelper::removeIndex($data,2);
+
+        self::assertEquals($expected, $actual);
+    }
+
     public function testRemove()
     {
         /**
          * 目标数组中没有符合条件元素的情况
          */
         $data = $this->prepareAssociateArray1();
-        $actual = ArrayHelper::remove($data, "22");
+        $actual = ArrayHelper::removeItem($data, "22");
         $expect0['a'] = "1A";
         $expect0['b'] = "1B";
         $expect0['c'] = "1C";
         self::assertEquals($expect0, $actual);
 
         /**
-         * 目标数组中有单个元素符合的情况(把多个值中第一个清除掉)
+         * 目标数组中有单个元素符合的情况
+         */
+        $data = $this->prepareAssociateArray1();
+        $actual = ArrayHelper::removeItem($data, "1B");
+        $expect1['a'] = "1A";
+        $expect1['c'] = "1C";
+
+        self::assertEquals($expect1, $actual);
+
+        /**
+         * 目标数组中有多个元素符合的情况(把多个值中第一个清除掉)
          */
         $data = $this->prepareAssociateArray1();
         $data['d'] = "1B";
-        $actual = ArrayHelper::remove($data, "1B");
+        $actual = ArrayHelper::removeItem($data, "1B");
         $expect1['a'] = "1A";
         $expect1['c'] = "1C";
         $expect1['d'] = "1B";

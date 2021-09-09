@@ -38,21 +38,54 @@ class ArrayHelper
     /**
      * 移除数组中的某个元素
      * @param $array
-     * @param $items
+     * @param $item
      * @return array
      */
-    public static function remove($array, $items)
+    public static function removeItem($array, $item)
     {
-        // if (ObjectHelper::getType($items) == ObjectTypes::ARRAYS) {
-        //     $target = $items;
-        // } else {
-        //     $target[] = $items;
-        // }
-        //
-        // return array_diff($array, $target);
+        if (ObjectHelper::getType($array) == ObjectTypes::ARRAYS) {
+            if ($idx = array_search($item, $array, true)) {
+                unset($array[$idx]);
+            }
+        }
 
-        if($idx = array_search($items,$array,true)) {
-            unset($array[$idx]);
+        return $array;
+    }
+
+    public static function removeIndex($array, $index)
+    {
+        if (ObjectHelper::getType($array) == ObjectTypes::ARRAYS) {
+            array_splice($array,$index,1);
+        }
+
+        return $array;
+    }
+
+    /**
+     * 删除数组的第一个元素
+     * @param $array
+     * @return mixed|null
+     */
+    public static function removeHead($array)
+    {
+        if (ObjectHelper::getType($array) == ObjectTypes::ARRAYS) {
+            array_shift($array);
+        }
+
+        return $array;
+    }
+
+    /**
+     * 删除数组的最后一个元素
+     * @param $array
+     * @return mixed|null
+     */
+    public static function removeTail($array)
+    {
+        if (ObjectHelper::getType($array) == ObjectTypes::ARRAYS) {
+            $length = self::getLength($array);
+            $lastIndex = $length - 1;
+            array_splice($array,$lastIndex,1);
         }
 
         return $array;
@@ -91,7 +124,7 @@ class ArrayHelper
         }
 
         $result = array_keys($array);
-        if ($result && isset($result[0]) ) {
+        if ($result && isset($result[0])) {
             if (ObjectHelper::getType($result[0]) == ObjectTypes::INTEGER) {
                 return true;
             }
