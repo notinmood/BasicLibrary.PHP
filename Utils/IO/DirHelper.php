@@ -15,12 +15,12 @@ class DirHelper
      * @param $fullPath
      * @return bool
      */
-    public static function surePathExist($fullPath)
+    public static function ensurePathExist($fullPath)
     {
-        return self::makedir($fullPath);
+        return self::makeDir($fullPath);
     }
 
-    private static function makedir($path)
+    private static function makeDir($path)
     {
         $arr = array();
         while (!is_dir($path)) {
@@ -32,8 +32,8 @@ class DirHelper
             return true;
         }
         while (count($arr)) {
-            $parentdir = array_pop($arr);//弹出最后一个数组单元
-            mkdir($parentdir);//从父目录往下创建
+            $parentDir = array_pop($arr);//弹出最后一个数组单元
+            mkdir($parentDir);//从父目录往下创建
         }
     }
 

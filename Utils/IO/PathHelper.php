@@ -15,6 +15,11 @@ use Hiland\Utils\Data\StringHelper;
 
 class PathHelper
 {
+    /**
+     * 将各个部分路径整合成一个完整的路径
+     * @param ...$paths
+     * @return string
+     */
     public static function combine(...$paths)
     {
         $result = "";

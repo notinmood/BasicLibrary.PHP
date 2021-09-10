@@ -61,20 +61,19 @@ class NetHelper
 
     /**
      * 根据是否有$data值进行智能判断是发起post还是get请求
-     *
      * @param string $url
      *            被请求的url
      * @param mixed $data
      *            post请求时发送的数据
-     * @param int $timeoutsecond
+     * @param int   $timeOutSeconds
      *            请求超时时间
-     * @param bool $issslverify
+     * @param bool  $isSSLVerify
      *            是否进行ssl验证
-     * @param array $headerarray
+     * @param array $headerArray
      *            请求头信息
-     * @param bool $isForceUnSafe
+     * @param bool  $isForceUnSafe
      *            是否强制启用非安全模式（php5.6下在向微信服务器上传资源的时候选用此选项）
-     * @param array $cretfilearray
+     * @param array $certificateFileArray
      *            请求的证书信息（证书需要带全部的物理路径）并且证书的文件名命名格式要求如下：
      *            cert证书 命名格式为 *****cert.pem
      *            key证书命名格式为 *****key.pem
@@ -82,16 +81,16 @@ class NetHelper
      * @return mixed
      * @throws WechatException
      */
-    public static function request($url, $data = null, $timeoutsecond = 0, $issslverify = false,
-                                   $headerarray = array(), $cretfilearray = array(),
+    public static function request($url, $data = null, $timeOutSeconds = 0, $isSSLVerify = false,
+                                   $headerArray = array(), $certificateFileArray = array(),
                                    $isForceUnSafe = false)
     {
-        if ($timeoutsecond = 0) {
-            $timeoutsecond = 30;
+        if ($timeOutSeconds = 0) {
+            $timeOutSeconds = 30;
         }
         $curl = curl_init();
 
-        curl_setopt($curl, CURLOPT_TIMEOUT, $timeoutsecond);
+        curl_setopt($curl, CURLOPT_TIMEOUT, $timeOutSeconds);
         // 要求结果为字符串且输出到屏幕上
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
@@ -108,11 +107,11 @@ class NetHelper
             curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
         }
 
-        if ($headerarray && count($headerarray) >= 1) {
-            curl_setopt($curl, CURLOPT_HTTPHEADER, $headerarray);
+        if ($headerArray && count($headerArray) >= 1) {
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $headerArray);
         }
 
-        if ($issslverify) {
+        if ($isSSLVerify) {
             // 检测服务器的证书是否由正规浏览器认证过的授权CA颁发的
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, TRUE);
             // 检测服务器的域名与证书上的是否一致
@@ -122,18 +121,18 @@ class NetHelper
             curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE); //不需要证书验证
         }
 
-        if ($cretfilearray) {
-            foreach ($cretfilearray as $key) {
-                $filebasename = FileHelper::getFileBaseName($key);
-                if (StringHelper::isContains($filebasename, "cert.pem")) {
+        if ($certificateFileArray) {
+            foreach ($certificateFileArray as $key) {
+                $fileBaseName = FileHelper::getFileBaseName($key);
+                if (StringHelper::isContains($fileBaseName, "cert.pem")) {
                     curl_setopt($curl, CURLOPT_SSLCERT, $key);
                 }
 
-                if (StringHelper::isContains($filebasename, "key.pem")) {
+                if (StringHelper::isContains($fileBaseName, "key.pem")) {
                     curl_setopt($curl, CURLOPT_SSLKEY, $key);
                 }
 
-                if (StringHelper::isContains($filebasename, "ca.pem")) {
+                if (StringHelper::isContains($fileBaseName, "ca.pem")) {
                     curl_setopt($curl, CURLOPT_CAINFO, $key);
                 }
             }

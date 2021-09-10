@@ -64,24 +64,37 @@ class DateHelper
         }
     }
 
-    /**从字符串解析出日期时间
-     * @param $dateString
-     * @return bool|\DateTime，成功时返回正确的日期时间格式；失败时返回false；
+    /**从字符串等信息中解析出日期时间
+     * @param $data mixed 可以是一个字符串,数字,日期格式
+     * @return bool|DateTime，成功时返回正确的日期时间格式；失败时返回false；
      */
-    public static function parseDateTimeSafely($dateString)
+    public static function parseDateTimeSafely($data)
     {
+        if(ObjectHelper::isEmpty($data)){
+            return false;
+        }
+
         $result = false;
-        $type = ObjectHelper::getType($dateString);
+        $type = ObjectHelper::getType($data);
         switch ($type) {
             case ObjectTypes::STRING:
                 try {
-                    $result = new DateTime($dateString, self::getDateTimeZone());
+                    $result = new DateTime($data, self::getDateTimeZone());
                 } catch (Exception $e) {
                     $result = false;
                 }
                 break;
             case ObjectTypes::DATETIME:
-                $result = $dateString;
+                $result = $data;
+                break;
+            case ObjectTypes::INTEGER:
+            case ObjectTypes::DOUBLE:
+            case ObjectTypes::FLOAT:
+                try {
+                    $result = self::getDateTime($data);
+                } catch (Exception $e) {
+                    $result = false;
+                }
                 break;
             default:
                 $result = false;
@@ -91,7 +104,7 @@ class DateHelper
     }
 
     /** 将timestamp转换成日期字符串(format函数的别名)
-     * @param null $timestamp
+     * @param null   $timestamp
      * @param string $format
      * @return string
      * @throws Exception
@@ -117,7 +130,7 @@ class DateHelper
             return new DateTime($targetString, self::getDateTimeZone());
         } else {
             $ts2038 = self::get20380101Timestamp();
-            $diffArray = self::getDiff($ts2038, $timestamp);
+            $diffArray = self::getInterval($ts2038, $timestamp);
 
             $targetDateTime = self::addInterval($ts2038, 'd', $diffArray->d, 'dt');
             $targetDateTime = self::addInterval($targetDateTime, 'h', $diffArray->h, 'dt');
@@ -127,13 +140,13 @@ class DateHelper
     }
 
     /**获取两个日期之间的差值（秒或者毫秒）
-     * @param $dateMain
-     * @param $dateSecondary
+     * @param        $dateMain
+     * @param        $dateSecondary
      * @param string $intervalType “s”表示秒；“ms”表示毫秒
      * @return float|int
      * @throws Exception
      */
-    public static function diffInterval($dateMain, $dateSecondary, $intervalType = "s")
+    public static function getIntervalSeconds($dateMain, $dateSecondary, $intervalType = "s")
     {
         $ms4Main = self::getTotalMilliSeconds($dateMain);
         $ms4Secondary = self::getTotalMilliSeconds($dateSecondary);
@@ -154,12 +167,13 @@ class DateHelper
 
 
     /**
+     * 获取两个日期之间的差额(如果后一个日期比前一个日期小,那么返回的DateInterval的属性invert的值为1)
      * @param $startValue DateTime|int|float 开始时间(即可以是DateTime类型也可以是timestamp类型)
-     * @param $endValue DateTime|int|float 结束时间(即可以是DateTime类型也可以是timestamp类型)
+     * @param $endValue   DateTime|int|float 结束时间(即可以是DateTime类型也可以是timestamp类型)
      * @return DateInterval
      * @throws Exception
      */
-    public static function getDiff($startValue, $endValue)
+    public static function getInterval($startValue, $endValue)
     {
         if (ObjectHelper::getType($startValue) == ObjectTypes::DATETIME) {
             $startValue = self::getTimestamp($startValue);
@@ -170,6 +184,14 @@ class DateHelper
         }
 
         $timeDiff = $endValue - $startValue;
+        $invert = 0;
+
+        if ($timeDiff < 0) {
+            $invert = 1;
+            $timeDiff = 0 - $timeDiff;
+        }
+
+
         $days = intval($timeDiff / 86400);
         $remain = $timeDiff % 86400;
         $hours = intval($remain / 3600);
@@ -178,12 +200,13 @@ class DateHelper
         $secs = $remain % 60;
 
         $p = "P{$days}DT{$hours}H{$mins}M{$secs}S";
-        return new DateInterval($p);
+        $interval = new DateInterval($p);
+        $interval->invert = $invert;
+        return $interval;
     }
 
     /**
      * 获取从1970年1月1日以来总共的毫秒数
-     *
      * @param null $dateValue
      * @return float
      * @throws Exception
@@ -212,7 +235,7 @@ class DateHelper
 
         //以下代码修复php中2038年问题（32位php的int无法表示2038年01月19日星期二凌晨03:14:07之后的时间秒数。
         //超过 2^31 – 1，2^31 – 1 就是0x7FFFFFFF）
-        $year20380101 = new DateTime("2038-1-1 0:0:0", self::getDateTimeZone());
+        $year20380101 = self::get20380101DateTime(); //new DateTime("2038-1-1 0:0:0", self::getDateTimeZone());
         if ($dateValue <= $year20380101) {
             $result = $dateValue->getTimestamp();
         } else {
@@ -231,7 +254,6 @@ class DateHelper
 
     /**
      * 获取当前时间的毫秒数信息
-     *
      * @return float
      */
     public static function getCurrentMilliSecond()
@@ -241,23 +263,19 @@ class DateHelper
 
     /**
      * 对日期进行时间间隔处理
-     *
      * @param int|DateTime $originalValue int类型的时间戳或者是DateTime时间
-     * @param string $intervalType
-     *            时间间隔类型，具体如下：
-     *            y:年
-     *            M:月
-     *            d:日
-     *
-     *            q:季度
-     *            w:星期
-     *
-     *            h:小时
-     *            m或者i:分钟
-     *            s:秒钟
-     *
-     * @param int $intervalValue 时间间隔值
-     * @param string $returnType 返回值类型--dt:返回DateTime时间类型；ts(默认):返回timestamp类型。
+     * @param string       $intervalType
+     *                                    时间间隔类型，具体如下：
+     *                                    y:年
+     *                                    M:月
+     *                                    d:日
+     *                                    q:季度
+     *                                    w:星期
+     *                                    h:小时
+     *                                    m或者i:分钟
+     *                                    s:秒钟
+     * @param int          $intervalValue 时间间隔值
+     * @param string       $returnType    返回值类型--dt:返回DateTime时间类型；ts(默认):返回timestamp类型。
      * @return int|DateTime int类型的时间戳或者是DateTime时间
      * @throws Exception
      */
@@ -333,7 +351,7 @@ class DateHelper
 
     /**
      * 对数字表示的timestamp进行格式化友好显示
-     * @param int $time timestamp格式的时间
+     * @param int    $time         timestamp格式的时间
      * @param string $formatString 格式化字符串
      * @return string
      * @throws Exception
@@ -348,11 +366,11 @@ class DateHelper
 
     /**
      * 获取某个制定的日期是星期几
-     * @param $timestamp 指定的日期（默认为当前日期）
-     * @param string $format 返回星期几的格式
-     * （默认（或者number,N,n）为数组0-7；
-     * chinese,C,c:汉字 一，。。。日；
-     * chinesefull,CF,cf:汉字全称 星期一。。。星期天）
+     * @param        $timestamp 指定的日期（默认为当前日期）
+     * @param string $format    返回星期几的格式
+     *                          （默认（或者number,N,n）为数组0-7；
+     *                          chinese,C,c:汉字 一，。。。日；
+     *                          chinesefull,CF,cf:汉字全称 星期一。。。星期天）
      * @return string
      */
     public static function getWeekName($format = 'number', $timestamp = null)
@@ -412,7 +430,7 @@ class DateHelper
     /**
      * 获取日期中月份的中文叫法
      * @param null|int $month
-     * @param string $postfixes 后缀信息
+     * @param string   $postfixes 后缀信息
      * @return string
      */
     public static function getMonthChineseName($month = null, $postfixes = '')

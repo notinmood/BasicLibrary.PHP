@@ -20,7 +20,7 @@ class CodingHelper
 {
     /**
      * js escape php 实现
-     * @param $string           the sting want to be escaped
+     * @param        $string           the string want to be escaped
      * @param string $in_encoding
      * @param string $out_encoding
      * @return string
@@ -41,6 +41,10 @@ class CodingHelper
         return $return;
     }
 
+    /**
+     * @param $str
+     * @return string
+     */
     public static function unescape($str)
     {
         $ret = '';

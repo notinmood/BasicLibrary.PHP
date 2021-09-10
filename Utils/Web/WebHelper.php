@@ -162,12 +162,6 @@ class WebHelper
         }
         exit ($data);
     }
-//
-//    public static function getWebPhysicalRootPath()
-//    {
-//        return dirname('/');
-//        //return $_SERVER['DOCUMENT_ROOT'];
-//    }
 
     /**
      * 获取应用程序地址
@@ -190,7 +184,7 @@ class WebHelper
         return EnvHelper::getServerHostName();
     }
 
-    /**
+    /**TODO:需要判断是否在ThinkPHP内
      * 获取应用程序地址
      * @return string
      */

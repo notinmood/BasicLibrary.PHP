@@ -446,9 +446,9 @@ class MimeHelper
     {
         if (version_compare(PHP_VERSION, '5.3', '>=')) {
             // 方法1、自己根据扩张名称查找文件mime类型
-            $fileextensionname = FileHelper::getFileExtensionName($filename);
-            if (in_array($fileextensionname, array_keys(self::$MIMEARRAY)) == true) {
-                return self::$MIMEARRAY[$fileextensionname];
+            $fileExtensionName = FileHelper::getFileExtensionName($filename);
+            if (in_array($fileExtensionName, array_keys(self::$MIMEARRAY)) == true) {
+                return self::$MIMEARRAY[$fileExtensionName];
             } else {
                 return false;
             }

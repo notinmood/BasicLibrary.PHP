@@ -10,6 +10,9 @@
 
 namespace Hiland\Utils\DataConstruct;
 
+/**
+ * 链表LinkedList的节点类型
+ */
 class Node
 {
     /**

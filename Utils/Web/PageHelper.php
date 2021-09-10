@@ -20,8 +20,7 @@ class PageHelper
 
     private static function buildCoding($coding = 'utf-8')
     {
-        $content = '<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=' . $coding . '"> <meta charset="' . $coding . '">';
-        return $content;
+        return '<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=' . $coding . '"> <meta charset="' . $coding . '">';
     }
 
     /**

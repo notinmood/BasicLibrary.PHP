@@ -84,8 +84,9 @@ class EnvHelper
         }
     }
 
-    public static function isDebug(){
-        $result= true;
+    public static function isDebug()
+    {
+        $result = true;
         // ConfigH
 
         return $result;

@@ -17,7 +17,7 @@ use Hiland\Utils\Web\WebHelper;
  * 方法asynExec调用的参数为一个url地址
  * 方法
  */
-class Thread
+class ThreadHelper
 {
     /**
      * 不需要返回值的异步执行（只在后台执行业务逻辑，不能有返回值）
@@ -25,7 +25,7 @@ class Thread
      * @param string $host 域名主机信息
      * @param int $port 端口
      */
-    public static function asynExec($url, $host = '', $port = 80)
+    public static function asyncExec($url, $host = '', $port = 80)
     {
         if (empty($host)) {
             $host = WebHelper::getHostName();

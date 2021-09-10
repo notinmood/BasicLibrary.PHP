@@ -41,7 +41,7 @@ use Hiland\Utils\Data\FontHelper;
  *          $destImage = $image->createImage(600, 500);
  *          ImageHelper::display($destImage, 'jpg', 80);
  */
-class Images
+class imageMate
 {
     // 原图资源信息
     var $sourceImage;

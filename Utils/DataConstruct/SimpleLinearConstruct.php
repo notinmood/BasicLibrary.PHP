@@ -2,6 +2,8 @@
 
 namespace Hiland\Utils\DataConstruct;
 
+use Exception;
+
 /**
  * 简单的线性数据结构
  */
@@ -20,31 +22,32 @@ abstract class SimpleLinearConstruct
     /**
      * 入队 *
      * @param $value
-     * @throws \Exception
+     * @throws Exception
      */
     public function push($value)
     {
         $myValue = $value;
-        throw new \Exception('请在派生类实现入队操作');
+        throw new Exception('请在派生类实现入队操作');
     }
 
     /**
      * 出队*
+     * @throws Exception
      */
     public function pop()
     {
-        throw new \Exception('请在派生类实现出队操作');
+        throw new Exception('请在派生类实现出队操作');
     }
 
 
     /**
      * 查询当前元素
      * @return mixed|NULL
-     * @throws \Exception
+     * @throws Exception
      */
     public function seek()
     {
-        throw new \Exception('请在派生类实现查询当前元素操作');
+        throw new Exception('请在派生类实现查询当前元素操作');
     }
 
     /**

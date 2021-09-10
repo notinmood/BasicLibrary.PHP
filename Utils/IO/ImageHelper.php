@@ -202,9 +202,6 @@ class ImageHelper
             case 1:
                 $result = 'gif';
                 break;
-            case 2:
-                $result = 'jpg';
-                break;
             case 3:
                 $result = 'png';
                 break;
@@ -224,6 +221,7 @@ class ImageHelper
             case 8:
                 $result = 'tiff';
                 break;
+            case 2:
             default:
                 $result = 'jpg';
                 break;
@@ -410,12 +408,11 @@ class ImageHelper
 
     /**
      * 裁剪图片
-     *
      * @param resource $sourceImage
      *            待操作的图片资源
      * @param int $topRemoveValue
      *            图片上部清除的数值（像素）
-     * @param int $buttomRemoveValue
+     * @param int $bottomRemoveValue
      *            图片下部清除的数值（像素）
      * @param int $leftRemoveValue
      *            图片左部清除的数值（像素）
@@ -423,7 +420,7 @@ class ImageHelper
      *            图片右部清除的数值（像素）
      * @return resource
      */
-    public static function cropImage($sourceImage, $topRemoveValue, $buttomRemoveValue = 0, $leftRemoveValue = 0, $rightRemoveValue = 0)
+    public static function cropImage($sourceImage, $topRemoveValue, $bottomRemoveValue = 0, $leftRemoveValue = 0, $rightRemoveValue = 0)
     {
         $sourceWidth = imagesx($sourceImage);
         $sourceHeight = imagesy($sourceImage);
@@ -436,8 +433,8 @@ class ImageHelper
             $leftRemoveValue = 0;
         }
 
-        if ($buttomRemoveValue >= $sourceHeight - $topRemoveValue) {
-            $buttomRemoveValue = 0;
+        if ($bottomRemoveValue >= $sourceHeight - $topRemoveValue) {
+            $bottomRemoveValue = 0;
         }
 
         if ($rightRemoveValue >= $sourceWidth - $leftRemoveValue) {
@@ -445,7 +442,7 @@ class ImageHelper
         }
 
         $newWidth = $sourceWidth - $leftRemoveValue - $rightRemoveValue;
-        $newHeight = $sourceHeight - $topRemoveValue - $buttomRemoveValue;
+        $newHeight = $sourceHeight - $topRemoveValue - $bottomRemoveValue;
         $croppedImage = imagecreatetruecolor($newWidth, $newHeight);
 
         imagecopy($croppedImage, $sourceImage, 0, 0, $leftRemoveValue, $topRemoveValue, $newWidth, $newHeight);
@@ -629,7 +626,7 @@ class ImageHelper
         }
     }
 
-    public static function fillText2Image2($backGroudImage, $fontSize, $angle, $startX, $startY, $textColor, $fontFileName, $content, $charCountPerLine, $linesDistance, $noFirstLineStretch = 0)
+    public static function fillText2Image2($backGroundImage, $fontSize, $angle, $startX, $startY, $textColor, $fontFileName, $content, $charCountPerLine, $linesDistance, $noFirstLineStretch = 0)
     {
         $length = mb_strlen($content);
 
@@ -645,7 +642,7 @@ class ImageHelper
                 if ($lineNumber > 0) {
                     $posX = $startX - $noFirstLineStretch;
                 }
-                imagefttext($backGroudImage, $fontSize, $angle, $posX, $posY, $textColor, $fontFileName, $lineContent);
+                imagefttext($backGroundImage, $fontSize, $angle, $posX, $posY, $textColor, $fontFileName, $lineContent);
                 $charNumber = 0;
                 $lineNumber++;
                 $lineContent = '';
