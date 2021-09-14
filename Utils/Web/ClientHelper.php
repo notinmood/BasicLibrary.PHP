@@ -14,7 +14,7 @@ class ClientHelper
      * 返回类型为以下字符串：
      * MSIE、Weixin、Firefox、Chrome、Safari、Opera、Other
      */
-    public static function getBrowser()
+    public static function getBrowserName()
     {
         if (!empty($_SERVER['HTTP_USER_AGENT'])) {
             $br = $_SERVER['HTTP_USER_AGENT'];
@@ -35,7 +35,7 @@ class ClientHelper
             }
             return $br;
         } else {
-            return "unknow";
+            return "unknown";
         }
     }
 
@@ -69,7 +69,7 @@ class ClientHelper
             }
             return $lang;
         } else {
-            return "unknow";
+            return "unknown";
         }
     }
 
@@ -97,7 +97,7 @@ class ClientHelper
             }
             return $OS;
         } else {
-            return "unknow";
+            return "unknown";
         }
     }
 

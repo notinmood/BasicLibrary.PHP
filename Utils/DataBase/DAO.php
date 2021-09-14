@@ -37,9 +37,8 @@ class DAO
 
     /**
      * 构造函数
-     *
      * @param string $dbHostName
-     * @param int $dbHostPort
+     * @param int    $dbHostPort
      * @param string $dbUserName
      * @param string $dbPassword
      * @param string $dbDataBase
@@ -293,9 +292,8 @@ class DAO
     }
 
     /**
-     *
      * @param array $result
-     * @param int $fetchType
+     * @param int   $fetchType
      *            取值为：
      *            1 或者MYSQL_ASSOC、MYSQLI_ASSOC - 关联数组，用字段名称表示Key的数组
      *            2 或者MYSQL_NUM、MYSQLI_NUM - 数字数组，用数字表示Key的数组

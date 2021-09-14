@@ -80,6 +80,7 @@ class MorseHelper
         '$' => '0001001', /* Dollar sign         */
         '@' => '011010',  /* At sign             */
     );
+
     protected static $standardReverse = null;
 
     public static function encode($text, $option = null)
@@ -246,7 +247,6 @@ class MorseHelper
         $ord_1 = decbin(0xe0 | ($code >> 12));
         $ord_2 = decbin(0x80 | (($code >> 6) & 0x3f));
         $ord_3 = decbin(0x80 | ($code & 0x3f));
-        $utf8_str = chr(bindec($ord_1)) . chr(bindec($ord_2)) . chr(bindec($ord_3));
-        return $utf8_str;
+        return chr(bindec($ord_1)) . chr(bindec($ord_2)) . chr(bindec($ord_3));
     }
 }

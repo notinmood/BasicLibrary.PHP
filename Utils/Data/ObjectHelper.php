@@ -2,21 +2,27 @@
 
 namespace Hiland\Utils\Data;
 
+use Exception;
+use stdClass;
+
 class ObjectHelper
 {
     /**
      * 将带有名值对类型数组的各成员，赋值给复杂对象的属性上
      * 如果对象已经拥有该属性，那么数组成员的值将会覆盖对象原有的属性值
-     * 如果对象没有改属性，那么将会为对象创建改属性，并赋数组成员的的值
-     *
-     * @param array $array
+     * 如果对象没有该属性，那么将会为对象创建改属性，并赋数组成员的的值
+     * @param array  $array
      *            名值对类型的原数组
      * @param object $object
      *            目标对象
      * @return object 赋值后的对象
      */
-    public static function arrayToComplexObject($array, $object)
+    public static function appendArrayToObject($array, $object = null)
     {
+        if ($object == null) {
+            $object = new stdClass();
+        }
+
         foreach ($array as $k => $v) {
             $object->$k = $v;
         }
@@ -26,11 +32,10 @@ class ObjectHelper
 
     /**
      * 数组转简单对象
-     *
      * @param array $array 名值对类型的一维或者多维数组
      * @return object
      */
-    public static function arrayToObject($array)
+    public static function fromArray($array)
     {
         $json = json_encode($array);
         return json_decode($json);
@@ -38,11 +43,10 @@ class ObjectHelper
 
     /**
      * 对象转简单数组
-     *
      * @param object $object
      * @return mixed
      */
-    public static function objectToArray($object)
+    public static function toArray($object)
     {
         $json = json_encode($object);
         return json_decode($json, true);
@@ -50,7 +54,6 @@ class ObjectHelper
 
     /**
      * 根据变量的值查找变量名字
-     *
      * @param mixed $var
      *            变量的值
      * @param mixed $scope
@@ -84,8 +87,8 @@ class ObjectHelper
 
     /**
      *判断两个值是否相等
-     * @param $dataA
-     * @param $dataB
+     * @param      $dataA
+     * @param      $dataB
      * @param bool $strictlyCompare 是否进行严格比较（严格模式是先比较类型，再比较值；非严格模式下 trure和“true”是相等的）
      * @return bool
      */
@@ -220,7 +223,7 @@ class ObjectHelper
      * array() (一个空数组)
      * $var; (一个声明了，但是没有值的变量)
      * 另外 一个没有内部成员的对象Object也是空的
-     * @param $data
+     * @param      $data
      * @param null $memberName
      * @return bool
      */
@@ -252,7 +255,7 @@ class ObjectHelper
         } else {
             switch ($type) {
                 case ObjectTypes::OBJECT:
-                    $emptyObject = new \stdClass();
+                    $emptyObject = new stdClass();
                     if ($data == $emptyObject) {
                         $result = true;
                     }
@@ -262,7 +265,6 @@ class ObjectHelper
             }
         }
 
-
         return $result;
     }
 
@@ -270,7 +272,7 @@ class ObjectHelper
      * @param $data
      * @return bool
      */
-    public static function isNumeric($data)
+    public static function isNumber($data)
     {
         $type = self::getType($data);
         if ($type == ObjectTypes::INTEGER || $type == ObjectTypes::DOUBLE || $type == ObjectTypes::FLOAT) {
@@ -328,13 +330,30 @@ class ObjectHelper
         }
     }
 
+    /**
+     * 获取对象对应的类型
+     * @param $object
+     * @return string|null 得到的是一个Class的完全名称(即包括命名空间在内的名称)
+     */
+    public static function getClassName($object)
+    {
+        $result = null;
+        try {
+            $result = get_class($object);
+        } catch (Exception $e) {
+            $result = null;
+        }
+
+        return $result;
+    }
+
     /**判断某个对象是否为某个类型的实例
      * 跟 运算符 a instanceof B 效果相同
      * @param $entity
      * @param $classFullName string 带命名空间的类型名称全名（调用的时候，获取某个类型的全名称可以使用::class关键字，即AAA::class）
      * @return bool
      * @example
-     * ObjectHelper::isInstance($entity1,ActiveCode::class);
+     *                       ObjectHelper::isInstance($entity1,ActiveCode::class);
      */
     public static function isInstance($entity, $classFullName)
     {

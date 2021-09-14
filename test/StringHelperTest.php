@@ -38,4 +38,12 @@ class StringHelperTest extends TestCase
         $result= StringHelper::isStartWith($whole, $padding);
         $this->assertTrue($result);
     }
+
+    public function testGrouping(){
+        $data= "13573290346";
+        $formator= "{3}-{4}-{4}";
+        $actual = StringHelper::grouping($data, $formator);
+        $expected= "135-7329-0346";
+        self::assertEquals($expected, $actual);
+    }
 }

@@ -1,18 +1,19 @@
 <?php
+
 namespace Hiland\Utils\Controller;
 
 use Think\Controller;
 use Think\Page;
-use Hiland\Biz\Loger\CommonLoger;
+use Hiland\Biz\Logger\CommonLogger;
 use Hiland\Utils\Data\CipherHelper;
 use Hiland\Utils\DataModel\ModelMate;
 use Hiland\Utils\DataModel\ViewMate;
 use Hiland\Utils\Datas\SystemConst;
 use Hiland\Utils\Web\WebHelper;
 
-/**
+/**TODO:需要调整,不能依赖ThinkPHP
  * Created by PhpStorm.
- * User: xiedalie
+ * User: xiedali
  * Date: 2016/7/27
  * Time: 21:15
  * 本类型内主要是为（列表等）页面提供了常用了方法
@@ -39,12 +40,12 @@ class HibaseController extends Controller
 
     /**
      * 单条信息的添加修改页面对应的action可以调用此方法
-     * @param $model
-     * @param int|string $key 主键的值
-     * @param string $keyName 主键的名称
-     * @param array $savingData 前台提交过来要保存的数据，（默认为null，其会自动从post字节流中获取）
-     * @param array $findingCondition 查找要显示在前台的记录信息，所需要使用的过滤条件（如果为null，其会自动根据主键进行组装此条件）
-     * @param null|array $link ViewLink连接
+     * @param            $model
+     * @param int|string $key              主键的值
+     * @param string     $keyName          主键的名称
+     * @param array      $savingData       前台提交过来要保存的数据，（默认为null，其会自动从post字节流中获取）
+     * @param array      $findingCondition 查找要显示在前台的记录信息，所需要使用的过滤条件（如果为null，其会自动根据主键进行组装此条件）
+     * @param null|array $link             ViewLink连接
      */
     protected function itemInteract($model, $key = 0, $keyName = '', $savingData = null, $findingCondition = null, $link = null)
     {
@@ -116,12 +117,12 @@ class HibaseController extends Controller
 
     /**
      * 列表页对应的action可以对用此方法
-     * @param $model
+     * @param      $model
      * @param null $condition
-     * @param int $pageIndex
-     * @param int $countPerPage
-     * @param $dataListName string 传递到前端列表数据的名称
-     * @param $link array 各表之间的逻辑关联数组
+     * @param int  $pageIndex
+     * @param int  $countPerPage
+     * @param      $dataListName string 传递到前端列表数据的名称
+     * @param      $link         array 各表之间的逻辑关联数组
      */
     protected function itemList($model, $condition = null, $pageIndex = 0, $countPerPage = 0, $dataListName = "", $link = null)
     {
@@ -151,7 +152,7 @@ class HibaseController extends Controller
      * @param $pageIndex
      * @param $countPerPage
      * @param $dataListName string 传递到前端列表数据的名称
-     * @param $link array 各表之间的逻辑关联数组
+     * @param $link         array 各表之间的逻辑关联数组
      */
     protected function assignListAndPaging($model, $condition, $pageIndex, $countPerPage, $dataListName = "", $link = null)
     {
@@ -175,7 +176,7 @@ class HibaseController extends Controller
 
     /**
      * 进行分页的逻辑处理，请在需要分页的子类方法中调用
-     * @param $totalCount
+     * @param     $totalCount
      * @param int $countPerPage
      */
     protected function assignPaging($totalCount, $countPerPage = 0)
@@ -200,9 +201,9 @@ class HibaseController extends Controller
 
     /**
      * 更新项目记录并跳转到前一个页面
-     * @param $model
+     * @param        $model
      * @param string $keys
-     * @param null $data
+     * @param null   $data
      * @param string $keyName
      */
     protected function itemsMaintenance($model, $keys = "", $data = null, $keyName = 'id')

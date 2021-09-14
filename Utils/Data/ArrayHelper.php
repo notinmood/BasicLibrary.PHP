@@ -148,9 +148,17 @@ class ArrayHelper
      * @param array $array 名值对类型的一维或者多维数组
      * @return object
      */
-    public static function arrayToObject($array)
+    public static function toObject($array)
     {
-        return ObjectHelper::arrayToObject($array);
+        return ObjectHelper::fromArray($array);
+    }
+
+    /**
+     * @param $object
+     * @return mixed
+     */
+    public static function fromObject($object){
+        return ObjectHelper::toArray($object);
     }
 
     /**
@@ -158,7 +166,7 @@ class ArrayHelper
      * @param string $xml xml字符串
      * @return array    转换得到的数组
      */
-    public static function xmlToArray($xml)
+    public static function fromXml($xml)
     {
         //禁止引用外部xml实体
         libxml_disable_entity_loader(true);
@@ -180,7 +188,7 @@ class ArrayHelper
             $xml .= '<?xml version="1.0" encoding="' . $charset . '" ?>';
         }
         $xml .= "<$rootName>";
-        $xml .= self::convertToXml($array);
+        $xml .= self::toXmlInner($array);
         $xml .= "</$rootName>";
         return $xml;
     }
@@ -189,7 +197,7 @@ class ArrayHelper
      * @param $value
      * @return string
      */
-    private static function convertToXml($value)
+    private static function toXmlInner($value)
     {
         $xml = '';
         if ((!is_array($value) && !is_object($value)) || count($value) <= 0) {
@@ -198,7 +206,7 @@ class ArrayHelper
             foreach ($value as $key => $val) {
                 if (is_array($val) || is_object($val)) { // 判断是否是数组，或者，对像
                     $xml .= "<" . $key . ">";
-                    $xml .= self::convertToXml($val); // 是数组或者对像就的递归调用
+                    $xml .= self::toXmlInner($val); // 是数组或者对像就的递归调用
                     $xml .= "</" . $key . ">";
                 } else {
                     if (is_numeric($val)) {
@@ -221,12 +229,7 @@ class ArrayHelper
      */
     public static function exchangeKeyValue($originalArray)
     {
-        $newArray = array();
-        foreach ($originalArray as $key => $value) {
-            $newArray[$value] = $key;
-        }
-
-        return $newArray;
+        return array_flip($originalArray);
     }
 
     /**

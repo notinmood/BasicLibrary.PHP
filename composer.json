@@ -1,23 +1,28 @@
 {
-    "name": "hiland/basiclibrary.php",
-    "description": "rainytop's php basic library.",
-    "homepage": "http://www.hilandsoft.com/",
-    "keywords": ["php","basic library","codecs"],
-    "type": "library",
-    "license": "Apache-2.0",
-    "require": {
-        "php": "^5.3.3 || ^7.4"
+  "name": "hiland/basiclibrary.php",
+  "description": "rainytop's php basic library.",
+  "homepage": "http://www.hilandsoft.com/",
+  "keywords": [
+    "php",
+    "basic library",
+    "codecs"
+  ],
+  "type": "library",
+  "license": "Apache-2.0",
+  "require": {
+    "php": "^5.3.3 || ^7.4",
+    "ext-mbstring": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "9.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Hiland\\Test\\": "",
+      "Hiland\\": ""
     },
-    "require-dev": {
-        "phpunit/phpunit": "9.*"
-    },
-    "autoload": {
-        "psr-4": {
-            "Hiland\\Test\\": "",
-            "Hiland\\": ""
-        },
-        "files": [
-            "Utils/Common/functions.php"
-        ]
-    }
+    "files": [
+      "Utils/Common/functions.php"
+    ]
+  }
 }

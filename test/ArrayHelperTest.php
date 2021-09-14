@@ -145,6 +145,15 @@ class ArrayHelperTest extends TestCase
         self::assertEquals($expect, $actual);
     }
 
+    public function testExchangeKeyValue(){
+        $data= $this->prepareAssociateArray1();
+        $expected["1A"]= "a";
+        $expected["1B"]= "b";
+        $expected["1C"]= "c";
+        $actual= ArrayHelper::exchangeKeyValue($data);
+        self::assertEquals($expected, $actual);
+    }
+
     private function prepareAssociateArray1()
     {
         $array1['a'] = "1A";

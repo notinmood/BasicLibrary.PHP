@@ -1,8 +1,8 @@
 <?php
 
-namespace Hiland\Biz\Loger;
+namespace Hiland\Biz\Logger;
 
-use Hiland\Biz\Loger\DBLoger\Loger;
+use Hiland\Biz\Logger\DBLogger\Logger;
 use Hiland\Biz\ThinkAddon\TPCompatibleHelper;
 use Hiland\Biz\ThinkAddon\TPConfigHelper;
 use Hiland\Utils\Data\ReflectionHelper;
@@ -15,7 +15,7 @@ use Hiland\Utils\Data\ReflectionHelper;
  * 说明: 如果启用第三方的loger，请在配置文件中设置LogProviderName
  * C("SYSTEM_LOG_LEVEL") 请配置日志记录级别
  */
-class CommonLoger
+class CommonLogger
 {
     const LOGLEVEL_BIZ = 0;
     const LOGLEVEL_DEBUG = 30;
@@ -34,11 +34,11 @@ class CommonLoger
      *      int $misc 日志附加信息
      *      string $status 日志状态信息
      */
-    public static function log($title, $content = '', $logLevel = CommonLoger::LOGLEVEL_DEBUG, $option = array('status' => '', 'category' => 'develop', 'other' => '', 'misc' => 0))
+    public static function log($title, $content = '', $logLevel = CommonLogger::LOGLEVEL_DEBUG, $option = array('status' => '', 'category' => 'develop', 'other' => '', 'misc' => 0))
     {
         $systemLogLevel = TPCompatibleHelper::config("SYSTEM_LOG_LEVEL");
         if (empty($systemLogLevel)) {
-            $systemLogLevel = CommonLoger::LOGLEVEL_DEBUG;
+            $systemLogLevel = CommonLogger::LOGLEVEL_DEBUG;
         }
 
         if ($logLevel > $systemLogLevel) {
@@ -65,27 +65,27 @@ class CommonLoger
             $misc = $option['misc'];
         }
 
-        self::getLoger()->log($title, $content, $status, $category, $other, $misc);
+        self::getLogger()->log($title, $content, $status, $category, $other, $misc);
     }
 
-    private static function getLoger()
+    private static function getLogger()
     {
-        $cacheKey = "system-provider-loger";
+        $cacheKey = "system-provider-logger";
         if (TPCompatibleHelper::cache($cacheKey)) {
             return TPCompatibleHelper::cache($cacheKey);
         } else {
             $providerName = TPCompatibleHelper::config("LogProviderName");
             if (empty($providerName)) {
-                //$providerName = "DBLoger";
-                //默认的loger为DBLoger直接使用new机制，不使用反射机制生成，提高性能
-                $loger = new Loger();
+                //$providerName = "DBLogger";
+                //默认的logger为DBLogger直接使用new机制，不使用反射机制生成，提高性能
+                $logger = new Logger();
             } else {
-                $className = "Hiland\\Biz\\Loger\\$providerName\\Loger";
-                $loger = ReflectionHelper::createInstance($className);
+                $className = "Hiland\\Biz\\Logger\\$providerName\\Logger";
+                $logger = ReflectionHelper::createInstance($className);
             }
 
-            TPCompatibleHelper::cache($cacheKey, $loger);
-            return $loger;
+            TPCompatibleHelper::cache($cacheKey, $logger);
+            return $logger;
         }
     }
 }

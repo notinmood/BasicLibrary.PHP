@@ -3,6 +3,7 @@
 namespace Hiland\Utils\Web;
 
 
+use Hiland\Utils\Data\ThinkHelper;
 use Hiland\Utils\Environment\EnvHelper;
 use think\Container;
 use think\Request;
@@ -35,6 +36,15 @@ class RequestHelper
             return $requestEntity->isGet();
         } else {
             return $_SERVER['REQUEST_METHOD'] == 'GET';
+        }
+    }
+
+    public static function getInput($name, $default = null, $method = RequestMethods::ALL)
+    {
+        if (ThinkHelper::isThinkPHP() && function_exists("input")) {
+            return input($name, $default);
+        } else {
+            //TODO:xiedali 需要手动实现
         }
     }
 

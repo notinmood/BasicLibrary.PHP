@@ -2,7 +2,7 @@
 
 namespace Hiland\Utils\Environment;
 
-class Device
+class DeviceHelper
 {
     /**
      * 判断当前运行的设备是否为移动设备

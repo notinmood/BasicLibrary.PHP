@@ -193,7 +193,7 @@ class StringHelper
     public static function grouping($data, $formator)
     {
         $content = '';
-        $pattern = '/\{\d*\}/';
+        $pattern = '/{\d*}/';
         $matches = null;
         $result = preg_match_all($pattern, $formator, $matches);
         if ($result) {

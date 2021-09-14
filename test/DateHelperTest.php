@@ -10,13 +10,10 @@
 
 namespace Hiland\Utils\Data;
 
-use Cassandra\Date;
-use DateInterval;
 use PHPUnit\Framework\TestCase;
 
 class DateHelperTest extends TestCase
 {
-
     public function testGetInterval()
     {
         $startValue = new \DateTime("2021-09-10");
@@ -69,6 +66,10 @@ class DateHelperTest extends TestCase
         $expected = new \DateTime("2038-1-1 0:0:0");
         self::assertEquals($expected, $actual);
     }
+
+    // public function testGetTimeZone(){
+    //     echo ini_get("date.timezone");
+    // }
 
     // public function testFormat()
     // {

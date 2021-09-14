@@ -1,7 +1,7 @@
 <?php
 namespace Hiland\Biz\Tencent\Packet;
 
-use Hiland\Biz\Loger\CommonLoger;
+use Hiland\Biz\Logger\CommonLogger;
 use Hiland\Biz\Tencent\Common\WechatConfig;
 use Hiland\Biz\Tencent\Common\WechatException;
 use Hiland\Utils\Data\ArrayHelper;

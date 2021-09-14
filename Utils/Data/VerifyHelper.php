@@ -6,7 +6,7 @@ class VerifyHelper
 {
     /**
      * 数字验证
-     * @param $data
+     * @param        $data
      * @param string $flag : int是否是整数，float是否是浮点型
      * @return bool
      */
@@ -37,14 +37,15 @@ class VerifyHelper
 
     /**
      * 名称匹配，如用户名，目录名等
-     * @param string $data 要匹配的字符串
-     * @param bool $chinese 是否支持中文,默认支持，如果是匹配文件名，建议关闭此项（false）
+     * @param string $data    要匹配的字符串
+     * @param bool   $chinese 是否支持中文,默认支持，如果是匹配文件名，建议关闭此项（false）
      * @param string $charset 编码（默认utf-8,支持gb2312）
      * @return bool
      */
     public static function isName($data, $chinese = true, $charset = 'utf-8')
     {
         if (!self::isEmpty($data)) return false;
+
         if ($chinese) {
             $match = (strtolower($charset) == 'gb2312') ? "/^[" . chr(0xa1) . "-" . chr(0xff) . "A-Za-z0-9_-]+$/" : "/^[x{4e00}-x{9fa5}A-Za-z0-9_]+$/u";
         } else {
@@ -60,8 +61,13 @@ class VerifyHelper
      */
     public static function isEmail($data)
     {
-        if (!self::isEmpty($data)) return false;
-        return (bool)preg_match(RegexHelper::EMAIL, $data);
+        // if (!self::isEmpty($data)) return false;
+        // return (bool)preg_match(RegexHelper::EMAIL, $data);
+
+        /**
+         * 使用php内部的功能进行判断
+         */
+        return (bool)filter_var($data, FILTER_VALIDATE_EMAIL);
     }
 
     /**
@@ -92,7 +98,7 @@ class VerifyHelper
 
     /**
      * 验证中文
-     * @param string $data 要匹配的字符串
+     * @param string $data    要匹配的字符串
      * @param string $charset 编码（默认utf-8,支持gb2312）
      * @return bool
      */
@@ -120,10 +126,10 @@ class VerifyHelper
 
     /**
      * 验证长度
-     * @param $data
-     * @param int $type 方式(默认min <= $str <= max)
-     * @param int $min 最小值;
-     * @param int $max 最大值;
+     * @param        $data
+     * @param int    $type    方式(默认min <= $str <= max)
+     * @param int    $min     最小值;
+     * @param int    $max     最大值;
      * @param string $charset 字符集
      * @return bool
      */
@@ -146,8 +152,8 @@ class VerifyHelper
     /**
      * 验证密码
      * @param string $data
-     * @param int $minLen
-     * @param int $maxLen
+     * @param int    $minLen
+     * @param int    $maxLen
      * @return boolean
      */
     public static function isPWD($data, $minLen = 6, $maxLen = 16)
@@ -162,8 +168,8 @@ class VerifyHelper
     /**
      * 验证用户名
      * @param string $data
-     * @param int $minLen
-     * @param int $maxLen
+     * @param int    $minLen
+     * @param int    $maxLen
      * @param string $charset
      * @return boolean
      */

@@ -35,7 +35,22 @@ class DateHelper
      */
     private static function getDateTimeZone()
     {
-        return new DateTimeZone("PRC");
+        $zoneName = ini_get("date.timezone");
+        if (!$zoneName) {
+            return new DateTimeZone("UTC");
+        } else {
+            switch ($zoneName) {
+                case "Asia/Shanghai":
+                    return new DateTimeZone("PRC");
+                    break;
+                default:
+                    return new DateTimeZone($zoneName);
+
+            }
+        }
+        // return new DateTimeZone("PRC");
+        // return new DateTimeZone("UTC");
+        // return new DateTimeZone("Asia/Shanghai");
     }
 
 
@@ -70,7 +85,7 @@ class DateHelper
      */
     public static function parseDateTimeSafely($data)
     {
-        if(ObjectHelper::isEmpty($data)){
+        if (ObjectHelper::isEmpty($data)) {
             return false;
         }
 
@@ -199,6 +214,10 @@ class DateHelper
         $mins = intval($remain / 60);
         $secs = $remain % 60;
 
+        /**
+         * 间隔规格格式以字母P开头，用于“期间”。每个持续时间周期由一个整数值和一个句点指示符表示。
+         * 如果持续时间包含时间元素，则说明的该部分前面有字母T。
+         */
         $p = "P{$days}DT{$hours}H{$mins}M{$secs}S";
         $interval = new DateInterval($p);
         $interval->invert = $invert;

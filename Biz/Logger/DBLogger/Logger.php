@@ -1,5 +1,6 @@
 <?php
-namespace Hiland\Biz\Loger\DBLoger;
+
+namespace Hiland\Biz\Logger\DBLogger;
 
 use Hiland\Biz\ThinkAddon\TPCompatibleHelper;
 use Hiland\Utils\Data\GuidHelper;
@@ -37,23 +38,16 @@ CREATE TABLE `【前缀】_system_infolog` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
  */
 
-class Loger
+class Logger
 {
     /**
      * 进行日志记录
-     *
-     * @param string $title
-     *            日志的标题
-     * @param string $content
-     *            日志的内容
-     * @param string $categoryname
-     *            日志的分类名称
-     * @param string $other
-     *            日志附加信息
-     * @param int $misc1
-     *            日志附加信息
-     * @param string $status
-     *            日志状态信息
+     * @param string $title        日志的标题
+     * @param string $content      日志的内容
+     * @param string $status       日志状态信息
+     * @param string $categoryname 日志的分类名称
+     * @param string $other        日志附加信息
+     * @param int    $misc
      * @return boolean 日志记录的成功与失败
      */
     public function log($title, $content = '', $status = '', $categoryname = 'develop', $other = '', $misc = 0)
@@ -70,7 +64,7 @@ class Loger
             $data['other'] = $other;
             $data['misc'] = $misc;
             $data['status'] = $status;
-            $data['createtime'] = date('Y-m-d H:i:s',time());
+            $data['createtime'] = date('Y-m-d H:i:s', time());
 
             if ($model->interact($data)) {
                 $result = true;

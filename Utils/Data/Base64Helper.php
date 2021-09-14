@@ -15,15 +15,73 @@ namespace Hiland\Utils\Data;
  */
 class Base64Helper
 {
+    /**
+     * @param string $commonString
+     * @param false  $safely 是否要进行安全转换(为了安全起见,(在url等场景中)需要将这两个字符 + / （加除，加粗）进行合理地替换)
+     * @return array|string|string[]/
+     */
+    public static function encode($commonString, $safely = false)
+    {
+        $result = base64_encode($commonString);
+
+        if ($safely == true) {
+            $result = self::getSafeBase64($result);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param $base64String
+     * @return false|string
+     */
+    public static function decode($base64String)
+    {
+        $base64String = self::getOriginalBase64($base64String);
+        return base64_decode($base64String);
+    }
+
+    /**
+     * 判断字符串是否进行了base64加密
+     * @param string $stringData
+     * @return bool
+     */
+    public static function isBase64($stringData)
+    {
+        $length = StringHelper::getLength($stringData);
+        if ($length % 4 != 0) {
+            return false;
+        }
+
+        for ($i = 0; $i < $length; $i++) {
+            $currentChar = $stringData[$i];
+            if ($currentChar >= 'A' && $currentChar <= 'Z') {
+                continue;
+            }
+            if ($currentChar >= 'a' && $currentChar <= 'z') {
+                continue;
+            }
+            if ($currentChar >= '0' && $currentChar <= '9') {
+                continue;
+            }
+            if ($currentChar == '+' || $currentChar == '\\' || $currentChar == '=') {
+                continue;
+            }
+
+            return false;
+        }
+        return true;
+    }
+
     /**获取安全的base64编码（用于在url中传递等工作）
      * Base64编码中使用了 两个特殊字符 + / （加除，加粗）    可以谐音为 “贝斯是加粗”的吉他
      * 为了安全起见,(在url等场景中)需要将这两个字符进行合理的替换
-     * @param $data
+     * @param $commonBase64String
      * @return array|string|string[]
      */
-    public static function getSafeBase64($data)
+    private static function getSafeBase64($commonBase64String)
     {
-        $string = str_replace(array('-', '_'), array('+', '/'), $data);
+        $string = str_replace(array('+', '/', '='), array('_', '|', '-'), $commonBase64String);
         $mod4 = strlen($string) % 4;
         if ($mod4) {
             $string .= substr('====', $mod4);
@@ -34,11 +92,11 @@ class Base64Helper
 
     /**
      * 从安全的base64编码，还原原始的base64编码
-     * @param $data
+     * @param $safeBase64String
      * @return array|string|string[]
      */
-    public static function getOriginalBase64($data)
+    private static function getOriginalBase64($safeBase64String)
     {
-        return str_replace(array('+', '/', '='), array('-', '_', ''), $data);
+        return str_replace(array('_', '|', '-'), array('+', '/', '='), $safeBase64String);
     }
 }

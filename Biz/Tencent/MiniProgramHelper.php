@@ -8,7 +8,7 @@
 
 namespace Hiland\Biz\Tencent;
 
-use Hiland\Biz\Loger\CommonLoger;
+use Hiland\Biz\Logger\CommonLogger;
 use Hiland\Biz\Tencent\MiniProgram\MiniProgramConfig;
 use Hiland\Biz\Tencent\MiniProgram\WXBizDataCrypt;
 use Hiland\Utils\Web\NetHelper;
