@@ -74,4 +74,22 @@ class ObjectHelperTest extends TestCase
         $actual = ObjectHelper::getClassName($object);
         self::assertNull($actual);
     }
+
+    public function testIsNumber(){
+        $data= 12;
+        $actual = ObjectHelper::isNumber($data);
+        self::assertTrue($actual);
+
+        $data= (float)12.45;
+        $actual = ObjectHelper::isNumber($data);
+        self::assertTrue($actual);
+
+        $data= (double)12.45;
+        $actual = ObjectHelper::isNumber($data);
+        self::assertTrue($actual);
+
+        $data= "12.45";
+        $actual = ObjectHelper::isNumber($data);
+        self::assertFalse($actual);
+    }
 }

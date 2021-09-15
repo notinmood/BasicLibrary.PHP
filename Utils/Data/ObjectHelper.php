@@ -268,12 +268,20 @@ class ObjectHelper
         return $result;
     }
 
-    /** 判断一个数据是否为数值类型
+    /**
+     * 判断一个数据是否为数值类型
+     * ════════════════════════
+     * 跟系统内置的is_numeric()不同点：
+     * 字符串表示的数字，比如"123"(用引号包裹起来的数字)
+     *  在is_numeric内是 true
+     *  在本函数内是false
      * @param $data
      * @return bool
      */
     public static function isNumber($data)
     {
+        // return is_numeric($data);
+
         $type = self::getType($data);
         if ($type == ObjectTypes::INTEGER || $type == ObjectTypes::DOUBLE || $type == ObjectTypes::FLOAT) {
             return true;
