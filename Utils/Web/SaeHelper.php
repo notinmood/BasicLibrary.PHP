@@ -21,8 +21,8 @@ class SaeHelper
      */
     public static function saveImage($imagefilename, $savedimagebasename = null, $storagedomainname = 'public')
     {
-        $fileextionname = strtolower(FileHelper::getFileExtensionName($imagefilename));
-        $filebasename = FileHelper::getFileBaseName($imagefilename);
+        $fileextionname = strtolower(FileHelper::getExtensionName($imagefilename));
+        $filebasename = FileHelper::getBaseName($imagefilename);
 
         if (empty($savedimagebasename)) {
             $savedimagebasename = $filebasename;
@@ -69,7 +69,7 @@ class SaeHelper
      */
     public static function saveImageResource($image, $savedimagebasename, $storagedomainname = 'public')
     {
-        $fileextionname = strtolower(FileHelper::getFileExtensionName($savedimagebasename));
+        $fileextionname = strtolower(FileHelper::getExtensionName($savedimagebasename));
 
         $storage = new \SaeStorage();
         ob_start();
@@ -105,7 +105,7 @@ class SaeHelper
      */
     public static function saveTempImageResource($image, $savingImageBaseName)
     {
-        $fileextionname = strtolower(FileHelper::getFileExtensionName($savingImageBaseName));
+        $fileextionname = strtolower(FileHelper::getExtensionName($savingImageBaseName));
 
         $filefullname = SAE_TMP_PATH . $savingImageBaseName;
 

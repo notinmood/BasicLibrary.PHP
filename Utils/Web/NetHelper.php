@@ -123,7 +123,7 @@ class NetHelper
 
         if ($certificateFileArray) {
             foreach ($certificateFileArray as $key) {
-                $fileBaseName = FileHelper::getFileBaseName($key);
+                $fileBaseName = FileHelper::getBaseName($key);
                 if (StringHelper::isContains($fileBaseName, "cert.pem")) {
                     curl_setopt($curl, CURLOPT_SSLCERT, $key);
                 }

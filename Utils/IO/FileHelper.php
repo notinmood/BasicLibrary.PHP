@@ -12,7 +12,7 @@ class FileHelper
      * @param string $fileName
      *            带路径的全文件名
      */
-    public static function getFileDirName($fileName)
+    public static function getDirName($fileName)
     {
         $path = pathinfo($fileName);
         return $path['dirname'];
@@ -24,7 +24,7 @@ class FileHelper
      * @param string $fileName
      *            带路径的全文件名
      */
-    public static function getFileBaseName($fileName)
+    public static function getBaseName($fileName)
     {
         $path = pathinfo($fileName);
         return $path['basename'];
@@ -34,7 +34,7 @@ class FileHelper
      * 获取文件的基本名称信息（不带路径不带扩张名的文件名称）
      * @param string $fileName 带路径的全文件名
      */
-    public static function getFileBaseNameWithoutExtension($fileName)
+    public static function getBaseNameWithoutExtension($fileName)
     {
         $path = pathinfo($fileName);
         return $path['filename'];
@@ -44,7 +44,7 @@ class FileHelper
      * 获取文件扩展名称信息（扩展名不带点（“.”））
      * @param string $fileName 带路径的全文件名
      */
-    public static function getFileExtensionName($fileName)
+    public static function getExtensionName($fileName)
     {
         $path = pathinfo($fileName);
         return $path['extension'];
@@ -84,7 +84,7 @@ class FileHelper
      * @param $fileName
      * @return bool|string
      */
-    public static function getFileEncoding($fileName)
+    public static function getEncoding($fileName)
     {
         $content = file_get_contents($fileName);
         return StringHelper::getEncoding($content);

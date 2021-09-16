@@ -24,7 +24,7 @@ class GeoHelper
      * @param string $rankType 排序方式 asc升序 desc 降序
      * @param string $dataItemLatFormat 获取$dataList数据集内元素的lat坐标的格式（缺省为"lat"，如果此坐标嵌套在元素的子元素内，其格式为 "**"."lat"）
      * @param string $dataItemLngFormat 获取$dataList数据集内元素的lng坐标的格式（缺省为"lng"，如果此坐标嵌套在元素的子元素内，其格式为 "**"."lng"）
-     * @return array|bool
+     * @return bool
      */
     public static function rankDistance($userLat, $userLng, $dataList, $rankType = 'asc', $dataItemLatFormat = "lat", $dataItemLngFormat = "lng")
     {

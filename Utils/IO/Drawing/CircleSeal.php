@@ -14,8 +14,9 @@ namespace Hiland\Utils\IO\Drawing;
  * @create on 10:03 2012-5-29
  * @example:
  *  $seal = new CircleSeal('你我他坐站走东西南北中',75,6,24,0,0,16,40);
- *  $seal->doImg();
+ *  $seal->draw();
  */
+
 class CircleSeal
 {
     private $sealString;    //印章字符
@@ -40,14 +41,14 @@ class CircleSeal
     //构造方法
     /**
      * CircleSeal constructor.
-     * @param string $str 印章文字字符串
-     * @param int $radius 印章半径
-     * @param int $rimWidth 边框厚度
-     * @param int $startRadius 五角星半径
-     * @param int $startAngle 五角星倾斜角度
-     * @param int $charAngle 字符串倾斜角度
-     * @param int $fontSize 印章文字字体大小
-     * @param int $innerRadius 内圆半径
+     * @param string $str         印章文字字符串
+     * @param int    $radius      印章半径
+     * @param int    $rimWidth    边框厚度
+     * @param int    $startRadius 五角星半径
+     * @param int    $startAngle  五角星倾斜角度
+     * @param int    $charAngle   字符串倾斜角度
+     * @param int    $fontSize    印章文字字体大小
+     * @param int    $innerRadius 内圆半径
      */
     public function __construct($str = '', $radius = 75, $rimWidth = 6, $startRadius = 24, $startAngle = 0, $charAngle = 0, $fontSize = 16, $innerRadius = 0)
     {

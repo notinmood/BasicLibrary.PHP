@@ -18,7 +18,6 @@ class HtmlHelper
      */
     public static function cleanComment($html)
     {
-        //TODO:xiedali 这个需要处理.
-        return $html;
+        return preg_replace('/<!--(.|\s)*?-->/', '', $html);
     }
 }

@@ -96,7 +96,7 @@ class ConfigMate
 
     private static function getParser($fileName)
     {
-        $extensionName = FileHelper::getFileExtensionName($fileName);
+        $extensionName = FileHelper::getExtensionName($fileName);
         $extensionName = StringHelper::upperStringFirstChar($extensionName);
 
         $targetParserType = "ConfigParser{$extensionName}";

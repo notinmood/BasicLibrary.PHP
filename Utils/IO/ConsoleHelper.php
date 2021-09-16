@@ -38,11 +38,28 @@ class ConsoleHelper
 
     /**
      * 带换行功能的echo
-     * @param mixed $data 待输出信息
+     * @param mixed $data               待输出信息
+     * @param bool  $bothBeforeAndAfter 如果true就在$data这一行前后都加入新行标志;
+     *                                  如果false就只在$data这一行后加入新行标志.
      */
-    public static function echoLine($data)
+    public static function echoLine($data = "", $bothBeforeAndAfter = false)
     {
+        if ($bothBeforeAndAfter) {
+            echo EnvHelper::getNewLineSymbol();
+        }
+
         echo "$data", EnvHelper::getNewLineSymbol();
+    }
+
+    /**
+     * 带换行功能的echo(方法echoLine的别名)
+     * @param mixed $data               待输出信息
+     * @param bool  $bothBeforeAndAfter 如果true就在$data这一行前后都加入新行标志;
+     *                                  如果false就只在$data这一行后加入新行标志.
+     */
+    public static function el($data = "", $bothBeforeAndAfter = false)
+    {
+        self::echoLine($data, $bothBeforeAndAfter);
     }
 
     /**

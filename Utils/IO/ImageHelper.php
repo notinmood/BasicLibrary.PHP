@@ -562,7 +562,7 @@ class ImageHelper
     public static function save($image, $filePhysicalFullName, $imageDisplayQuality = 80)
     {
         $filePhysicalFullName = str_replace('/', '\\', $filePhysicalFullName);
-        $imageType = strtolower(FileHelper::getFileExtensionName($filePhysicalFullName));
+        $imageType = strtolower(FileHelper::getExtensionName($filePhysicalFullName));
 
         $functionName = self::getImageOutputFunction($imageType);
         $paramCount = self::getImageOutputFunctionParamCount($imageType);

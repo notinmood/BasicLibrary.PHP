@@ -6,12 +6,9 @@ namespace Hiland\Utils\IO\Drawing;
  *  基本图片处理，用于完成图片缩入，水印添加
  *  当水印图超过目标图片尺寸时，水印图能自动适应目标图片而缩小
  *  水印图可以设置跟背景的合并度
- *
  *  Copyright(c) 2005 by ustb99. All rights reserved
- *
  *  To contact the author write to {@link mailto:ustb80@163.com}
- *
- * @author 偶然
+ * @author  偶然
  * @version $Id: thumb.class.php,v 1.9 2006/09/30 09:31:56 zengjian Exp $
  * @package system
  */
@@ -19,135 +16,106 @@ namespace Hiland\Utils\IO\Drawing;
 /**
  * ThumbHandler
  * @access public
+ * ════════════════════════
+ * 使用方法:
+ * 自动裁切:
+ * 程序会按照图片的尺寸从中部裁切最大的正方形，并按目标尺寸进行缩略
+ * $t->setSrcImg("img/test.jpg");
+ * $t->setCutType(1);//这一句就OK了
+ * $t->setDstImg("tmp/new_test.jpg");
+ * $t->createImg(60,60);
+ * 手工裁切:
+ * 程序会按照指定的位置从源图上取图
+ * $t->setSrcImg("img/test.jpg");
+ * $t->setCutType(2);//指明为手工裁切
+ * $t->setSrcCutPosition(100, 100);// 源图起点坐标
+ * $t->setRectangleCut(300, 200);// 裁切尺寸
+ * $t->setDstImg("tmp/new_test.jpg");
+ * $t->createImg(300,200);
+ * 使用实例:
+ * < ?php
+ * require_once('lib/thumb.class.php');
+ * $t = new ThumbHandler();
+ * $t->setSrcImg("img/test.jpg");
+ * $t->setDstImg("tmp/new_test.jpg");
+ * $t->setMaskImg("img/test.gif");
+ * $t->setMaskPosition(1);
+ * $t->setMaskImgPct(80);
+ * $t->setDstImgBorder(4,"#dddddd");
+ * // 指定缩放比例
+ * $t->createImg(300,200);
+ * ?>
+ * < ?php
+ * require_once('lib/thumb.class.php');
+ * $t = new ThumbHandler();
+ * // 基本使用
+ * $t->setSrcImg("img/test.jpg");
+ * $t->setMaskWord("test");
+ * $t->setDstImgBorder(10,"#dddddd");
+ * // 指定缩放比例
+ * $t->createImg(50);
+ * ?>
+ * < ?php
+ * equire_once('lib/thumb.class.php');
+ * $t = new ThumbHandler();
+ * // 基本使用
+ * $t->setSrcImg("img/test.jpg");
+ * $t->setMaskWord("test");
+ * // 指定固定宽高
+ * $t->createImg(200,200);
+ * ?>
+ * < ?php
+ * require_once('lib/thumb.class.php');
+ * $t = new ThumbHandler();
+ * $t->setSrcImg("img/test.jpg");
+ * $t->setDstImg("tmp/new_test.jpg");
+ * $t->setMaskWord("test");
+ * // 指定固定宽高
+ * $t->createImg(200,200);
+ * ?>
+ * < ?php
+ * require_once('lib/thumb.class.php');
+ * $t = new ThumbHandler();
+ * $t->setSrcImg("img/test.jpg");
+ * // 指定字体文件地址
+ * $t->setMaskFont("c:/winnt/fonts/arial.ttf");
+ * $t->setMaskFontSize(20);
+ * $t->setMaskFontColor("#ffff00");
+ * $t->setMaskWord("test3333333");
+ * $t->setDstImgBorder(99,"#dddddd");
+ * $t->createImg(50);
+ * ?>
+ * < ?php
+ * require_once('lib/thumb.class.php');
+ * $t = new ThumbHandler();
+ * $t->setSrcImg("img/test.jpg");
+ * $t->setMaskOffsetX(55);
+ * $t->setMaskOffsetY(55);
+ * $t->setMaskPosition(1);
+ * //$t->setMaskPosition(2);
+ * //$t->setMaskPosition(3);
+ * //$t->setMaskPosition(4);
+ * $t->setMaskFontColor("#ffff00");
+ * $t->setMaskWord("test");
+ * // 指定固定宽高
+ * $t->createImg(50);
+ * ?>
+ * < ?php
+ * require_once('lib/thumb.class.php');
+ * $t = new ThumbHandler();
+ * $t->setSrcImg("img/test.jpg");
+ * $t->setMaskFont("c:/winnt/fonts/simyou.ttf");
+ * $t->setMaskFontSize(20);
+ * $t->setMaskFontColor("#ffffff");
+ * $t->setMaskTxtPct(20);
+ * $t->setDstImgBorder(10,"#dddddd");
+ * $text = "中文";
+ * $str = mb_convert_encoding($text, "UTF-8", "gb2312");
+ * $t->setMaskWord($str);
+ * $t->setMaskWord("test");
+ * // 指定固定宽高
+ * $t->createImg(50);
  */
-
-/*
- 使用方法:
-    自动裁切:
-    程序会按照图片的尺寸从中部裁切最大的正方形，并按目标尺寸进行缩略
- 
-    $t->setSrcImg("img/test.jpg");
-    $t->setCutType(1);//这一句就OK了
-    $t->setDstImg("tmp/new_test.jpg");
-    $t->createImg(60,60);
- 
-    手工裁切:
-    程序会按照指定的位置从源图上取图
- 
-    $t->setSrcImg("img/test.jpg");
-    $t->setCutType(2);//指明为手工裁切
-    $t->setSrcCutPosition(100, 100);// 源图起点坐标
-    $t->setRectangleCut(300, 200);// 裁切尺寸
-    $t->setDstImg("tmp/new_test.jpg");
-    $t->createImg(300,200);
-    
-    使用实例:
-
-< ?php
-require_once('lib/thumb.class.php');
- 
-$t = new ThumbHandler();
- 
-$t->setSrcImg("img/test.jpg");
-$t->setDstImg("tmp/new_test.jpg");
-$t->setMaskImg("img/test.gif");
-$t->setMaskPosition(1);
-$t->setMaskImgPct(80);
-$t->setDstImgBorder(4,"#dddddd");
- 
-// 指定缩放比例
-$t->createImg(300,200);
-?>
-< ?php
-require_once('lib/thumb.class.php');
- 
-$t = new ThumbHandler();
- 
-// 基本使用
-$t->setSrcImg("img/test.jpg");
-$t->setMaskWord("test");
-$t->setDstImgBorder(10,"#dddddd");
- 
-// 指定缩放比例
-$t->createImg(50);
-?>
-< ?php
-equire_once('lib/thumb.class.php');
- 
-$t = new ThumbHandler();
- 
-// 基本使用
-$t->setSrcImg("img/test.jpg");
-$t->setMaskWord("test");
- 
-// 指定固定宽高
-$t->createImg(200,200);
-?>
-< ?php
-require_once('lib/thumb.class.php');
- 
-$t = new ThumbHandler();
- 
-$t->setSrcImg("img/test.jpg");
-$t->setDstImg("tmp/new_test.jpg");
-$t->setMaskWord("test");
- 
-// 指定固定宽高
-$t->createImg(200,200);
-?>
-< ?php
-require_once('lib/thumb.class.php');
- 
-$t = new ThumbHandler();
- 
-$t->setSrcImg("img/test.jpg");
- 
-// 指定字体文件地址
-$t->setMaskFont("c:/winnt/fonts/arial.ttf");
-$t->setMaskFontSize(20);
-$t->setMaskFontColor("#ffff00");
-$t->setMaskWord("test3333333");
-$t->setDstImgBorder(99,"#dddddd");
-$t->createImg(50);
- 
-?>
-< ?php
-require_once('lib/thumb.class.php');
- 
-$t = new ThumbHandler();
- 
-$t->setSrcImg("img/test.jpg");
-$t->setMaskOffsetX(55);
-$t->setMaskOffsetY(55);
-$t->setMaskPosition(1);
-//$t->setMaskPosition(2);
-//$t->setMaskPosition(3);
-//$t->setMaskPosition(4);
-$t->setMaskFontColor("#ffff00");
-$t->setMaskWord("test");
- 
-// 指定固定宽高
-$t->createImg(50);
-?>
-< ?php
-require_once('lib/thumb.class.php');
- 
-$t = new ThumbHandler();
- 
-$t->setSrcImg("img/test.jpg");
-$t->setMaskFont("c:/winnt/fonts/simyou.ttf");
-$t->setMaskFontSize(20);
-$t->setMaskFontColor("#ffffff");
-$t->setMaskTxtPct(20);
-$t->setDstImgBorder(10,"#dddddd");
-$text = "中文";
-$str = mb_convert_encoding($text, "UTF-8", "gb2312");
-$t->setMaskWord($str);
-$t->setMaskWord("test");
- 
-// 指定固定宽高
-$t->createImg(50);
-*/
 class ThumbHandler
 {
     var $dst_img;// 目标文件
@@ -215,8 +183,7 @@ class ThumbHandler
 
     /**
      * 设置图片生成路径
-     *
-     * @param    string $src_img 图片生成路径
+     * @param string $src_img 图片生成路径
      */
     function setSrcImg($src_img, $img_type = null)
     {
@@ -253,7 +220,7 @@ class ThumbHandler
 
     /**
      * 取得图片类型
-     * @param    string $file_path 文件路径
+     * @param string $file_path 文件路径
      * @return mixed
      */
     function _getImgType($file_path)
@@ -262,7 +229,7 @@ class ThumbHandler
         if (file_exists($file_path)) {
             $img_info = @getimagesize($file_path);
             if (isset($type_list[$img_info[2]])) {
-                Return $type_list[$img_info[2]];
+                return $type_list[$img_info[2]];
             }
         } else {
             die("文件不存在,不能取得文件类型!");
@@ -272,14 +239,13 @@ class ThumbHandler
     /**
      * 检查图片类型是否合法,调用了array_key_exists函数，此函数要求
      * php版本大于4.1.0
-     *
-     * @param    string $img_type 文件类型
+     * @param string $img_type 文件类型
      * @return bool
      */
     function _checkValid($img_type)
     {
         if (!array_key_exists($img_type, $this->all_type)) {
-            Return false;
+            return false;
         }
     }
 
@@ -301,8 +267,7 @@ class ThumbHandler
 
     /**
      * 设置图片生成路径
-     *
-     * @param    string $dst_img 图片生成路径
+     * @param string $dst_img 图片生成路径
      */
     function setDstImg($dst_img)
     {
@@ -315,8 +280,7 @@ class ThumbHandler
 
     /**
      * 按指定路径生成目录
-     *
-     * @param    string $path 路径
+     * @param string $path 路径
      */
     function _mkdirs($path)
     {
@@ -340,8 +304,7 @@ class ThumbHandler
 
     /**
      * 设置图片的显示质量
-     *
-     * @param    string $n 质量
+     * @param string $n 质量
      */
     function setImgDisplayQuality($n)
     {
@@ -350,8 +313,7 @@ class ThumbHandler
 
     /**
      * 设置图片的生成质量
-     *
-     * @param    string $n 质量
+     * @param string $n 质量
      */
     function setImgCreateQuality($n)
     {
@@ -369,7 +331,6 @@ class ThumbHandler
 
     /**
      * 设置字体颜色
-     *
      * @param string $color 字体颜色
      */
     function setMaskFontColor($color = "#ffffff")
@@ -379,7 +340,6 @@ class ThumbHandler
 
     /**
      * 设置水印字体
-     *
      * @param string|integer $font 字体
      */
     function setMaskFont($font = 2)
@@ -400,8 +360,7 @@ class ThumbHandler
 
     /**
      * 设置图片水印
-     *
-     * @param    string $img 水印图片源
+     * @param string $img 水印图片源
      */
     function setMaskImg($img)
     {
@@ -410,8 +369,7 @@ class ThumbHandler
 
     /**
      * 设置水印横向偏移
-     *
-     * @param    integer $x 横向偏移量
+     * @param integer $x 横向偏移量
      */
     function setMaskOffsetX($x)
     {
@@ -420,8 +378,7 @@ class ThumbHandler
 
     /**
      * 设置水印纵向偏移
-     *
-     * @param    integer $y 纵向偏移量
+     * @param integer $y 纵向偏移量
      */
     function setMaskOffsetY($y)
     {
@@ -430,8 +387,7 @@ class ThumbHandler
 
     /**
      * 指定水印位置
-     *
-     * @param    integer $position 位置,1:左上,2:左下,3:右上,0/4:右下
+     * @param integer $position 位置,1:左上,2:左下,3:右上,0/4:右下
      */
     function setMaskPosition($position = 0)
     {
@@ -440,8 +396,7 @@ class ThumbHandler
 
     /**
      * 设置图片合并程度
-     *
-     * @param    integer $n 合并程度
+     * @param integer $n 合并程度
      */
     function setMaskImgPct($n)
     {
@@ -450,8 +405,7 @@ class ThumbHandler
 
     /**
      * 设置文字合并程度
-     *
-     * @param    integer $n 合并程度
+     * @param integer $n 合并程度
      */
     function setMaskTxtPct($n)
     {
@@ -460,7 +414,6 @@ class ThumbHandler
 
     /**
      * 设置缩略图边框
-     *
      * @param    (类型)     (参数名)    (描述)
      */
     function setDstImgBorder($size = 1, $color = "#000000")
@@ -487,7 +440,6 @@ class ThumbHandler
 
     /**
      * 设置剪切类型
-     *
      * @param    (类型)     (参数名)    (描述)
      */
     function setCutType($type)
@@ -497,9 +449,9 @@ class ThumbHandler
 
     /**
      * 创建图片,主函数
-     * @param    integer $a 当缺少第二个参数时，此参数将用作百分比，
+     * @param integer $a           当缺少第二个参数时，此参数将用作百分比，
      *                             否则作为宽度值
-     * @param    integer $b 图片缩放后的高度
+     * @param integer $b           图片缩放后的高度
      */
     function createImg($a, $b = null)
     {
@@ -537,17 +489,16 @@ class ThumbHandler
 
         // 释放
         if (imagedestroy($this->h_src) && imagedestroy($this->h_dst)) {
-            Return true;
+            return true;
         } else {
-            Return false;
+            return false;
         }
     }
 
     /**
      * 设置新图尺寸
-     *
-     * @param    integer $img_w 目标宽度
-     * @param    integer $img_h 目标高度
+     * @param integer $img_w 目标宽度
+     * @param integer $img_h 目标高度
      */
     function _setNewImgSize($img_w, $img_h = null)
     {
@@ -666,7 +617,6 @@ class ThumbHandler
 
     /**
      * 设置源图剪切起始坐标点
-     *
      * @param    (类型)     (参数名)    (描述)
      */
     function setSrcCutPosition($x, $y)
@@ -677,8 +627,7 @@ class ThumbHandler
 
     /**
      * 设置图片剪切
-     *
-     * @param    integer $width 矩形剪切
+     * @param integer $width 矩形剪切
      */
     function setRectangleCut($width, $height)
     {
@@ -688,8 +637,7 @@ class ThumbHandler
 
     /**
      * 水平翻转
-     *
-     * @param    string $src 图片源
+     * @param string $src 图片源
      */
     function _flipH($src)
     {
@@ -705,8 +653,7 @@ class ThumbHandler
 
     /**
      * 垂直翻转
-     *
-     * @param    string $src 图片源
+     * @param string $src 图片源
      */
     function _flipV($src)
     {
@@ -814,7 +761,7 @@ class ThumbHandler
      */
     function _isFull()
     {
-        Return ($this->mask_w + $this->mask_offset_x > $this->fill_w
+        return ($this->mask_w + $this->mask_offset_x > $this->fill_w
             || $this->mask_h + $this->mask_offset_y > $this->fill_h)
             ? true : false;
     }
@@ -833,8 +780,7 @@ class ThumbHandler
 
     /**
      * 分析颜色
-     *
-     * @param    string $color 十六进制颜色
+     * @param string $color 十六进制颜色
      */
     function _parseColor($color)
     {
@@ -844,7 +790,7 @@ class ThumbHandler
             $ii++;
         }
 
-        Return $arr;
+        return $arr;
     }
 
     /**
@@ -1019,7 +965,7 @@ class ThumbHandler
             }
             $func_name($this->h_dst, $this->dst_img, $this->img_display_quality);
         } else {
-            Return false;
+            return false;
         }
     }
 }

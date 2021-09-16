@@ -17,11 +17,11 @@ class FileHelperTest extends TestCase
     public function testGetFileEncoding()
     {
         $fileName = PathHelper::combine(__DIR__, "res/utf-8.txt");
-        $actual = FileHelper::getFileEncoding($fileName);
+        $actual = FileHelper::getEncoding($fileName);
         $this->assertEquals("UTF-8", $actual);
 
         $fileName = PathHelper::combine(__DIR__,"res/gb2312.txt");
-        $actual = FileHelper::getFileEncoding($fileName);
+        $actual = FileHelper::getEncoding($fileName);
         $this->assertEquals("EUC-CN", $actual);
     }
 
@@ -29,12 +29,12 @@ class FileHelperTest extends TestCase
     public function testGetFileExtensionName()
     {
         $fileName= "E:\\myworkspace\\MyStudy\\WebPackStudy\\index.js";
-        $actual= FileHelper::getFileExtensionName($fileName);
+        $actual= FileHelper::getExtensionName($fileName);
         $expected= "js";
         self::assertEquals($expected, $actual);
 
         $fileName= "MyStudy\\WebPackStudy\\index.js";
-        $actual= FileHelper::getFileExtensionName($fileName);
+        $actual= FileHelper::getExtensionName($fileName);
         $expected= "js";
         self::assertEquals($expected, $actual);
     }
