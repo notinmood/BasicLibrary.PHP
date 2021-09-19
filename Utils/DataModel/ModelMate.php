@@ -10,6 +10,8 @@ use Think\Model;
 /**
  * 模型辅助器
  * 封装模型与数据库交互的常用操作
+ * ════════════════════════
+ * ThinkPHP的Model中的initialize方法,请修改为protected(否则会启用反射,影响性能)
  * @author devel
  */
 class ModelMate
@@ -19,7 +21,6 @@ class ModelMate
 
     /**
      * 构造函数
-     *
      * @param string|model $model
      *            其可以是一个表示model名称的字符串；
      *            也可以是一个继承至Think\Model的类型
@@ -28,11 +29,18 @@ class ModelMate
     {
         if (is_string($model)) {
             $thinkVersion = ThinkHelper::getPrimaryVersion();
-            if ($thinkVersion < 5) {
-                $this->modelObject = $this->queryObject = M($model);
+
+            $this->modelObject = new CommonModel($model);
+            $className = "\\think\\facade\\Db";
+            $exist = class_exists("$className");
+            if ($exist) {
+                $this->queryObject = \think\facade\Db::name($model);
             } else {
-                $this->modelObject = new CommonModel($model);
-                $this->queryObject = Db::name($model);
+                $className = "\\think\\Db";
+                $exist = class_exists("$className");
+                if ($exist) {
+                    $this->queryObject = \think\Db::name($model);
+                }
             }
         } else {
             $this->modelObject = $model;
@@ -42,10 +50,9 @@ class ModelMate
 
     /**
      * 按照主键获取信息
-     *
      * @param int|string $key
      *            查询信息的主键值
-     * @param string $keyName
+     * @param string     $keyName
      *            查询信息的主键名称
      * @return array 模型实体数据
      */
@@ -56,7 +63,7 @@ class ModelMate
 
     /**
      * 获取get数据时候需要的model
-     * @param $key
+     * @param        $key
      * @param string $keyName
      * @return Model
      */
@@ -78,14 +85,14 @@ class ModelMate
 
     /**
      * 根据条件获取一条记录
-     * @param array $condition 过滤条件
+     * @param array  $condition 过滤条件
      * @param string $orderBy
      * @return array 符合条件的结果，一维数组
      * @example
-     * $where= array();
-     * $where['shopid'] = $merchantScanedID;
-     * $where['openid'] = $openId;
-     * $result = $buyerShopMate->find($where);
+     *                          $where= array();
+     *                          $where['shopid'] = $merchantScanedID;
+     *                          $where['openid'] = $openId;
+     *                          $result = $buyerShopMate->find($where);
      */
     public function find($condition = array(), $orderBy = '')
     {
@@ -95,18 +102,18 @@ class ModelMate
 
     /**
      * 根据条件获取多条记录
-     * @param array $condition
-     * @param string $orderBy 排序信息
-     * @param int $pageIndex 页面序号
-     * @param int $itemCountPerPage 每页显示的信息条目数
-     * @param int $limit 查询信息的条目数
-     * @param string $fields 需要在查询结果中显示的字段信息，缺省情况下显示全部字段
+     * @param array  $condition
+     * @param string $orderBy          排序信息
+     * @param int    $pageIndex        页面序号
+     * @param int    $itemCountPerPage 每页显示的信息条目数
+     * @param int    $limit            查询信息的条目数
+     * @param string $fields           需要在查询结果中显示的字段信息，缺省情况下显示全部字段
      * @return array 符合条件的结果，多维数组
      * @example
-     * $where= array();
-     * $where['shopid'] = $merchantScanedID;
-     * $where['openid'] = $openId;
-     * $relation = $buyerShopMate->select($where);
+     *                                 $where= array();
+     *                                 $where['shopid'] = $merchantScanedID;
+     *                                 $where['openid'] = $openId;
+     *                                 $relation = $buyerShopMate->select($where);
      */
     public function select($condition = array(), $orderBy = "", $pageIndex = 0, $itemCountPerPage = 0, $limit = 0, $fields = '')
     {
@@ -116,7 +123,7 @@ class ModelMate
 
         $model = $this->getModel_Select($condition, $orderBy, $pageIndex, $itemCountPerPage, $limit);
 
-        if($fields){
+        if ($fields) {
             return $model->field($fields)->select();
         } else {
             return $model->select();
@@ -125,11 +132,11 @@ class ModelMate
 
     /**
      * 根据条件获取Select需要的model
-     * @param array $condition
-     * @param string $orderBy 排序信息
-     * @param int $pageIndex 页面序号
-     * @param int $itemCountPerPage 每页显示的信息条目数
-     * @param int $limit 查询信息的条目数
+     * @param array  $condition
+     * @param string $orderBy          排序信息
+     * @param int    $pageIndex        页面序号
+     * @param int    $itemCountPerPage 每页显示的信息条目数
+     * @param int    $limit            查询信息的条目数
      * @return Model
      */
     protected function getModel_Select($condition = array(), $orderBy = "id desc", $pageIndex = 0, $itemCountPerPage = 0, $limit = 0)
@@ -176,8 +183,8 @@ class ModelMate
     /**
      * 获取某记录的字段的值
      * @param int|string $key
-     * @param string $fieldName
-     * @param string $keyName
+     * @param string     $fieldName
+     * @param string     $keyName
      * @return mixed 字段的值
      */
     public function getValue($key, $fieldName, $keyName = 'id')
@@ -186,20 +193,17 @@ class ModelMate
         $model = $this->getModel_Where($condition);
 
         $thinkVersion = ThinkHelper::getPrimaryVersion();
-        if ($thinkVersion < 5) {
-            return $model->getField($fieldName);
-        } else {
+
             $model = $model->find();
             return $model[$fieldName];
-        }
     }
 
     /**
      * 设置某记录的字段的值
      * @param int|string $key
-     * @param string $fieldName
-     * @param mixed $fieldValue
-     * @param string $keyName
+     * @param string     $fieldName
+     * @param mixed      $fieldValue
+     * @param string     $keyName
      * @return bool|int 成功时返回受影响的行数，失败时返回false
      */
     public function setValue($key, $fieldName, $fieldValue, $keyName = 'id')
@@ -211,20 +215,13 @@ class ModelMate
 
     /**
      * 查找单个值
-     * @param string $searcher 要查找的内容
+     * @param string      $searcher 要查找的内容
      * @param string|null $whereClause
      * @return null|mixed
      */
     public function queryValue($searcher, $whereClause = null)
     {
-        $tableName = '';
-
-        $thinkVersion = ThinkHelper::getPrimaryVersion();
-        if ($thinkVersion < 5) {
-            $tableName = $this->modelObject->getTableName();
-        } else {
-            $tableName = $this->queryObject->getTable();
-        }
+        $tableName = $this->queryObject->getTable();
 
         $sql = "SELECT $searcher FROM $tableName";
         if (!empty($whereClause)) {
@@ -247,14 +244,7 @@ class ModelMate
      */
     public function query($sql)
     {
-        $tableName = '';
-
-        $thinkVersion = ThinkHelper::getPrimaryVersion();
-        if ($thinkVersion < 5) {
-            $tableName = $this->modelObject->getTableName();
-        } else {
-            $tableName = $this->queryObject->getTable();
-        }
+        $tableName = $this->queryObject->getTable();
 
         if (strstr($sql, '__MODELTABLENAME__')) {
             $sql = str_replace('__MODELTABLENAME__', $tableName, $sql);
@@ -269,7 +259,7 @@ class ModelMate
 
     /**
      * 执行原始的sql语句
-     * @param $sql
+     * @param      $sql
      * @param bool $parse
      * @return false|int
      */
@@ -280,8 +270,7 @@ class ModelMate
 
     /**
      * 交互信息
-     *
-     * @param array $data
+     * @param array  $data
      *            待跟数据库交互的模型实体数据
      * @param string $keyName
      *            当前模型的数据库表的主键名称
@@ -298,18 +287,12 @@ class ModelMate
             return false;
         }
 
-        $recordID = 0;
         $isAddOperation = true;
 
-        $thinkVersion = ThinkHelper::getPrimaryVersion();
         /* 添加或新增基础内容 */
         if (empty($data[$keyName])) { // 新增数据
-            if ($thinkVersion < 5) {
-                $recordID = $this->modelObject->data($data)->add(); // 添加基础内容
-            } else {
-                $recordID = $this->queryObject->insert($data, false, true);
-                $recordID = (int)$recordID;
-            }
+            $recordID = $this->queryObject->insert($data, false, true);
+            $recordID = (int)$recordID;
 
             if (!$recordID) {
                 //$this->model->setError('新增数据出错！');
@@ -319,11 +302,7 @@ class ModelMate
             $recordID = $data[$keyName];
             $isAddOperation = false;
 
-            if ($thinkVersion < 5) {
-                $status = $this->modelObject->data($data)->save(); // 更新基础内容
-            } else {
-                $status = $this->queryObject->update($data);
-            }
+            $status = $this->queryObject->update($data);
 
             if (false === $status) {
                 //$this->model->setError('更新数据出错！');
@@ -345,8 +324,8 @@ class ModelMate
 
     /**
      * 按照主键集合批量更新数据
-     * @param $keys string 主键集合（用逗号分隔的主键字符串，例如“1,5,6”）
-     * @param $data array 需要更新的数据（可以是目标实体的部分属性构成的array，比如本data内只包含status信息，这样就可以批量更新数据库内的记录状态）
+     * @param        $keys    string 主键集合（用逗号分隔的主键字符串，例如“1,5,6”）
+     * @param        $data    array 需要更新的数据（可以是目标实体的部分属性构成的array，比如本data内只包含status信息，这样就可以批量更新数据库内的记录状态）
      * @param string $keyName 主键的名称，缺省为“id”
      * @return bool
      */
@@ -373,8 +352,8 @@ class ModelMate
     }
 
     /**
-     * @param $condition
-     * @param $field
+     * @param     $condition
+     * @param     $field
      * @param int $step
      * @param int $lazyTime
      * @return bool
@@ -385,8 +364,8 @@ class ModelMate
     }
 
     /**
-     * @param $condition
-     * @param $field
+     * @param     $condition
+     * @param     $field
      * @param int $step
      * @param int $lazyTime
      * @return bool

@@ -2,6 +2,7 @@
 
 namespace Hiland\Utils\Data;
 
+use DateTime;
 use Exception;
 use stdClass;
 
@@ -42,7 +43,7 @@ class ObjectHelper
     }
 
     /**
-     * 对象转简单数组
+     * 对象转简单数组(跟get_object_vars相同功能)
      * @param object $object
      * @return mixed
      */
@@ -50,6 +51,8 @@ class ObjectHelper
     {
         $json = json_encode($object);
         return json_decode($json, true);
+
+        // return get_object_vars($object);
     }
 
     /**
@@ -127,7 +130,7 @@ class ObjectHelper
      */
     public static function getType($data)
     {
-        if ($data instanceof \DateTime) {
+        if ($data instanceof DateTime) {
             return ObjectTypes::DATETIME;
         }
 

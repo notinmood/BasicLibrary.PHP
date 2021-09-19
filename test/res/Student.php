@@ -36,4 +36,7 @@ class Student
     private static function getTypeNameEn($fixer=""){
         return "This is a Student ".$fixer;
     }
+
+    public $only4Object2Array= "only4Object2Array";
+    public static  $staticOnly4Object2Array = "staticOnly4Object2Array";
 }
