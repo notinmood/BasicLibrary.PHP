@@ -16,11 +16,6 @@ namespace Hiland\Utils\Environment;
  */
 class ConfigParserIni extends ConfigParser
 {
-    // public function get($key)
-    // {
-    //
-    // }
-
     public function loadFileToArray($fileFullName)
     {
         $p_ini = parse_ini_file($fileFullName, true);

@@ -3,12 +3,13 @@
 namespace Hiland\Utils\DataModel;
 
 use Hiland\Utils\Data\ThinkHelper;
+use ReflectionException;
 use think\Config;
 use think\Db;
 use Think\Model;
 
 /**
- * 模型辅助器
+ * 模型辅助器(需要ThinkPHP或者ThinkORM支持)
  * 封装模型与数据库交互的常用操作
  * ════════════════════════
  * ThinkPHP的Model中的initialize方法,请修改为protected(否则会启用反射,影响性能)
@@ -28,9 +29,11 @@ class ModelMate
     public function __construct($model)
     {
         if (is_string($model)) {
-            $thinkVersion = ThinkHelper::getPrimaryVersion();
+            try {
+                $this->modelObject = new CommonModel($model);
+            } catch (ReflectionException $e) {
+            }
 
-            $this->modelObject = new CommonModel($model);
             $className = "\\think\\facade\\Db";
             $exist = class_exists("$className");
             if ($exist) {

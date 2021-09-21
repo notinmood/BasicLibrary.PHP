@@ -46,4 +46,11 @@ class StringHelperTest extends TestCase
         $expected= "135-7329-0346";
         self::assertEquals($expected, $actual);
     }
+    
+    public function testUpperWordsFirstChar(){
+        $data = "I like this game!";
+        $actual = StringHelper::upperWordsFirstChar($data);
+        $expected = "I Like This Game!";
+        self::assertEquals($expected, $actual);
+    }
 }

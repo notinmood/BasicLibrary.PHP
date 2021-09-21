@@ -28,5 +28,4 @@ class MateContainer
         self::$mates[$name] = $mate;
         return $mate;
     }
-
 }

@@ -2,11 +2,13 @@
 
 namespace Hiland\Utils\Data;
 
+use Hiland\Utils\Environment\EnvHelper;
+
 class StringHelper
 {
     /**
      * 获取目标编码类型的文本
-     * @param        $data
+     * @param string $data
      * @param string $targetEncoding
      * @return false|string|string[]|null
      */
@@ -42,7 +44,7 @@ class StringHelper
      */
     public static function getNewLineSymbol()
     {
-        return PHP_EOL;
+        return EnvHelper::getNewLineSymbol();
     }
 
     /**
