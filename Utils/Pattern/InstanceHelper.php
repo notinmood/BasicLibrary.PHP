@@ -13,6 +13,14 @@ namespace Hiland\Utils\Pattern;
 
 use Hiland\Utils\Data\StringHelper;
 
+/**
+ * 单例辅助器
+ * (缺点：IDE内无法实现代码的智能提示)
+ * ════════════════════════
+ * 使用方法：
+ * $className = Student::class;
+ * $actual = InstanceHelper::get($className, "张三", 20);
+ */
 class InstanceHelper
 {
     private static $_instances = [];
