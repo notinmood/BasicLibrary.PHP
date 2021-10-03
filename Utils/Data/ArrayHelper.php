@@ -2,6 +2,8 @@
 
 namespace Hiland\Utils\Data;
 
+use phpDocumentor\Reflection\Types\True_;
+
 class ArrayHelper
 {
     /**
@@ -352,18 +354,23 @@ class ArrayHelper
 
     /**
      * 将多维数组平面化
-     * @param iterable $arrayData 待转换的多维数组
-     * @param string   $seperator 平面化后各个维度Key之间的分隔符,缺省为"."
-     * @param string   $prepend   平面化后的key前缀,缺省为空
+     * @param iterable $arrayData      待转换的多维数组
+     * @param string   $seperator      平面化后各个维度Key之间的分隔符,缺省为"."
+     * @param string   $prepend        平面化后的key前缀,缺省为空
+     * @param string   $indexKeyPrefix 如果是索引性质的数组,想给索引key加一个前缀的名称,缺省为空
      * @return array
      */
-    public static function flatten($arrayData, $seperator = ".", $prepend = '')
+    public static function flatten($arrayData, $seperator = ".", $prepend = '', $indexKeyPrefix = "")
     {
         $results = [];
 
         foreach ($arrayData as $key => $value) {
+            if (ObjectHelper::getType($key) == ObjectTypes::INTEGER) {
+                $key = $indexKeyPrefix . $key;
+            }
+
             if (is_array($value) && !empty($value)) {
-                $results = array_merge($results, static::flatten($value, $seperator, $prepend . $key . $seperator));
+                $results = array_merge($results, static::flatten($value, $seperator, $prepend . $key . $seperator,$indexKeyPrefix));
             } else {
                 $results[$prepend . $key] = $value;
             }
@@ -371,7 +378,6 @@ class ArrayHelper
 
         return $results;
     }
-
 
 
     /**
@@ -554,45 +560,69 @@ class ArrayHelper
     /**
      * 像CSS选择器一样,从多维数组内获取符合XPath的信息
      * ════════════════════════
-     * @param $arrayData
-     * @param $selector
+     * @param string $arrayData
+     * @param string $selector
+     * @param bool   $withIndexKey 查询路径里面是否包含索引数组的数字key,默认false
      * @return array
      * @example
-     *         1、目标数组 $array = [
-     *         ['website' => ['id' => 1, 'url' => 'reddit.com']],
-     *         ['website' => ['id' => 2, 'url' => 'twitter.com']],
-     *         ['website' => ['id' => 3, 'url' => 'dev.to']],
-     *         ];
-     *         2、应用xpath选取数据
-     *         $names = ArrayHelper::select($array, 'website.url');
-     *         3、--output--
-     *         ['reddit.com', 'twitter.com', 'dev.to']
+     *                             1、目标数组 $array = [
+     *                             ['website' => ['id' => 1, 'url' => 'reddit.com']],
+     *                             ['website' => ['id' => 2, 'url' => 'twitter.com']],
+     *                             ['website' => ['id' => 3, 'url' => 'dev.to']],
+     *                             ];
+     *                             2、应用xpath选取数据
+     *                             $names = ArrayHelper::select($array, 'website.url');
+     *                             3、--output--
+     *                             ['reddit.com', 'twitter.com', 'dev.to']
      */
-    public static function select($arrayData, $selector)
+    public static function select($arrayData, $selector, $withIndexKey = false)
     {
-        // $selectorArray = explode(".", $selector);
-        // $selectorLength = self::getLength($selectorArray);
-        //
-        // $input = $arrayData;
-        // $result = [];
-        //
-        // for ($i = 0; $i < $selectorLength; $i++) {
-        //     $result = [];
-        //
-        //     $currentSelectorNode = $selectorArray[$i];
-        //     foreach ($input as $key => $value) {
-        //         if (ObjectHelper::getType($key) == ObjectTypes::INTEGER) {
-        //             dump($value);
-        //         }else{
-        //             if ($key == $currentSelectorNode) {
-        //                 $result[$key] = $value;
-        //             }
-        //         }
-        //
-        //     }
-        //     $input = $result;
-        // }
-        //
-        // return $result;
+        if ($withIndexKey) {
+            $indexKeyPrefix = "";
+        } else {
+            $indexKeyPrefix = "I_I_";
+        }
+
+        $flattenArray = self::flatten($arrayData, ".", "", $indexKeyPrefix);
+        $keys = array_keys($flattenArray);
+        $values = array_values($flattenArray);
+
+        $result = [];
+        for ($i = 0; $i < self::getLength($keys); $i++) {
+            $currentKey = $keys[$i];
+            if (!$withIndexKey) {
+                $currentKey = StringHelper::replace($currentKey, "/$indexKeyPrefix\d*\./", "", true);
+            }
+
+            if ($selector == $currentKey) {
+                $result[] = $values[$i];
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Select方法的别名,Laravel内相同功能的方法名称就为pluck.
+     * 像CSS选择器一样,从多维数组内获取符合XPath的信息
+     * ════════════════════════
+     * @param string $arrayData
+     * @param string $selector
+     * @param bool   $withIndexKey 查询路径里面是否包含索引数组的数字key,默认false
+     * @return array
+     * @example
+     *                             1、目标数组 $array = [
+     *                             ['website' => ['id' => 1, 'url' => 'reddit.com']],
+     *                             ['website' => ['id' => 2, 'url' => 'twitter.com']],
+     *                             ['website' => ['id' => 3, 'url' => 'dev.to']],
+     *                             ];
+     *                             2、应用xpath选取数据
+     *                             $names = ArrayHelper::select($array, 'website.url');
+     *                             3、--output--
+     *                             ['reddit.com', 'twitter.com', 'dev.to']
+     */
+    public static function pluck($arrayData, $selector, $withIndexKey = false)
+    {
+        return self::select($arrayData, $selector, $withIndexKey);
     }
 }

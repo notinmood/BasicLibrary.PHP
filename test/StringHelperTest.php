@@ -59,7 +59,7 @@ class StringHelperTest extends TestCase
     public function testPaddingEnd()
     {
         $data = "qingdao";
-        $actual = StringHelper::paddingEnd($data, 10,"-");
+        $actual = StringHelper::paddingEnd($data, 10, "-");
         $expected = "qingdao---";
 
         self::assertEquals($expected, $actual);
@@ -71,6 +71,24 @@ class StringHelperTest extends TestCase
         $actual = StringHelper::paddingBegin($data, 10);
         $expected = "   qingdao";
 
+        self::assertEquals($expected, $actual);
+    }
+
+    public function testReplace()
+    {
+        $data = "我是一个中国人,我骄傲!";
+        $actual = StringHelper::replace($data, "我", "你");
+        $expected = "你是一个中国人,你骄傲!";
+        self::assertEquals($expected, $actual);
+
+        $data = "我是一个中国人,我骄傲!";
+        $actual = StringHelper::replace($data, "/我/i", "你",true);
+        $expected = "你是一个中国人,你骄傲!";
+        self::assertEquals($expected, $actual);
+
+        $data = "I_I_0.website.id";
+        $actual = StringHelper::replace($data, "/I_I_\d+/i", "",true);
+        $expected = ".website.id";
         self::assertEquals($expected, $actual);
     }
 }

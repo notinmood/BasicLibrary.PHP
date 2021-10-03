@@ -143,7 +143,7 @@ class StringHelper
     }
 
     /**获取字符串长度
-     * @param        $stringData
+     * @param string $stringData
      * @param string $encoding
      * @return false|int
      */
@@ -153,20 +153,25 @@ class StringHelper
     }
 
     /**包装php的字符串替换(将各个参数名称进一步明确化)
-     * @param $wholeStringData
-     * @param $oldStringData
-     * @param $newStringData
+     * @param string $wholeStringData
+     * @param string $oldStringDataOrRegex
+     * @param string $newStringData
+     * @param bool   $useRegex
      * @return array|string|string[]
      */
-    public static function replace($wholeStringData, $oldStringData, $newStringData)
+    public static function replace($wholeStringData, $oldStringDataOrRegex, $newStringData, $useRegex = false)
     {
-        return str_replace($oldStringData, $newStringData, $wholeStringData);
+        if ($useRegex) {
+            return preg_replace($oldStringDataOrRegex, $newStringData, $wholeStringData);
+        } else {
+            return str_replace($oldStringDataOrRegex, $newStringData, $wholeStringData);
+        }
     }
 
     /**
      * 将一个字符串按照某个分隔符分隔成数组
      * @param $wholeStringData     string 字符串全串
-     * @param $delimiter string 分隔符
+     * @param $delimiter           string 分隔符
      * @return false|string[]
      */
     public static function explode($wholeStringData, $delimiter)

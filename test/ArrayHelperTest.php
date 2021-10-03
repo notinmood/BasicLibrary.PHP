@@ -223,19 +223,36 @@ class ArrayHelperTest extends TestCase
         return ['A', 'B', 'C', 'D'];
     }
 
-    // public function testSelect()
-    // {
-    //     $array = [
-    //         ['website' => ['id' => 1, 'url' => 'reddit.com']],
-    //         ['website' => ['id' => 2, 'url' => 'twitter.com']],
-    //         ['website' => ['id' => 3, 'url' => 'dev.to']],
-    //     ];
-    //
-    //     $actual = ArrayHelper::select($array, 'website.url');
-    //
-    //     $expected = ['reddit.com', 'twitter.com', 'dev.to'];
-    //     self::assertEquals($expected, $actual);
-    // }
+    public function testSelect1()
+    {
+        $array = [
+            ['website' => ['id' => 1, 'url' => 'reddit.com']],
+            ['website' => ['id' => 2, 'url' => 'twitter.com']],
+            ['website' => ['id' => 3, 'url' => 'dev.to']],
+        ];
+
+        $actual = ArrayHelper::select($array, 'website.url');
+
+        $expected = ['reddit.com', 'twitter.com', 'dev.to'];
+        self::assertEquals($expected, $actual);
+    }
+
+    public function testSelect2()
+    {
+        $array = [
+            ['website' => [['id' => 1], ['url' => 'reddit.com']]],
+            ['website' => ['id' => 2, 'url' => 'twitter.com']],
+            ['website' => ['id' => 3, 'url' => 'dev.to']],
+        ];
+
+        $actual = ArrayHelper::select($array, 'website.url');
+        $expected = ['reddit.com', 'twitter.com', 'dev.to'];
+        self::assertEquals($expected, $actual);
+
+        $actual = ArrayHelper::select($array, '0.website.1.url', true);
+        $expected = ['reddit.com'];
+        self::assertEquals($expected, $actual);
+    }
 
     public function testFlatten1()
     {
@@ -269,10 +286,24 @@ class ArrayHelperTest extends TestCase
             ];
 
 
-        $actual = ArrayHelper::flatten($array,'.');
+        $actual = ArrayHelper::flatten($array, '.');
         $actual = json_encode($actual);
 
         $expected = '{"id":"82","remark":"hello","time":"2016-06-15 15:23:21","contact.id":"182","contact.name":"\u89e3\u7136","contact.phone":"18888888888"}';
+
+        self::assertEquals($expected, $actual);
+    }
+
+    public function testFlatten3()
+    {
+        $array = [
+            ['website' => [['id' => 1], ['url' => 'reddit.com']]],
+        ];
+
+        $actual = ArrayHelper::flatten($array, ".", "", "I_");
+        $actual = json_encode($actual);
+
+        $expected = '{"I_0.website.I_0.id":1,"I_0.website.I_1.url":"reddit.com"}';
 
         self::assertEquals($expected, $actual);
     }
