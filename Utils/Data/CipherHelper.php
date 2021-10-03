@@ -74,6 +74,27 @@ class CipherHelper
     }
 
     /**
+     * 解密
+     * @param string $string 待解密字符串
+     * @param string $key 解密秘钥
+     * @param int $expiry 过期时间
+     * @param bool $safeBase64 是否使用安全的base64编码（如果直接使用base64_encode和base64_decode方法的话，生成的字符串可能不适用URL地址。）
+     * @return string 解密后的字符串
+     */
+    public static function decrypt($string, $key = '', $expiry = 0, $safeBase64 = true)
+    {
+        if ($safeBase64) {
+            $string = str_replace(array('-', '_'), array('+', '/'), $string);
+            $mod4 = strlen($string) % 4;
+            if ($mod4) {
+                $string .= substr('====', $mod4);
+            }
+        }
+
+        return self::cipherCode($string, 'DECODE', $key, $expiry);
+    }
+
+    /**
      * 对字符串进行加解密操作
      * @param string $string
      * @param string $operation 取值'DECODE'表示解密，其他字符表示加密
@@ -143,26 +164,5 @@ class CipherHelper
             // 因为加密后的密文可能是一些特殊字符，复制过程可能会丢失，所以用base64编码
             return $keyc . str_replace('=', '', base64_encode($result));
         }
-    }
-
-    /**
-     * 解密
-     * @param string $string 待解密字符串
-     * @param string $key 解密秘钥
-     * @param int $expiry 过期时间
-     * @param bool $safeBase64 是否使用安全的base64编码（如果直接使用base64_encode和base64_decode方法的话，生成的字符串可能不适用URL地址。）
-     * @return string 解密后的字符串
-     */
-    public static function decrypt($string, $key = '', $expiry = 0, $safeBase64 = true)
-    {
-        if ($safeBase64) {
-            $string = str_replace(array('-', '_'), array('+', '/'), $string);
-            $mod4 = strlen($string) % 4;
-            if ($mod4) {
-                $string .= substr('====', $mod4);
-            }
-        }
-
-        return self::cipherCode($string, 'DECODE', $key, $expiry);
     }
 }

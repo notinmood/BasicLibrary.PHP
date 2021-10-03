@@ -19,7 +19,7 @@ class GuidHelper
      *            是否在guid两端加入括号
      * @return string
      */
-    public static function emptys($isBracket = false)
+    public static function genEmpty($isBracket = false)
     {
         $guid = "00000000-0000-0000-0000-000000000000";
 

@@ -7,7 +7,7 @@ class Queue extends SimpleLinearConstruct
     /**
      * （尾部）入队 *
      * @param mixed $value
-     * @return int|void
+     * @return int
      */
     public function push($value)
     {

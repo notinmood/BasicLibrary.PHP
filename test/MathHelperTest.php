@@ -19,19 +19,19 @@ class MathHelperTest extends TestCase
     public function testFloat2Percent()
     {
         $data = 2.78536;
-        $r1 = MathHelper::float2Percent($data);
-        $r2 = MathHelper::float2Percent($data, 2);
+        $r1 = MathHelper::convertFloatToPercent($data);
+        $r2 = MathHelper::convertFloatToPercent($data, 2);
         $this->assertEquals($r2, $r1);
         $this->assertEquals("278.54%", $r1);
 
-        $r3 = MathHelper::float2Percent($data, 1);
+        $r3 = MathHelper::convertFloatToPercent($data, 1);
         $this->assertEquals("278.5%", $r3);
     }
 
     public function testPercent2Float()
     {
         $data = "278.54%";
-        $r1 = MathHelper::percent2Float($data);
+        $r1 = MathHelper::convertPercentToFloat($data);
         $this->assertEquals(2.7854, $r1);
     }
 

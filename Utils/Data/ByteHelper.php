@@ -31,7 +31,7 @@ class ByteHelper
      * @return array 目标byte数组
      * @author Zikie
      */
-    public static function convertToBytes($string)
+    public static function convertFromString($string)
     {
         $bytes = array();
         $length = strlen($string);

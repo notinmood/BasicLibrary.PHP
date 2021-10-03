@@ -17,7 +17,7 @@ class JsonHelper
      * @param $jsonData
      * @return mixed
      */
-    public static function toArray($jsonData)
+    public static function convertToArray($jsonData)
     {
         return json_decode($jsonData,true);
     }
@@ -27,7 +27,7 @@ class JsonHelper
      * @param $jsonData
      * @return mixed
      */
-    public static function toObject($jsonData)
+    public static function convertToObject($jsonData)
     {
         return json_decode($jsonData,false);
     }

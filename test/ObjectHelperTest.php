@@ -97,7 +97,7 @@ class ObjectHelperTest extends TestCase
     public function testToArray()
     {
         $s = new Student("zhangsan", 20);
-        $actual =  ObjectHelper::toArray($s);
+        $actual =  ObjectHelper::convertTOArray($s);
         $expected =  get_object_vars($s);
         // dump($actual);
         self::assertEquals($expected, $actual);

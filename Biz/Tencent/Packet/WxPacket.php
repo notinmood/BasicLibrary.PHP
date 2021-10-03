@@ -75,7 +75,7 @@ class WxPacket
     {
         try {
             $this->setParameter('sign', $this->getSign());
-            $xml = ArrayHelper::ToXml($this->parameters, 'xml', false);
+            $xml = ArrayHelper::convertToXml($this->parameters, 'xml', false);
         } catch (WechatException $e) {
             die('error' . $e->errorMessage());
         }

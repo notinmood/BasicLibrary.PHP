@@ -16,7 +16,7 @@ class MathHelper
      * @param $data string 百分比字符串（可以带%也可以不带）
      * @return float
      */
-    public static function percent2Float($data)
+    public static function convertPercentToFloat($data)
     {
         return (float)$data / 100;
     }
@@ -27,7 +27,7 @@ class MathHelper
      * @param int $precisionNumber 精度位数
      * @return string 带%的百分比字符串
      */
-    public static function float2Percent($data, $precisionNumber = 2)
+    public static function convertFloatToPercent($data, $precisionNumber = 2)
     {
         $format = "%01." . $precisionNumber . "f";
         return sprintf($format, $data * 100) . '%';

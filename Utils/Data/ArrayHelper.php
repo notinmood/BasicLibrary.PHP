@@ -194,18 +194,18 @@ class ArrayHelper
      * @param array $array 名值对类型的一维或者多维数组
      * @return object
      */
-    public static function toObject($array)
+    public static function convertToObject($array)
     {
-        return ObjectHelper::fromArray($array);
+        return ObjectHelper::convertFromArray($array);
     }
 
     /**
      * @param $object
      * @return mixed
      */
-    public static function fromObject($object)
+    public static function convertFromObject($object)
     {
-        return ObjectHelper::toArray($object);
+        return ObjectHelper::convertTOArray($object);
     }
 
     /**
@@ -213,7 +213,7 @@ class ArrayHelper
      * @param string $xml xml字符串
      * @return array    转换得到的数组
      */
-    public static function fromXml($xml)
+    public static function convertFromXml($xml)
     {
         //禁止引用外部xml实体
         libxml_disable_entity_loader(true);
@@ -228,7 +228,7 @@ class ArrayHelper
      * @param bool   $includeHeader 是否在生成的xml文档中包含xml头部声明
      * @return string
      */
-    public static function ToXml($array, $rootName = 'myXml', $includeHeader = true, $charset = 'utf8')
+    public static function convertToXml($array, $rootName = 'myXml', $includeHeader = true, $charset = 'utf8')
     {
         $xml = '';
         if ($includeHeader) {

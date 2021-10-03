@@ -36,7 +36,7 @@ class ObjectHelper
      * @param array $array 名值对类型的一维或者多维数组
      * @return object
      */
-    public static function fromArray($array)
+    public static function convertFromArray($array)
     {
         $json = json_encode($array);
         return json_decode($json);
@@ -47,7 +47,7 @@ class ObjectHelper
      * @param object $object
      * @return mixed
      */
-    public static function toArray($object)
+    public static function convertTOArray($object)
     {
         $json = json_encode($object);
         return json_decode($json, true);
@@ -95,7 +95,7 @@ class ObjectHelper
      * @param bool $strictlyCompare 是否进行严格比较（严格模式是先比较类型，再比较值；非严格模式下 trure和“true”是相等的）
      * @return bool
      */
-    public static function equal($dataA, $dataB, $strictlyCompare = false)
+    public static function equals($dataA, $dataB, $strictlyCompare = false)
     {
         $typeA = self::getType($dataA);
         $typeB = self::getType($dataB);

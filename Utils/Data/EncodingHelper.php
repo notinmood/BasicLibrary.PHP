@@ -13,10 +13,10 @@ namespace Hiland\Utils\Data;
  * 而php中只有个urlencode和urldecode，这个编码和解码函数对encodeURI和encodeURIComponent有效，
  * 但是对escape的是无效的。javascript中的escape()函数和unescape()函数用户字符串编码，
  * 类似于PHP中的urlencode()函数，下面是php实现的escape函数代码：
- * Class CodingHelper
+ * Class EncodingHelper
  * @package Hiland\Utils\Data
  */
-class CodingHelper
+class EncodingHelper
 {
     /**
      * js escape php 实现

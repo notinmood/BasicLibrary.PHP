@@ -229,7 +229,7 @@ class MorseHelper
         } else {
             $mor = dechex($mor);
         }
-        return self::unicodeToUtf8($mor);
+        return self::convertUnicodeToUtf8($mor);
     }
 
     //解密摩斯电码
@@ -239,7 +239,7 @@ class MorseHelper
      * @param  [type] $unicode_str Unicode字符
      * @return string [type]              Utf-8字符
      */
-    protected static function unicodeToUtf8($unicode_str)
+    protected static function convertUnicodeToUtf8($unicode_str)
     {
         $utf8_str = '';
         $code = intval(hexdec($unicode_str));
