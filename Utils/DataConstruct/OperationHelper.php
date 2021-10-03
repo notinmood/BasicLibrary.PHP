@@ -1,24 +1,27 @@
 <?php
 
-namespace Hiland\Utils\Data;
+namespace Hiland\Utils\DataConstruct;
 
+use Hiland\Utils\Data\GuidHelper;
 use Think\Model;
 
+/**
+ * TODO：需要跟Returns.php整合
+ */
 class OperationHelper
 {
 
     /**
      * 从系统各种类型的返回值中判断，执行成功与否
-     *
      * @param mixed $operationResult
      *            系统中约定：
      *            执行成功返回true或者数字（表示数据库执行成功的条数，被影响表记录的id等）；
      *            执行失败返回false或者0,null,字符串（表示失败的原因）
      * @return bool 成败标志
-     *         各种表示成功的都用true表示
-     *         各种表示失败的都用false表示
+     *            各种表示成功的都用true表示
+     *            各种表示失败的都用false表示
      */
-    public static function getResult($operationResult)
+    public static function getStatus($operationResult)
     {
         $result = true;
 
@@ -58,12 +61,11 @@ class OperationHelper
 
     /**
      * 构建计算机系统错误信息 json格式的字符串
-     *
      * @param string $message
      *            错误内容
      * @param string $details
      *            错误详细信息
-     * @param bool $isRollback
+     * @param bool   $isRollback
      *            是否回滚事务
      * @return string json格式的字符串
      */
@@ -74,22 +76,21 @@ class OperationHelper
 
     /**
      * 构建错误信息 json格式的字符串
-     *
      * @param string $message
      *            错误内容
      * @param string $details
      *            错误详细信息
-     * @param int $type
+     * @param int    $type
      *            错误类型，
      *            0表示计算机处理上的错误（比如无法插入相同的primary等）
      *            1表示业务逻辑上不满足条件的错误（比如余额不足无法完成支付等）
-     * @param bool $isRollback
+     * @param bool   $isRollback
      *            是否回滚事务
      * @return string json格式的字符串
      */
     public static function buildErrorResult($message, $details = '', $type = 1, $isRollback = false)
     {
-        if ($isRollback) {
+        if ($isRollback && class_exists("Think\\Model")) {
             $transModel = new Model();
             $transModel->rollback();
         }
@@ -103,12 +104,11 @@ class OperationHelper
 
     /**
      * 构建业务逻辑错误信息 json格式的字符串
-     *
      * @param string $message
      *            错误内容
      * @param string $details
      *            错误详细信息
-     * @param bool $isRollback
+     * @param bool   $isRollback
      *            是否回滚事务
      * @return string json格式的字符串
      */
@@ -119,7 +119,6 @@ class OperationHelper
 
     /**
      * 解析获取错误结果信息中的错误摘要信息
-     *
      * @param string $errorResult
      *            错误结果（json格式的字符串）
      * @return mixed
@@ -131,7 +130,6 @@ class OperationHelper
 
     /**
      * 解析获取错误结果信息中的各元素内容
-     *
      * @param string $errorResult
      *            错误结果（json格式的字符串）
      * @param string $elementName
@@ -146,7 +144,6 @@ class OperationHelper
 
     /**
      * 解析获取错误结果信息为数组
-     *
      * @param string $errorResult
      *            错误结果（json格式的字符串）
      * @return array

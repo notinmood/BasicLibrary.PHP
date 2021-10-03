@@ -14,6 +14,50 @@ use PHPUnit\Framework\TestCase;
 
 class ArrayHelperTest extends TestCase
 {
+    public function testSort2D()
+    {
+        $myArray = [
+            [
+                "地区" => "河南",
+                "2010年" => 5437.1,
+                "2011年" => 5542.5,
+                "2012年" => 5638.6,
+            ],
+            [
+                "地区" => "黑龙江",
+                "2010年" => 5012.8,
+                "2011年" => 5570.6,
+                "2012年" => 5761.5,
+            ],
+            [
+                "地区" => "山东",
+                "2010年" => 4335.7,
+                "2011年" => 4426.3,
+                "2012年" => 4511.4,
+            ],
+        ];
+
+        $actual = ArrayHelper::sort2D($myArray, "2011年");
+
+        self::assertEquals("山东", $actual[0]["地区"]);
+        self::assertEquals("河南", $actual[1]["地区"]);
+        self::assertEquals("黑龙江", $actual[2]["地区"]);
+    }
+
+    public function testPush()
+    {
+        $targetArray = $this->prepareIndexArray();
+        $actual = ArrayHelper::push($targetArray, "X");
+        $expected = ['A', 'B', 'C', 'D', 'X'];
+        self::assertEquals($expected, $actual);
+
+        $targetArray = $this->prepareIndexArray();
+        $actual = ArrayHelper::push($targetArray, "X", "Y");
+        $expected = ['A', 'B', 'C', 'D', 'X', 'Y'];
+        self::assertEquals($expected, $actual);
+    }
+
+
     public function testIsAssociateArray()
     {
         $targetArray = $this->prepareAssociateArray1();
@@ -68,7 +112,7 @@ class ArrayHelperTest extends TestCase
         $expected['a'] = "1A";
         $expected['b'] = "1B";
 
-        $actual= ArrayHelper::removeTail($data);
+        $actual = ArrayHelper::removeTail($data);
 
         self::assertEquals($expected, $actual);
     }
@@ -79,7 +123,7 @@ class ArrayHelperTest extends TestCase
         $expected['a'] = "1A";
         $expected['b'] = "1B";
 
-        $actual= ArrayHelper::removeIndex($data,2);
+        $actual = ArrayHelper::removeIndex($data, 2);
 
         self::assertEquals($expected, $actual);
     }
@@ -145,12 +189,13 @@ class ArrayHelperTest extends TestCase
         self::assertEquals($expect, $actual);
     }
 
-    public function testExchangeKeyValue(){
-        $data= $this->prepareAssociateArray1();
-        $expected["1A"]= "a";
-        $expected["1B"]= "b";
-        $expected["1C"]= "c";
-        $actual= ArrayHelper::exchangeKeyValue($data);
+    public function testExchangeKeyValue()
+    {
+        $data = $this->prepareAssociateArray1();
+        $expected["1A"] = "a";
+        $expected["1B"] = "b";
+        $expected["1C"] = "c";
+        $actual = ArrayHelper::exchangeKeyValue($data);
         self::assertEquals($expected, $actual);
     }
 
@@ -176,5 +221,59 @@ class ArrayHelperTest extends TestCase
     private function prepareIndexArray()
     {
         return ['A', 'B', 'C', 'D'];
+    }
+
+    // public function testSelect()
+    // {
+    //     $array = [
+    //         ['website' => ['id' => 1, 'url' => 'reddit.com']],
+    //         ['website' => ['id' => 2, 'url' => 'twitter.com']],
+    //         ['website' => ['id' => 3, 'url' => 'dev.to']],
+    //     ];
+    //
+    //     $actual = ArrayHelper::select($array, 'website.url');
+    //
+    //     $expected = ['reddit.com', 'twitter.com', 'dev.to'];
+    //     self::assertEquals($expected, $actual);
+    // }
+
+    public function testFlatten1()
+    {
+        $array = [
+            ['website' => ['id' => 1, 'url' => 'reddit.com']],
+            ['website' => ['id' => 2, 'url' => 'twitter.com']],
+            ['website' => ['id' => 3, 'url' => 'dev.to']],
+        ];
+
+        $actual = ArrayHelper::flatten($array);
+        $actual = json_encode($actual);
+
+        $expected = '{"0.website.id":1,"0.website.url":"reddit.com","1.website.id":2,"1.website.url":"twitter.com","2.website.id":3,"2.website.url":"dev.to"}';
+
+        self::assertEquals($expected, $actual);
+    }
+
+    public function testFlatten2()
+    {
+        $array =
+            [
+                "id" => "82",
+                "remark" => 'hello',
+                "time" => "2016-06-15 15:23:21",
+                "contact" =>
+                    [
+                        "id" => "182",
+                        "name" => "解然",
+                        "phone" => "18888888888",
+                    ],
+            ];
+
+
+        $actual = ArrayHelper::flatten($array,'.');
+        $actual = json_encode($actual);
+
+        $expected = '{"id":"82","remark":"hello","time":"2016-06-15 15:23:21","contact.id":"182","contact.name":"\u89e3\u7136","contact.phone":"18888888888"}';
+
+        self::assertEquals($expected, $actual);
     }
 }

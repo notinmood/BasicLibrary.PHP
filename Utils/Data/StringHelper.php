@@ -8,17 +8,17 @@ class StringHelper
 {
     /**
      * 获取目标编码类型的文本
-     * @param string $data
+     * @param string $stringData
      * @param string $targetEncoding
      * @return false|string|string[]|null
      */
-    public static function getEncodingContent($data, $targetEncoding = 'UTF-8')
+    public static function getEncodingContent($stringData, $targetEncoding = 'UTF-8')
     {
-        $originalEncoding = self::getEncoding($data);
+        $originalEncoding = self::getEncoding($stringData);
 
         $result = "";
         if ($originalEncoding) {
-            $result = mb_convert_encoding($data, $targetEncoding, $originalEncoding);
+            $result = mb_convert_encoding($stringData, $targetEncoding, $originalEncoding);
         }
 
         return $result;
@@ -26,16 +26,16 @@ class StringHelper
 
     /**
      * 获取内容的编码
-     * @param string $data
+     * @param string $stringData
      * @return bool|string
      * 备注1：php中用mb_detect_encoding测出来的euc-cn是gb2312编码：
      * EUC-CN是GB2312最常用的表示方法。浏览器编码表上的“GB2312”，通常都是指“EUC-CN”表示法。
      * 备注2：用mb_detect_encoding函数进行编码识别时，很多人都碰到过识别编码有误问题的说明
      * https://www.jb51.net/article/27282.htm
      */
-    public static function getEncoding($data = "")
+    public static function getEncoding($stringData = "")
     {
-        return mb_detect_encoding($data, array("ASCII", "GB2312", "GBK", "UTF-8"));
+        return mb_detect_encoding($stringData, array("ASCII", "GB2312", "GBK", "UTF-8"));
     }
 
     /**
@@ -49,7 +49,7 @@ class StringHelper
 
     /**
      * 截取全角和半角（汉字和英文）混合的字符串以避免乱码
-     * @param string $original
+     * @param string $originalStringData
      *            要截取的字符串
      * @param int    $startPosition
      *            开始位置(第一个字符的位置为0)
@@ -59,9 +59,9 @@ class StringHelper
      * @return string
      * @author 小墨 244349067@qq.com
      */
-    public static function subString($original, $startPosition, $length = 0, $charset = "utf-8")
+    public static function subString($originalStringData, $startPosition, $length = 0, $charset = "utf-8")
     {
-        $originalStringLength = strlen($original);
+        $originalStringLength = strlen($originalStringData);
 
         if ($startPosition >= $originalStringLength) {
             return '';
@@ -76,15 +76,15 @@ class StringHelper
         }
 
         if (function_exists("mb_substr")) {
-            $slice = mb_substr($original, $startPosition, $length, $charset);
+            $slice = mb_substr($originalStringData, $startPosition, $length, $charset);
         } elseif (function_exists('iconv_substr')) {
-            $slice = iconv_substr($original, $startPosition, $length, $charset);
+            $slice = iconv_substr($originalStringData, $startPosition, $length, $charset);
         } else {
             $re['utf-8'] = "/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xff][\x80-\xbf]{3}/";
             $re['gb2312'] = "/[\x01-\x7f]|[\xb0-\xf7][\xa0-\xfe]/";
             $re['gbk'] = "/[\x01-\x7f]|[\x81-\xfe][\x40-\xfe]/";
             $re['big5'] = "/[\x01-\x7f]|[\x81-\xfe]([\x40-\x7e]|\xa1-\xfe])/";
-            preg_match_all($re[$charset], $original, $match);
+            preg_match_all($re[$charset], $originalStringData, $match);
             $slice = join("", array_slice($match[0], $startPosition, $length));
         }
 
@@ -92,16 +92,16 @@ class StringHelper
     }
 
     /**
-     * @param string $padding 待测试的结尾字符
-     * @param string $whole   全句
+     * @param string $paddingStringData 待测试的结尾字符
+     * @param string $wholeStringData   全句
      * @return bool
      */
-    public static function isEndWith($whole, $padding)
+    public static function isEndWith($wholeStringData, $paddingStringData)
     {
-        $paddingLength = strlen($padding);
-        $fullLength = strlen($whole);
-        $subString = substr($whole, $fullLength - $paddingLength);
-        if ($subString == $padding) {
+        $paddingLength = strlen($paddingStringData);
+        $fullLength = strlen($wholeStringData);
+        $subString = substr($wholeStringData, $fullLength - $paddingLength);
+        if ($subString == $paddingStringData) {
             return true;
         } else {
             return false;
@@ -109,13 +109,13 @@ class StringHelper
     }
 
     /**
-     * @param string $padding 待测试的开始字符
-     * @param string $whole   全句
+     * @param string $paddingStringData 待测试的开始字符
+     * @param string $wholeStringData   全句
      * @return bool
      */
-    public static function isStartWith($whole, $padding)
+    public static function isStartWith($wholeStringData, $paddingStringData)
     {
-        $before = self::getStringBeforeSeperator($whole, $padding);
+        $before = self::getStringBeforeSeperator($wholeStringData, $paddingStringData);
         if ($before == '') {
             return true;
         } else {
@@ -125,15 +125,15 @@ class StringHelper
 
     /**
      * 判断一个字符串是否被包含在另外一个字符串内
-     * @param string $subString
+     * @param string $subStringData
      *            被查找的子字符串
-     * @param string $whole
+     * @param string $wholeStringData
      *            查找的母体字符串
      * @return boolean
      */
-    public static function isContains($whole, $subString)
+    public static function isContains($wholeStringData, $subStringData)
     {
-        $result = strstr($whole, $subString);
+        $result = strstr($wholeStringData, $subStringData);
 
         if ($result === false) {
             return false;
@@ -143,56 +143,56 @@ class StringHelper
     }
 
     /**获取字符串长度
-     * @param        $strData
+     * @param        $stringData
      * @param string $encoding
      * @return false|int
      */
-    public static function getLength($strData, $encoding = "utf-8")
+    public static function getLength($stringData, $encoding = "utf-8")
     {
-        return mb_strlen($strData, $encoding);
+        return mb_strlen($stringData, $encoding);
     }
 
     /**包装php的字符串替换(将各个参数名称进一步明确化)
-     * @param $whole
-     * @param $old
-     * @param $new
+     * @param $wholeStringData
+     * @param $oldStringData
+     * @param $newStringData
      * @return array|string|string[]
      */
-    public static function replace($whole, $old, $new)
+    public static function replace($wholeStringData, $oldStringData, $newStringData)
     {
-        return str_replace($old, $new, $whole);
+        return str_replace($oldStringData, $newStringData, $wholeStringData);
     }
 
     /**
      * 将一个字符串按照某个分隔符分隔成数组
-     * @param $whole     string 字符串全串
+     * @param $wholeStringData     string 字符串全串
      * @param $delimiter string 分隔符
      * @return false|string[]
      */
-    public static function explode($whole, $delimiter)
+    public static function explode($wholeStringData, $delimiter)
     {
-        return explode($delimiter, $whole);
+        return explode($delimiter, $wholeStringData);
     }
 
     /**
      * 将一个数组的各个元素串联成一个字符串
-     * @param $arrData
+     * @param $arrayData
      * @param $delimiter
      * @return string
      */
-    public static function implode($arrData, $delimiter = "")
+    public static function implode($arrayData, $delimiter = "")
     {
-        return implode($delimiter, $arrData);
+        return implode($delimiter, $arrayData);
     }
 
     /**
      * 将一个字符串按照字符个数分组进行格式化
-     * @param string $data     string
-     * @param string $formator string 字符串字符个数分组的格式，同一个分组内字符的个数用{}包围，各个分组之间可以自定义分隔符，例如
-     *                         '{4}-{2}-{2}'，或者'{4} {2} {2}'(中间用空格表示);
+     * @param string $stringData string
+     * @param string $formator   string 字符串字符个数分组的格式，同一个分组内字符的个数用{}包围，各个分组之间可以自定义分隔符，例如
+     *                           '{4}-{2}-{2}'，或者'{4} {2} {2}'(中间用空格表示);
      * @return string
      */
-    public static function grouping($data, $formator)
+    public static function grouping($stringData, $formator)
     {
         $content = '';
         $pattern = '/{\d*}/';
@@ -210,13 +210,13 @@ class StringHelper
                 $matchedNumber = StringHelper::getStringAfterSeperator($matchedWithQuotation, '{');
                 $matchedNumber = StringHelper::getStringBeforeSeperator($matchedNumber, '}');
                 $matchedNumber = (int)$matchedNumber;
-                $dataLength = strlen($data);
+                $dataLength = strlen($stringData);
                 if ($dataLength >= $matchedNumber) {
-                    $content .= substr($data, 0, $matchedNumber);
-                    $data = substr($data, $matchedNumber);
+                    $content .= substr($stringData, 0, $matchedNumber);
+                    $stringData = substr($stringData, $matchedNumber);
                 } else {
-                    $content .= $data;
-                    $data = '';
+                    $content .= $stringData;
+                    $stringData = '';
                 }
             }
         }
@@ -226,16 +226,16 @@ class StringHelper
 
     /** 对带有占位符的字符串信息，进行格式化填充，形成完整的字符串。
      * 现在推荐直接使用 PHP系统自带的格式化方式,例如:"k的值为{$k}；v的值为{$v}"
-     * @param $data          string 带有占位符的字符串信息（占位符用{?}表示），例如 "i like this {?},do you known {?}"
-     * @param $realValueList string[] 待填入的真实信息，用字符串数组表示，例如["qingdao","beijing"];
-     *                       或者使用用逗号分隔的各个独立的字符串表示,比如"qingdao","beijing"
+     * @param $stringData          string 带有占位符的字符串信息（占位符用{?}表示），例如 "i like this {?},do you known {?}"
+     * @param $realValueList       string[] 待填入的真实信息，用字符串数组表示，例如["qingdao","beijing"];
+     *                             或者使用用逗号分隔的各个独立的字符串表示,比如"qingdao","beijing"
      * @return string
      */
-    public static function format($data, ...$realValueList)
+    public static function format($stringData, ...$realValueList)
     {
         $needle = "{?}";
         // 查找?位置
-        $p = strpos($data, $needle);
+        $p = strpos($stringData, $needle);
         // 替换字符的数组下标
         $i = 0;
 
@@ -244,84 +244,106 @@ class StringHelper
         }
 
         while ($p !== false) {
-            $data = substr_replace($data, $realValueList[$i++], $p, 3);
+            $stringData = substr_replace($stringData, $realValueList[$i++], $p, 3);
             // 查找下一个?位置  没有时会退出循环
-            $p = strpos($data, $needle, ++$p);
+            $p = strpos($stringData, $needle, ++$p);
         }
 
-        return $data;
+        return $stringData;
     }
 
 
     /**
      * 获取字符串分隔符前面的内容
-     * @param string $whole
+     * @param string $wholeStringData
      * @param string $seperator
      * @return string
      */
-    public static function getStringBeforeSeperator($whole, $seperator)
+    public static function getStringBeforeSeperator($wholeStringData, $seperator)
     {
-        if (self::isContains($whole, $seperator)) {
-            $array = explode($seperator, $whole);
+        if (self::isContains($wholeStringData, $seperator)) {
+            $array = explode($seperator, $wholeStringData);
             return $array[0];
         } else {
-            return $whole;
+            return $wholeStringData;
         }
     }
 
     /**
      * 获取字符串分隔符后面的内容
-     * @param string $whole
+     * @param string $wholeStringData
      * @param string $seperator
      * @return string
      */
-    public static function getStringAfterSeperator($whole, $seperator)
+    public static function getStringAfterSeperator($wholeStringData, $seperator)
     {
-        if (self::isContains($whole, $seperator)) {
-            $array = explode($seperator, $whole);
+        if (self::isContains($wholeStringData, $seperator)) {
+            $array = explode($seperator, $wholeStringData);
             return $array[1];
         } else {
-            return $whole;
+            return $wholeStringData;
         }
     }
 
     /**
      * 将字符串中第一个单词的首字母大写
-     * @param $data
+     * @param $stringData
      * @return string
      */
-    public static function upperStringFirstChar($data)
+    public static function upperStringFirstChar($stringData)
     {
-        return ucfirst($data);
+        return ucfirst($stringData);
     }
 
     /**
      * 将字符串中每一个单词的首字母大写
-     * @param $data
+     * @param $stringData
      * @return string
      */
-    public static function upperWordsFirstChar($data)
+    public static function upperWordsFirstChar($stringData)
     {
-        return ucwords($data);
+        return ucwords($stringData);
     }
 
     /**
      * 将字符串中每一个字母都转成大写
-     * @param $data
+     * @param $stringData
      * @return string
      */
-    public static function upper($data)
+    public static function upper($stringData)
     {
-        return mb_strtoupper($data);
+        return mb_strtoupper($stringData);
     }
 
     /**
      * 将字符串中每一个字母都转成小写
-     * @param $data
+     * @param $stringData
      * @return string
      */
-    public static function lower($data)
+    public static function lower($stringData)
     {
-        return mb_strtolower($data);
+        return mb_strtolower($stringData);
+    }
+
+    /**
+     * @param string $stringData 需要进行补充的原始字符串
+     * @param int    $length
+     * @param string $pad
+     * @return string
+     */
+    public static function paddingEnd($stringData, $length, $pad = " ")
+    {
+        return str_pad($stringData, $length, $pad);
+    }
+
+    /**
+     * @param string $stringData 需要进行补充的原始字符串
+     * @param int    $length
+     * @param string $pad
+     * @return string
+     */
+    public static function paddingBegin($stringData, $length, $pad = " ")
+    {
+        return str_pad($stringData, $length, $pad, STR_PAD_LEFT);
     }
 }

@@ -18,6 +18,9 @@ class InstanceHelperTest extends TestCase
 {
     public function testGet()
     {
+        /**
+         * 构造函数带参数的sample
+         */
         $className = Student::class;
         $actual1 = InstanceHelper::get($className, "张三", 20);
         $this->assertInstanceOf($className, $actual1);
@@ -32,7 +35,9 @@ class InstanceHelperTest extends TestCase
         $this->assertNotEquals($actualLisi, $actual1);
         $this->assertNotSame($actualLisi, $actual1);
 
-
+        /**
+         * 构造函数不带参数的sample
+         */
         $className = Teacher::class;
         $actualTeacher = InstanceHelper::get($className);
         $this->assertInstanceOf($className, $actualTeacher);

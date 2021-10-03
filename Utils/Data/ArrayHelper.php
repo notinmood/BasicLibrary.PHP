@@ -26,13 +26,57 @@ class ArrayHelper
     }
 
     /**
-     * @param $array
-     * @param $item
-     * @return int
+     * 在数组的末尾添加新的元素(新元素的key是数字形式索引)
+     * 方法push和方法addTail功能相同,互为别名
+     * @param array $array
+     * @param mixed ...$items
+     * @return array
      */
-    public static function push($array, $item)
+    public static function push(array $array, ...$items)
     {
-        return array_push($array, $item);
+        array_push($array, ...$items);
+        return $array;
+    }
+
+    /**
+     * 在数组的开头添加新的元素(新元素的key是数字形式索引)
+     * @param $array
+     * @param ...$items
+     * @return mixed
+     */
+    public static function addHead($array, ...$items)
+    {
+        array_unshift($array, ...$items);
+        return $array;
+    }
+
+    /**
+     * 为数组添加Key/Value形式的item
+     * @param $array
+     * @param $key
+     * @param $value
+     * @return array|mixed
+     */
+    public static function addItem(&$array, $key, $value)
+    {
+        if ($array == null) {
+            $array = [];
+        }
+
+        $array[$key] = $value;
+        return $array;
+    }
+
+    /**
+     * 在数组的末尾添加新的元素(新元素的key是数字形式索引)
+     * 方法push和方法addTail功能相同,互为别名
+     * @param $array
+     * @param ...$items
+     * @return array
+     */
+    public static function addTail($array, ...$items)
+    {
+        return self::push($array, ...$items);
     }
 
     /**
@@ -55,7 +99,7 @@ class ArrayHelper
     public static function removeIndex($array, $index)
     {
         if (ObjectHelper::getType($array) == ObjectTypes::ARRAYS) {
-            array_splice($array,$index,1);
+            array_splice($array, $index, 1);
         }
 
         return $array;
@@ -85,7 +129,7 @@ class ArrayHelper
         if (ObjectHelper::getType($array) == ObjectTypes::ARRAYS) {
             $length = self::getLength($array);
             $lastIndex = $length - 1;
-            array_splice($array,$lastIndex,1);
+            array_splice($array, $lastIndex, 1);
         }
 
         return $array;
@@ -157,7 +201,8 @@ class ArrayHelper
      * @param $object
      * @return mixed
      */
-    public static function fromObject($object){
+    public static function fromObject($object)
+    {
         return ObjectHelper::toArray($object);
     }
 
@@ -233,7 +278,7 @@ class ArrayHelper
     }
 
     /**
-     * 将有别名标示的二维数组转换为一维数组
+     * 从(类似表结构的)二维数组中抽取信息转换为一维数组
      * @param array  $originalArray
      *            原始的二维数组
      * @param string $newKeyName
@@ -306,71 +351,28 @@ class ArrayHelper
     }
 
     /**
-     * 把第二维度中的value为名值对的 二维数组，转换为一维数组
-     * @param        $originalArray
-     * @param string $convertNodeName
-     * @return mixed
-     * @example
-     * 原二维数组为
-     * {
-     * ["id"] => "82"
-     * ["remark"] => 'hello',
-     * ["time"] => "2016-06-15 15:23:21",
-     * ["contact"] =>
-     * {
-     * ["id"] => "182",
-     * ["name"] => "解然",
-     * ["phone"] => "18888888888",
-     * }
-     * }
-     * 经过转换后为
-     * {
-     * ["id"] => "82"
-     * ["remark"] => 'hello',
-     * ["time"] => "2016-06-15 15:23:21",
-     * ["contact__id"] => "182",
-     * ["contact__name"] => "解然",
-     * ["contact__phone"] =>"18888888888",
-     * }
+     * 将多维数组平面化
+     * @param iterable $arrayData 待转换的多维数组
+     * @param string   $seperator 平面化后各个维度Key之间的分隔符,缺省为"."
+     * @param string   $prepend   平面化后的key前缀,缺省为空
+     * @return array
      */
-    public static function convert2DTo1D(&$originalArray, $convertNodeName = '')
+    public static function flatten($arrayData, $seperator = ".", $prepend = '')
     {
-        if ($convertNodeName) {
-            $node = $originalArray[$convertNodeName];
-            $originalArray = self::convert2DNodeTo1D($originalArray, $convertNodeName, $node);
-        } else {
-            foreach ($originalArray as $oneKey => $oneValue) {
-                self::convert2DNodeTo1D($originalArray, $oneKey, $oneValue);
+        $results = [];
+
+        foreach ($arrayData as $key => $value) {
+            if (is_array($value) && !empty($value)) {
+                $results = array_merge($results, static::flatten($value, $seperator, $prepend . $key . $seperator));
+            } else {
+                $results[$prepend . $key] = $value;
             }
         }
 
-        return $originalArray;
+        return $results;
     }
 
-    /**
-     * @param $array
-     * @param $nodeName
-     * @param $node
-     * @return mixed
-     */
-    private static function convert2DNodeTo1D(&$array, $nodeName, $node)
-    {
-        if ($node && is_array($node)) {
-            foreach ($node as $k => $v) {
-                if (empty($k)) {
-                    break;
-                } else {
-                    $newKey = $nodeName . "__" . $k;
-                    if (array_key_exists($newKey, $array)) {
-                        $newKey = $newKey . "__";
-                    }
-                    $array[$newKey] = $v;
-                }
-            }
-        }
 
-        return $array;
-    }
 
     /**
      * 友好的显示数据集信息
@@ -504,39 +506,93 @@ class ArrayHelper
         return array_merge(...$targetArrays);
     }
 
-    /** 在多维度数组中，根据某一个维度进行排序
-     * @param     $array      目标数组
-     * @param     $columnName 目标维度名称
-     * @param int $sortType   排序类型 SORT_ASC 或者 SORT_DESC
-     * @return mixed
+    /** 在二维数组中，根据某一个维度的名称进行排序
+     * @param array  $array      目标数组
+     * @param string $columnName 目标维度名称
+     * @param int    $sortType   排序类型 SORT_ASC 或者 SORT_DESC
+     * @return array
      * @example 对类似如下数组中，根据“2010年”年排序
-     *                        array(31) {
-     *                        [0] => array(5) {
-     *                        ["地区"] => string(6) "河南"
-     *                        ["2010年"] => float(5437.1)
-     *                        ["2011年"] => float(5542.5)
-     *                        ["2012年"] => float(5638.6)
-     *                        [""] => NULL
-     *                        }
-     *                        [1] => array(5) {
-     *                        ["地区"] => string(9) "黑龙江"
-     *                        ["2010年"] => float(5012.8)
-     *                        ["2011年"] => float(5570.6)
-     *                        ["2012年"] => float(5761.5)
-     *                        [""] => NULL
-     *                        }
-     *                        [2] => array(5) {
-     *                        ["地区"] => string(6) "山东"
-     *                        ["2010年"] => float(4335.7)
-     *                        ["2011年"] => float(4426.3)
-     *                        ["2012年"] => float(4511.4)
-     *                        [""] => NULL
-     *                        }
-     *                        }
+     *                           $myArray = [
+     *                           [
+     *                           "地区" => "河南",
+     *                           "2010年" => 5437.1,
+     *                           "2011年" => 5542.5,
+     *                           "2012年" => 5638.6,
+     *                           ],
+     *                           [
+     *                           "地区" => "黑龙江",
+     *                           "2010年" => 5012.8,
+     *                           "2011年" => 5570.6,
+     *                           "2012年" => 5761.5,
+     *                           ],
+     *                           [
+     *                           "地区" => "山东",
+     *                           "2010年" => 4335.7,
+     *                           "2011年" => 4426.3,
+     *                           "2012年" => 4511.4,
+     *                           ],
+     *                           ];
+     *                           $actual = ArrayHelper::sort2D($myArray, "2011年");
+     *                           var_dump($actual);
      */
-    public static function multiColumnSort($array, $columnName, $sortType = SORT_ASC)
+    public static function sort2D($array, $columnName, $sortType = SORT_ASC)
     {
         array_multisort(array_column($array, $columnName), $sortType, $array);
         return $array;
+    }
+
+    /**
+     * Divide an array into two arrays. One with keys and the other with values.
+     * @param array $arrayData
+     * @return array
+     */
+    public static function divide($arrayData)
+    {
+        return [array_keys($arrayData), array_values($arrayData)];
+    }
+
+    /**
+     * 像CSS选择器一样,从多维数组内获取符合XPath的信息
+     * ════════════════════════
+     * @param $arrayData
+     * @param $selector
+     * @return array
+     * @example
+     *         1、目标数组 $array = [
+     *         ['website' => ['id' => 1, 'url' => 'reddit.com']],
+     *         ['website' => ['id' => 2, 'url' => 'twitter.com']],
+     *         ['website' => ['id' => 3, 'url' => 'dev.to']],
+     *         ];
+     *         2、应用xpath选取数据
+     *         $names = ArrayHelper::select($array, 'website.url');
+     *         3、--output--
+     *         ['reddit.com', 'twitter.com', 'dev.to']
+     */
+    public static function select($arrayData, $selector)
+    {
+        // $selectorArray = explode(".", $selector);
+        // $selectorLength = self::getLength($selectorArray);
+        //
+        // $input = $arrayData;
+        // $result = [];
+        //
+        // for ($i = 0; $i < $selectorLength; $i++) {
+        //     $result = [];
+        //
+        //     $currentSelectorNode = $selectorArray[$i];
+        //     foreach ($input as $key => $value) {
+        //         if (ObjectHelper::getType($key) == ObjectTypes::INTEGER) {
+        //             dump($value);
+        //         }else{
+        //             if ($key == $currentSelectorNode) {
+        //                 $result[$key] = $value;
+        //             }
+        //         }
+        //
+        //     }
+        //     $input = $result;
+        // }
+        //
+        // return $result;
     }
 }

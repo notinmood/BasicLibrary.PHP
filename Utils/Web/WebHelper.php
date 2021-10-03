@@ -7,7 +7,6 @@ use Hiland\Utils\Data\StringHelper;
 use Hiland\Utils\Environment\EnvHelper;
 
 /**
- *
  * @author 然
  */
 class WebHelper
@@ -15,7 +14,7 @@ class WebHelper
     /**
      * 下载文件
      * 说明 Controller的Action方法中，调用本方法后不能再出现 dump(); display();这样的向浏览器页面刷信息的方法。
-     * @param mixed $data 可以是带全路径的文件名称，也可以数组，字符串或者内存数据流
+     * @param mixed  $data        可以是带全路径的文件名称，也可以数组，字符串或者内存数据流
      * @param string $newFileName 在客户浏览器弹出下载对话框中显示的默认文件名
      */
     public static function download($data, $newFileName = null)
@@ -45,11 +44,15 @@ class WebHelper
 
             file_put_contents("php://output", $data);
         }
+
+        /**
+         * 结束输出流
+         */
+        exit();
     }
 
     /**
      * 网页跳转
-     *
      * @param string $targetUrl
      *            待跳转的页面
      */
@@ -60,13 +63,9 @@ class WebHelper
 
     /**
      * 给url附加参数信息
-     *
-     * @param string $url
-     *            原url
-     * @param array|string $paraData
-     *            将要作为url参数被附加在url后面，的带名值对类型的数组或者已经排列好的参数名值对字符串
-     * @param bool $isUrlEncode
-     *            是否对参数的值进行url编码
+     * @param string       $url         原url
+     * @param array|string $paraData    将要作为url参数被附加在url后面，的带名值对类型的数组或者已经排列好的参数名值对字符串
+     * @param bool         $isUrlEncode 是否对参数的值进行url编码
      * @return string 附加了参数信息的url
      */
     public static function attachUrlParameter($url, $paraData, $isUrlEncode = false)
@@ -88,14 +87,13 @@ class WebHelper
 
     /**
      * 对一个名值对数组格式化为url的参数
-     *
      * @param array $paraArray
-     *            需要格式化的名值对数组
-     * @param bool $isUrlEncode
-     *            是否对参数的值进行url编码
+     *                          需要格式化的名值对数组
+     * @param bool  $isUrlEncode
+     *                          是否对参数的值进行url编码
      * @param array $excludeParaArray
-     *            不编制在url参数列表中的参数名数组（只有参数名称的一维数组）
-     * @param bool $isSortPara 是否对参数进行排序
+     *                          不编制在url参数列表中的参数名数组（只有参数名称的一维数组）
+     * @param bool  $isSortPara 是否对参数进行排序
      * @return string
      */
     public static function formatArrayAsUrlParameter($paraArray, $isUrlEncode = false, $excludeParaArray = null, $isSortPara = true)
@@ -131,12 +129,13 @@ class WebHelper
     /**
      * Ajax方式返回数据到客户端
      * @access protected
-     * @param mixed $data 要返回的数据
-     * @param String $type AJAX返回数据格式,默认值为JSON
-     * @param int $json_option 传递给json_encode的option参数(为避免中午转码请使用JSON_UNESCAPED_UNICODE)
+     * @param mixed  $data         要返回的数据
+     * @param String $type         AJAX返回数据格式,默认值为JSON
+     * @param int    $json_option  传递给json_encode的option参数(为避免中文转码请使用JSON_UNESCAPED_UNICODE)
+     * @param string $callbackName 如果是jsonp的时候，此处为回调函数的名称(或者为回调函数名称的形参名称)
      * @return void
      */
-    public static function serverReturn($data, $type = '', $json_option = 0)
+    public static function serverReturn($data, $type = '', $json_option = 0, $callbackName = "")
     {
         if (empty($type)) {
             $type = 'JSON';
@@ -151,16 +150,48 @@ class WebHelper
             case 'JSONP':
                 // 返回JSON数据格式到客户端 包含状态信息
                 header('Content-Type:application/json; charset=utf-8');
-                
-                $handler = isset($_GET[TPCompatibleHelper::config('VAR_JSONP_HANDLER')]) ? $_GET[TPCompatibleHelper::config('VAR_JSONP_HANDLER')] : TPCompatibleHelper::config('DEFAULT_JSONP_HANDLER');
+
+                /**
+                 * 1、先判断是否通过参数传递过来回调函数的信息
+                 */
+                $handler = "";
+                if ($callbackName) {
+                    $handler = $_GET[$callbackName];
+
+                    if (!$handler) {
+                        $handler = $callbackName;
+                    }
+                } else {
+                    /**
+                     * 2、接着从配置文件内读取浏览器传递过来的 需要回调的JavaScript函数名称
+                     */
+                    $handler = isset($_GET[TPCompatibleHelper::config('VAR_JSONP_HANDLER')]) ? $_GET[TPCompatibleHelper::config('VAR_JSONP_HANDLER')] : TPCompatibleHelper::config('DEFAULT_JSONP_HANDLER');
+                }
+
+                if (!$handler) {
+                    $handler = "callback";
+                }
+
                 $data = $handler . '(' . json_encode($data, $json_option) . ');';
                 break;
             case 'EVAL' :
                 // 返回可执行的js脚本
                 header('Content-Type:text/html; charset=utf-8');
+                $data = 'eval(' . json_encode($data, $json_option) . ');';
                 break;
         }
         exit ($data);
+    }
+
+    /**
+     * 服务器端返回JSONP类型数据
+     * @param        $data
+     * @param string $callbackName
+     * @param int    $json_option
+     */
+    public static function jsonp($data, $callbackName = "", $json_option = 0)
+    {
+        return self::serverReturn($data, "JSONP", $json_option, $callbackName);
     }
 
     /**
@@ -176,7 +207,6 @@ class WebHelper
     /**
      * 获取网站的域名信息
      * 不包括前面的"http://"和后面的"/"
-     *
      * @return string
      */
     public static function getHostName()
@@ -185,6 +215,7 @@ class WebHelper
     }
 
     /**TODO:需要判断是否在ThinkPHP内
+     * TODO:xiedali 这个需要重新处理
      * 获取应用程序地址
      * @return string
      */
@@ -203,7 +234,7 @@ class WebHelper
         return $schema . self::getHostName() . self::getWebGate();
     }
 
-    /**
+    /**TODO:xiedali 这个需要重新处理
      * 获取应用程序入口页面地址（在模式下，比getWebApp少一个问号）
      * @return string
      */
@@ -233,7 +264,7 @@ class WebHelper
         return $schema . self::getHostName() . self::getWebRoot();
     }
 
-    /**
+    /**TODO:xiedali 这个需要重新处理
      * 获取应用程序的根
      * @return string
      */
