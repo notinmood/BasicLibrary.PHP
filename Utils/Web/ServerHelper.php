@@ -11,6 +11,8 @@
 
 namespace Hiland\Utils\Web;
 
+use Hiland\Utils\Data\ArrayHelper;
+use Hiland\Utils\Data\StringHelper;
 use Hiland\Utils\Environment\EnvHelper;
 
 class ServerHelper
@@ -43,6 +45,17 @@ class ServerHelper
     }
 
     /**
+     * 判断是否为本地服务器
+     * @param $domainNameOrIP string 域名或ip地址
+     * @return bool
+     */
+    public static function isLocalServer($domainNameOrIP)
+    {
+        return EnvHelper::isLocalServer($domainNameOrIP);
+    }
+
+
+    /**
      * 获取服务器域名 （例如app.rainytop.com）
      * @return string
      */
@@ -71,18 +84,54 @@ class ServerHelper
      *因此可以通过以下逻辑获取到项目的根目录物理路径
      * @return string
      */
-    public static function getRootPhysicalPath()
+    public static function getPhysicalRoot()
     {
         return EnvHelper::getRootPhysicalPath();
     }
 
     /**
-     * 判断是否为本地服务器
-     * @param $domainNameOrIP string 域名或ip地址
-     * @return bool
+     * 获取应用程序的(网络)根路径
+     * @return string
      */
-    public static function isLocalServer($domainNameOrIP)
+    public static function getWebRoot()
     {
-        return EnvHelper::isLocalServer($domainNameOrIP);
+        return self::getAppName() . "/";
+    }
+
+    /**
+     * 获取应用程序的名称
+     * @return mixed|string
+     */
+    public static function getAppName()
+    {
+        $pageWebRelativePath = $_SERVER['SCRIPT_NAME'];
+        if (StringHelper::isStartWith($pageWebRelativePath, "/")) {
+            $pageWebRelativePath = StringHelper::subString($pageWebRelativePath, 1);
+        }
+
+        $pageWebRelativePathArray = StringHelper::explode($pageWebRelativePath, "/");
+        $pageWebRelativePathArray = array_reverse($pageWebRelativePathArray);
+
+        $rootPhysicalPath = EnvHelper::getRootPhysicalPath();
+        $rootPhysicalPath = StringHelper::replace($rootPhysicalPath, "/", "\\");
+
+        $filePhysicalFullPath = $_SERVER["SCRIPT_FILENAME"];
+        $filePhysicalFullPath = StringHelper::replace($filePhysicalFullPath, "/", "\\");
+        $filePhysicalRelativePath = StringHelper::subString($filePhysicalFullPath, StringHelper::getLength($rootPhysicalPath));
+
+        $filePhysicalRelativePathArray = StringHelper::explode($filePhysicalRelativePath, "\\");
+        $filePhysicalRelativePathArray = array_reverse($filePhysicalRelativePathArray);
+
+        $pageWebRelativePathArrayLength = ArrayHelper::getLength($pageWebRelativePathArray);
+
+        if (isset($filePhysicalRelativePathArray[$pageWebRelativePathArrayLength - 1])) {
+            if ($pageWebRelativePathArray[$pageWebRelativePathArrayLength - 1] == $filePhysicalRelativePathArray[$pageWebRelativePathArrayLength - 1]) {
+                return "";
+            } else {
+                return $pageWebRelativePathArray[$pageWebRelativePathArrayLength - 1];
+            }
+        } else {
+            return $pageWebRelativePathArray[$pageWebRelativePathArrayLength - 1];
+        }
     }
 }
