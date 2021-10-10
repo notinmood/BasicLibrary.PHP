@@ -27,7 +27,7 @@ class HibaseController extends Controller
 
     private function assignBasicConfig()
     {
-        $basicConfig['approot'] = WebHelper::getWebAppFull();
+        // $basicConfig['approot'] = WebHelper::getWebAppFull();
 
         //==以下数据可以根据不同的项目进行调整=======================================
         $basicConfig['defaultavatar'] = WebHelper::getWebRootFull() . "/Public/Uploads/defaultavatar.jpg";

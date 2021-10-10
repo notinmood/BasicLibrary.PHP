@@ -154,15 +154,6 @@ class EnvHelper
         return PHP_VERSION_ID;
     }
 
-    /**
-     * 获取Web服务器名称（IIS还是apache等）
-     * @return mixed
-     */
-    public static function getWebServerName()
-    {
-        return $_SERVER['SERVER_SOFTWARE'];
-    }
-
 
     /**
      * 获取托管平台的名称
@@ -219,19 +210,6 @@ class EnvHelper
         return !filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
     }
 
-    /**
-     * 获取服务器域名 （例如app.rainytop.com）
-     * @return string
-     */
-    public static function getServerHostName()
-    {
-        return isset($_SERVER['HTTP_X_FORWARDED_HOST']) ? $_SERVER['HTTP_X_FORWARDED_HOST'] : (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '');
-    }
-
-    public static function getServerCompressType($url)
-    {
-        return HttpResponseHeader::get($url, "Content-Encoding");
-    }
 
     /**
      * 获取web项目的根目录物理路径

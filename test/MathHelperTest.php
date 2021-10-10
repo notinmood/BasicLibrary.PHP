@@ -34,6 +34,20 @@ class MathHelperTest extends TestCase
         $r1 = MathHelper::convertPercentToFloat($data);
         $this->assertEquals(2.7854, $r1);
     }
+    
+    public function testConvertBase(){
+        $actual = MathHelper::convertBase("10", 2, 10);
+        $expected = 2;
+        self::assertEquals($expected, $actual);
+
+        $actual = MathHelper::convertBase("10", 10, 16);
+        $expected = "a";
+        self::assertEquals($expected, $actual);
+
+        $actual = MathHelper::convertBase("10", 8, 2);
+        $expected = "1000";
+        self::assertEquals($expected, $actual);
+    }
 
     public function testSma()
     {

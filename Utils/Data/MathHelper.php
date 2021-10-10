@@ -23,19 +23,19 @@ class MathHelper
 
     /**
      * 小数转百分比
-     * @param $data
-     * @param int $precisionNumber 精度位数
+     * @param     $data
+     * @param int $precision 精度位数
      * @return string 带%的百分比字符串
      */
-    public static function convertFloatToPercent($data, $precisionNumber = 2)
+    public static function convertFloatToPercent($data, $precision = 2)
     {
-        $format = "%01." . $precisionNumber . "f";
+        $format = "%01." . $precision . "f";
         return sprintf($format, $data * 100) . '%';
     }
 
     /**获取一个数列的简单的移动平均值
-     * @param $sourceArray
-     * @param $period int 滑动时间周期(比如每5天作为一个周期计算一次平均值)
+     * @param        $sourceArray
+     * @param        $period          int 滑动时间周期(比如每5天作为一个周期计算一次平均值)
      * @param string $targetFieldName 如果是一维数组可以忽略本参数；如果是二维数组，请指定需要进行计算的字段名称。
      * @return array
      */
@@ -69,4 +69,17 @@ class MathHelper
 
         return $result;
     }
+
+    /**
+     * 数学中各种进制之间的相互转换
+     * @param string $numberString 待转换的(字符串格式的)目标数字
+     * @param int    $fromBase     从**进制转换
+     * @param int    $toBase       转换到**进制
+     * @return string
+     */
+    public static function convertBase($numberString, $fromBase, $toBase)
+    {
+        return base_convert($numberString, $fromBase, $toBase);
+    }
+
 }

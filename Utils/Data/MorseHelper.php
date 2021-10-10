@@ -16,12 +16,12 @@ namespace Hiland\Utils\Data;
 class MorseHelper
 {
     //加密代码
-    protected static $option = array(
+    private static $option = array(
         'space' => '/',
         'short' => '.',
         'long' => '-',
     );
-    protected static $standard = array(
+    private static $standard = array(
         /* Letters                               */
         'A' => '01',      /* A                   */
         'B' => '1000',    /* B                   */
@@ -81,15 +81,21 @@ class MorseHelper
         '@' => '011010',  /* At sign             */
     );
 
-    protected static $standardReverse = null;
+    private static $standardReverse = null;
 
-    public static function encode($text, $option = null)
+    /**
+     * 加密摩斯电码
+     * @param string $stringData
+     * @param null   $option
+     * @return string
+     */
+    public static function encode($stringData, $option = null)
     {
         $option = self::defaultOption($option); // 默认参数
         $morse = []; // 最终的 morse 结果
         // 删除空格，转大写，分割为数组
-        $text = self::mbStrSplit(strtoupper(str_replace(' ', '', $text)));
-        foreach ($text as $key => $ch) {
+        $stringData = self::mbStrSplit(strtoupper(str_replace(' ', '', $stringData)));
+        foreach ($stringData as $key => $ch) {
             $r = @self::$standard[$ch];
             if (!$r && $r != "0") { //"0"是字母E，因此要排除
                 $r = self::unicodeHexMorse($ch); // 找不到，说明是非标准的字符，使用 unicode。
@@ -101,7 +107,7 @@ class MorseHelper
 
     //按utf分割字符串
 
-    protected static function defaultOption($option = null)
+    private static function defaultOption($option = null)
     {
         $option = $option || [];
         return [
@@ -111,60 +117,15 @@ class MorseHelper
         ];
     }
 
-    protected static function mbStrSplit($str)
+    private static function mbStrSplit($stringData)
     {
-        /*
-        字符串切割方式有多种
-        function utf8_str_split($str, $split_len = 1)
-        {
-            if (!preg_match('/^[0-9]+$/', $split_len) || $split_len < 1)
-                return FALSE;
-
-            $len = mb_strlen($str, 'UTF-8');
-            if ($len <= $split_len)
-                return array($str);
-
-            preg_match_all('/.{'.$split_len.'}|[^\x00]{1,'.$split_len.'}$/us', $str, $ar);
-
-            return $ar[0];
-        }
-        function utf8_str_split($str )
-        {
-            $split = 1;
-            $array = array();
-            for( $i = 0; $i < strlen( $str ); )
-            {
-                $value = ord( $str[ $i ] );
-                if( $value > 127 )
-                {
-                    if( $value >= 192 && $value <= 223 )
-                        $split = 2;
-                    elseif( $value >=224 && $value <= 239 )
-                        $split = 3;
-                    elseif($value >= 240 && $value <= 247)
-                        $split = 4;
-                }
-                else
-                {
-                    $split = 1;
-                }
-                $key = NULL;
-                for( $j=0; $j<$split; $j++,$i++ )
-                {
-                    $key .= $str[$i];
-                }
-                array_push( $array, $key );
-            }
-            return $array;
-        }
-        */
         $len = 1;
         $start = 0;
-        $strlen = mb_strlen($str);
-        while ($strlen) {
-            $array[] = mb_substr($str, $start, $len, "utf8");
-            $str = mb_substr($str, $len, $strlen, "utf8");
-            $strlen = mb_strlen($str);
+        $length = mb_strlen($stringData);
+        while ($length) {
+            $array[] = mb_substr($stringData, $start, $len, "utf8");
+            $stringData = mb_substr($stringData, $len, $length, "utf8");
+            $length = mb_strlen($stringData);
         }
         return $array;
     }
@@ -182,7 +143,7 @@ class MorseHelper
 
     //摩斯码转文本
 
-    protected static function charCodeAt($str, $index)
+    private static function charCodeAt($str, $index)
     {
         $char = mb_substr($str, $index, 1, 'UTF-8');
         if (mb_check_encoding($char, 'UTF-8')) {
@@ -195,7 +156,13 @@ class MorseHelper
 
     //unicode转二进制
 
-    public static function decode($morse, $option = null)
+    /**
+     * 解密摩斯电码
+     * @param string $morseStringData
+     * @param null   $option
+     * @return string
+     */
+    public static function decode($morseStringData, $option = null)
     {
         if (self::$standardReverse === null) {
             foreach (self::$standard as $key => $value) {
@@ -205,23 +172,24 @@ class MorseHelper
 
         $option = self::defaultOption($option);
         $msg = [];
-        $morse = explode($option[0], $morse); // 分割为数组
-        foreach ($morse as $key => $mor) {
+        $morseStringData = explode($option[0], $morseStringData); // 分割为数组
+        foreach ($morseStringData as $key => $mor) {
             $mor = str_replace(' ', '', $mor);
             $mor = str_replace($option[2], '1', str_replace($option[1], '0', $mor));
 
             $r = @self::$standardReverse[$mor];
             if (!$r) {
-                $r = self::morseHexUnicode($mor); // 找不到，说明是非标准字符的 morse，使用 unicode 解析方式。
+                /**
+                 * 找不到，说明是非标准字符的 morse，使用 unicode 解析方式。
+                 */
+                $r = self::morseHexUnicode($mor);
             }
             $msg[] = $r;
         }
         return join('', $msg);
     }
 
-    //加密摩斯电码
-
-    protected static function morseHexUnicode($mor)
+    private static function morseHexUnicode($mor)
     {
         $mor = bindec($mor);
         if (!$mor) {
@@ -232,14 +200,12 @@ class MorseHelper
         return self::convertUnicodeToUtf8($mor);
     }
 
-    //解密摩斯电码
-
     /**
      * Unicode字符转换成utf8字符
      * @param  [type] $unicode_str Unicode字符
      * @return string [type]              Utf-8字符
      */
-    protected static function convertUnicodeToUtf8($unicode_str)
+    private static function convertUnicodeToUtf8($unicode_str)
     {
         $utf8_str = '';
         $code = intval(hexdec($unicode_str));

@@ -2,7 +2,7 @@
 
 namespace Hiland\Utils\Data;
 
-use phpDocumentor\Reflection\Types\True_;
+use ReflectionException;
 
 class ArrayHelper
 {
@@ -253,7 +253,7 @@ class ArrayHelper
             foreach ($value as $key => $val) {
                 if (is_array($val) || is_object($val)) { // 判断是否是数组，或者，对像
                     $xml .= "<" . $key . ">";
-                    $xml .= self::toXmlInner($val); // 是数组或者对像就的递归调用
+                    $xml .= self::toXmlInner($val); // 是数组或者对像就递归调用
                     $xml .= "</" . $key . ">";
                 } else {
                     if (is_numeric($val)) {
@@ -291,7 +291,7 @@ class ArrayHelper
      *            如果这个值为空，那么将会把一维数组的key作为此值
      * @return array 转换后的一维数组
      * @example 待转换的有别名的二维数组类似如下：
-     *            $originalarray => array(
+     *            $originalArray => array(
      *            'UNOUT' => array(
      *            'value' => 0,
      *            'display' => '未出局'
@@ -305,25 +305,25 @@ class ArrayHelper
      *            'display' => '出局'
      *            )
      *            )
-     *            1、extract2DTo1D($originalarray, 'value', 'display')的结果为
+     *            1、 extract2DTo1D($originalArray, 'value', 'display')的结果为
      *            array(3) {
      *            [0] => string(9) "未出局"
      *            [1] => string(15) "锁定未出局"
      *            [10] => string(6) "出局"
      *            }
-     *            2、extract2DTo1D($originalarray, 'value')的结果为
+     *            2、 extract2DTo1D($originalArray, 'value')的结果为
      *            array(3) {
      *            [0] => string(5) "UNOUT"
      *            [1] => string(16) "PARTIALOUTASLOCK"
      *            [10] => string(3) "OUT"
      *            }
-     *            3、extract2DTo1D($originalarray,'','display')的结果为
+     *            3、 extract2DTo1D($originalArray,'','display')的结果为
      *            array(3) {
      *            ["UNOUT"] => string(9) "未出局"
      *            ["PARTIALOUTASLOCK"] => string(15) "锁定未出局"
      *            ["OUT"] => string(6) "出局"
      *            }
-     *            4、extract2DTo1D($originalarray)的结果为
+     *            4、 extract2DTo1D($originalArray)的结果为
      *            array(3) {
      *            ["UNOUT"] => string(5) "UNOUT"
      *            ["PARTIALOUTASLOCK"] => string(16) "PARTIALOUTASLOCK"
@@ -370,7 +370,7 @@ class ArrayHelper
             }
 
             if (is_array($value) && !empty($value)) {
-                $results = array_merge($results, static::flatten($value, $seperator, $prepend . $key . $seperator,$indexKeyPrefix));
+                $results = array_merge($results, static::flatten($value, $seperator, $prepend . $key . $seperator, $indexKeyPrefix));
             } else {
                 $results[$prepend . $key] = $value;
             }
@@ -381,7 +381,7 @@ class ArrayHelper
 
 
     /**
-     * 友好的显示数据集信息
+     * 友好地显示数据集信息
      * @param array $dbSet
      *            数据集
      * @param array $mapArray
@@ -396,6 +396,7 @@ class ArrayHelper
      *            2、如果是类的方法，请使用如下格式进行书写 nameSpace/className|methodName,
      *            其中如果是直接使用调用方类内的其他某个方法,nameSpace/className可以直接用__CLASS__表示
      * @return array 友好显示的数据集信息
+     * @throws ReflectionException
      */
     public static function friendlyDisplayDbSet(&$dbSet, $mapArray = null, $funcArray = null)
     {
@@ -413,7 +414,7 @@ class ArrayHelper
     }
 
     /**
-     * 友好的显示数据集信息
+     * 友好地显示数据集信息
      * @param array $dataEntity
      *            数据实体
      * @param array $mapArray
@@ -428,6 +429,7 @@ class ArrayHelper
      *            2、如果是类的方法，请使用如下格式进行书写 nameSpace/className|methodName,
      *            其中如果是直接使用调用方类内的其他某个方法,nameSpace/className可以直接用__CLASS__表示
      * @return array 友好显示的数据实体
+     * @throws ReflectionException
      */
     public static function friendlyDisplayEntity(&$dataEntity, $mapArray = null, $funcArray = null)
     {
@@ -560,7 +562,7 @@ class ArrayHelper
     /**
      * 像CSS选择器一样,从多维数组内获取符合XPath的信息
      * ════════════════════════
-     * @param string $arrayData
+     * @param array  $arrayData
      * @param string $selector
      * @param bool   $withIndexKey 查询路径里面是否包含索引数组的数字key,默认false
      * @return array
@@ -606,7 +608,7 @@ class ArrayHelper
      * Select方法的别名,Laravel内相同功能的方法名称就为pluck.
      * 像CSS选择器一样,从多维数组内获取符合XPath的信息
      * ════════════════════════
-     * @param string $arrayData
+     * @param array  $arrayData
      * @param string $selector
      * @param bool   $withIndexKey 查询路径里面是否包含索引数组的数字key,默认false
      * @return array

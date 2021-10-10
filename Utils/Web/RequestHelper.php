@@ -64,4 +64,15 @@ class RequestHelper
             return null;
         }
     }
+
+    /**
+     * 获取当前请求的全路径
+     * @return string
+     */
+    public function getFullPath()
+    {
+        $http_type = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
+        $hostName = ServerHelper::getHostName();
+        return $http_type . $hostName . $_SERVER['REQUEST_URI'];
+    }
 }

@@ -25,18 +25,18 @@ class CalculateMate
     //第一个要计算的数值
     public $number = 0;
     //精度计算时保留的小数点位数
-    public $scale = 2;
+    public $precision = 2;
     //计算结果
     public $result = 0;
 
     /**
      * AccuracyCal constructor.
-     * @param int $scale 精确计算是保留的小数位数
+     * @param int $precision 精确计算是保留的小数位数,缺省为2位小数的精度
      */
-    public function __construct($number = 0, $scale = 2)
+    public function __construct($number = 0, $precision = 2)
     {
         $this->number = $number;
-        $this->scale = $scale;
+        $this->precision = $precision;
     }
 
     /**
@@ -56,7 +56,7 @@ class CalculateMate
      */
     public function add($number)
     {
-        $this->result = bcadd($this->result, $number, $this->scale);
+        $this->result = bcadd($this->result, $number, $this->precision);
         return $this;
     }
 
@@ -67,7 +67,7 @@ class CalculateMate
      */
     public function sub($number)
     {
-        $this->result = bcsub($this->result, $number, $this->scale);
+        $this->result = bcsub($this->result, $number, $this->precision);
         return $this;
     }
 
@@ -78,7 +78,7 @@ class CalculateMate
      */
     public function mul($number)
     {
-        $this->result = bcmul($this->result, $number, $this->scale);
+        $this->result = bcmul($this->result, $number, $this->precision);
         return $this;
     }
 
@@ -89,7 +89,7 @@ class CalculateMate
      */
     public function div($number)
     {
-        $this->result = bcdiv($this->result, $number, $this->scale);
+        $this->result = bcdiv($this->result, $number, $this->precision);
         return $this;
     }
 

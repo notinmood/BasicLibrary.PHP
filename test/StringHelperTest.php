@@ -91,4 +91,20 @@ class StringHelperTest extends TestCase
         $expected = ".website.id";
         self::assertEquals($expected, $actual);
     }
+    
+    public function testConvertFromUTF8ToUnicode(){
+        $data = "我";
+        $actual = StringHelper::convertCharFromUTF8ToUnicode($data);
+        $expected = "6211";
+
+        self::assertEquals($expected, $actual);
+    }
+
+    public function testConvertFromUnicodeToUTF8(){
+        $data = "6211";
+        $actual = StringHelper::convertCharFromUnicodeToUTF8($data);
+        $expected = "我";
+
+        self::assertEquals($expected, $actual);
+    }
 }

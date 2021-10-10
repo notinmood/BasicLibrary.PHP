@@ -13,11 +13,11 @@ class HtmlHelper
 {
     /**
      *清除html中的注释
-     * @param $html
+     * @param $htmlString
      * @return string
      */
-    public static function cleanComment($html)
+    public static function cleanComment($htmlString)
     {
-        return preg_replace('/<!--(.|\s)*?-->/', '', $html);
+        return preg_replace('/<!--(.|\s)*?-->/', '', $htmlString);
     }
 }

@@ -351,4 +351,74 @@ class StringHelper
     {
         return str_pad($stringData, $length, $pad, STR_PAD_LEFT);
     }
+
+    /**
+     * 翻转字符串
+     * @param string $stringData 待翻转的字符串
+     * @return string
+     */
+    public static function reverse($stringData)
+    {
+        return strrev($stringData);
+    }
+
+    // /**
+    //  * 将UTF8字符串转换成Unicode字符串
+    //  * @param $utf8StringData
+    //  * @return string
+    //  */
+    // public static function convertFromUTF8ToUnicode($utf8StringData)
+    // {
+    //     $length = self::getLength($utf8StringData);
+    //     $result = [];
+    //     for ($i = 0; $i < $length; $i++) {
+    //         $result[] = self::convertCharFromUTF8ToUnicode($utf8StringData[$i]);
+    //     }
+    //
+    //     return self::implode($result);
+    // }
+
+    // /**
+    //  * Unicode字符串转换成utf8字符串
+    //  * @param $unicodeStringData
+    //  * @return string
+    //  */
+    // public static function convertFromUnicodeToUTF8($unicodeStringData){
+    //     $length = self::getLength($unicodeStringData);
+    //     $result = [];
+    //     for ($i = 0; $i < $length; $i++) {
+    //         $result[] = self::convertCharFromUnicodeToUTF8($unicodeStringData[$i]);
+    //     }
+    //
+    //     return self::implode($result);
+    // }
+
+    /**
+     * utf8字符转换成Unicode字符
+     * @param $utf8Char string
+     * @return string      Unicode字符
+     */
+    public static function convertCharFromUTF8ToUnicode($utf8Char)
+    {
+        $unicode = 0;
+        $unicode = (ord($utf8Char[0]) & 0x1F) << 12;
+        $unicode |= (ord($utf8Char[1]) & 0x3F) << 6;
+        $unicode |= (ord($utf8Char[2]) & 0x3F);
+        return dechex($unicode);
+    }
+
+    /**
+     * Unicode字符转换成utf8字符
+     * @param string $unicodeChar Unicode字符
+     * @return string       Utf-8字符
+     */
+    public static function convertCharFromUnicodeToUTF8($unicodeChar)
+    {
+        $code = intval(hexdec($unicodeChar));
+        //这里注意转换出来的code一定得是整形，这样才会正确的按位操作
+        $ord_1 = decbin(0xe0 | ($code >> 12));
+        $ord_2 = decbin(0x80 | (($code >> 6) & 0x3f));
+        $ord_3 = decbin(0x80 | ($code & 0x3f));
+        return chr(bindec($ord_1)) . chr(bindec($ord_2)) . chr(bindec($ord_3));
+    }
 }

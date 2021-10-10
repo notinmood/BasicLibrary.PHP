@@ -27,29 +27,29 @@ class ByteHelper
 
     /**
      * 转换一个String字符串为byte数组
-     * @param string $string 需要转换的字符串
+     * @param string $stringData 需要转换的字符串
      * @return array 目标byte数组
      * @author Zikie
      */
-    public static function convertFromString($string)
+    public static function convertFromString($stringData)
     {
         $bytes = array();
-        $length = strlen($string);
+        $length = strlen($stringData);
         for ($i = 0; $i < $length; $i++) {
-            $bytes[] = ord($string[$i]);
+            $bytes[] = ord($stringData[$i]);
         }
         return $bytes;
     }
 
     /**
      * 将字节数组转化为String类型的数据
-     * @param array $bytes 字节数组
+     * @param array $bytesData 字节数组
      * @return string 一个String类型的数据
      */
-    public static function convertToString($bytes)
+    public static function convertToString($bytesData)
     {
         $str = '';
-        foreach ($bytes as $ch) {
+        foreach ($bytesData as $ch) {
             $str .= chr($ch);
         }
 

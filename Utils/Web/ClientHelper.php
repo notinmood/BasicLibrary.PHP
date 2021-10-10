@@ -1,10 +1,10 @@
 <?php
+
 namespace Hiland\Utils\Web;
 
 /**
  * 获取操作系统，浏览器，语言，IP，IP归属地等客户端信息
- *
- * @author 然
+ * @author  然
  * @version 20131225
  */
 class ClientHelper
@@ -52,7 +52,6 @@ class ClientHelper
 
     /**
      * 获得访客浏览器语言
-     *
      * @return string
      */
     public static function getLanguage()
@@ -75,7 +74,6 @@ class ClientHelper
 
     /**
      * 获取访客操作系统
-     *
      * @return string
      */
     public static function getOS()
@@ -102,10 +100,10 @@ class ClientHelper
     }
 
     /**
-     * 获取客户端ip（尚有问题，请使用getOnlineIP方法）
+     * 获取客户端ip
      * @return string
      */
-    public static function getLocalIP()
+    public static function getIP()
     {
         if (getenv("HTTP_CLIENT_IP") && strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown")) {
             $ip = getenv("HTTP_CLIENT_IP");
@@ -154,33 +152,32 @@ class ClientHelper
     // }
     // }
 
-    /**
-     * 根据ip获得访客所在地地名信息
-     *
-     * @param string $ip
-     * @return string|boolean
-     */
-    public static function getPlaceFromIP($ip = '')
-    {
-        if (empty($ip)) {
-            $ip = self::getOnlineIP();
-        }
-        $ip_json = @file_get_contents("http://ip.taobao.com/service/getIpInfo.php?ip=" . $ip); // 根据taobao ip
-        $ip_arr = json_decode(stripslashes($ip_json), 1);
-        if ($ip_arr['code'] == 0) {
-            return $ip_arr;
-        } else {
-            return false;
-        }
-    }
+    // /**
+    //  * 根据ip获得访客所在地地名信息
+    //  * @param string $ip
+    //  * @return string|boolean
+    //  */
+    // public static function getPlaceFromIP($ip = '')
+    // {
+    //     if (empty($ip)) {
+    //         $ip = self::getOnlineIP();
+    //     }
+    //     $ip_json = @file_get_contents("http://ip.taobao.com/service/getIpInfo.php?ip=" . $ip); // 根据taobao ip
+    //     $ip_arr = json_decode(stripslashes($ip_json), 1);
+    //     if ($ip_arr['code'] == 0) {
+    //         return $ip_arr;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
-    /**
-     * 获得本地真实IP
-     */
-    public static function getOnlineIP()
-    {
-        $ip_json = @file_get_contents("http://ip.taobao.com/service/getIpInfo.php?ip=myip");
-        $ip_arr = json_decode(stripslashes($ip_json), 1);
-        return $ip_arr['code'] == 0 ? $ip_arr['data']['ip'] : '';
-    }
+    // /**
+    //  * 获得本地真实IP
+    //  */
+    // public static function getOnlineIP()
+    // {
+    //     $ip_json = @file_get_contents("http://ip.taobao.com/service/getIpInfo.php?ip=myip");
+    //     $ip_arr = json_decode(stripslashes($ip_json), 1);
+    //     return $ip_arr['code'] == 0 ? $ip_arr['data']['ip'] : '';
+    // }
 }

@@ -20,17 +20,17 @@ class EncodingHelper
 {
     /**
      * js escape php 实现
-     * @param        $string           the string want to be escaped
+     * @param        $stringData           the string want to be escaped
      * @param string $in_encoding
      * @param string $out_encoding
      * @return string
      */
-    public static function escape($string, $in_encoding = 'UTF-8', $out_encoding = 'UCS-2')
+    public static function escape($stringData, $in_encoding = 'UTF-8', $out_encoding = 'UCS-2')
     {
         $return = '';
         if (function_exists('mb_get_info')) {
-            for ($x = 0; $x < mb_strlen($string, $in_encoding); $x++) {
-                $str = mb_substr($string, $x, 1, $in_encoding);
+            for ($x = 0; $x < mb_strlen($stringData, $in_encoding); $x++) {
+                $str = mb_substr($stringData, $x, 1, $in_encoding);
                 if (strlen($str) > 1) { // 多字节字符
                     $return .= '%u' . strtoupper(bin2hex(mb_convert_encoding($str, $out_encoding, $in_encoding)));
                 } else {
@@ -42,16 +42,16 @@ class EncodingHelper
     }
 
     /**
-     * @param $str
+     * @param $stringData
      * @return string
      */
-    public static function unescape($str)
+    public static function unescape($stringData)
     {
         $ret = '';
-        $len = strlen($str);
+        $len = strlen($stringData);
         for ($i = 0; $i < $len; $i++) {
-            if ($str[$i] == '%' && $str[$i + 1] == 'u') {
-                $val = hexdec(substr($str, $i + 2, 4));
+            if ($stringData[$i] == '%' && $stringData[$i + 1] == 'u') {
+                $val = hexdec(substr($stringData, $i + 2, 4));
                 if ($val < 0x7f)
                     $ret .= chr($val);
                 else
@@ -64,11 +64,11 @@ class EncodingHelper
                             chr(0x80 | ($val & 0x3f));
                 $i += 5;
             } else
-                if ($str[$i] == '%') {
-                    $ret .= urldecode(substr($str, $i, 3));
+                if ($stringData[$i] == '%') {
+                    $ret .= urldecode(substr($stringData, $i, 3));
                     $i += 2;
                 } else
-                    $ret .= $str[$i];
+                    $ret .= $stringData[$i];
         }
         return $ret;
     }

@@ -2,7 +2,7 @@
 
 namespace Hiland\Utils\Data;
 
-/**
+use ReflectionClass;/**
  * Abstract class that enables creation of PHP enums.
  * All you
  * have to do is extend this class and define some constants.
@@ -10,7 +10,6 @@ namespace Hiland\Utils\Data;
  * (or from on of superclass if any). There is also
  * __default constat that enables you creation of object
  * without passing enum value.
- *
  * @author Marijan Šuflaj <msufflaj32@gmail.com&gt
  * @link http://www.php4every1.com/scripts/php-enum/
  */
@@ -101,7 +100,7 @@ abstract class Enum
     {
         $class = get_class($this);
 
-        $r = new \ReflectionClass($class);
+        $r = new ReflectionClass($class);
 
         $constants = $r->getConstants();
 
