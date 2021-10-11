@@ -10,6 +10,9 @@
 
 namespace Hiland\Utils\Environment;
 
+/**
+ * 配置文件辅助类(外部使用此类)
+ */
 class ConfigHelper
 {
     public static function loadFile($fileName = "config.php")

@@ -13,6 +13,9 @@ namespace Hiland\Utils\Environment;
 use Hiland\Utils\Data\JsonHelper;
 use Hiland\Utils\IO\FileHelper;
 
+/**
+ * json格式的内容解析器
+ */
 class ConfigParserJson extends ConfigParser
 {
     public function loadFileToArray($fileFullName)

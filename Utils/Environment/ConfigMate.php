@@ -16,14 +16,22 @@ use Hiland\Utils\Data\StringHelper;
 use Hiland\Utils\IO\FileHelper;
 use Hiland\Utils\IO\PathHelper;
 
+/**
+ * 配置文件交互的核心类
+ */
 class ConfigMate
 {
     private static $_instance = null;
 
+    private function __construct()
+    {
+        //do nothing;
+    }
+
     public static function Instance()
     {
         if (!self::$_instance) {
-            self::$_instance = new ConfigMate();
+            self::$_instance = new self();
         }
 
         return self::$_instance;

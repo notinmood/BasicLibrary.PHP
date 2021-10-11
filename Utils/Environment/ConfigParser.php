@@ -10,6 +10,9 @@
 
 namespace Hiland\Utils\Environment;
 
+/**
+ * (抽象的)配置文件解析器
+ */
 abstract class ConfigParser
 {
     public function toString(){
