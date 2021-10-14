@@ -22,7 +22,7 @@
       "Hiland\\": ""
     },
     "files": [
-      "Utils/Common/functions.php"
+      "Common/functions.php"
     ]
   }
 }
