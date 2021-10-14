@@ -21,7 +21,16 @@ class Node
      */
     public $isNullNode;
 
+    /**
+     * 节点的值
+     * @var mixed|null
+     */
     public $value;
+
+    /**
+     * 下一节点信息
+     * @var mixed|null
+     */
     public $next;
 
     public function __construct($value = null, $next = null, $isNullNode = false)
