@@ -14,23 +14,41 @@
 
 use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\ThinkHelper;
+use Hiland\Utils\IO\ConsoleHelper;
 
-/**
- * 将var_dump进行简短表示
- */
+
 if (!function_exists('dump') && ThinkHelper::isThinkPHP() == false) {
+    /**
+     * 将var_dump进行简短表示
+     * @param $value
+     */
     function dump($value)
     {
         var_dump($value);
     }
 }
 
-/**
- * 判断目标标的是否存在
- */
+
 if (!function_exists("exist")) {
+    /**
+     * 判断标的物是否存在
+     * @param $value
+     * @return bool
+     */
     function exist($value)
     {
         return ObjectHelper::isExist($value);
+    }
+}
+
+if (!function_exists("el")) {
+    /**
+     * 使用单独一行显示文本信息
+     * @param string $stringData
+     * @param false  $both 是否在此行的前后都使用新行标志,缺省false仅在行尾加入新行标志
+     */
+    function el($stringData, $both = false)
+    {
+        ConsoleHelper::el($stringData, $both);
     }
 }

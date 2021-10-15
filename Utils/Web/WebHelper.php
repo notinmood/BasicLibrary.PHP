@@ -3,6 +3,7 @@
 namespace Hiland\Utils\Web;
 
 use Hiland\Biz\ThinkAddon\TPCompatibleHelper;
+use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\StringHelper;
 use Hiland\Utils\Environment\EnvHelper;
 
@@ -52,9 +53,24 @@ class WebHelper
     }
 
     /**
+     * 从一个url中提取所有 meta 标签的 content 属性
+     * @param        $url
+     * @param string $tagName 网页上的meta的tag名称,缺省为空的时候返回所有tag的内容
+     * @return array|false|mixed
+     */
+    public static function getWebMetas($url, $tagName = "")
+    {
+        $result = get_meta_tags($url);
+        if ($tagName) {
+            return ObjectHelper::getMember($result, $tagName,"");
+        } else {
+            return $result;
+        }
+    }
+
+    /**
      * 网页跳转
-     * @param string $targetUrl
-     *            待跳转的页面
+     * @param string $targetUrl 待跳转的页面
      */
     public static function redirectUrl($targetUrl)
     {
@@ -194,16 +210,6 @@ class WebHelper
         return self::serverReturn($data, "JSONP", $json_option, $callbackName);
     }
 
-    // /**
-    //  * 获取应用程序地址
-    //  * @param string $schema
-    //  * @return string
-    //  */
-    // public static function getWebAppFull($schema = "http://")
-    // {
-    //     return $schema . self::getHostName() . self::getWebApp();
-    // }
-
     /**
      * 获取网站的域名信息
      * 不包括前面的"http://"和后面的"/"
@@ -213,6 +219,16 @@ class WebHelper
     {
         return ServerHelper::getHostName();
     }
+
+    // /**
+    //  * 获取应用程序地址
+    //  * @param string $schema
+    //  * @return string
+    //  */
+    // public static function getWebAppFull($schema = "http://")
+    // {
+    //     return $schema . self::getHostName() . self::getWebApp();
+    // }
 
     // /**TODO:需要判断是否在ThinkPHP内
     //  * TODO:xiedali 这个需要重新处理

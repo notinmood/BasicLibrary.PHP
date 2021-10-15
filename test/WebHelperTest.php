@@ -14,7 +14,16 @@ use PHPUnit\Framework\TestCase;
 
 class WebHelperTest extends TestCase
 {
-    //TODO:xiedali
+    public function testGetWebMetas(){
+        $url= 'https://www.jb51.net';
+        $result= WebHelper::getWebMetas($url);
+        dump($result);
+        
+        $result = WebHelper::getWebMetas($url,"keyword");
+        dump($result);
+        
+        self::assertEquals(true, true);
+    }
 
     // public function testJsonp()
     // {
