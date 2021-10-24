@@ -95,7 +95,13 @@ class ServerHelper
      */
     public static function getWebRoot()
     {
-        return self::getAppName() . "/";
+        $webRoot = "/";
+        $appName = self::getAppName();
+        if ($appName) {
+            $webRoot .= $appName . "/";
+        }
+
+        return $webRoot;
     }
 
     /**
