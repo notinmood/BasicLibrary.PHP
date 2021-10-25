@@ -5,9 +5,10 @@ namespace Hiland\Utils\Web;
 use Hiland\Biz\ThinkAddon\TPCompatibleHelper;
 use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\StringHelper;
-use Hiland\Utils\Environment\EnvHelper;
 
 /**
+ * @TODO   本类需要重构,将具体的实现方法分别分布到其他类型helper中,
+ * 本类仅仅提供以上功能友好的对外接口(即其他类型功能的别名)
  * @author 然
  */
 class WebHelper
@@ -62,7 +63,7 @@ class WebHelper
     {
         $result = get_meta_tags($url);
         if ($tagName) {
-            return ObjectHelper::getMember($result, $tagName,"");
+            return ObjectHelper::getMember($result, $tagName, "");
         } else {
             return $result;
         }
@@ -90,7 +91,7 @@ class WebHelper
         if (is_string($paraData)) {
             $paraString = $paraData;
         } else {
-            $paraString = self::formatArrayAsUrlParameter($paraData, $isUrlEncode);
+            $paraString = self::convertArrayToUrlParameter($paraData, $isUrlEncode);
         }
 
         if (StringHelper::isContains($url, "?")) {
@@ -103,16 +104,13 @@ class WebHelper
 
     /**
      * 对一个名值对数组格式化为url的参数
-     * @param array $paraArray
-     *                          需要格式化的名值对数组
-     * @param bool  $isUrlEncode
-     *                          是否对参数的值进行url编码
-     * @param array $excludeParaArray
-     *                          不编制在url参数列表中的参数名数组（只有参数名称的一维数组）
-     * @param bool  $isSortPara 是否对参数进行排序
+     * @param array $paraArray        需要格式化的名值对数组
+     * @param bool  $isUrlEncode      是否对参数的值进行url编码
+     * @param array $excludeParaArray 不编制在url参数列表中的参数名数组（只有参数名称的一维数组）
+     * @param bool  $isSortPara       是否对参数进行排序
      * @return string
      */
-    public static function formatArrayAsUrlParameter($paraArray, $isUrlEncode = false, $excludeParaArray = null, $isSortPara = true)
+    public static function convertArrayToUrlParameter($paraArray, $isUrlEncode = false, $excludeParaArray = null, $isSortPara = true)
     {
         $buffString = "";
 
@@ -143,15 +141,26 @@ class WebHelper
     }
 
     /**
+     * 服务器端返回JSONP类型数据
+     * @param        $data                   发送到客户浏览器的数据
+     * @param string $callbackClientFuncName 回调的用户浏览器的函数名称
+     * @param int    $json_option
+     */
+    public static function jsonp($data, $callbackClientFuncName = "", $json_option = 0)
+    {
+        return self::serverReturn($data, "JSONP", $json_option, $callbackClientFuncName);
+    }
+
+    /**
      * Ajax方式返回数据到客户端
      * @access protected
-     * @param mixed  $data         要返回的数据
-     * @param String $type         AJAX返回数据格式,默认值为JSON
-     * @param int    $json_option  传递给json_encode的option参数(为避免中文转码请使用JSON_UNESCAPED_UNICODE)
-     * @param string $callbackName 如果是jsonp的时候，此处为回调函数的名称(或者为回调函数名称的形参名称)
+     * @param mixed  $data                   要返回的数据
+     * @param String $type                   AJAX返回数据格式,默认值为JSON
+     * @param int    $jsonOption             传递给json_encode的option参数(为避免中文转码请使用JSON_UNESCAPED_UNICODE)
+     * @param string $callbackClientFuncName 如果是jsonp的时候，此处为回调函数的名称(或者为回调函数名称的形参名称)
      * @return void
      */
-    public static function serverReturn($data, $type = '', $json_option = 0, $callbackName = "")
+    public static function serverReturn($data, $type = '', $jsonOption = 0, $callbackClientFuncName = "")
     {
         if (empty($type)) {
             $type = 'JSON';
@@ -161,7 +170,7 @@ class WebHelper
             case 'JSON' :
                 // 返回JSON数据格式到客户端 包含状态信息
                 header('Content-Type:application/json; charset=utf-8');
-                $data = json_encode($data, $json_option);
+                $data = json_encode($data, $jsonOption);
                 break;
             case 'JSONP':
                 // 返回JSON数据格式到客户端 包含状态信息
@@ -171,11 +180,11 @@ class WebHelper
                  * 1、先判断是否通过参数传递过来回调函数的信息
                  */
                 $handler = "";
-                if ($callbackName) {
-                    $handler = $_GET[$callbackName];
+                if ($callbackClientFuncName) {
+                    $handler = $_GET[$callbackClientFuncName];
 
                     if (!$handler) {
-                        $handler = $callbackName;
+                        $handler = $callbackClientFuncName;
                     }
                 } else {
                     /**
@@ -188,26 +197,15 @@ class WebHelper
                     $handler = "callback";
                 }
 
-                $data = $handler . '(' . json_encode($data, $json_option) . ');';
+                $data = $handler . '(' . json_encode($data, $jsonOption) . ');';
                 break;
             case 'EVAL' :
                 // 返回可执行的js脚本
                 header('Content-Type:text/html; charset=utf-8');
-                $data = 'eval(' . json_encode($data, $json_option) . ');';
+                $data = 'eval(' . json_encode($data, $jsonOption) . ');';
                 break;
         }
         exit ($data);
-    }
-
-    /**
-     * 服务器端返回JSONP类型数据
-     * @param        $data
-     * @param string $callbackName
-     * @param int    $json_option
-     */
-    public static function jsonp($data, $callbackName = "", $json_option = 0)
-    {
-        return self::serverReturn($data, "JSONP", $json_option, $callbackName);
     }
 
     /**
@@ -219,73 +217,4 @@ class WebHelper
     {
         return ServerHelper::getHostName();
     }
-
-    // /**
-    //  * 获取应用程序地址
-    //  * @param string $schema
-    //  * @return string
-    //  */
-    // public static function getWebAppFull($schema = "http://")
-    // {
-    //     return $schema . self::getHostName() . self::getWebApp();
-    // }
-
-    // /**TODO:需要判断是否在ThinkPHP内
-    //  * TODO:xiedali 这个需要重新处理
-    //  * 获取应用程序地址
-    //  * @return string
-    //  */
-    // public static function getWebApp()
-    // {
-    //     return (__APP__);
-    // }
-    //
-    // /**
-    //  * 获取应用程序入口页面地址（在模式下，比getWebApp少一个问号）
-    //  * @param string $schema
-    //  * @return string
-    //  */
-    // public static function getWebGateFull($schema = "http://")
-    // {
-    //     return $schema . self::getHostName() . self::getWebGate();
-    // }
-    //
-    // /**TODO:xiedali 这个需要重新处理
-    //  * 获取应用程序入口页面地址（在模式下，比getWebApp少一个问号）
-    //  * @return string
-    //  */
-    // public static function getWebGate()
-    // {
-    //     return _PHP_FILE_;
-    // }
-    //
-    // /**
-    //  * 获取网站的域名信息
-    //  * 不包括后面的"/"
-    //  * @param string $schema
-    //  * @return string
-    //  */
-    // public static function getHostNameFull($schema = "http://")
-    // {
-    //     return $schema . self::getHostName();
-    // }
-
-    // /**
-    //  * 获取全路径的应用程序的根
-    //  * @param string $schema
-    //  * @return string
-    //  */
-    // public static function getWebRootFull($schema = "http://")
-    // {
-    //     return $schema . self::getHostName() . self::getWebRoot();
-    // }
-    //
-    // /**TODO:xiedali 这个需要重新处理
-    //  * 获取应用程序的根
-    //  * @return string
-    //  */
-    // public static function getWebRoot()
-    // {
-    //     return __ROOT__;
-    // }
 }

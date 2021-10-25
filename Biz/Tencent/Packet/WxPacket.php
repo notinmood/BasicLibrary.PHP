@@ -111,7 +111,7 @@ class WxPacket
                 throw new WechatException("生成签名参数缺失！" . "<br>");
             }
 
-            $unSignParaString = WebHelper::formatArrayAsUrlParameter($this->parameters);
+            $unSignParaString = WebHelper::convertArrayToUrlParameter($this->parameters);
             $result = CipherHelper::signature($unSignParaString, $key);
 
             return $result;

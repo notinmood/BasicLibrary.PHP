@@ -13,8 +13,10 @@
  */
 
 use Hiland\Utils\Data\ObjectHelper;
+use Hiland\Utils\Data\StringHelper;
 use Hiland\Utils\Data\ThinkHelper;
 use Hiland\Utils\IO\ConsoleHelper;
+use Hiland\Utils\Web\ServerHelper;
 
 
 if (!function_exists('dump') && ThinkHelper::isThinkPHP() == false) {
@@ -50,5 +52,43 @@ if (!function_exists("el")) {
     function el($stringData, $both = false)
     {
         ConsoleHelper::el($stringData, $both);
+    }
+}
+
+
+if (!function_exists('fixUrl')) {
+    /**
+     * @param string $mcaUrl 普通url或者MCA格式表示的url("Module/Controller/Action")
+     * @param string $entry  入口页面
+     * @return string
+     */
+    function fixUrl($mcaUrl, $entry = "index.php")
+    {
+        $webRoot = ServerHelper::getWebRoot();
+        if (StringHelper::isStartWith($webRoot, "/") == false) {
+            $webRoot = "/" . $webRoot;
+        }
+
+        $enterUrl = $webRoot;
+        if ($entry) {
+            $enterUrl .= $entry . "/";
+        }
+
+        if (function_exists("url")) {
+            /**
+             * 如果是在thinkphp中存在url函数则调用
+             */
+            $targetUrl = url($mcaUrl);
+        } else {
+            $targetUrl = $mcaUrl;
+        }
+
+        if (StringHelper::isStartWith($targetUrl, $enterUrl) == false) {
+            $webRootLength = StringHelper::getLength($webRoot);
+            $targetUrl = StringHelper::subString($targetUrl, $webRootLength);
+            $targetUrl = $enterUrl . $targetUrl;
+        }
+
+        return $targetUrl;
     }
 }
