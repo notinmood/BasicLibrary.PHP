@@ -12,6 +12,7 @@ namespace Hiland\Utils\Data;
 
 use Hiland\Test\res\Student;
 use PHPUnit\Framework\TestCase;
+use ReflectionException;
 use function PHPUnit\Framework\assertEquals;
 
 class ReflectionHelperTest extends TestCase
@@ -21,6 +22,9 @@ class ReflectionHelperTest extends TestCase
     //
     // }
 
+    /**
+     * @throws ReflectionException
+     */
     public function testExecuteInstanceMethod()
     {
         $student = new Student("zhangsan", 20);
