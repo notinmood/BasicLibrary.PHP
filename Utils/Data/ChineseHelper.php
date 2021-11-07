@@ -4,7 +4,6 @@ namespace Hiland\Utils\Data;
 
 class ChineseHelper
 {
-
     /**
      * 将中文字符串转成拼音
      * @param string $chineseString 待转换的中文字符串
@@ -187,117 +186,125 @@ class ChineseHelper
     }
 
 
-    /*
-     * 获取中文首字拼音字母
+    /**
+     * 获取中文首字拼音字母(例如L,M等)
+     * @param string $chineseString 中文字符串
+     * @return string
      */
-    public static function getFirstChar($s0)
+    public static function getFirstChar($chineseString)
     {
         //手动添加未识别记录
-        if (mb_substr($s0, 0, 1, 'utf-8') == "怡") {
+        if (mb_substr($chineseString, 0, 1, 'utf-8') == "怡") {
             return "Y";
         }
 
-        if (mb_substr($s0, 0, 1, 'utf-8') == "泗") {
+        if (mb_substr($chineseString, 0, 1, 'utf-8') == "泗") {
             return "S";
         }
 
-        $fchar = ord(substr($s0, 0, 1));
-        if (($fchar >= ord("a") and $fchar <= ord("z")) or ($fchar >= ord("A") and $fchar <= ord("Z"))) {
-            return strtoupper(chr($fchar));
+        /**
+         * 英文字符串的首字符
+         */
+        $firstChar = ord(substr($chineseString, 0, 1));
+        if (($firstChar >= ord("a") and $firstChar <= ord("z")) or ($firstChar >= ord("A") and $firstChar <= ord("Z"))) {
+            return strtoupper(chr($firstChar));
         }
 
-        $s = iconv("UTF-8", "GBK", $s0);
-        $asc = ord($s{0}) * 256 + ord($s{1}) - 65536;
-        //dump($s0.':'.$asc);
-        if ($asc >= -20319 and $asc <= -20284) {
+        /**
+         * 中文字符串的首字符
+         */
+        $stringEncoded = iconv("UTF-8", "GBK", $chineseString);
+        $charCode = ord($stringEncoded[0]) * 256 + ord($stringEncoded[1]) - 65536;
+
+        if ($charCode >= -20319 and $charCode <= -20284) {
             return "A";
         }
 
-        if ($asc >= -20283 and $asc <= -19776) {
+        if ($charCode >= -20283 and $charCode <= -19776) {
             return "B";
         }
 
-        if ($asc >= -19775 and $asc <= -19219) {
+        if ($charCode >= -19775 and $charCode <= -19219) {
             return "C";
         }
 
-        if ($asc >= -19218 and $asc <= -18711) {
+        if ($charCode >= -19218 and $charCode <= -18711) {
             return "D";
         }
 
-        if ($asc >= -18710 and $asc <= -18527) {
+        if ($charCode >= -18710 and $charCode <= -18527) {
             return "E";
         }
 
-        if ($asc >= -18526 and $asc <= -18240) {
+        if ($charCode >= -18526 and $charCode <= -18240) {
             return "F";
         }
 
-        if ($asc >= -18239 and $asc <= -17923) {
+        if ($charCode >= -18239 and $charCode <= -17923) {
             return "G";
         }
 
-        if ($asc >= -17922 and $asc <= -17418) {
+        if ($charCode >= -17922 and $charCode <= -17418) {
             return "H";
         }
 
-        if ($asc >= -17417 and $asc <= -16475) {
+        if ($charCode >= -17417 and $charCode <= -16475) {
             return "J";
         }
 
-        if ($asc >= -16474 and $asc <= -16213) {
+        if ($charCode >= -16474 and $charCode <= -16213) {
             return "K";
         }
 
-        if ($asc >= -16212 and $asc <= -15641) {
+        if ($charCode >= -16212 and $charCode <= -15641) {
             return "L";
         }
 
-        if ($asc >= -15640 and $asc <= -15166) {
+        if ($charCode >= -15640 and $charCode <= -15166) {
             return "M";
         }
 
-        if ($asc >= -15165 and $asc <= -14923) {
+        if ($charCode >= -15165 and $charCode <= -14923) {
             return "N";
         }
 
-        if ($asc >= -14922 and $asc <= -14915) {
+        if ($charCode >= -14922 and $charCode <= -14915) {
             return "O";
         }
 
-        if ($asc >= -14914 and $asc <= -14631) {
+        if ($charCode >= -14914 and $charCode <= -14631) {
             return "P";
         }
 
-        if ($asc >= -14630 and $asc <= -14150) {
+        if ($charCode >= -14630 and $charCode <= -14150) {
             return "Q";
         }
 
-        if ($asc >= -14149 and $asc <= -14091) {
+        if ($charCode >= -14149 and $charCode <= -14091) {
             return "R";
         }
 
-        if ($asc >= -14090 and $asc <= -13319) {
+        if ($charCode >= -14090 and $charCode <= -13319) {
             return "S";
         }
 
-        if ($asc >= -13318 and $asc <= -12839) {
+        if ($charCode >= -13318 and $charCode <= -12839) {
             return "T";
         }
 
-        if ($asc >= -12838 and $asc <= -12557) {
+        if ($charCode >= -12838 and $charCode <= -12557) {
             return "W";
         }
 
-        if ($asc >= -12556 and $asc <= -11848) {
+        if ($charCode >= -12556 and $charCode <= -11848) {
             return "X";
         }
 
-        if ($asc >= -11847 and $asc <= -11056) {
+        if ($charCode >= -11847 and $charCode <= -11056) {
             return "Y";
         }
 
-        if ($asc >= -11055 and $asc <= -10247) {
+        if ($charCode >= -11055 and $charCode <= -10247) {
             return "Z";
         }
 

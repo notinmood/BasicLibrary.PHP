@@ -32,7 +32,7 @@ class StockMate
 
     /**
      * @param ...$stockCode
-     * @return mixed|string
+     * @return array 数组的元素是StockRealTimeQuote类型的对象
      */
     public function getRealTimeQuote(...$stockCode)
     {
