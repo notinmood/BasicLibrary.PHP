@@ -4,7 +4,6 @@ namespace Hiland\Biz\Stock;
 
 use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\StringHelper;
-use Hiland\Utils\Pattern\NullObject;
 
 class StockHelper
 {
@@ -21,12 +20,12 @@ class StockHelper
      */
     public static function formatStockCode($stockCode, $prefix = "[SEN]", $postfix = "")
     {
-        preg_match("/\d{6}/", $stockCode, $matches);
-        $standardCode = "";
-        if (ObjectHelper::isEmpty($matches)) {
+        $stockCode = self::getStandardStockCode($stockCode);
+
+        if (!$stockCode) {
             return "";
         } else {
-            $standardCode = $matches[0];
+            $standardCode = $stockCode;
             $bizCode = "{$prefix}{$standardCode}{$postfix}";
             $stockExchangeNameUpper = self::getStockExchangeName($standardCode);
             $stockExchangeNameLower = StringHelper::lower($stockExchangeNameUpper);
@@ -41,28 +40,27 @@ class StockHelper
             /**
              * 其他非明确指定的都换成大写交易所的名称
              */
-            $target = preg_replace("/\[SEN\]/i", $stockExchangeNameUpper, $target);
-
 
             /**
              * 添加其他替换过滤条件
              */
-            return $target;
+            return preg_replace("/\[SEN\]/i", $stockExchangeNameUpper, $target);
         }
     }
 
     /**
      * 获取交易所名称
-     * @param $standardStockCode 标准6位数的股票代码
+     * @param $stockCode 股票代码
      * @return string
      */
-    public static function getStockExchangeName($standardStockCode)
+    public static function getStockExchangeName($stockCode)
     {
-        if (StringHelper::getLength($standardStockCode) != 6) {
+        $stockCode = self::getStandardStockCode($stockCode);
+        if (!$stockCode) {
             return "";
         }
 
-        $standardCodeFirstChar = StringHelper::subString($standardStockCode, 0, 1);
+        $standardCodeFirstChar = StringHelper::subString($stockCode, 0, 1);
         switch ($standardCodeFirstChar) {
             case "6":
             case "7":
@@ -74,5 +72,21 @@ class StockHelper
         }
 
         return $stockExchangeName;
+    }
+
+    /**
+     * 获取6位数的标准股票代码
+     * @param $stockCode
+     * @return mixed|string
+     */
+    public static function getStandardStockCode($stockCode)
+    {
+        preg_match("/[0|3|6|7|9]\d{5}/", $stockCode, $matches);
+
+        if (ObjectHelper::isEmpty($matches)) {
+            return "";
+        } else {
+            return $matches[0];
+        }
     }
 }

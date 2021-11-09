@@ -52,5 +52,38 @@ class StockHelperTest extends TestCase
         $expected = "SZ";
         $actual = StockHelper::getStockExchangeName($data);
         self::assertEquals($expected, $actual);
+
+        $data = "400001";
+        $expected = "";
+        $actual = StockHelper::getStockExchangeName($data);
+        self::assertEquals($expected, $actual);
+
+        $data = "3001";
+        $expected = "";
+        $actual = StockHelper::getStockExchangeName($data);
+        self::assertEquals($expected, $actual);
+    }
+
+    public function testGetStandardStockCode()
+    {
+        $data = "000917";
+        $expected = "000917";
+        $actual = StockHelper::getStandardStockCode($data);
+        self::assertEquals($expected, $actual);
+
+        $data = "000.917";
+        $expected = "";
+        $actual = StockHelper::getStandardStockCode($data);
+        self::assertEquals($expected, $actual);
+
+        $data = "这是海尔的股票代码600690,2021年最高价格为38元。";
+        $expected = "600690";
+        $actual = StockHelper::getStandardStockCode($data);
+        self::assertEquals($expected, $actual);
+
+        $data = "这不是一个股票代码500690";
+        $expected = "";
+        $actual = StockHelper::getStandardStockCode($data);
+        self::assertEquals($expected, $actual);
     }
 }
