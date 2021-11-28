@@ -45,8 +45,10 @@ class EnvHelper
      * @return bool
      * ════════════════════════
      * 说明：
-     *在iis中配置fastcgi时PHP_SAPI的返回值为cgi-fcgi,在nginx等服务器上返回的是fpm-fcgi.
-     * 因此本方法判断cgi或者fcgi就可以得到结果
+     * 1.在iis中配置fastcgi时PHP_SAPI的返回值为cgi-fcgi,在nginx等服务器上返回的是fpm-fcgi.
+     * 因此本方法判断cgi或者fcgi就可以得到结果.
+     * 2.PHP 常量 PHP_SAPI 具有和 php_sapi_name() 相同的值。
+     * 更多信息参考 https://www.php.net/manual/zh/function.php-sapi-name.php
      */
     public static function isCGI()
     {
