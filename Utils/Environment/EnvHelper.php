@@ -2,12 +2,10 @@
 
 namespace Hiland\Utils\Environment;
 
-use Hiland\Utils\Data\ArrayHelper;
 use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\RegexHelper;
 use Hiland\Utils\Data\StringHelper;
 use Hiland\Utils\Data\ThinkHelper;
-use Hiland\Utils\Web\HttpResponseHeader;
 
 class EnvHelper
 {
@@ -45,24 +43,17 @@ class EnvHelper
     /**
      * 是否运行在浏览器/服务器模式下
      * @return bool
+     * ════════════════════════
+     * 说明：
+     *在iis中配置fastcgi时PHP_SAPI的返回值为cgi-fcgi,在nginx等服务器上返回的是fpm-fcgi.
+     * 因此本方法判断cgi或者fcgi就可以得到结果
      */
     public static function isCGI()
     {
+        /**
+         * SAPI:the Server API,就是PHP跟服务器所使用的接口方式
+         */
         if (0 === strpos(PHP_SAPI, 'cgi') || false !== strpos(PHP_SAPI, 'fcgi')) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * 是否运行在命令行模式下
-     * @return bool
-     */
-    public static function isCLI()
-    {
-        $sapi_type = php_sapi_name();
-        if (isset($sapi_type) && substr($sapi_type, 0, 3) == 'cli') {
             return true;
         } else {
             return false;
@@ -84,6 +75,10 @@ class EnvHelper
         }
     }
 
+    /**
+     * TODO:
+     * @return bool
+     */
     public static function isDebug()
     {
         $result = true;
@@ -110,6 +105,20 @@ class EnvHelper
             return PHP_EOL;
         } else {
             return "<br/>";
+        }
+    }
+
+    /**
+     * 是否运行在命令行模式下
+     * @return bool
+     */
+    public static function isCLI()
+    {
+        $sapi_type = php_sapi_name();
+        if (isset($sapi_type) && substr($sapi_type, 0, 3) == 'cli') {
+            return true;
+        } else {
+            return false;
         }
     }
 
