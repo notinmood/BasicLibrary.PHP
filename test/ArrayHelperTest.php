@@ -307,4 +307,20 @@ class ArrayHelperTest extends TestCase
 
         self::assertEquals($expected, $actual);
     }
+
+    public function testZip(){
+        $a = [1,3,5,7,9];
+        $b= [2,4,6,8];
+        $c= ["a","b","c"];
+
+        $expected= [[1,2,"a"],[3,4,"b"],[5,6,"c"]];
+        $actual= ArrayHelper::zip($a,$b,$c);
+        self::assertEquals($expected,$actual);
+
+
+        $d= ["a","b","c","d"];
+        $expected= [[1,2,"a"],[3,4,"b"],[5,6,"c"],[7,8,"d"]];
+        $actual= ArrayHelper::zip($a,$b,$d);
+        self::assertEquals($expected,$actual);
+    }
 }

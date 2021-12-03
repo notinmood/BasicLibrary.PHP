@@ -28,19 +28,6 @@ class ArrayHelper
     }
 
     /**
-     * 在数组的末尾添加新的元素(新元素的key是数字形式索引)
-     * 方法push和方法addTail功能相同,互为别名
-     * @param array $array
-     * @param mixed ...$items
-     * @return array
-     */
-    public static function push(array $array, ...$items)
-    {
-        array_push($array, ...$items);
-        return $array;
-    }
-
-    /**
      * 在数组的开头添加新的元素(新元素的key是数字形式索引)
      * @param $array
      * @param ...$items
@@ -79,6 +66,19 @@ class ArrayHelper
     public static function addTail($array, ...$items)
     {
         return self::push($array, ...$items);
+    }
+
+    /**
+     * 在数组的末尾添加新的元素(新元素的key是数字形式索引)
+     * 方法push和方法addTail功能相同,互为别名
+     * @param array $array
+     * @param mixed ...$items
+     * @return array
+     */
+    public static function push(array $array, ...$items)
+    {
+        array_push($array, ...$items);
+        return $array;
     }
 
     /**
@@ -137,6 +137,15 @@ class ArrayHelper
         return $array;
     }
 
+    /**获取数组内元素的个数
+     * @param $array
+     * @return int
+     */
+    public static function getLength($array)
+    {
+        return count($array);
+    }
+
     /**
      * 判断当前是否为关联数组
      * @param $array
@@ -177,16 +186,6 @@ class ArrayHelper
         }
 
         return false;
-    }
-
-
-    /**获取数组内元素的个数
-     * @param $array
-     * @return int
-     */
-    public static function getLength($array)
-    {
-        return count($array);
     }
 
     /**
@@ -351,34 +350,6 @@ class ArrayHelper
 
         return $newArray;
     }
-
-    /**
-     * 将多维数组平面化
-     * @param iterable $arrayData      待转换的多维数组
-     * @param string   $seperator      平面化后各个维度Key之间的分隔符,缺省为"."
-     * @param string   $prepend        平面化后的key前缀,缺省为空
-     * @param string   $indexKeyPrefix 如果是索引性质的数组,想给索引key加一个前缀的名称,缺省为空
-     * @return array
-     */
-    public static function flatten($arrayData, $seperator = ".", $prepend = '', $indexKeyPrefix = "")
-    {
-        $results = [];
-
-        foreach ($arrayData as $key => $value) {
-            if (ObjectHelper::getType($key) == ObjectTypes::INTEGER) {
-                $key = $indexKeyPrefix . $key;
-            }
-
-            if (is_array($value) && !empty($value)) {
-                $results = array_merge($results, static::flatten($value, $seperator, $prepend . $key . $seperator, $indexKeyPrefix));
-            } else {
-                $results[$prepend . $key] = $value;
-            }
-        }
-
-        return $results;
-    }
-
 
     /**
      * 友好地显示数据集信息
@@ -560,6 +531,30 @@ class ArrayHelper
     }
 
     /**
+     * Select方法的别名,Laravel内相同功能的方法名称就为pluck.
+     * 像CSS选择器一样,从多维数组内获取符合XPath的信息
+     * ════════════════════════
+     * @param array  $arrayData
+     * @param string $selector
+     * @param bool   $withIndexKey 查询路径里面是否包含索引数组的数字key,默认false
+     * @return array
+     * @example
+     *                             1、目标数组 $array = [
+     *                             ['website' => ['id' => 1, 'url' => 'reddit.com']],
+     *                             ['website' => ['id' => 2, 'url' => 'twitter.com']],
+     *                             ['website' => ['id' => 3, 'url' => 'dev.to']],
+     *                             ];
+     *                             2、应用xpath选取数据
+     *                             $names = ArrayHelper::select($array, 'website.url');
+     *                             3、--output--
+     *                             ['reddit.com', 'twitter.com', 'dev.to']
+     */
+    public static function pluck($arrayData, $selector, $withIndexKey = false)
+    {
+        return self::select($arrayData, $selector, $withIndexKey);
+    }
+
+    /**
      * 像CSS选择器一样,从多维数组内获取符合XPath的信息
      * ════════════════════════
      * @param array  $arrayData
@@ -605,26 +600,61 @@ class ArrayHelper
     }
 
     /**
-     * Select方法的别名,Laravel内相同功能的方法名称就为pluck.
-     * 像CSS选择器一样,从多维数组内获取符合XPath的信息
-     * ════════════════════════
-     * @param array  $arrayData
-     * @param string $selector
-     * @param bool   $withIndexKey 查询路径里面是否包含索引数组的数字key,默认false
+     * 将多维数组平面化
+     * @param iterable $arrayData      待转换的多维数组
+     * @param string   $seperator      平面化后各个维度Key之间的分隔符,缺省为"."
+     * @param string   $prepend        平面化后的key前缀,缺省为空
+     * @param string   $indexKeyPrefix 如果是索引性质的数组,想给索引key加一个前缀的名称,缺省为空
+     * @return array
+     */
+    public static function flatten($arrayData, $seperator = ".", $prepend = '', $indexKeyPrefix = "")
+    {
+        $results = [];
+
+        foreach ($arrayData as $key => $value) {
+            if (ObjectHelper::getType($key) == ObjectTypes::INTEGER) {
+                $key = $indexKeyPrefix . $key;
+            }
+
+            if (is_array($value) && !empty($value)) {
+                $results = array_merge($results, static::flatten($value, $seperator, $prepend . $key . $seperator, $indexKeyPrefix));
+            } else {
+                $results[$prepend . $key] = $value;
+            }
+        }
+
+        return $results;
+    }
+
+    /**
+     * 分别提取每个数组的第n个元素组成新的二维数组(内层纬度为每个传入数组的第n个元素组成的数组；外层纬度为传入的最短数组的长度)
+     * @param ...$arrayData
      * @return array
      * @example
-     *                             1、目标数组 $array = [
-     *                             ['website' => ['id' => 1, 'url' => 'reddit.com']],
-     *                             ['website' => ['id' => 2, 'url' => 'twitter.com']],
-     *                             ['website' => ['id' => 3, 'url' => 'dev.to']],
-     *                             ];
-     *                             2、应用xpath选取数据
-     *                             $names = ArrayHelper::select($array, 'website.url');
-     *                             3、--output--
-     *                             ['reddit.com', 'twitter.com', 'dev.to']
+     *         $a = [1,3,5,7,9];
+     *         $b= [2,4,6,8];
+     *         $c= ["a","b","c"];
+     *         $result= ArrayHelper::zip($a,$b,$c);
+     *         ────────────────────────
+     *         $result 的值为 [[1,2,"a"],[3,4,"b"],[5,6,"c"]];
      */
-    public static function pluck($arrayData, $selector, $withIndexKey = false)
+    public static function zip(...$arrayData)
     {
-        return self::select($arrayData, $selector, $withIndexKey);
+        $arraysCount = count($arrayData);
+        $arrayLength = array_map(function ($item) {
+            return count($item);
+        }, $arrayData);
+
+        $arrayLengthMin = min($arrayLength);
+        $result = [];
+        for ($i = 0; $i < $arrayLengthMin; $i++) {
+            $indexArray = [];
+            for ($j = 0; $j < $arraysCount; $j++) {
+                $indexArray[] = $arrayData[$j][$i];
+            }
+            $result[] = $indexArray;
+        }
+
+        return $result;
     }
 }
