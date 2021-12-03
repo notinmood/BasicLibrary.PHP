@@ -53,8 +53,7 @@ abstract class SimpleLinearConstruct
     /**
      * 清空队列*
      */
-    public
-    function makeEmpty()
+    public function makeEmpty()
     {
         unset($this->dataArray);
     }
@@ -65,5 +64,14 @@ abstract class SimpleLinearConstruct
     public function getLength()
     {
         return count($this->dataArray);
+    }
+
+    /**
+     * 转换为普通Array
+     * @return array|mixed
+     */
+    public function convertToArray()
+    {
+        return $this->dataArray;
     }
 }

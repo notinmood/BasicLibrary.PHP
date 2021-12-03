@@ -9,6 +9,8 @@
 namespace Hiland\Utils\Data;
 
 
+use Hiland\Utils\DataConstruct\Queue;
+
 class MathHelper
 {
     /**
@@ -33,19 +35,72 @@ class MathHelper
         return sprintf($format, $data * 100) . '%';
     }
 
-    /**获取一个数列的简单的移动平均值
-     * @param        $sourceArray
-     * @param        $period          int 滑动时间周期(比如每5天作为一个周期计算一次平均值)
+    // /**获取一个数列的移动平均值
+    //  * @param        $sourceArray
+    //  * @param        $period          int 滑动时间周期(比如每5天作为一个周期计算一次平均值)
+    //  * @param string $targetFieldName 如果是一维数组可以忽略本参数；如果是二维数组，请指定需要进行计算的字段名称。
+    //  * @return array
+    //  */
+    // public static function ma($sourceArray, $period, $targetFieldName = '')
+    // {
+    //     $result = null;
+    //     $level = ArrayHelper::getLevel($sourceArray);
+    //     $pIndex = $period - 1;
+    //     $data = array_values($sourceArray);
+    //     $sum = 0;
+    //
+    //     foreach ($data as $k => $v) {
+    //         if ($level == 1) {
+    //             $currentValue = $v;
+    //             $needRemoveValue = $data[$k - $pIndex] ? $data[$k - $pIndex] : 0;
+    //         } else {
+    //             $currentValue = $v[$targetFieldName];
+    //             $needRemoveValue = $data[$k - $pIndex][$targetFieldName] ? $data[$k - $pIndex][$targetFieldName] : 0;
+    //         }
+    //
+    //         $sum += $currentValue;
+    //         if ($k < $pIndex) {
+    //             $item = 0;
+    //         } else {
+    //             $item = sprintf("%.2f", ($sum / $period));
+    //             $sum -= $needRemoveValue;
+    //         }
+    //
+    //         $result[] = $item;
+    //     }
+    //
+    //     return $result;
+    // }
+
+    /**
+     * 获取一个数列的移动平均值
+     * @param array  $sourceArray     待计算的原始数组
+     * @param int    $windowPeriod    滑动窗口的窗口大小(即时间周期,比如每5天作为一个周期做一次计算)
      * @param string $targetFieldName 如果是一维数组可以忽略本参数；如果是二维数组，请指定需要进行计算的字段名称。
      * @return array
      */
-    public static function sma($sourceArray, $period, $targetFieldName = '')
+    public static function ma($sourceArray, $windowPeriod, $targetFieldName = '')
+    {
+        return self::rolling($sourceArray, $windowPeriod, $targetFieldName, [self::class, "_maCallback"]);
+    }
+
+    /**
+     * 对数组进行窗口滑动计算
+     * @param array    $sourceArray             待计算的原始数组
+     * @param int      $windowPeriod            滑动窗口的窗口大小(即时间周期,比如每5天作为一个周期做一次计算)
+     * @param string   $targetFieldName         如果是一维数组可以忽略本参数；如果是二维数组，请指定需要进行计算的字段名称。
+     * @param callable $everyWindowCallbackFunc 对每个窗口周期进行计算的回调函数(传递出1个参数：包含当前窗口内的各个元素的array)
+     * @return array
+     */
+    public static function rolling($sourceArray, $windowPeriod, $targetFieldName = '', $everyWindowCallbackFunc)
     {
         $result = null;
         $level = ArrayHelper::getLevel($sourceArray);
-        $pIndex = $period - 1;
+        $pIndex = $windowPeriod - 1;
         $data = array_values($sourceArray);
         $sum = 0;
+
+        $queue = new Queue();
 
         foreach ($data as $k => $v) {
             if ($level == 1) {
@@ -56,12 +111,13 @@ class MathHelper
                 $needRemoveValue = $data[$k - $pIndex][$targetFieldName] ? $data[$k - $pIndex][$targetFieldName] : 0;
             }
 
-            $sum += $currentValue;
+            // $sum += $currentValue;
+            $queue->push($currentValue);
             if ($k < $pIndex) {
                 $item = 0;
             } else {
-                $item = sprintf("%.2f", ($sum / $period));
-                $sum -= $needRemoveValue;
+                $item = $everyWindowCallbackFunc($queue->convertToArray());
+                $queue->pop($needRemoveValue);
             }
 
             $result[] = $item;
@@ -70,8 +126,32 @@ class MathHelper
         return $result;
     }
 
+    private static function _maCallback($windowData)
+    {
+        $sum = 0;
+        foreach ($windowData as $item) {
+            $sum += $item;
+        }
+
+        $count = count($windowData);
+
+        return sprintf("%.2f", ($sum / $count));
+    }
+
     /**
-     * 数学中各种进制之间的相互转换
+     * 数学中各种进制之间的相互转换,返回字符串表示的数据(convertBase的别名缩写)
+     * @param string $numberString 待转换的(字符串格式的)目标数字
+     * @param int    $fromBase     从**进制转换
+     * @param int    $toBase       转换到**进制
+     * @return string
+     */
+    public function convert($numberString, $fromBase, $toBase)
+    {
+        return self::convertBase($numberString, $fromBase, $toBase);
+    }
+
+    /**
+     * 数学中各种进制之间的相互转换,返回字符串表示的数据
      * @param string $numberString 待转换的(字符串格式的)目标数字
      * @param int    $fromBase     从**进制转换
      * @param int    $toBase       转换到**进制
@@ -81,5 +161,4 @@ class MathHelper
     {
         return base_convert($numberString, $fromBase, $toBase);
     }
-
 }
