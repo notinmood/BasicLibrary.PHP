@@ -2,7 +2,9 @@
 
 namespace Hiland\Utils\Data;
 
+use ReflectionClass;
 use ReflectionException;
+use ReflectionMethod;
 
 class ReflectionHelper
 {
@@ -28,19 +30,27 @@ class ReflectionHelper
      * 获取类型的反射信息
      * @param string $className 类名称（如果有命名空间，请携带命名空间，如：'Tencent\Model\Bar'）
      * @param array  $args      类构造器参数数组
-     * @return \ReflectionClass
+     * @return ReflectionClass
      */
     public static function getReflectionClass($className, &$args = null)
     {
-        $refClass = new \ReflectionClass($className);
+        $refClass = null;
+        try {
+            $refClass = new ReflectionClass($className);
+        } catch (ReflectionException $e) {
+        }
+
         if (isset($args) && !isset($args[0])) {
             $args2 = array();
-            foreach ($refClass->getMethod('__construct')->getParameters() as $param) {
-                if (isset($args[$param->name])) {
-                    $args2[] = $args[$param->name];
-                } elseif ($param->isDefaultValueAvailable()) {
-                    $args2[] = $param->getDefaultValue();
+            try {
+                foreach ($refClass->getMethod('__construct')->getParameters() as $param) {
+                    if (isset($args[$param->name])) {
+                        $args2[] = $args[$param->name];
+                    } elseif ($param->isDefaultValueAvailable()) {
+                        $args2[] = $param->getDefaultValue();
+                    }
                 }
+            } catch (ReflectionException $e) {
             }
             $args = $args2;
         }
@@ -94,7 +104,7 @@ class ReflectionHelper
         $result = null;
         $method = null;
         try {
-            $method = new \ReflectionMethod($className, $methodName);
+            $method = new ReflectionMethod($className, $methodName);
         } catch (ReflectionException $e) {
         }
 
@@ -103,27 +113,11 @@ class ReflectionHelper
             $method->setAccessible(TRUE);
             try {
                 $result = $method->invoke(null, ...$methodArgs);
-            } catch (\ReflectionException $e) {
+            } catch (ReflectionException $e) {
             }
         }
 
         return $result;
-    }
-
-    /**动态调用方法 (相比較ExcuteMethod，這個方法更常用)
-     *  这个方法1、即可以一个普通的function，那么第一个直接传入function的名称就可以了
-     *         2、也可以是一个对象的method，那么第一个参数要传入一个数组array(实体对象, 方法名称字符串)，例如array($this, "getUser");
-     * @param      $funcName
-     * @param null $funcParam
-     * @return mixed
-     */
-    public static function executeFunction($funcName, $funcParam = null)
-    {
-        if (is_array($funcParam)) {
-            return call_user_func_array($funcName, $funcParam);
-        } else {
-            return call_user_func($funcName, $funcParam);
-        }
     }
 
     /**
@@ -156,4 +150,19 @@ class ReflectionHelper
         }
     }
 
+    /**动态调用方法 (相比較ExecuteMethod，這個方法更常用)
+     *  这个方法1、即可以一个普通的function，那么第一个直接传入function的名称就可以了
+     *         2、也可以是一个对象的method，那么第一个参数要传入一个数组array(实体对象, 方法名称字符串)，例如array($this, "getUser");
+     * @param      $funcName
+     * @param null $funcParam
+     * @return mixed
+     */
+    public static function executeFunction($funcName, $funcParam = null)
+    {
+        if (is_array($funcParam)) {
+            return call_user_func_array($funcName, $funcParam);
+        } else {
+            return call_user_func($funcName, $funcParam);
+        }
+    }
 }

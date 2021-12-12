@@ -12,7 +12,7 @@ trait FileTrait
      * @param string $fileUrl 要读取的文件地址。
      * @param $afterReadLineCallback 每次讀取一行後，可以執行的回調函數
      * @param null $callbackParams 回调函数的参数
-     * @return mixed 成功返回TRUE，失败返回FALSE
+     * @return bool 成功返回TRUE，失败返回FALSE
      */
     public function readLineOfText($fileUrl, $afterReadLineCallback, $callbackParams = null)
     {
