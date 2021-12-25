@@ -2,7 +2,8 @@
 
 namespace Hiland\Utils\Data;
 
-/**TODO: 需要写一个demo
+/**
+ * @TODO: 需要写一个demo
  * Class ExtentibleRepository
  * @package Hiland\Utils\Data
  */
@@ -24,9 +25,8 @@ class ExtentibleRepository
 
     /**
      * 构造函数
-     *
      * @param string $keys
-     * @param mixed $values
+     * @param mixed  $values
      */
     public function __construct($keys, $values)
     {
@@ -53,7 +53,6 @@ class ExtentibleRepository
     }
 
 
-
     private function GetNVC()
     {
         if ($this->isParserd == false) {
@@ -65,7 +64,7 @@ class ExtentibleRepository
     /**
      * 将序列化进入keys和values的数据，转换为名值对数组
      * @param string $keys
-     * @param mixed $values
+     * @param mixed  $values
      * @return string
      * @example string keys = "key1:S:0:3:key2:S:3:2:";
      *          string values = "12345";
@@ -135,8 +134,8 @@ class ExtentibleRepository
     /**
      * 转换为可序列化的数据
      * @param array $nvc 各个属性的名值对数组
-     * @throws \Exception
      * @return string[] 数组两个参数分别为，'keys':所有的键名的信息；'values':所有值的信息
+     * @throws \Exception
      */
     private static function convertToSerializerData($nvc)
     {
@@ -161,7 +160,7 @@ class ExtentibleRepository
 
         return array(
             'keys' => $sbKey,
-            'values' => $sbValue
+            'values' => $sbValue,
         );
     }
 }

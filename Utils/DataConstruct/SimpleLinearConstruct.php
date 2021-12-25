@@ -20,7 +20,7 @@ abstract class SimpleLinearConstruct
     }
 
     /**
-     * 入队 *
+     * 入队
      * @param $value
      * @throws Exception
      */
@@ -31,7 +31,7 @@ abstract class SimpleLinearConstruct
     }
 
     /**
-     * 出队*
+     * 出队
      * @throws Exception
      */
     public function pop()

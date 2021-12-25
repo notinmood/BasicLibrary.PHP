@@ -9,18 +9,18 @@
 namespace Hiland\Utils\Data;
 
 /**
- * javascript有编码函数escape()和对应的解码函数unescape()，
- * 而php中只有个urlencode和urldecode，这个编码和解码函数对encodeURI和encodeURIComponent有效，
- * 但是对escape的是无效的。javascript中的escape()函数和unescape()函数用户字符串编码，
- * 类似于PHP中的urlencode()函数，下面是php实现的escape函数代码：
+ * javascript有编码函数 escape()和对应的解码函数 unescape()，
+ * 而 php中只有个 urlencode 和 urldecode，这个编码和解码函数对 encodeURI和 encodeURIComponent有效，
+ * 但是对escape的是无效的。javascript中的 escape()函数和 unescape()函数用户字符串编码，
+ * 类似于 PHP 中的 urlencode()函数，下面是 php 实现的 escape 函数代码：
  * Class EncodingHelper
  * @package Hiland\Utils\Data
  */
 class EncodingHelper
 {
     /**
-     * js escape php 实现
-     * @param        $stringData           the string want to be escaped
+     * js的 escape 功能之 php 实现
+     * @param string $stringData the string want to be escaped
      * @param string $in_encoding
      * @param string $out_encoding
      * @return string
@@ -42,7 +42,8 @@ class EncodingHelper
     }
 
     /**
-     * @param $stringData
+     * js的 unescape 功能之 php 实现
+     * @param string $stringData
      * @return string
      */
     public static function unescape($stringData)

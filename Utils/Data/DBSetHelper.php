@@ -2,6 +2,8 @@
 
 namespace Hiland\Utils\Data;
 
+use ReflectionException;
+
 /**
  * 数据集辅助类
  * @author devel
@@ -47,7 +49,6 @@ class DBSetHelper
 
     /**
      * 友好的显示数据集信息
-     *
      * @param array $dbSet
      *            数据集
      * @param array $mapArray
@@ -61,8 +62,8 @@ class DBSetHelper
      *            1、如果是全局函数可以直接写函数的名称，
      *            2、如果是类的方法，请使用如下格式进行书写 nameSpace/className|methodName,
      *            其中如果是直接使用调用方类内的其他某个方法,nameSpace/className可以直接用__CLASS__表示
-     *
      * @return array 友好显示的数据集信息
+     * @throws ReflectionException
      */
     public static function friendlyDisplay(&$dbSet, $mapArray = null, $funcArray = null)
     {
