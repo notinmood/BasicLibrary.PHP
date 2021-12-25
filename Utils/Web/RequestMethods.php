@@ -13,7 +13,6 @@ namespace Hiland\Utils\Web;
 
 class RequestMethods
 {
-    // 'get', 'post', 'put', 'patch', 'delete', 'route', 'param', 'request', 'session', 'cookie', 'server', 'env', 'path', 'file'
     const ALL= "all";
     const GET = "get";
     const POST = "post";

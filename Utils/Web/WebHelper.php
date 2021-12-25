@@ -7,7 +7,7 @@ use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\StringHelper;
 
 /**
- * @TODO   本类需要重构,将具体的实现方法分别分布到其他类型helper中,
+ * @TODO   本类需要重构,将具体的实现方法分别分布到其他类型 helper中,
  * 本类仅仅提供以上功能友好的对外接口(即其他类型功能的别名)
  * @author 然
  */

@@ -3,7 +3,9 @@
 namespace Hiland\Utils\Data;
 
 if (defined("TWOZEROZEROZEROYEAR") == false) {
-    // 946656000 表示1970年1月1日到2000年1月1日间总的秒数
+    /**
+     * 946656000 表示1970年1月1日到2000年1月1日间总的秒数
+     */
     define("TWOZEROZEROZEROYEAR", "946656000");
 }
 
@@ -41,7 +43,7 @@ class GuidHelper
         $totalMilliseconds = (time() - TWOZEROZEROZEROYEAR) * 1000 + DateHelper::getCurrentMilliSecond();
         $totalMillisecondsHex = base_convert($totalMilliseconds, 10, 16);
 
-        // 左侧通过添加0补齐11位
+        // 左侧通过添加 0 补齐 11 位
         $totalMillisecondsHex = str_pad($totalMillisecondsHex, 11, 0, STR_PAD_LEFT);
 
         $charID = md5(uniqid(mt_rand(), true));

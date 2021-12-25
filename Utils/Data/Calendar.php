@@ -4,7 +4,7 @@ namespace Hiland\Utils\Data;
 
 /**
  * Created by PhpStorm.
- * User: xiedalie
+ * User: xiedali
  * Date: 2017/3/15
  * Time: 15:36
  */
@@ -183,26 +183,22 @@ class Calendar
         }
         #再加当年的几个月
         switch ($cMonth) {
+            case 10:
+            case 7:
+            case 5:
             case 12:
                 $total += 30;
+                break;
+            case 9:
+            case 8:
+            case 6:
+            case 4:
             case 11:
                 $total += 31;
-            case 10:
-                $total += 30;
-            case 9:
-                $total += 31;
-            case 8:
-                $total += 31;
-            case 7:
-                $total += 30;
-            case 6:
-                $total += 31;
-            case 5:
-                $total += 30;
-            case 4:
-                $total += 31;
+                break;
             case 3:
                 $total += 28;
+                break;
             case 2:
                 $total += 31;
         }

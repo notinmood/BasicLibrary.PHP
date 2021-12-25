@@ -602,12 +602,12 @@ class ArrayHelper
     /**
      * 将多维数组平面化
      * @param iterable $arrayData      待转换的多维数组
-     * @param string   $seperator      平面化后各个维度Key之间的分隔符,缺省为"."
+     * @param string   $separator      平面化后各个维度Key之间的分隔符,缺省为"."
      * @param string   $prepend        平面化后的key前缀,缺省为空
      * @param string   $indexKeyPrefix 如果是索引性质的数组,想给索引key加一个前缀的名称,缺省为空
      * @return array
      */
-    public static function flatten($arrayData, $seperator = ".", $prepend = '', $indexKeyPrefix = "")
+    public static function flatten($arrayData, $separator = ".", $prepend = '', $indexKeyPrefix = "")
     {
         $results = [];
 
@@ -617,7 +617,7 @@ class ArrayHelper
             }
 
             if (is_array($value) && !empty($value)) {
-                $results = array_merge($results, static::flatten($value, $seperator, $prepend . $key . $seperator, $indexKeyPrefix));
+                $results = array_merge($results, static::flatten($value, $separator, $prepend . $key . $separator, $indexKeyPrefix));
             } else {
                 $results[$prepend . $key] = $value;
             }

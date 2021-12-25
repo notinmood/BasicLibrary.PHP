@@ -24,7 +24,7 @@ class StockDataSourceSina implements IStockDataSource
         }
 
         $baseUrl = "http://hq.sinajs.cn/list={$stockCodeString}";
-        $content = NetHelper::Get($baseUrl);
+        $content = NetHelper::get($baseUrl);
 
         /**
          * 新浪传递过来的编码是GB18030,通过类似PostManAPI这样的工具可以查看到新浪Response的编码格式

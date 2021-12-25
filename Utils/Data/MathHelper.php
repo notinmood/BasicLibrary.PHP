@@ -35,42 +35,6 @@ class MathHelper
         return sprintf($format, $data * 100) . '%';
     }
 
-    // /**获取一个数列的移动平均值
-    //  * @param        $sourceArray
-    //  * @param        $period          int 滑动时间周期(比如每5天作为一个周期计算一次平均值)
-    //  * @param string $targetFieldName 如果是一维数组可以忽略本参数；如果是二维数组，请指定需要进行计算的字段名称。
-    //  * @return array
-    //  */
-    // public static function ma($sourceArray, $period, $targetFieldName = '')
-    // {
-    //     $result = null;
-    //     $level = ArrayHelper::getLevel($sourceArray);
-    //     $pIndex = $period - 1;
-    //     $data = array_values($sourceArray);
-    //     $sum = 0;
-    //
-    //     foreach ($data as $k => $v) {
-    //         if ($level == 1) {
-    //             $currentValue = $v;
-    //             $needRemoveValue = $data[$k - $pIndex] ? $data[$k - $pIndex] : 0;
-    //         } else {
-    //             $currentValue = $v[$targetFieldName];
-    //             $needRemoveValue = $data[$k - $pIndex][$targetFieldName] ? $data[$k - $pIndex][$targetFieldName] : 0;
-    //         }
-    //
-    //         $sum += $currentValue;
-    //         if ($k < $pIndex) {
-    //             $item = 0;
-    //         } else {
-    //             $item = sprintf("%.2f", ($sum / $period));
-    //             $sum -= $needRemoveValue;
-    //         }
-    //
-    //         $result[] = $item;
-    //     }
-    //
-    //     return $result;
-    // }
 
     /**
      * 获取一个数列的移动平均值

@@ -14,7 +14,7 @@ class JavaScriptHelper
     public static function alertNavigate($message, $url, $isExit = true)
     {
         $content= "alert('$message');location.href='$url';";
-        self::javaScriptFrame($content, $isExit);
+        self::javaScriptWrapper($content, $isExit);
     }
 
     /**
@@ -26,7 +26,7 @@ class JavaScriptHelper
     public static function alertBack($message, $isExit = true)
     {
         $content= "alert('$message');history.back();";
-        self::javaScriptFrame($content, $isExit);
+        self::javaScriptWrapper($content, $isExit);
     }
 
     /**
@@ -38,7 +38,7 @@ class JavaScriptHelper
     public static function navigate($url, $isExit = true)
     {
         $content= "location.href='{$url}';";
-        self::javaScriptFrame($content, $isExit);
+        self::javaScriptWrapper($content, $isExit);
     }
 
     /**
@@ -50,7 +50,7 @@ class JavaScriptHelper
     public static function alertClose($message, $isExit = true)
     {
         $content= "alert('$message');close();";
-        self::javaScriptFrame($content, $isExit);
+        self::javaScriptWrapper($content, $isExit);
     }
 
     /**
@@ -62,14 +62,14 @@ class JavaScriptHelper
     public static function alert($message, $isExit = true)
     {
         $content= "alert('$message');";
-        self::javaScriptFrame($content, $isExit);
+        self::javaScriptWrapper($content, $isExit);
     }
 
     /**
      * @param $content
      * @param $isExit
      */
-    private static function javaScriptFrame($content, $isExit)
+    private static function javaScriptWrapper($content, $isExit)
     {
         echo "<script type='text/javascript'>{$content}</script>";
         if ($isExit) {

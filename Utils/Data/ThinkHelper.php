@@ -31,6 +31,31 @@ class ThinkHelper
         return false;
     }
 
+    /**获取thinkphp的主版本号
+     * @return int
+     */
+    public static function getPrimaryVersion()
+    {
+        return self::getSomeSubVersion(0);
+    }
+
+    private static function getSomeSubVersion($pos)
+    {
+        $result = 0;
+
+        $version = self::getVersion();
+        $firstNode = StringHelper::getStringBeforeSeperator($version, " ");
+        $secondNode = StringHelper::getStringAfterSeperator($version, " ");
+        $arr = explode(".", $firstNode);
+        $arr[] = $secondNode;
+
+        if (ArrayHelper::containsKey($arr, $pos)) {
+            $result = $arr[$pos];
+        }
+
+        return $result;
+    }
+
     /**
      * 获取当前使用thinkphp的版本
      * @return string
@@ -50,14 +75,6 @@ class ThinkHelper
         return $version;
     }
 
-    /**获取thinkphp的主版本号
-     * @return int
-     */
-    public static function getPrimaryVersion()
-    {
-        return self::getSomeSubVersion(0);
-    }
-
     /**获取thinkphp的次版本号
      * @return int
      */
@@ -65,7 +82,6 @@ class ThinkHelper
     {
         return self::getSomeSubVersion(1);
     }
-
 
     /**获取thinkphp的修订版本号
      * @return int
@@ -78,23 +94,5 @@ class ThinkHelper
     public static function getVersionAddon()
     {
         return self::getSomeSubVersion(3);
-    }
-
-
-    private static function getSomeSubVersion($pos)
-    {
-        $result = 0;
-
-        $version = self::getVersion();
-        $firstNode = StringHelper::getStringBeforeSeperator($version, " ");
-        $secondNode = StringHelper::getStringAfterSeperator($version, " ");
-        $arr = explode(".", $firstNode);
-        $arr[] = $secondNode;
-
-        if (ArrayHelper::containsKey($arr, $pos)) {
-            $result = $arr[$pos];
-        }
-
-        return $result;
     }
 }

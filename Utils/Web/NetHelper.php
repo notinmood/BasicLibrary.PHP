@@ -2,9 +2,14 @@
 
 namespace Hiland\Utils\Web;
 
+use Exception;
 use Hiland\Biz\Tencent\Common\WechatException;
 use Hiland\Utils\Data\StringHelper;
 use Hiland\Utils\IO\FileHelper;
+
+/**
+ * @TODO:这个文件需要修改和验证，里面不能出现 WechatException.
+ */
 
 class NetHelper
 {
@@ -15,9 +20,9 @@ class NetHelper
      * @param mixed $data
      * @param null $optionalheaders
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
-    public static function Post($url, $data = null, $optionalheaders = null)
+    public static function post($url, $data = null, $optionalheaders = null)
     {
         $params = array(
             'http' => array(
@@ -31,11 +36,11 @@ class NetHelper
         $ctx = stream_context_create($params);
         $fp = @fopen($url, 'rb', false, $ctx);
         if (!$fp) {
-            throw new \Exception("Problem with $url");
+            throw new Exception("Problem with $url");
         }
         $response = @stream_get_contents($fp);
         if ($response === false) {
-            throw new \Exception("Problem reading data from $url");
+            throw new Exception("Problem reading data from $url");
         }
         return $response;
     }
@@ -47,7 +52,7 @@ class NetHelper
      * @param bool $isCloseAtOnce 是否立即关闭连接
      * @return string
      */
-    public static function Get($url, $isCloseAtOnce = false)
+    public static function get($url, $isCloseAtOnce = false)
     {
         if ($isCloseAtOnce) {
             $context = stream_context_create(array('http' => array('header' => 'Connection: close\r\n')));

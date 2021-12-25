@@ -126,7 +126,7 @@ class CalendarHelper
             for ($j = 0; $j <= $i; $j++) {
                 $temp += $monthData[$j];
             }
-            array_push($res, $temp);
+            $res[] = $temp;
         }
         return $res;
     }
