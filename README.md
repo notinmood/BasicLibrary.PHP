@@ -16,4 +16,4 @@
   "alibabacloud/sdk": "^1.8"
 },
 ```
-
+2. 根据需要，将 demo.config.***，修改为 config.xxx 以实现配置需求。

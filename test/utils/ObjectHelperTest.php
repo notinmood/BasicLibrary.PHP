@@ -10,7 +10,7 @@
 
 namespace Hiland\Utils\Data;
 
-use Hiland\Test\res\Student;
+use Hiland\Test\_res\Student;
 use PHPUnit\Framework\TestCase;
 
 class ObjectHelperTest extends TestCase
@@ -28,7 +28,7 @@ class ObjectHelperTest extends TestCase
 
         $object = $student;
         $actual = ObjectHelper::getClassName($object);
-        $expected = "Hiland\\Test\\res\\Student";
+        $expected = "Hiland\\Test\\_res\\Student";
         self::assertEquals($expected, $actual);
 
         /**

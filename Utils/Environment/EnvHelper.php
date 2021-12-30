@@ -248,7 +248,7 @@ class EnvHelper
         $current_path_length = ObjectHelper::getLength($current_path_array);
         $request_path_length = ObjectHelper::getLength($request_path_array);
 
-        $min_length = $current_path_length < $request_path_length ? $current_path_length : $request_path_length;
+        $min_length = min($current_path_length, $request_path_length);
 
         $root_array = [];
         for ($i = 0; $i < $min_length; $i++) {

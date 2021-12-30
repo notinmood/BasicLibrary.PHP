@@ -12,31 +12,33 @@ namespace Hiland\Utils\Environment;
 
 use Hiland\Utils\Data\ReflectionHelper;
 use PHPUnit\Framework\TestCase;
+use ReflectionException;
+use ReflectionMethod;
 
 class ConfigMateTest extends TestCase
 {
     public function testGetParser()
     {
         //1、方法1
-        $method = new \ReflectionMethod(ConfigMate::class, "getParser");
+        $method = new ReflectionMethod(ConfigMate::class, "getParser");
         $method->setAccessible(TRUE);
         try {
-            $parser = $method->invoke(null, "config.json");
-        } catch (\ReflectionException $e) {
+            $parser = $method->invoke(null, "demo.config.json");
+        } catch (ReflectionException $e) {
         }
         $parser = $parser->toString();
         self::assertEquals(@"Hiland\Utils\Environment\ConfigParserJson", $parser);
 
         //2、方法2是对方法1的包装(方法查找、可视化设置、方法调用都进行了封装),
         //建议以后对私有成员的测试都采用此种方法
-        $parser = ReflectionHelper::executeStaticMethod(ConfigMate::class, "getParser", "config.php");
+        $parser = ReflectionHelper::executeStaticMethod(ConfigMate::class, "getParser", "demo.config.php");
         $parser = $parser->toString();
         self::assertEquals(@"Hiland\Utils\Environment\ConfigParserArray", $parser);
     }
 
     public function testArrayGet()
     {
-        $actual = ConfigMate::Instance()->loadFile("config.php")->get('a');
+        $actual = ConfigMate::Instance()->loadFile("demo.config.php")->get('a');
         $expected = "AAA";
         self::assertEquals("$expected", "$actual");
 
@@ -49,11 +51,11 @@ class ConfigMateTest extends TestCase
         $expected = "T.AAA";
         self::assertEquals("$expected", "$actual");
 
-        $actual = ConfigMate::Instance()->loadFile("config.php")->get('a');
+        $actual = ConfigMate::Instance()->loadFile("demo.config.php")->get('a');
         $expected = "AAA";
         self::assertEquals("$expected", "$actual");
 
-        $actual = ConfigMate::Instance()->loadFile("config.php")->get('d.dB.dBA');
+        $actual = ConfigMate::Instance()->loadFile("demo.config.php")->get('d.dB.dBA');
         $expected = "dba-content";
         self::assertEquals("$expected", "$actual");
 
@@ -64,7 +66,7 @@ class ConfigMateTest extends TestCase
 
     public function testIniGet()
     {
-        $actual = ConfigMate::Instance()->loadFile("config.ini")->get('ga.non_section_node');
+        $actual = ConfigMate::Instance()->loadFile("demo.config.ini")->get('ga.non_section_node');
         // self::assertNull("$actual");
 
         $actual = ConfigMate::Instance()->get('base.host');
@@ -82,7 +84,7 @@ class ConfigMateTest extends TestCase
 
     public function testJsonGet()
     {
-        $actual = ConfigMate::Instance()->loadFile("config.json")->get('ga.non_section_node');
+        $actual = ConfigMate::Instance()->loadFile("demo.config.json")->get('ga.non_section_node');
         // self::assertNull("$actual");
 
         // $tt= ConfigMate::Instance()->getCurrentConfigContent();

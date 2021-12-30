@@ -9,7 +9,7 @@
  */
 
 
-namespace Hiland\Test\res;
+namespace Hiland\Test\_res;
 
 class Teacher
 {

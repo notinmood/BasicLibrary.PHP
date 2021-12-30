@@ -10,7 +10,7 @@
 
 namespace Hiland\Utils\Pattern;
 
-use Hiland\Test\res\Student;
+use Hiland\Test\_res\Student;
 use PHPUnit\Framework\TestCase;
 
 class NullObjectTest extends TestCase

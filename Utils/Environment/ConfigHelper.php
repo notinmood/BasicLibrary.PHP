@@ -12,6 +12,9 @@ namespace Hiland\Utils\Environment;
 
 /**
  * 配置文件辅助类(外部使用此类)
+ * TODO:需要加入缓存
+ * TODO:需要加入 .env文件的优先使用
+ * TODO:加入对配置文件的自动发现；去掉可以加载多个配置文件的逻辑(没必须这么复杂)
  */
 class ConfigHelper
 {

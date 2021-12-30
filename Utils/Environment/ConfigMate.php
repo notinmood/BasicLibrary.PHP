@@ -22,6 +22,9 @@ use Hiland\Utils\IO\PathHelper;
 class ConfigMate
 {
     private static $_instance = null;
+    private static $__configContentArray = [];
+    private static $__currentConfigFileName = "";
+    private static $__currentConfigParser = null;
 
     private function __construct()
     {
@@ -37,10 +40,6 @@ class ConfigMate
         return self::$_instance;
     }
 
-    private static $__configContentArray = [];
-    private static $__currentConfigFileName = "";
-    private static $__currentConfigParser = null;
-
     public function get($key, $default = null)
     {
         $result = null;
@@ -55,7 +54,7 @@ class ConfigMate
 
             $nameNodes = explode(".", $key);
 
-            $configContent = self:: getCurrentConfigContent();
+            $configContent = self::getCurrentConfigContent();
             if ($configContent) {
                 if ($nameNodes[0]) {
                     $result = $configContent[$nameNodes[0]];
@@ -78,17 +77,6 @@ class ConfigMate
         return $result;
     }
 
-
-    private static function getCurrentConfigContent()
-    {
-        $fileName = self::$__currentConfigFileName;
-        if (ArrayHelper::containsKey(self::$__configContentArray, $fileName)) {
-            return self::$__configContentArray[$fileName];
-        } else {
-            return null;
-        }
-    }
-
     /**
      * 是否需要自动载入缺省的config文件
      * @return bool
@@ -99,22 +87,6 @@ class ConfigMate
             return true;
         } else {
             return false;
-        }
-    }
-
-    private static function getParser($fileName)
-    {
-        $extensionName = FileHelper::getExtensionName($fileName);
-        $extensionName = StringHelper::upperStringFirstChar($extensionName);
-
-        $targetParserType = "ConfigParser{$extensionName}";
-        $targetParserClass = "Hiland\\Utils\\Environment\\{$targetParserType}";
-        $targetFileBaseName = "{$targetParserType}.php";
-        $targetFileFullName = PathHelper::combine(__DIR__, $targetFileBaseName);
-        if (file_exists($targetFileFullName)) {
-            return new $targetParserClass();
-        } else {
-            return new ConfigParserArray();
         }
     }
 
@@ -134,5 +106,31 @@ class ConfigMate
         }
 
         return $this;
+    }
+
+    private static function getParser($fileName)
+    {
+        $extensionName = FileHelper::getExtensionName($fileName);
+        $extensionName = StringHelper::upperStringFirstChar($extensionName);
+
+        $targetParserType = "ConfigParser{$extensionName}";
+        $targetParserClass = "Hiland\\Utils\\Environment\\{$targetParserType}";
+        $targetFileBaseName = "{$targetParserType}.php";
+        $targetFileFullName = PathHelper::combine(__DIR__, $targetFileBaseName);
+        if (file_exists($targetFileFullName)) {
+            return new $targetParserClass();
+        } else {
+            return new ConfigParserArray();
+        }
+    }
+
+    private static function getCurrentConfigContent()
+    {
+        $fileName = self::$__currentConfigFileName;
+        if (ArrayHelper::containsKey(self::$__configContentArray, $fileName)) {
+            return self::$__configContentArray[$fileName];
+        } else {
+            return null;
+        }
     }
 }

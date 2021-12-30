@@ -10,32 +10,34 @@
 
 namespace Hiland\Utils\Data;
 
+use DateTime;
+use Exception;
 use PHPUnit\Framework\TestCase;
 
 class DateHelperTest extends TestCase
 {
     public function testGetInterval()
     {
-        $startValue = new \DateTime("2021-09-10");
-        $endValue = new \DateTime("2021-10-10");
+        $startValue = new DateTime("2021-09-10");
+        $endValue = new DateTime("2021-10-10");
 
         $actual = null;
         try {
             $actual = DateHelper::getInterval($startValue, $endValue);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
         }
-        dump($actual);
+        // dump($actual);
         self::assertEquals(0, $actual->invert);
         /**
          * ════════════════════════
          */
-        $startValue = new \DateTime("2021-09-10");
-        $endValue = new \DateTime("2021-8-10");
+        $startValue = new DateTime("2021-09-10");
+        $endValue = new DateTime("2021-8-10");
 
         $actual = null;
         try {
             $actual = DateHelper::getInterval($startValue, $endValue);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
         }
         self::assertEquals(1, $actual->invert);
     }
@@ -44,13 +46,20 @@ class DateHelperTest extends TestCase
     public function testGetDateTime()
     {
         $timespan = 2145888000;
-        $actual = DateHelper::getDateTime($timespan);
-        $expected = new \DateTime("2038-1-1 0:0:0");
+        $actual = "";
+        try {
+            $actual = DateHelper::getDateTime($timespan);
+        } catch (Exception $e) {
+        }
+        $expected = new DateTime("2038-1-1 0:0:0");
         self::assertEquals($expected, $actual);
 
         $timespan = 2145888002;
-        $actual = DateHelper::getDateTime($timespan);
-        $expected = new \DateTime("2038-1-1 0:0:2");
+        try {
+            $actual = DateHelper::getDateTime($timespan);
+        } catch (Exception $e) {
+        }
+        $expected = new DateTime("2038-1-1 0:0:2");
         self::assertEquals($expected, $actual);
     }
 
@@ -63,7 +72,7 @@ class DateHelperTest extends TestCase
 
         $dateString = 2145888000;
         $actual = DateHelper::parseDateTimeSafely($dateString);
-        $expected = new \DateTime("2038-1-1 0:0:0");
+        $expected = new DateTime("2038-1-1 0:0:0");
         self::assertEquals($expected, $actual);
     }
 

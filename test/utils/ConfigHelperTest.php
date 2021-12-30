@@ -22,7 +22,7 @@ class ConfigHelperTest extends TestCase
         self::assertEquals($expect, $actual);
 
         $key = "archive.host";
-        $actual = ConfigHelper::get("$key",null,"config.ini");
+        $actual = ConfigHelper::get("$key",null,"demo.config.ini");
         $expect = "localhost";
         self::assertEquals($expect, $actual);
 

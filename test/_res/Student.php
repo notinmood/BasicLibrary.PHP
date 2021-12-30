@@ -8,7 +8,7 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Test\res;
+namespace Hiland\Test\_res;
 
 class Student
 {

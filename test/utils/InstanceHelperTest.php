@@ -10,8 +10,8 @@
 
 namespace Hiland\Utils\Pattern;
 
-use Hiland\Test\res\Student;
-use Hiland\Test\res\Teacher;
+use Hiland\Test\_res\Student;
+use Hiland\Test\_res\Teacher;
 use PHPUnit\Framework\TestCase;
 
 class InstanceHelperTest extends TestCase

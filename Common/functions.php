@@ -15,7 +15,6 @@
 use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\StringHelper;
 use Hiland\Utils\Data\ThinkHelper;
-use Hiland\Utils\IO\ConsoleHelper;
 use Hiland\Utils\Web\ServerHelper;
 
 
@@ -43,15 +42,27 @@ if (!function_exists("exist")) {
     }
 }
 
-if (!function_exists("el")) {
+if (!function_exists("exist")) {
     /**
-     * 使用单独一行显示文本信息
-     * @param string $stringData
-     * @param false  $both 是否在此行的前后都使用新行标志,缺省false仅在行尾加入新行标志
+     * 判断标的物是否存在
+     * @param $value
+     * @return bool
      */
-    function el($stringData, $both = false)
+    function exist($value)
     {
-        ConsoleHelper::el($stringData, $both);
+        return ObjectHelper::isExist($value);
+    }
+}
+
+if (!function_exists("getLength")) {
+    /**
+     * 显示目标对象的长度(内部调用ObjectHelper::getLength()方法实现)
+     * @param $data
+     * @return false|int
+     */
+    function getLength($data)
+    {
+        return ObjectHelper::getLength($data);
     }
 }
 

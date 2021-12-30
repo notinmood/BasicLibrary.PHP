@@ -10,7 +10,7 @@
 
 namespace Hiland\Utils\Data;
 
-use Hiland\Test\res\Student;
+use Hiland\Test\_res\Student;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 use function PHPUnit\Framework\assertEquals;
