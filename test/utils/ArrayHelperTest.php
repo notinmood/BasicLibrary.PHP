@@ -57,6 +57,10 @@ class ArrayHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
+    private function prepareIndexArray()
+    {
+        return ['A', 'B', 'C', 'D'];
+    }
 
     public function testIsAssociateArray()
     {
@@ -75,6 +79,14 @@ class ArrayHelperTest extends TestCase
         $targetArray = null;
         $actual = ArrayHelper::isAssociateArray($targetArray);
         self::assertEquals(false, $actual);
+    }
+
+    private function prepareAssociateArray1()
+    {
+        $array1['a'] = "1A";
+        $array1['b'] = "1B";
+        $array1['c'] = "1C";
+        return $array1;
     }
 
     public function testIsIndexArray()
@@ -189,24 +201,6 @@ class ArrayHelperTest extends TestCase
         self::assertEquals($expect, $actual);
     }
 
-    public function testExchangeKeyValue()
-    {
-        $data = $this->prepareAssociateArray1();
-        $expected["1A"] = "a";
-        $expected["1B"] = "b";
-        $expected["1C"] = "c";
-        $actual = ArrayHelper::exchangeKeyValue($data);
-        self::assertEquals($expected, $actual);
-    }
-
-    private function prepareAssociateArray1()
-    {
-        $array1['a'] = "1A";
-        $array1['b'] = "1B";
-        $array1['c'] = "1C";
-        return $array1;
-    }
-
     /**
      * @return array
      */
@@ -218,9 +212,14 @@ class ArrayHelperTest extends TestCase
         return $array2;
     }
 
-    private function prepareIndexArray()
+    public function testExchangeKeyValue()
     {
-        return ['A', 'B', 'C', 'D'];
+        $data = $this->prepareAssociateArray1();
+        $expected["1A"] = "a";
+        $expected["1B"] = "b";
+        $expected["1C"] = "c";
+        $actual = ArrayHelper::exchangeKeyValue($data);
+        self::assertEquals($expected, $actual);
     }
 
     public function testSelect1()
@@ -308,19 +307,44 @@ class ArrayHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testZip(){
-        $a = [1,3,5,7,9];
-        $b= [2,4,6,8];
-        $c= ["a","b","c"];
+    public function testZip()
+    {
+        $a = [1, 3, 5, 7, 9];
+        $b = [2, 4, 6, 8];
+        $c = ["a", "b", "c"];
 
-        $expected= [[1,2,"a"],[3,4,"b"],[5,6,"c"]];
-        $actual= ArrayHelper::zip($a,$b,$c);
+        $expected = [[1, 2, "a"], [3, 4, "b"], [5, 6, "c"]];
+        $actual = ArrayHelper::zip($a, $b, $c);
+        self::assertEquals($expected, $actual);
+
+
+        $d = ["a", "b", "c", "d"];
+        $expected = [[1, 2, "a"], [3, 4, "b"], [5, 6, "c"], [7, 8, "d"]];
+        $actual = ArrayHelper::zip($a, $b, $d);
+        self::assertEquals($expected, $actual);
+    }
+
+    public function testContainsValue()
+    {
+        $array1 = ["age" => 20];
+        $array1["email"] = "9727005@qq.com";
+        $array1["name"] = "zhangsan";
+
+        $actual = ArrayHelper::isContainsValue($array1, "zhangsan");
+        $expected = true;
+        self::assertEquals($expected, $actual);
+
+        $actual = ArrayHelper::isContainsValue($array1, "张三");
+        $expected = false;
+        self::assertEquals($expected, $actual);
+
+        $array2 = ["beijing", "shanghai", "qingdao"];
+        $actual = ArrayHelper::isContainsValue($array2,"qingdao");
+        $expected = true;
         self::assertEquals($expected,$actual);
 
-
-        $d= ["a","b","c","d"];
-        $expected= [[1,2,"a"],[3,4,"b"],[5,6,"c"],[7,8,"d"]];
-        $actual= ArrayHelper::zip($a,$b,$d);
+        $actual = ArrayHelper::isContainsValue($array2,"guangzhou");
+        $expected = false;
         self::assertEquals($expected,$actual);
     }
 }

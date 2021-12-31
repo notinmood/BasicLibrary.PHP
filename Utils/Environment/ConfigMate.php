@@ -127,7 +127,7 @@ class ConfigMate
     private static function getCurrentConfigContent()
     {
         $fileName = self::$__currentConfigFileName;
-        if (ArrayHelper::containsKey(self::$__configContentArray, $fileName)) {
+        if (ArrayHelper::isContainsKey(self::$__configContentArray, $fileName)) {
             return self::$__configContentArray[$fileName];
         } else {
             return null;

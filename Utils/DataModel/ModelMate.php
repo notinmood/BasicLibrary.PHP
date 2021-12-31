@@ -5,7 +5,9 @@ namespace Hiland\Utils\DataModel;
 use Hiland\Utils\Data\ThinkHelper;
 use ReflectionException;
 use think\Config;
-use think\Db;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use Think\Model;
 
 /**
@@ -19,6 +21,10 @@ class ModelMate
 {
     var $modelObject;
     var $queryObject;
+    /**
+     * @var string
+     */
+    private $tableRealName;
 
     /**
      * 构造函数
@@ -48,6 +54,17 @@ class ModelMate
         } else {
             $this->modelObject = $model;
         }
+
+        $this->tableRealName = $this->modelObject->getTable();
+    }
+
+    /**
+     * 获取数据库真实的表名称(包含了表前缀)
+     * @return string
+     */
+    public function getTableRealName()
+    {
+        return $this->tableRealName;
     }
 
 
@@ -58,6 +75,9 @@ class ModelMate
      * @param string     $keyName
      *            查询信息的主键名称
      * @return array 模型实体数据
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function get($key, $keyName = 'id')
     {
@@ -77,7 +97,7 @@ class ModelMate
     }
 
     /**
-     * 获取加入where过滤条件的modle
+     * 获取加入where过滤条件的 model
      * @param array $condition
      * @return Model
      */
@@ -91,6 +111,9 @@ class ModelMate
      * @param array  $condition 过滤条件
      * @param string $orderBy
      * @return array 符合条件的结果，一维数组
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @example
      *                          $where= array();
      *                          $where['shopid'] = $merchantScanedID;
@@ -197,8 +220,8 @@ class ModelMate
 
         $thinkVersion = ThinkHelper::getPrimaryVersion();
 
-            $model = $model->find();
-            return $model[$fieldName];
+        $model = $model->find();
+        return $model[$fieldName];
     }
 
     /**
@@ -231,7 +254,7 @@ class ModelMate
             $sql .= ' where ' . $whereClause;
         }
 
-        $dbSet = $this->query($sql);
+        $dbSet = $this->directlyQuery($sql);
 
         if ($dbSet) {
             return $dbSet[0][$searcher];
@@ -245,7 +268,7 @@ class ModelMate
      * @param $sql
      * @return mixed
      */
-    public function query($sql)
+    public function directlyQuery($sql)
     {
         $tableName = $this->queryObject->getTable();
 
@@ -263,12 +286,11 @@ class ModelMate
     /**
      * 执行原始的sql语句
      * @param      $sql
-     * @param bool $parse
      * @return false|int
      */
-    public function execute($sql, $parse = false)
+    public function directlyExecute($sql)
     {
-        return $this->queryObject->execute($sql, $parse);
+        return $this->queryObject->execute($sql);
     }
 
     /**

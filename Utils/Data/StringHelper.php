@@ -47,6 +47,17 @@ class StringHelper
         return EnvHelper::getNewLineSymbol();
     }
 
+
+    /**获取字符串长度
+     * @param string $stringData
+     * @param string $encoding
+     * @return false|int
+     */
+    public static function getLength($stringData, $encoding = "utf-8")
+    {
+        return mb_strlen($stringData, $encoding);
+    }
+
     /**
      * 截取全角和半角（汉字和英文）混合的字符串以避免乱码
      * @param string $originalStringData
@@ -92,6 +103,52 @@ class StringHelper
     }
 
     /**
+     * 从字符串的开头位置移除 n 个长度的字符
+     * @param $wholeStringData
+     * @param $length
+     * @return string
+     */
+    public static function removeHead($wholeStringData, $lengthOrTail)
+    {
+        if (ObjectHelper::getType($lengthOrTail) == ObjectTypes::STRING) {
+            if(StringHelper::isStartWith($wholeStringData,$lengthOrTail)){
+                return self::getStringAfterSeparator($wholeStringData,$lengthOrTail);
+            }
+            else{
+                return $wholeStringData;
+            }
+        }else{
+            return self::subString($wholeStringData, $lengthOrTail);
+        }
+    }
+
+    /**
+     * 从字符串的末尾位置移除 n 个长度的字符
+     * @param $wholeStringData
+     * @param $lengthOrTail
+     * @return string
+     */
+    public static function removeTail($wholeStringData, $lengthOrTail)
+    {
+        if (ObjectHelper::getType($lengthOrTail) == ObjectTypes::STRING) {
+            if (StringHelper::isEndWith($wholeStringData, $lengthOrTail)) {
+                return self::getStringBeforeSeparator($wholeStringData, $lengthOrTail);
+            } else {
+                return $wholeStringData;
+            }
+        } else {
+            $length = $lengthOrTail;
+            $allLength = self::getLength($wholeStringData);
+            if ($allLength <= $length) {
+                return "";
+            } else {
+                $pos = $allLength - $length;
+                return self::subString($wholeStringData, 0, $pos);
+            }
+        }
+    }
+
+    /**
      * @param string $paddingStringData 待测试的结尾字符
      * @param string $wholeStringData   全句
      * @return bool
@@ -115,11 +172,27 @@ class StringHelper
      */
     public static function isStartWith($wholeStringData, $paddingStringData)
     {
-        $before = self::getStringBeforeSeperator($wholeStringData, $paddingStringData);
+        $before = self::getStringBeforeSeparator($wholeStringData, $paddingStringData);
         if ($before == '') {
             return true;
         } else {
             return false;
+        }
+    }
+
+    /**
+     * 获取字符串分隔符前面的内容
+     * @param string $wholeStringData
+     * @param string $seperator
+     * @return string
+     */
+    public static function getStringBeforeSeparator($wholeStringData, $seperator)
+    {
+        if (self::isContains($wholeStringData, $seperator)) {
+            $array = explode($seperator, $wholeStringData);
+            return $array[0];
+        } else {
+            return $wholeStringData;
         }
     }
 
@@ -140,16 +213,6 @@ class StringHelper
         } else {
             return true;
         }
-    }
-
-    /**获取字符串长度
-     * @param string $stringData
-     * @param string $encoding
-     * @return false|int
-     */
-    public static function getLength($stringData, $encoding = "utf-8")
-    {
-        return mb_strlen($stringData, $encoding);
     }
 
     /**包装php的字符串替换(将各个参数名称进一步明确化)
@@ -212,8 +275,8 @@ class StringHelper
                 $seperatorLength = strlen($seperator);
                 $formator = substr($formator, $matchedWithQuotationLength + $seperatorLength);
 
-                $matchedNumber = StringHelper::getStringAfterSeperator($matchedWithQuotation, '{');
-                $matchedNumber = StringHelper::getStringBeforeSeperator($matchedNumber, '}');
+                $matchedNumber = StringHelper::getStringAfterSeparator($matchedWithQuotation, '{');
+                $matchedNumber = StringHelper::getStringBeforeSeparator($matchedNumber, '}');
                 $matchedNumber = (int)$matchedNumber;
                 $dataLength = strlen($stringData);
                 if ($dataLength >= $matchedNumber) {
@@ -228,6 +291,21 @@ class StringHelper
         return $content;
     }
 
+    /**
+     * 获取字符串分隔符后面的内容
+     * @param string $wholeStringData
+     * @param string $seperator
+     * @return string
+     */
+    public static function getStringAfterSeparator($wholeStringData, $seperator)
+    {
+        if (self::isContains($wholeStringData, $seperator)) {
+            $array = explode($seperator, $wholeStringData);
+            return $array[1];
+        } else {
+            return $wholeStringData;
+        }
+    }
 
     /** 对带有占位符的字符串信息，进行格式化填充，形成完整的字符串。
      * 现在推荐直接使用 PHP系统自带的格式化方式,例如:"k的值为{$k}；v的值为{$v}"
@@ -255,39 +333,6 @@ class StringHelper
         }
 
         return $stringData;
-    }
-
-
-    /**
-     * 获取字符串分隔符前面的内容
-     * @param string $wholeStringData
-     * @param string $seperator
-     * @return string
-     */
-    public static function getStringBeforeSeperator($wholeStringData, $seperator)
-    {
-        if (self::isContains($wholeStringData, $seperator)) {
-            $array = explode($seperator, $wholeStringData);
-            return $array[0];
-        } else {
-            return $wholeStringData;
-        }
-    }
-
-    /**
-     * 获取字符串分隔符后面的内容
-     * @param string $wholeStringData
-     * @param string $seperator
-     * @return string
-     */
-    public static function getStringAfterSeperator($wholeStringData, $seperator)
-    {
-        if (self::isContains($wholeStringData, $seperator)) {
-            $array = explode($seperator, $wholeStringData);
-            return $array[1];
-        } else {
-            return $wholeStringData;
-        }
     }
 
     /**

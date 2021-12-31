@@ -116,7 +116,7 @@ abstract class Enum
      *
      * @return string String representation of this enum's value
      */
-    public function __toString()
+    public function toString()
     {
         return (string)$this->value;
     }

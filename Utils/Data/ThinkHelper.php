@@ -44,12 +44,12 @@ class ThinkHelper
         $result = 0;
 
         $version = self::getVersion();
-        $firstNode = StringHelper::getStringBeforeSeperator($version, " ");
-        $secondNode = StringHelper::getStringAfterSeperator($version, " ");
+        $firstNode = StringHelper::getStringBeforeSeparator($version, " ");
+        $secondNode = StringHelper::getStringAfterSeparator($version, " ");
         $arr = explode(".", $firstNode);
         $arr[] = $secondNode;
 
-        if (ArrayHelper::containsKey($arr, $pos)) {
+        if (ArrayHelper::isContainsKey($arr, $pos)) {
             $result = $arr[$pos];
         }
 

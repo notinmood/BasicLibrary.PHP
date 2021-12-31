@@ -12,6 +12,6 @@ use Hiland\Utils\Web\WebHelper;
 
 require "../vendor/autoload.php";
 
-$data=  __DIR__ ."\\_res\\only_resource.txt";
+$data=  __DIR__ ."\\res\\only_resource.txt";
 WebHelper::download($data,"myNewFileName.md");
 dump(2222);

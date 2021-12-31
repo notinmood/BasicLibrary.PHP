@@ -39,10 +39,10 @@ class ShortenUrl
         $partten = 'http://' . WebHelper::getHostName() . self::SHORTPATH;
 
         if (StringHelper::isStartWith($shortUrl, $partten)) {
-            $id = StringHelper::getStringAfterSeperator($shortUrl, $partten);
+            $id = StringHelper::getStringAfterSeparator($shortUrl, $partten);
 
             if (StringHelper::isEndWith($id, '/')) {
-                $id = StringHelper::getStringBeforeSeperator($id, '/');
+                $id = StringHelper::getStringBeforeSeparator($id, '/');
             }
 
             return self::getLongUrlDetails($id);

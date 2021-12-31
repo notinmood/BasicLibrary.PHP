@@ -83,8 +83,8 @@ class GuidHelper
      */
     public static function addonHyphen($guidWithoutHyphen)
     {
-        $guidWithoutHyphen = StringHelper::getStringAfterSeperator($guidWithoutHyphen, chr(123)); // "{"
-        $guidWithoutHyphen = StringHelper::getStringBeforeSeperator($guidWithoutHyphen, chr(125)); // "}"
+        $guidWithoutHyphen = StringHelper::getStringAfterSeparator($guidWithoutHyphen, chr(123)); // "{"
+        $guidWithoutHyphen = StringHelper::getStringBeforeSeparator($guidWithoutHyphen, chr(125)); // "}"
 
         $hyphen = chr(45); // "-"
         return substr($guidWithoutHyphen, 0, 8) . $hyphen
@@ -101,8 +101,8 @@ class GuidHelper
      */
     public static function determine($data)
     {
-        $data = StringHelper::getStringAfterSeperator($data, chr(123)); // "{"
-        $data = StringHelper::getStringBeforeSeperator($data, chr(125)); // "}"
+        $data = StringHelper::getStringAfterSeparator($data, chr(123)); // "{"
+        $data = StringHelper::getStringBeforeSeparator($data, chr(125)); // "}"
         $pattern = RegexHelper::GUID;
         if (preg_match($pattern, $data)) {
             return true;

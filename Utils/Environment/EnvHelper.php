@@ -189,7 +189,7 @@ class EnvHelper
     {
         //去掉后面的端口信息
         if (StringHelper::isContains($domainNameOrIP, ":")) {
-            $domainNameOrIP = StringHelper::getStringBeforeSeperator($domainNameOrIP, ":");
+            $domainNameOrIP = StringHelper::getStringBeforeSeparator($domainNameOrIP, ":");
         }
 
         $isIP = preg_match(RegexHelper::IP, $domainNameOrIP);

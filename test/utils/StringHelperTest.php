@@ -107,4 +107,57 @@ class StringHelperTest extends TestCase
 
         self::assertEquals($expected, $actual);
     }
+    
+    public function testRemoveHead(){
+        $whole ="i love china!";
+        $actual = StringHelper::removeHead($whole,3);
+        $expected = "ove china!";
+        self::assertEquals($expected,$actual);
+
+        $actual = StringHelper::removeHead($whole,13);
+        $expected = "";
+        self::assertEquals($expected,$actual);
+
+        $actual = StringHelper::removeHead($whole,14);
+        $expected = "";
+        self::assertEquals($expected,$actual);
+
+        $actual = StringHelper::removeHead($whole,"i lo");
+        $expected = "ve china!";
+        self::assertEquals($expected,$actual);
+
+        $actual = StringHelper::removeHead($whole,"i lol");
+        $expected = "i love china!";
+        self::assertEquals($expected,$actual);
+    }
+
+    public function testRemoveTail(){
+        $whole ="i love china!";
+        $actual = StringHelper::removeTail($whole,3);
+        $expected = "i love chi";
+        self::assertEquals($expected,$actual);
+
+        $actual = StringHelper::removeTail($whole,13);
+        $expected = "";
+        self::assertEquals($expected,$actual);
+
+        $actual = StringHelper::removeTail($whole,14);
+        $expected = "";
+        self::assertEquals($expected,$actual);
+
+        $whole ="i love你中国!";
+        $actual = StringHelper::removeTail($whole,3);
+        $expected = "i love你";
+        self::assertEquals($expected,$actual);
+
+        $whole ="i love你中国!";
+        $actual = StringHelper::removeTail($whole,"国!");
+        $expected = "i love你中";
+        self::assertEquals($expected,$actual);
+
+        $whole ="i love你中国!";
+        $actual = StringHelper::removeTail($whole,"中国");
+        $expected = "i love你中国!";
+        self::assertEquals($expected,$actual);
+    }
 }

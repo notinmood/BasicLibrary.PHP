@@ -12,20 +12,39 @@ class ArrayHelper
      * @param $item  mixed
      * @return bool
      */
-    public static function contains($array, $item)
+    public static function isContains($array, $item)
     {
         return in_array($item, $array);
     }
 
-    /**判断某个键是否存在于某个数组内
+    /**
+     * 判断某个键是否存在于某个数组内
      * @param $array
      * @param $key
      * @return bool
      */
-    public static function containsKey($array, $key)
+    public static function isContainsKey($array, $key)
     {
         return array_key_exists($key, $array);
     }
+
+    /**
+     * 判断某个值是否存在于某个数组内
+     * @param $array
+     * @param $value
+     * @return bool
+     */
+    public static function isContainsValue($array, $value){
+        foreach ($array as $k=>$v){
+            if($v== $value){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
 
     /**
      * 在数组的开头添加新的元素(新元素的key是数字形式索引)
@@ -428,8 +447,8 @@ class ArrayHelper
                     if (strpos($func, '|') < 0) {
                         $result = call_user_func($func, $row[$col]);
                     } else {
-                        $className = StringHelper::getStringBeforeSeperator($func, '|');
-                        $methodName = StringHelper::getStringAfterSeperator($func, '|');
+                        $className = StringHelper::getStringBeforeSeparator($func, '|');
+                        $methodName = StringHelper::getStringAfterSeparator($func, '|');
 
                         $result = ReflectionHelper::executeInstanceMethod($className, $methodName, null, null, array(
                             $row[$col],
