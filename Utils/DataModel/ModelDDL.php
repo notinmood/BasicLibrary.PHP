@@ -35,11 +35,9 @@ class ModelDDL
             $newTableName = $originalTableName . "__duplication__";
         }
 
-
         if ($dropTableIfExist) {
             $this->dropTable($newTableName, true);
         }
-
 
         $create_sql = $this->getTableDefinition($originalTableName);
 
@@ -52,9 +50,8 @@ class ModelDDL
         $insert_sql = $this->getContentSql($originalTableName, $includeDataRowCount);
         $insert_sql = StringHelper::replace($insert_sql, $originalTableName, $newTableName);
         if ($insert_sql) {
-            $mate . directly_exec(insert_sql);
+            $mate->directlyExecute($insert_sql);
         }
-
     }
 
     /**
@@ -82,16 +79,6 @@ class ModelDDL
             $mate->directlyExecute($sql);
         }
     }
-
-    //
-    // def get_content_sql(self, table_name, row_count=-1):
-    // """
-    //         获取数据表数据内容的插入sql语句
-    //         :param row_count:复制数据的行数(-1表示所有的行数，0-n表示具体行数)
-    //         :param table_name:
-    //         :return:
-    //         """
-    // pass
 
     /**
      * 判断某个表是否存在
@@ -158,11 +145,10 @@ class ModelDDL
             # select_sql = "SELECT * FROM %s"
             # rows = mate.directly_query(select_sql, [real_table_name], FetchMode.MANY)
         } else {
-            $select_sql = "SELECT * FROM `{0}` LIMIT {1}" . format($real_table_name, $row_count);
+            $select_sql = "SELECT * FROM `{$real_table_name}` LIMIT {$row_count}";
         }
 
-        $rows = $mate -> directlyQuery($select_sql);
-        // dump($rows);
+        $rows = $mate->directlyQuery($select_sql);
 
         $result = "";
         if ($rows) {
