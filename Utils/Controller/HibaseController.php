@@ -219,7 +219,7 @@ class HibaseController extends Controller
 
         //CommonLoger::log(json_encode($model));
         $mate = new ModelMate($model);
-        $result = $mate->maintenanceData($keys, $data, $keyName);
+        $result = $mate->maintainData($keys, $data, $keyName);
         if ($result) {
             $this->success("保存成功", cookie("prevUrl"));
         } else {

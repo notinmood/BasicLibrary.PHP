@@ -215,7 +215,8 @@ class ObjectHelper
         return !self::isEmpty($data);
     }
 
-    /**判断一个对象是否为空判断一个对象是否为空。
+    /**
+     * 判断一个对象是否为空判断一个对象是否为空。
      *以下的东西被认为是空的：
      * "" (空字符串)
      * 0 (作为整数的0)
@@ -348,7 +349,6 @@ class ObjectHelper
      */
     public static function getClassName($object)
     {
-        $result = null;
         try {
             $result = get_class($object);
         } catch (Exception $e) {
@@ -371,7 +371,8 @@ class ObjectHelper
         return is_a($entity, $classFullName);
     }
 
-    /**获取给定对象的元素长度（目前仅支持字符串和数组的长度求取）
+    /**
+     * 获取给定对象的元素长度（目前仅支持字符串和数组的长度求取）
      * @param $data
      * @return false|int
      */

@@ -61,7 +61,7 @@ class ViewMate extends ModelMate
      */
     public function get($key, $keyName = 'id', $useRelation = true)
     {
-        $model = $this->getModel_Get($key, $keyName);
+        $model = $this->getQueryObjectWithGet($key, $keyName);
 
         if ($useRelation) {
             $model = $model->relation($useRelation);
@@ -84,7 +84,7 @@ class ViewMate extends ModelMate
      */
     public function find($condition = array(), $useRelation = true)
     {
-        $model = $this->getModel_Where($condition);
+        $model = $this->getQueryObjectWithWhere($condition);
 
         if ($useRelation) {
             $model = $model->relation($useRelation);
@@ -117,7 +117,7 @@ class ViewMate extends ModelMate
             $orderBy = "id desc";
         }
 
-        $model = $this->getModel_Select($condition, $orderBy, $pageIndex, $itemCountPerPage, $limit);
+        $model = $this->getQueryObjectWithSelect($condition, $orderBy, $pageIndex, $itemCountPerPage, $limit);
 
         if ($useRelation) {
             $model = $model->relation($useRelation);
