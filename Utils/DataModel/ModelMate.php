@@ -280,7 +280,7 @@ class ModelMate
             $sql = str_replace('__MTN__', $tableName, $sql);
         }
 
-        return $this->queryObject->query($sql);
+        return $this->queryObject->getConnection()->query($sql);
     }
 
     /**
@@ -290,7 +290,7 @@ class ModelMate
      */
     public function directlyExecute($sql)
     {
-        return $this->queryObject->execute($sql);
+        return $this->queryObject->getConnection()->execute($sql);
     }
 
     /**
