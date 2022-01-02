@@ -2,24 +2,36 @@
 
 namespace Hiland\Utils\DataModel;
 
+use Hiland\Utils\Data\ArrayHelper;
+use Hiland\Utils\Data\ObjectHelper;
+use Hiland\Utils\Data\ObjectTypes;
 use ReflectionException;
 use think\Config;
+use think\db\BaseQuery;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\db\Query;
+use think\facade\Db;
 use Think\Model;
 
 /**
  * 模型辅助器(需要ThinkPHP或者ThinkORM支持)
  * 封装模型与数据库交互的常用操作
  * ════════════════════════
- * ThinkPHP的Model中的initialize方法,请修改为protected(否则会启用反射,影响性能)
- * @author devel
+ * 使用说明：
+ * 1.ThinkPHP的Model中的initialize方法,请修改为protected(否则会启用反射,影响性能)
+ * 2.选取数据(或数据集)时过滤条件的设定，请参考本级目录下的 _README.md 文件
  */
 class ModelMate
 {
+    /**
+     * @var CommonModel|Model
+     */
     var $modelObject;
+    /**
+     * @var BaseQuery|Db
+     */
     var $queryObject;
     /**
      * @var string
@@ -44,7 +56,7 @@ class ModelMate
             $className = "\\think\\facade\\Db";
             $exist = class_exists("$className");
             if ($exist) {
-                $this->queryObject = \think\facade\Db::name($model);
+                $this->queryObject = Db::name($model);
             } else {
                 $className = "\\think\\Db";
                 $exist = class_exists("$className");
@@ -256,8 +268,8 @@ class ModelMate
     {
         $condition[$keyName] = $key;
         $query = $this->getQueryObjectWithWhere($condition);
-        $query = $query->find();
-        return $query[$fieldName];
+        $result = $query->find();
+        return $result[$fieldName];
     }
 
     /**
@@ -266,38 +278,40 @@ class ModelMate
      * @param string     $fieldName
      * @param mixed      $fieldValue
      * @param string     $keyName
-     * @return bool|int 成功时返回受影响的行数，失败时返回false
+     * @return int 成功时返回受影响的行数，失败时返回false
+     * @throws DbException
      */
     public function setValue($key, $fieldName, $fieldValue, $keyName = 'id')
     {
         $condition[$keyName] = $key;
         $query = $this->getQueryObjectWithWhere($condition);
-        return $query->setField($fieldName, $fieldValue);
+        $data["{$fieldName}"] = $fieldValue;
+        return $query->update($data);
     }
 
-    /**
-     * 查找单个值
-     * @param string      $searcher 要查找的内容
-     * @param string|null $whereClause
-     * @return null|mixed
-     */
-    public function findValue($searcher, $whereClause = null)
-    {
-        $tableName = $this->queryObject->getTable();
-
-        $sql = "SELECT $searcher FROM $tableName";
-        if (!empty($whereClause)) {
-            $sql .= ' where ' . $whereClause;
-        }
-
-        $dbSet = $this->directlyQuery($sql);
-
-        if ($dbSet) {
-            return $dbSet[0][$searcher];
-        } else {
-            return null;
-        }
-    }
+    // /**
+    //  * 查找单个值
+    //  * @param string      $searcher 要查找的内容
+    //  * @param string|null $whereClause
+    //  * @return null|mixed
+    //  */
+    // public function findValue($searcher, $whereClause = null)
+    // {
+    //     $tableName = $this->queryObject->getTable();
+    //
+    //     $sql = "SELECT $searcher FROM $tableName";
+    //     if (!empty($whereClause)) {
+    //         $sql .= ' where ' . $whereClause;
+    //     }
+    //
+    //     $dbSet = $this->directlyQuery($sql);
+    //
+    //     if ($dbSet) {
+    //         return $dbSet[0][$searcher];
+    //     } else {
+    //         return null;
+    //     }
+    // }
 
     //------直接跟数据库交互的操作------------------------------------------------
 
@@ -334,29 +348,29 @@ class ModelMate
 
     //------自增自减的数据操作------------------------------------------------
 
-    /**
-     * @param     $condition
-     * @param     $field
-     * @param int $step
-     * @param int $lazyTime
-     * @return bool
-     */
-    public function setInc($condition, $field, $step = 1, $lazyTime = 0)
-    {
-        return $this->modelObject->where($condition)->setInc($field, $step, $lazyTime);
-    }
-
-    /**
-     * @param     $condition
-     * @param     $field
-     * @param int $step
-     * @param int $lazyTime
-     * @return bool
-     */
-    public function setDec($condition, $field, $step = 1, $lazyTime = 0)
-    {
-        return $this->modelObject->where($condition)->setDec($field, $step, $lazyTime);
-    }
+    // /**
+    //  * @param     $condition
+    //  * @param     $field
+    //  * @param int $step
+    //  * @param int $lazyTime
+    //  * @return bool
+    //  */
+    // public function setInc($condition, $field, $step = 1, $lazyTime = 0)
+    // {
+    //     return $this->modelObject->where($condition)->inc($field, $step, $lazyTime);
+    // }
+    //
+    // /**
+    //  * @param     $condition
+    //  * @param     $field
+    //  * @param int $step
+    //  * @param int $lazyTime
+    //  * @return bool
+    //  */
+    // public function setDec($condition, $field, $step = 1, $lazyTime = 0)
+    // {
+    //     return $this->modelObject->where($condition)->setDec($field, $step, $lazyTime);
+    // }
 
     //------获取带条件的查询对象------------------------------------------------
 
@@ -370,16 +384,6 @@ class ModelMate
     {
         $condition[$keyName] = $key;
         return self::getQueryObjectWithWhere($condition);
-    }
-
-    /**
-     * 获取加入where过滤条件的 Query
-     * @param array $condition
-     * @return Query
-     */
-    protected function getQueryObjectWithWhere($condition = array())
-    {
-        return $this->queryObject->where($condition);
     }
 
     /**
@@ -408,5 +412,89 @@ class ModelMate
         }
 
         return $query;
+    }
+
+    /**
+     * 获取加入where过滤条件的 Query
+     * @param array $condition
+     * @return Query
+     */
+    protected function getQueryObjectWithWhere($condition = array())
+    {
+        $queryObject = $this->queryObject;
+        $this->_parseWhereCondition($queryObject, $condition);
+        return $queryObject;
+    }
+
+    /**
+     * @param $queryObject
+     * @param $conditions
+     * @return void
+     */
+    private function _parseWhereCondition(&$queryObject, $conditions = [])
+    {
+        foreach ($conditions as $key => $value) {
+            switch ($key) {
+                case DatabaseEnum::WHEREOR:
+                    $this->_parseWhereOrCondition($queryObject, $value);
+                    break;
+                case DatabaseEnum::WHEREAND:
+                    $this->_parseWhereAndCondition($queryObject, $value);
+                    break;
+                default:
+                    $this->_parseWhereAndConditionDetail($queryObject, $key, $value);
+            }
+        }
+    }
+
+    private function _parseWhereOrCondition(&$queryObject, $conditions)
+    {
+        foreach ($conditions as $key => $value) {
+            $this->_parseWhereOrConditionDetail($queryObject, $key, $value);
+        }
+    }
+
+    private function _parseWhereOrConditionDetail(&$queryObject, $key, $value)
+    {
+        if (ObjectHelper::getType($value) == ObjectTypes::ARRAYS) {
+            if (ArrayHelper::getLevel($value) == 1) {
+                $queryObject = $queryObject->whereOr($key, array_keys($value)[0], array_values($value)[0]);
+            } else {
+                foreach ($value as $secondKey => $secondValue) {
+                    $queryObject->whereOr($key, $secondKey, $secondValue);
+                }
+            }
+        } else {
+            $queryObject->whereOr($key, $value);
+        }
+    }
+
+    private function _parseWhereAndCondition(&$queryObject, $conditions)
+    {
+        foreach ($conditions as $key => $value) {
+            $this->_parseWhereAndConditionDetail($queryObject, $key, $value);
+        }
+    }
+
+    /**
+     * @TODO 暂时未处理 OR 的逻辑
+     * @param $queryObject
+     * @param $key
+     * @param $value
+     * @return void
+     */
+    private function _parseWhereAndConditionDetail(&$queryObject, $key, $value)
+    {
+        if (ObjectHelper::getType($value) == ObjectTypes::ARRAYS) {
+            if (ArrayHelper::getLevel($value) == 1) {
+                $queryObject = $queryObject->where($key, array_keys($value)[0], array_values($value)[0]);
+            } else {
+                foreach ($value as $secondItem) {
+                    $queryObject->where($key, array_keys($secondItem)[0], array_values($secondItem)[0]);
+                }
+            }
+        } else {
+            $queryObject->where($key, $value);
+        }
     }
 }

@@ -50,4 +50,19 @@ class ReflectionHelperTest extends TestCase
         $expect= "This is a Student (USA)";
         self::assertEquals($expect, $actual);
     }
+
+    /**
+     * @return void
+     * @throws ReflectionException
+     */
+    public function testGetInstanceProperty(){
+        $student = new Student("zhangsan", 20);
+        $actual = ReflectionHelper::getInstanceProperty(Student::class,"userName",$student);
+        $expected = "zhangsan";
+        self::assertEquals($expected,$actual);
+
+        $actual = ReflectionHelper::getInstanceProperty(Student::class,"userName",null,["zhangsan", 20]);
+        $expected = "zhangsan";
+        self::assertEquals($expected,$actual);
+    }
 }

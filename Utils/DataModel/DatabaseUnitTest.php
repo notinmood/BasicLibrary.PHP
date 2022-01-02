@@ -10,6 +10,8 @@
 
 namespace Hiland\Utils\DataModel;
 
+use Hiland\Utils\Data\RandHelper;
+
 class DatabaseUnitTest
 {
     /**
@@ -32,27 +34,13 @@ class DatabaseUnitTest
     public function __construct($tableName, $duplicateRowCount = -1, $autoDispose = True)
     {
         $this->autoDispose = $autoDispose;
-        $this->newTableName = $tableName . "__tmp_dup__";
+        $random = RandHelper::rand(8,"NUMBER");
+        $this->newTableName = $tableName . "__dup_{$random}__";
 
         $this->ddl = DatabaseClient::getDDL();
         $this->ddl->duplicateTable($tableName, $this->newTableName, $duplicateRowCount);
 
         $this->mate = DatabaseClient::getMate($this->newTableName);
-    }
-
-    public function getNewTableName()
-    {
-        return $this->newTableName;
-    }
-
-    public function getDDL()
-    {
-        return $this->ddl;
-    }
-
-    public function getMate()
-    {
-        return $this->mate;
     }
 
     /**
@@ -73,4 +61,25 @@ class DatabaseUnitTest
     {
         $this->ddl->dropTable($this->newTableName);
     }
+
+    /**
+     * 获取复制的新表的表名称
+     * @return string
+     */
+    public function getNewTableName()
+    {
+        return $this->newTableName;
+    }
+
+    public function getDDL()
+    {
+        return $this->ddl;
+    }
+
+    public function getMate()
+    {
+        return $this->mate;
+    }
+
+
 }

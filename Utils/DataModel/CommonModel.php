@@ -9,18 +9,16 @@
 namespace Hiland\Utils\DataModel;
 
 
-use Hiland\Biz\ThinkAddon\TPCompatibleHelper;
 use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\ReflectionHelper;
-use Hiland\Utils\Data\ThinkHelper;
 use ReflectionException;
 use think\Config;
 use think\Model;
 
 /**
- * 通用的Model
+ * 通用的 Model
  * ════════════════════════
- * 继承的Model中的initialize方法,请修改为protected(否则会启用反射,影响性能)
+ * (基类 Model中的 initialize 方法,请修改为 protected (否则会启用反射,影响性能))
  */
 class CommonModel extends Model
 {

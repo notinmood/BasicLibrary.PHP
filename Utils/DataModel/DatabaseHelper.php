@@ -69,7 +69,6 @@ class DatabaseHelper
         return "INSERT INTO `{$table_name}` ({$keys}) VALUES ({$values});";
     }
 
-
     /**
      * @param $data
      * @return string

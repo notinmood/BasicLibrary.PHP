@@ -10,12 +10,17 @@
 
 namespace Hiland\Test\database;
 
-use Hiland\Utils\DataModel\DatabaseClient;
+use PHPUnit\Framework\TestCase;
 
-class ModelMateTest
+/**
+ * 对Mate的测试，都统一在 MateContainerTest.php 内进行。
+ */
+class ModelMateTest extends TestCase
 {
-    public function testInteract(){
-        $mate= DatabaseClient::getMate("user");
-        // $mate-> interact()
+    public function testIndex()
+    {
+        $actual = 1;
+        $expected = 1;
+        self::assertEquals($expected, $actual);
     }
 }

@@ -10,9 +10,8 @@ class ReflectionHelper
 {
     /**
      * 通过反射创建对象实例
-     * @param string $className
-     *            类名称字符串（如果有命名空间的话带命名空间，例如Tencent\Model\Foo2）
-     * @param array  $args
+     * @param string $className 类名称字符串（如果有命名空间的话带命名空间，例如 Tencent\Model\Foo2）
+     * @param array  $args      类构造器参数数组(类似["zhangsan", 20]这样的一维索引数组)
      * @return object
      * @throws ReflectionException
      */
@@ -28,8 +27,8 @@ class ReflectionHelper
 
     /**
      * 获取类型的反射信息
-     * @param string $className 类名称（如果有命名空间，请携带命名空间，如：'Tencent\Model\Bar'）
-     * @param array  $args      类构造器参数数组
+     * @param string $className 类名称（如果有命名空间，请携带命名空间，如：Tencent\Model\Bar）
+     * @param array  $args      类构造器参数数组 (类似["zhangsan", 20]这样的一维索引数组)
      * @return ReflectionClass
      */
     public static function getReflectionClass($className, &$args = null)
@@ -60,10 +59,12 @@ class ReflectionHelper
 
     /**
      * 执行某个类里面的实例方法
-     * @param string $className     类名称（如果有命名空间，请携带命名空间，如：'Tencent\Model\Bar'）
+     * (参数$instance 和 $constructArgs 设置其一即可)
+     * @param string $className     类名称（如果有命名空间，请携带命名空间，如：Tencent\Model\Bar）
      * @param string $methodName    类内部的方法名称（可用是实例方法也可以是静态方法）
      * @param null   $instance      具体的类型实例
-     * @param array  $constructArgs 类构造器参数数组(如果没有指定$instance,那么便可以通过本参数进行实例化一个对象;如果已经指定了$instance,本参数将忽略.)
+     * @param array  $constructArgs 类构造器参数数组(类似["zhangsan", 20]这样的一维索引数组)
+     *                              (如果没有指定$instance,那么便可以通过本参数进行实例化一个对象;如果已经指定了$instance,本参数将忽略.)
      * @param array  $methodArgs    待调用方法的参数数组
      * @return mixed 调用方法的返回值
      * @throws ReflectionException
@@ -90,6 +91,35 @@ class ReflectionHelper
         }
 
         return $result;
+    }
+
+    /**
+     * 通过属性名称获取属性值(通常用于获取私有属性的场景)
+     * (参数$instance 和 $constructArgs 设置其一即可)
+     * @param string     $className     类型名称字符串(通常使用 <Class>::class这样的形式简便获得)
+     * @param string     $propertyName  待获取属性值的属性名称
+     * @param null       $instance      对象实例
+     * @param array|null $constructArgs 对象构造方法中使用的参数(类似["zhangsan", 20]这样的一维索引数组)
+     *                                  (如果没有指定$instance,那么便可以通过本参数进行实例化一个对象;如果已经指定了$instance,本参数将忽略.)
+     * @return mixed|null
+     * @throws ReflectionException
+     */
+    public static function getInstanceProperty($className, $propertyName, $instance = null, array $constructArgs = null)
+    {
+        $class = self::getReflectionClass($className, $constructArgs);
+        $property = $class->getProperty($propertyName);
+
+        if ($property) {
+            // 设置目标的可访问性
+            $property->setAccessible(true);
+
+            if (!$instance) {
+                $instance = $class->newInstanceArgs((array)$constructArgs);
+            }
+            return $property->getValue($instance);
+        } else {
+            return null;
+        }
     }
 
     /**
