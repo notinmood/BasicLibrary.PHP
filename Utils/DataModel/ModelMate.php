@@ -216,31 +216,31 @@ class ModelMate
         return $recordID;
     }
 
-    /**
-     * 按照主键集合批量更新数据
-     * @param string $keys    string 主键集合（用逗号分隔的主键字符串，例如“1,5,6”）
-     * @param array  $data    需要更新的数据（可以是目标实体的部分属性构成的 array，比如本 data 内只包含 status 信息，这样就可以批量更新数据库内的记录状态）
-     *                        如果不设置keys,那么也可以在data数组内设置一个键名称为 $keyName (就是名称为本方法第三个参数$keyName的元素项目) 的元素项
-     * @param string $keyName 主键的名称，缺省为“id”
-     * @return bool
-     */
-    public function maintainData($data, $keys = "", $keyName = 'id')
-    {
-        if (empty($keys) && array_key_exists($keyName, $data)) {
-            $keys = $data["$keyName"];
-        }
-
-        if (is_numeric($keys)) {
-            $keys = "$keys";
-        }
-
-        if (array_key_exists($keyName, $data)) {
-            unset($data["$keyName"]);
-        }
-
-        $condition = array("$keyName" => array("in", $keys));
-        return $this->modelObject->where($condition)->data($data)->save();
-    }
+    // /**
+    //  * 按照主键集合批量更新数据
+    //  * @param string $keys    string 主键集合（用逗号分隔的主键字符串，例如“1,5,6”）
+    //  * @param array  $data    需要更新的数据（可以是目标实体的部分属性构成的 array，比如本 data 内只包含 status 信息，这样就可以批量更新数据库内的记录状态）
+    //  *                        如果不设置keys,那么也可以在data数组内设置一个键名称为 $keyName (就是名称为本方法第三个参数$keyName的元素项目) 的元素项
+    //  * @param string $keyName 主键的名称，缺省为“id”
+    //  * @return bool
+    //  */
+    // public function maintainData($data, $keys = "", $keyName = 'id')
+    // {
+    //     if (empty($keys) && array_key_exists($keyName, $data)) {
+    //         $keys = $data["$keyName"];
+    //     }
+    //
+    //     if (is_numeric($keys)) {
+    //         $keys = "$keys";
+    //     }
+    //
+    //     if (array_key_exists($keyName, $data)) {
+    //         unset($data["$keyName"]);
+    //     }
+    //
+    //     $condition = array("$keyName" => array("in", $keys));
+    //     return $this->modelObject->where($condition)->data($data)->save();
+    // }
 
     /**
      * 删除数据
@@ -414,6 +414,8 @@ class ModelMate
         return $query;
     }
 
+    private $queried= false;
+
     /**
      * 获取加入where过滤条件的 Query
      * @param array $condition
@@ -422,8 +424,12 @@ class ModelMate
     protected function getQueryObjectWithWhere($condition = array())
     {
         $queryObject = $this->queryObject;
-        $this->_parseWhereCondition($queryObject, $condition);
-        return $queryObject;
+        if($this->queried){
+            $queryObject = $queryObject->newQuery();
+        }
+        $this->queried= true;
+
+        return $this->_parseWhereCondition($queryObject, $condition);
     }
 
     /**
@@ -431,49 +437,57 @@ class ModelMate
      * @param $conditions
      * @return void
      */
-    private function _parseWhereCondition(&$queryObject, $conditions = [])
+    private function _parseWhereCondition($queryObject, $conditions = [])
     {
         foreach ($conditions as $key => $value) {
             switch ($key) {
                 case DatabaseEnum::WHEREOR:
-                    $this->_parseWhereOrCondition($queryObject, $value);
+                    $queryObject = $this->_parseWhereOrCondition($queryObject, $value);
                     break;
                 case DatabaseEnum::WHEREAND:
-                    $this->_parseWhereAndCondition($queryObject, $value);
+                    $queryObject = $this->_parseWhereAndCondition($queryObject, $value);
                     break;
                 default:
-                    $this->_parseWhereAndConditionDetail($queryObject, $key, $value);
+                    $queryObject = $this->_parseWhereAndConditionDetail($queryObject, $key, $value);
             }
         }
+
+        return $queryObject;
     }
 
-    private function _parseWhereOrCondition(&$queryObject, $conditions)
+    private function _parseWhereOrCondition($queryObject, $conditions)
     {
         foreach ($conditions as $key => $value) {
-            $this->_parseWhereOrConditionDetail($queryObject, $key, $value);
+            $queryObject = $this->_parseWhereOrConditionDetail($queryObject, $key, $value);
         }
+
+        return $queryObject;
     }
 
-    private function _parseWhereOrConditionDetail(&$queryObject, $key, $value)
+    private function _parseWhereOrConditionDetail($queryObject, $key, $value)
     {
         if (ObjectHelper::getType($value) == ObjectTypes::ARRAYS) {
             if (ArrayHelper::getLevel($value) == 1) {
                 $queryObject = $queryObject->whereOr($key, array_keys($value)[0], array_values($value)[0]);
             } else {
                 foreach ($value as $secondKey => $secondValue) {
-                    $queryObject->whereOr($key, $secondKey, $secondValue);
+                    $queryObject = $queryObject->whereOr($key, $secondKey, $secondValue);
                 }
             }
         } else {
-            $queryObject->whereOr($key, $value);
+            $queryObject = $queryObject->whereOr($key, $value);
         }
+
+        return $queryObject;
     }
 
-    private function _parseWhereAndCondition(&$queryObject, $conditions)
+    private function _parseWhereAndCondition($queryObject, $conditions)
     {
         foreach ($conditions as $key => $value) {
-            $this->_parseWhereAndConditionDetail($queryObject, $key, $value);
+            $queryObject = $this->_parseWhereAndConditionDetail($queryObject, $key, $value);
         }
+
+        return $queryObject;
     }
 
     /**
@@ -481,20 +495,22 @@ class ModelMate
      * @param $queryObject
      * @param $key
      * @param $value
-     * @return void
+     * @return mixed
      */
-    private function _parseWhereAndConditionDetail(&$queryObject, $key, $value)
+    private function _parseWhereAndConditionDetail($queryObject, $key, $value)
     {
         if (ObjectHelper::getType($value) == ObjectTypes::ARRAYS) {
             if (ArrayHelper::getLevel($value) == 1) {
                 $queryObject = $queryObject->where($key, array_keys($value)[0], array_values($value)[0]);
             } else {
                 foreach ($value as $secondItem) {
-                    $queryObject->where($key, array_keys($secondItem)[0], array_values($secondItem)[0]);
+                    $queryObject = $queryObject->where($key, array_keys($secondItem)[0], array_values($secondItem)[0]);
                 }
             }
         } else {
-            $queryObject->where($key, $value);
+            $queryObject = $queryObject->where($key, $value);
         }
+
+        return $queryObject;
     }
 }

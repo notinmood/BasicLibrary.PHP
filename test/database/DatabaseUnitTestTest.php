@@ -308,7 +308,14 @@ class DatabaseUnitTestTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testMaintainData()
+    /**
+     * 测试WHERE条件设置的幂等性(即，多次调用WHERE条件的效果不会累计)
+     * @return void
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function testWhereIdempotence()
     {
         $table_name = "user";
         $biz = new DatabaseUnitTest($table_name);
