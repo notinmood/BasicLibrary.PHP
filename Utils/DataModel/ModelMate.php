@@ -20,8 +20,7 @@ use Think\Model;
  * 封装模型与数据库交互的常用操作
  * ════════════════════════
  * 使用说明：
- * 1.ThinkPHP的Model中的initialize方法,请修改为protected(否则会启用反射,影响性能)
- * 2.选取数据(或数据集)时过滤条件的设定，请参考本级目录下的 _README.md 文件
+ * 1.选取数据(或数据集)时过滤条件的设定，请参考本级目录下的 _README.md 文件
  */
 class ModelMate
 {

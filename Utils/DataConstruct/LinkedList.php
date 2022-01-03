@@ -145,7 +145,6 @@ class LinkedList
     /**
      * 删除
      * @param $index
-     * @throws Exceptionr
      */
     public function remove($index)
     {

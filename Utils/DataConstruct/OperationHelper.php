@@ -3,10 +3,9 @@
 namespace Hiland\Utils\DataConstruct;
 
 use Hiland\Utils\Data\GuidHelper;
-use Think\Model;
 
 /**
- * TODO：需要跟Returns.php整合
+ * TODO：需要跟 ResultObject.php 整合
  */
 class OperationHelper
 {
@@ -84,16 +83,14 @@ class OperationHelper
      *            错误类型，
      *            0表示计算机处理上的错误（比如无法插入相同的primary等）
      *            1表示业务逻辑上不满足条件的错误（比如余额不足无法完成支付等）
-     * @param bool   $isRollback
-     *            是否回滚事务
      * @return string json格式的字符串
      */
-    public static function buildErrorResult($message, $details = '', $type = 1, $isRollback = false)
+    public static function buildErrorResult($message, $details = '', $type = 1)
     {
-        if ($isRollback && class_exists("Think\\Model")) {
-            $transModel = new Model();
-            $transModel->rollback();
-        }
+        // if ($isRollback && class_exists("Think\\Model")) {
+        //     $transModel = new Model();
+        //     $transModel->rollback();
+        // }
 
         $data['type'] = $type;
         $data['message'] = urlencode($message);
@@ -108,13 +105,11 @@ class OperationHelper
      *            错误内容
      * @param string $details
      *            错误详细信息
-     * @param bool   $isRollback
-     *            是否回滚事务
      * @return string json格式的字符串
      */
-    public static function buildBizErrorResult($message, $details = '', $isRollback = false)
+    public static function buildBizErrorResult($message, $details = '')
     {
-        return self::buildErrorResult($message, $details, 0, $isRollback);
+        return self::buildErrorResult($message, $details, 0);
     }
 
     /**

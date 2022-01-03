@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 use ReflectionException;
 
 /**
- * 对Mate的测试，都统一在 MateContainerTest.php 内进行。
+ * 对Mate的测试，大部分都统一在 DatabaseUnitTestTest.php 内进行。
  */
 class ModelMateTest extends TestCase
 {

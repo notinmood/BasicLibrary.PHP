@@ -19,8 +19,6 @@ queryObject->getConnection()->query($sql)
    ```shell
    $condition = ["score" => 100, "class" => "三"]
    ```
- 
->无论是$condition[DatabaseEnum::WHEREOR] 还是$condition[DatabaseEnum::WHEREAND]设置的 AND 或者 OR 关系,都是对本数组元素对应值(这个值是一个子数组)的 AND 或者 OR(就是子数组各个元素的AND或者OR);跟另外一个$condition[DatabaseEnum::WHEREOR] 或者 $condition[DatabaseEnum::WHEREAND] 没有关系。
    
 3. 如果涉及到对范围进行筛选，那么可以将符号也一起加入到 $condition 中
    ```shell
@@ -37,3 +35,6 @@ queryObject->getConnection()->query($sql)
    $condition["score"] = [["<" => 90], [">=" => 80]];
    $condition["class"] = "三";
    ```
+
+
+>无论是$condition[DatabaseEnum::WHEREOR] 还是$condition[DatabaseEnum::WHEREAND]设置的 AND 或者 OR 关系,都是对本数组元素对应值(这个值是一个子数组)的 AND 或者 OR(就是子数组各个元素的AND或者OR);跟另外一个$condition[DatabaseEnum::WHEREOR] 或者 $condition[DatabaseEnum::WHEREAND] 没有关系。
