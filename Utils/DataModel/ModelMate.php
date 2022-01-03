@@ -43,7 +43,7 @@ class ModelMate
      * @param string|model $model
      *            其可以是一个表示model名称的字符串；
      *            也可以是一个继承至Think\Model的类型
-     * @TODO Think\Model的类型为严格验证
+     * @TODO Think\Model的类型未严格验证
      */
     public function __construct($model)
     {
@@ -174,10 +174,8 @@ class ModelMate
 
     /**
      * 交互信息
-     * @param array  $data
-     *            待跟数据库交互的模型实体数据
-     * @param string $keyName
-     *            当前模型的数据库表的主键名称
+     * @param array  $data    待跟数据库交互的模型实体数据
+     * @param string $keyName 当前模型的数据库表的主键名称
      * @return boolean|number
      */
     public function interact($data = null, $keyName = 'id')
@@ -443,87 +441,78 @@ class ModelMate
      */
     protected function getQueryObjectWithWhere($condition = array())
     {
-        $queryObject = $this->queryObject;
         if ($this->queried) {
-            $queryObject = $queryObject->newQuery();
+            $this->queryObject = $this->queryObject->newQuery();
         }
         $this->queried = true;
 
-        return $this->_parseWhereCondition($queryObject, $condition);
+        $this->_parseWhereCondition($condition);
+        return $this->queryObject;
     }
 
     /**
-     * @param $queryObject
-     * @param $conditions
+     * @param array $conditions
      * @return void
      */
-    private function _parseWhereCondition($queryObject, $conditions = [])
+    private function _parseWhereCondition($conditions = [])
     {
         foreach ($conditions as $key => $value) {
             switch ($key) {
                 case DatabaseEnum::WHEREOR:
-                    $queryObject = $this->_parseWhereOrCondition($queryObject, $value);
+                    $this->_parseWhereOrCondition($value);
                     break;
                 case DatabaseEnum::WHEREAND:
-                    $queryObject = $this->_parseWhereAndCondition($queryObject, $value);
+                    $this->_parseWhereAndCondition($value);
                     break;
                 default:
-                    $queryObject = $this->_parseWhereAndConditionDetail($queryObject, $key, $value);
+                    $this->_parseWhereAndConditionDetail($key, $value);
             }
         }
-
-        return $queryObject;
     }
 
-    private function _parseWhereOrCondition($queryObject, $conditions)
+    private function _parseWhereOrCondition($conditions)
     {
         foreach ($conditions as $key => $value) {
-            $queryObject = $this->_parseWhereOrConditionDetail($queryObject, $key, $value);
+            $this->_parseWhereOrConditionDetail($key, $value);
         }
-
-        return $queryObject;
     }
 
-    private function _parseWhereOrConditionDetail($queryObject, $key, $value)
+    private function _parseWhereOrConditionDetail($key, $value)
     {
+        $queryObject = $this->queryObject;
         if (ObjectHelper::getType($value) == ObjectTypes::ARRAYS) {
             if (ArrayHelper::getLevel($value) == 1) {
-                $queryObject = $queryObject->whereOr($key, array_keys($value)[0], array_values($value)[0]);
+                $queryObject->whereOr($key, array_keys($value)[0], array_values($value)[0]);
             } else {
                 foreach ($value as $secondKey => $secondValue) {
-                    $queryObject = $queryObject->whereOr($key, $secondKey, $secondValue);
+                    $queryObject->whereOr($key, $secondKey, $secondValue);
                 }
             }
         } else {
-            $queryObject = $queryObject->whereOr($key, $value);
+            $queryObject->whereOr($key, $value);
         }
-
-        return $queryObject;
     }
 
-    private function _parseWhereAndCondition($queryObject, $conditions)
+    private function _parseWhereAndCondition($conditions)
     {
         foreach ($conditions as $key => $value) {
-            $queryObject = $this->_parseWhereAndConditionDetail($queryObject, $key, $value);
+            $this->_parseWhereAndConditionDetail($key, $value);
         }
-
-        return $queryObject;
     }
 
-    private function _parseWhereAndConditionDetail($queryObject, $key, $value)
+    private function _parseWhereAndConditionDetail($key, $value)
     {
+        $queryObject = $this->queryObject;
         if (ObjectHelper::getType($value) == ObjectTypes::ARRAYS) {
             if (ArrayHelper::getLevel($value) == 1) {
-                $queryObject = $queryObject->where($key, array_keys($value)[0], array_values($value)[0]);
+                $queryObject->where($key, array_keys($value)[0], array_values($value)[0]);
             } else {
                 foreach ($value as $secondItem) {
-                    $queryObject = $queryObject->where($key, array_keys($secondItem)[0], array_values($secondItem)[0]);
+                    $queryObject->where($key, array_keys($secondItem)[0], array_values($secondItem)[0]);
                 }
             }
         } else {
-            $queryObject = $queryObject->where($key, $value);
+            $queryObject->where($key, $value);
         }
-
-        return $queryObject;
     }
 }
