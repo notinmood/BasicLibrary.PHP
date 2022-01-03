@@ -23,11 +23,13 @@ class DateHelper
 
     /**20380101的时间表示格式
      * @return DateTime
-     * @throws Exception
      */
     private static function get20380101DateTime()
     {
-        return new DateTime("2038-1-1 0:0:0", self::getDateTimeZone());
+        try {
+            return new DateTime("2038-1-1 0:0:0", self::getDateTimeZone());
+        } catch (Exception $e) {
+        }
     }
 
     /**统一设置时区为PRC
@@ -122,7 +124,6 @@ class DateHelper
      * @param null   $timestamp
      * @param string $format
      * @return string
-     * @throws Exception
      */
     public static function getDateTimeString($timestamp = null, $format = "Y-m-d H:i:s")
     {
@@ -132,7 +133,6 @@ class DateHelper
     /**将timestamp转换成日期
      * @param null $timestamp
      * @return DateTime
-     * @throws Exception
      */
     public static function getDateTime($timestamp = null)
     {
@@ -142,7 +142,10 @@ class DateHelper
             $targetArray = getdate($timestamp);
 
             $targetString = "{$targetArray['year']}-{$targetArray['mon']}-{$targetArray['mday']} {$targetArray['hours']}:{$targetArray['minutes']}:{$targetArray['seconds']}";
-            return new DateTime($targetString, self::getDateTimeZone());
+            try {
+                return new DateTime($targetString, self::getDateTimeZone());
+            } catch (Exception $e) {
+            }
         } else {
             $ts2038 = self::get20380101Timestamp();
             $diffArray = self::getInterval($ts2038, $timestamp);
@@ -159,7 +162,6 @@ class DateHelper
      * @param        $dateSecondary
      * @param string $intervalType “s”表示秒；“ms”表示毫秒
      * @return float|int
-     * @throws Exception
      */
     public static function getIntervalSeconds($dateMain, $dateSecondary, $intervalType = "s")
     {
@@ -186,7 +188,6 @@ class DateHelper
      * @param $startValue DateTime|int|float 开始时间(即可以是DateTime类型也可以是timestamp类型)
      * @param $endValue   DateTime|int|float 结束时间(即可以是DateTime类型也可以是timestamp类型)
      * @return DateInterval
-     * @throws Exception
      */
     public static function getInterval($startValue, $endValue)
     {
@@ -211,15 +212,19 @@ class DateHelper
         $remain = $timeDiff % 86400;
         $hours = intval($remain / 3600);
         $remain = $remain % 3600;
-        $mins = intval($remain / 60);
-        $secs = $remain % 60;
+        $minutes = intval($remain / 60);
+        $seconds = $remain % 60;
 
         /**
          * 间隔规格格式以字母P开头，用于“期间”。每个持续时间周期由一个整数值和一个句点指示符表示。
          * 如果持续时间包含时间元素，则说明的该部分前面有字母T。
          */
-        $p = "P{$days}DT{$hours}H{$mins}M{$secs}S";
-        $interval = new DateInterval($p);
+        $p = "P{$days}DT{$hours}H{$minutes}M{$seconds}S";
+        $interval = null;
+        try {
+            $interval = new DateInterval($p);
+        } catch (Exception $e) {
+        }
         $interval->invert = $invert;
         return $interval;
     }
@@ -228,7 +233,6 @@ class DateHelper
      * 获取从1970年1月1日以来总共的毫秒数
      * @param null $dateValue
      * @return float
-     * @throws Exception
      */
     public static function getTotalMilliSeconds($dateValue = null)
     {
@@ -239,7 +243,6 @@ class DateHelper
      * 获取一个指定时间点的timestamp(即从1970年1月1日以来总共的秒数)
      * @param string $dateValue 指定的时间点 ，可以是“201603161312”格式，也可以是“2016-03-16 13:12:25”
      * @return int
-     * @throws Exception
      */
     public static function getTimestamp($dateValue = null)
     {
@@ -248,7 +251,10 @@ class DateHelper
         }
 
         if (ObjectHelper::getType($dateValue) == ObjectTypes::STRING) {
-            $dateValue = new DateTime($dateValue);
+            try {
+                $dateValue = new DateTime($dateValue);
+            } catch (Exception $e) {
+            }
         }
         $dateValue->setTimezone(self::getDateTimeZone());
 
@@ -296,7 +302,6 @@ class DateHelper
      * @param int          $intervalValue 时间间隔值
      * @param string       $returnType    返回值类型--dt:返回DateTime时间类型；ts(默认):返回timestamp类型。
      * @return int|DateTime int类型的时间戳或者是DateTime时间
-     * @throws Exception
      */
     public static function addInterval($originalValue = null, $intervalType = "d", $intervalValue = 1, $returnType = "ts")
     {
@@ -307,7 +312,11 @@ class DateHelper
                 $originalValue = "@" . $originalValue;
             }
 
-            $source = new DateTime($originalValue);
+            $source = null;
+            try {
+                $source = new DateTime($originalValue);
+            } catch (Exception $e) {
+            }
             $source->setTimezone(self::getDateTimeZone());
         }
 
@@ -356,7 +365,11 @@ class DateHelper
 
         $formatString = "P{$y}Y{$M}M{$d}DT{$h}H{$i}M{$s}S";
 
-        $interval = new DateInterval($formatString);
+        $interval = null;
+        try {
+            $interval = new DateInterval($formatString);
+        } catch (Exception $e) {
+        }
         $interval->invert = $invert;
 
         $target = $source->add($interval);
@@ -373,7 +386,6 @@ class DateHelper
      * @param int    $time         timestamp格式的时间
      * @param string $formatString 格式化字符串
      * @return string
-     * @throws Exception
      */
     public static function format($time = null, $formatString = 'Y-m-d H:i:s')
     {

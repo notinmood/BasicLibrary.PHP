@@ -60,12 +60,9 @@ class StringHelper
 
     /**
      * 截取全角和半角（汉字和英文）混合的字符串以避免乱码
-     * @param string $originalStringData
-     *            要截取的字符串
-     * @param int    $startPosition
-     *            开始位置(第一个字符的位置为0)
-     * @param int    $length
-     *            要截取的长度(超过总长度 按总长度计算)
+     * @param string $originalStringData 要截取的字符串
+     * @param int    $startPosition      开始位置(第一个字符的位置为0)
+     * @param int    $length             要截取的长度(超过总长度 按总长度计算)
      * @param string $charset
      * @return string
      * @author 小墨 244349067@qq.com
@@ -103,29 +100,28 @@ class StringHelper
     }
 
     /**
-     * 从字符串的开头位置移除 n 个长度的字符
-     * @param $wholeStringData
-     * @param $length
+     * 从字符串的开头位置移除 n 个长度的字符,或者截去某个子字符串
+     * @param string     $wholeStringData
+     * @param int|string $lengthOrTail
      * @return string
      */
     public static function removeHead($wholeStringData, $lengthOrTail)
     {
         if (ObjectHelper::getType($lengthOrTail) == ObjectTypes::STRING) {
-            if(StringHelper::isStartWith($wholeStringData,$lengthOrTail)){
-                return self::getStringAfterSeparator($wholeStringData,$lengthOrTail);
-            }
-            else{
+            if (StringHelper::isStartWith($wholeStringData, $lengthOrTail)) {
+                return self::getStringAfterSeparator($wholeStringData, $lengthOrTail);
+            } else {
                 return $wholeStringData;
             }
-        }else{
+        } else {
             return self::subString($wholeStringData, $lengthOrTail);
         }
     }
 
     /**
-     * 从字符串的末尾位置移除 n 个长度的字符
-     * @param $wholeStringData
-     * @param $lengthOrTail
+     * 从字符串的末尾位置移除 n 个长度的字符,或者截去某个子字符串
+     * @param string     $wholeStringData
+     * @param int|string $lengthOrTail
      * @return string
      */
     public static function removeTail($wholeStringData, $lengthOrTail)
@@ -256,24 +252,24 @@ class StringHelper
     /**
      * 将一个字符串按照字符个数分组进行格式化
      * @param string $stringData string
-     * @param string $formator   string 字符串字符个数分组的格式，同一个分组内字符的个数用{}包围，各个分组之间可以自定义分隔符，例如
+     * @param string $formatter  string 字符串字符个数分组的格式，同一个分组内字符的个数用{}包围，各个分组之间可以自定义分隔符，例如
      *                           '{4}-{2}-{2}'，或者'{4} {2} {2}'(中间用空格表示);
      * @return string
      */
-    public static function grouping($stringData, $formator)
+    public static function grouping($stringData, $formatter)
     {
         $content = '';
         $pattern = '/{\d*}/';
         $matches = null;
-        $result = preg_match_all($pattern, $formator, $matches);
+        $result = preg_match_all($pattern, $formatter, $matches);
         if ($result) {
             foreach ($matches[0] as $matchedWithQuotation) {
-                $matchedWithQuotationStartPosition = strpos($formator, $matchedWithQuotation);
+                $matchedWithQuotationStartPosition = strpos($formatter, $matchedWithQuotation);
                 $matchedWithQuotationLength = strlen($matchedWithQuotation);
-                $seperator = substr($formator, 0, $matchedWithQuotationStartPosition);
-                $content .= $seperator;
-                $seperatorLength = strlen($seperator);
-                $formator = substr($formator, $matchedWithQuotationLength + $seperatorLength);
+                $separator = substr($formatter, 0, $matchedWithQuotationStartPosition);
+                $content .= $separator;
+                $separatorLength = strlen($separator);
+                $formatter = substr($formatter, $matchedWithQuotationLength + $separatorLength);
 
                 $matchedNumber = StringHelper::getStringAfterSeparator($matchedWithQuotation, '{');
                 $matchedNumber = StringHelper::getStringBeforeSeparator($matchedNumber, '}');

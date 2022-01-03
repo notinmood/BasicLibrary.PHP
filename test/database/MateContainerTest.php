@@ -18,7 +18,7 @@ class MateContainerTest extends TestCase
     {
         $mate = MateContainer::get("user");
         $entity = $mate->get(1);
-        // dump($entity);
+
         $actual = $entity["name"];
         $expected = "zhangsan";
         self::assertEquals($expected, $actual);

@@ -67,26 +67,37 @@ class ReflectionHelper
      *                              (如果没有指定$instance,那么便可以通过本参数进行实例化一个对象;如果已经指定了$instance,本参数将忽略.)
      * @param array  $methodArgs    待调用方法的参数数组
      * @return mixed 调用方法的返回值
-     * @throws ReflectionException
      */
     public static function executeInstanceMethod($className, $methodName, $instance = null, array $constructArgs = null, array $methodArgs = null)
     {
         $result = null;
         $class = self::getReflectionClass($className, $constructArgs);
-        $method = $class->getMethod($methodName);
+        try {
+            $method = $class->getMethod($methodName);
+        } catch (ReflectionException $e) {
+        }
 
         if ($method) {
             //如果是私有方法,通过此处访问设置可见性,依然可以从外表访问
             $method->setAccessible(TRUE);
 
             if (!$instance) {
-                $instance = $class->newInstanceArgs((array)$constructArgs);
+                try {
+                    $instance = $class->newInstanceArgs((array)$constructArgs);
+                } catch (ReflectionException $e) {
+                }
             }
 
             if (empty($methodArgs)) {
-                $result = $method->invoke($instance);
+                try {
+                    $result = $method->invoke($instance);
+                } catch (ReflectionException $e) {
+                }
             } else {
-                $result = $method->invokeArgs($instance, $methodArgs);
+                try {
+                    $result = $method->invokeArgs($instance, $methodArgs);
+                } catch (ReflectionException $e) {
+                }
             }
         }
 
@@ -102,19 +113,24 @@ class ReflectionHelper
      * @param array|null $constructArgs 对象构造方法中使用的参数(类似["zhangsan", 20]这样的一维索引数组)
      *                                  (如果没有指定$instance,那么便可以通过本参数进行实例化一个对象;如果已经指定了$instance,本参数将忽略.)
      * @return mixed|null
-     * @throws ReflectionException
      */
     public static function getInstanceProperty($className, $propertyName, $instance = null, array $constructArgs = null)
     {
         $class = self::getReflectionClass($className, $constructArgs);
-        $property = $class->getProperty($propertyName);
+        try {
+            $property = $class->getProperty($propertyName);
+        } catch (ReflectionException $e) {
+        }
 
         if ($property) {
             // 设置目标的可访问性
             $property->setAccessible(true);
 
             if (!$instance) {
-                $instance = $class->newInstanceArgs((array)$constructArgs);
+                try {
+                    $instance = $class->newInstanceArgs((array)$constructArgs);
+                } catch (ReflectionException $e) {
+                }
             }
             return $property->getValue($instance);
         } else {

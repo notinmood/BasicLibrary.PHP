@@ -497,7 +497,7 @@ class ArrayHelper
         $targetArrays = [];
         foreach ($arrays as $item) {
             if ($item) {
-                array_push($targetArrays, $item);
+                $targetArrays[] = $item;
             }
         }
 

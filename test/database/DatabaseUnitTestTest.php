@@ -12,9 +12,6 @@ namespace Hiland\Utils\DataModel;
 
 use Hiland\Test\database\_res\UserMocker;
 use PHPUnit\Framework\TestCase;
-use think\db\exception\DataNotFoundException;
-use think\db\exception\DbException;
-use think\db\exception\ModelNotFoundException;
 
 class DatabaseUnitTestTest extends TestCase
 {
@@ -98,8 +95,8 @@ class DatabaseUnitTestTest extends TestCase
 
         $condition[DatabaseEnum::WHEREOR] = ["sid" => 2, "score" => 87];
         $result = $mate->select($condition, "sid asc");
-        dump(gettype($result));
-        dump($result->count());
+        // dump(gettype($result));
+        // dump($result->count());
         $actual = $result->count();
         $expected = 2;
         self::assertEquals($expected, $actual);
@@ -280,7 +277,6 @@ class DatabaseUnitTestTest extends TestCase
 
     /**
      * @return void
-     * @throws DbException
      */
     public function testSetValue()
     {
@@ -312,10 +308,6 @@ class DatabaseUnitTestTest extends TestCase
         $biz = new DatabaseUnitTest($table_name);
         $mate = $biz->getMate();
 
-        // $data["class"] = "六";
-        // $data["score"] = 60;
-        // $mate->maintainData($data, "1,3,4");
-
         $result = $mate->get(1);
         $actual = $result["class"];
         $expected = "一";
@@ -324,6 +316,11 @@ class DatabaseUnitTestTest extends TestCase
         $result = $mate->get(2);
         $actual = $result["class"];
         $expected = "三";
+        self::assertEquals($expected, $actual);
+
+        $result = $mate->select(["score" => [">=" => 90]]);
+        $actual = $result->count();
+        $expected = 2;
         self::assertEquals($expected, $actual);
     }
 }

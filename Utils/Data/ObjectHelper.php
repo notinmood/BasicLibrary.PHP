@@ -51,8 +51,6 @@ class ObjectHelper
     {
         $json = json_encode($object);
         return json_decode($json, true);
-
-        // return get_object_vars($object);
     }
 
     /**

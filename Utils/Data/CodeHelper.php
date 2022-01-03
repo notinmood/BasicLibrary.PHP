@@ -60,7 +60,6 @@ class CodeHelper
     {
         $content = trim($content);
         $content = ltrim($content, '<?php');
-        $content = rtrim($content, '?>');
-        return $content;
+        return rtrim($content, '?>');
     }
 }

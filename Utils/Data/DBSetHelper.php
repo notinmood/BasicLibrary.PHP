@@ -12,7 +12,6 @@ class DBSetHelper
 {
     /**
      * 获取数据集中第0行中的某个字段值
-     *
      * @param array $dbSet
      * @param string $fieldName
      * @return mixed
