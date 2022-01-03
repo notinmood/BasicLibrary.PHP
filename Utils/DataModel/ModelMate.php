@@ -88,13 +88,15 @@ class ModelMate
      * @param int|string $key     查询信息的主键值
      * @param string     $keyName 查询信息的主键名称
      * @return array 模型实体数据
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
      */
     public function get($key, $keyName = 'id')
     {
-        return self::getQueryObjectWithGet($key, $keyName)->find();
+        try {
+            return self::getQueryObjectWithGet($key, $keyName)->find();
+        } catch (DataNotFoundException $e) {
+        } catch (ModelNotFoundException $e) {
+        } catch (DbException $e) {
+        }
     }
 
     /**
@@ -102,9 +104,6 @@ class ModelMate
      * @param array  $condition 过滤条件
      * @param string $orderBy
      * @return array 符合条件的结果，一维数组
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
      * @example
      *                          $where= array();
      *                          $where['shopid'] = $merchantScanedID;
@@ -114,7 +113,12 @@ class ModelMate
     public function find($condition = array(), $orderBy = '')
     {
         $query = $this->getQueryObjectWithWhere($condition);
-        return $query->order($orderBy)->find();
+        try {
+            return $query->order($orderBy)->find();
+        } catch (DataNotFoundException $e) {
+        } catch (ModelNotFoundException $e) {
+        } catch (DbException $e) {
+        }
     }
 
     /**
@@ -126,9 +130,6 @@ class ModelMate
      * @param int    $limit            查询信息的条目数
      * @param string $fields           需要在查询结果中显示的字段信息，缺省情况下显示全部字段
      * @return array 符合条件的结果，多维数组
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
      * @example
      *                                 $where= array();
      *                                 $where['shopid'] = $merchantScanedID;
@@ -144,16 +145,26 @@ class ModelMate
         $query = $this->getQueryObjectWithSelect($condition, $orderBy, $pageIndex, $itemCountPerPage, $limit);
 
         if ($fields) {
-            return $query->field($fields)->select();
+            try {
+                return $query->field($fields)->select();
+            } catch (DataNotFoundException $e) {
+            } catch (ModelNotFoundException $e) {
+            } catch (DbException $e) {
+            }
         } else {
-            return $query->select();
+            try {
+                return $query->select();
+            } catch (DataNotFoundException $e) {
+            } catch (ModelNotFoundException $e) {
+            } catch (DbException $e) {
+            }
         }
     }
 
     /**
      * 获取满足条件的记录数
      * @param array $condition
-     * @return mixed
+     * @return int
      */
     public function getCount($condition = array())
     {
@@ -168,7 +179,6 @@ class ModelMate
      * @param string $keyName
      *            当前模型的数据库表的主键名称
      * @return boolean|number
-     * @throws DbException
      */
     public function interact($data = null, $keyName = 'id')
     {
@@ -196,7 +206,11 @@ class ModelMate
             $recordID = $data[$keyName];
             $isAddOperation = false;
 
-            $status = $this->queryObject->update($data);
+            $status = false;
+            try {
+                $status = $this->queryObject->update($data);
+            } catch (DbException $e) {
+            }
 
             if (false === $status) {
                 //$this->model->setError('更新数据出错！');
@@ -245,13 +259,15 @@ class ModelMate
     /**
      * 删除数据
      * @param array $condition
-     * @return mixed 失败返回false；成功返回删除数据的条数
-     * @throws DbException
+     * @return int 失败返回false；成功返回删除数据的条数
      */
     public function delete($condition = array())
     {
         $query = $this->getQueryObjectWithWhere($condition);
-        return $query->delete();
+        try {
+            return $query->delete();
+        } catch (DbException $e) {
+        }
     }
 
     /**
@@ -260,16 +276,18 @@ class ModelMate
      * @param string     $fieldName
      * @param string     $keyName
      * @return mixed 字段的值
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
      */
     public function getValue($key, $fieldName, $keyName = 'id')
     {
         $condition[$keyName] = $key;
         $query = $this->getQueryObjectWithWhere($condition);
-        $result = $query->find();
-        return $result[$fieldName];
+        try {
+            $result = $query->find();
+            return $result[$fieldName];
+        } catch (DataNotFoundException $e) {
+        } catch (ModelNotFoundException $e) {
+        } catch (DbException $e) {
+        }
     }
 
     /**
@@ -279,14 +297,16 @@ class ModelMate
      * @param mixed      $fieldValue
      * @param string     $keyName
      * @return int 成功时返回受影响的行数，失败时返回false
-     * @throws DbException
      */
     public function setValue($key, $fieldName, $fieldValue, $keyName = 'id')
     {
         $condition[$keyName] = $key;
         $query = $this->getQueryObjectWithWhere($condition);
         $data["{$fieldName}"] = $fieldValue;
-        return $query->update($data);
+        try {
+            return $query->update($data);
+        } catch (DbException $e) {
+        }
     }
 
     // /**
@@ -414,7 +434,7 @@ class ModelMate
         return $query;
     }
 
-    private $queried= false;
+    private $queried = false;
 
     /**
      * 获取加入where过滤条件的 Query
@@ -424,10 +444,10 @@ class ModelMate
     protected function getQueryObjectWithWhere($condition = array())
     {
         $queryObject = $this->queryObject;
-        if($this->queried){
+        if ($this->queried) {
             $queryObject = $queryObject->newQuery();
         }
-        $this->queried= true;
+        $this->queried = true;
 
         return $this->_parseWhereCondition($queryObject, $condition);
     }
@@ -490,13 +510,6 @@ class ModelMate
         return $queryObject;
     }
 
-    /**
-     * @TODO 暂时未处理 OR 的逻辑
-     * @param $queryObject
-     * @param $key
-     * @param $value
-     * @return mixed
-     */
     private function _parseWhereAndConditionDetail($queryObject, $key, $value)
     {
         if (ObjectHelper::getType($value) == ObjectTypes::ARRAYS) {

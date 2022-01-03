@@ -89,9 +89,6 @@ class DatabaseUnitTestTest extends TestCase
 
     /**
      * @return void
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
      */
     public function testWhere1()
     {
@@ -110,9 +107,6 @@ class DatabaseUnitTestTest extends TestCase
 
     /**
      * @return void
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
      */
     public function testWhere2()
     {
@@ -311,9 +305,6 @@ class DatabaseUnitTestTest extends TestCase
     /**
      * 测试WHERE条件设置的幂等性(即，多次调用WHERE条件的效果不会累计)
      * @return void
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
      */
     public function testWhereIdempotence()
     {
