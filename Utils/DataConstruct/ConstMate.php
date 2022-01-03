@@ -49,8 +49,8 @@ class ConstMate
 {
     /**
      * 根据给定的前缀和值获取常量的显示信息
-     * @param $prefix
-     * @param $value
+     * @param        $prefix
+     * @param        $value
      * @param string $textPostFix 文本后缀
      * @return mixed
      */
@@ -63,8 +63,8 @@ class ConstMate
 
     /**
      * 获取所有的常量
-     * @param string $prefix 常量的前缀字符串
-     * @param bool $withText 是否将_TEXT后缀的条目一起获取到
+     * @param string $prefix   常量的前缀字符串
+     * @param bool   $withText 是否将_TEXT后缀的条目一起获取到
      * @return array
      */
     public static function getConsts($prefix = '', $withText = true)
@@ -129,50 +129,49 @@ class ConstMate
     /**
      * 获取某前缀构成的数组，Key为不带_TEXT常量的值，Value为带_TEXT常量的值
      * @param string $prefix
-     * @param string $textPostFix 文本后缀
-     * @param bool $keyValueModeForElement 组成数组的元素是否使用KeyValue模式，默认为true
-     *      如果为true，返回的结果类似如下
-     * array(7) {
-     * [-1] => string(9) "已取消"
-     * [0] => string(9) "未处理"
-     * [1] => string(12) "正在配送"
-     * [2] => string(9) "已完成"
-     * [-2] => string(9) "退货中"
-     * [-3] => string(9) "已退货"
-     * [-4] => string(12) "申请退货"
-     * }
-     *      如果为false，返回的结果类似如下
-     * array(7) {
-     * [0] => array(2) {
-     * ["value"] => int(-1)
-     * ["text"] => string(9) "已取消"
-     * }
-     * [1] => array(2) {
-     * ["value"] => int(0)
-     * ["text"] => string(9) "未处理"
-     * }
-     * [2] => array(2) {
-     * ["value"] => int(1)
-     * ["text"] => string(12) "正在配送"
-     * }
-     * [3] => array(2) {
-     * ["value"] => int(2)
-     * ["text"] => string(9) "已完成"
-     * }
-     * [4] => array(2) {
-     * ["value"] => int(-2)
-     * ["text"] => string(9) "退货中"
-     * }
-     * [5] => array(2) {
-     * ["value"] => int(-3)
-     * ["text"] => string(9) "已退货"
-     * }
-     * [6] => array(2) {
-     * ["value"] => int(-4)
-     * ["text"] => string(12) "申请退货"
-     * }
-     * }
-     *
+     * @param string $textPostFix            文本后缀
+     * @param bool   $keyValueModeForElement 组成数组的元素是否使用KeyValue模式，默认为true
+     *                                       如果为true，返回的结果类似如下
+     *                                       array(7) {
+     *                                       [-1] => string(9) "已取消"
+     *                                       [0] => string(9) "未处理"
+     *                                       [1] => string(12) "正在配送"
+     *                                       [2] => string(9) "已完成"
+     *                                       [-2] => string(9) "退货中"
+     *                                       [-3] => string(9) "已退货"
+     *                                       [-4] => string(12) "申请退货"
+     *                                       }
+     *                                       如果为false，返回的结果类似如下
+     *                                       array(7) {
+     *                                       [0] => array(2) {
+     *                                       ["value"] => int(-1)
+     *                                       ["text"] => string(9) "已取消"
+     *                                       }
+     *                                       [1] => array(2) {
+     *                                       ["value"] => int(0)
+     *                                       ["text"] => string(9) "未处理"
+     *                                       }
+     *                                       [2] => array(2) {
+     *                                       ["value"] => int(1)
+     *                                       ["text"] => string(12) "正在配送"
+     *                                       }
+     *                                       [3] => array(2) {
+     *                                       ["value"] => int(2)
+     *                                       ["text"] => string(9) "已完成"
+     *                                       }
+     *                                       [4] => array(2) {
+     *                                       ["value"] => int(-2)
+     *                                       ["text"] => string(9) "退货中"
+     *                                       }
+     *                                       [5] => array(2) {
+     *                                       ["value"] => int(-3)
+     *                                       ["text"] => string(9) "已退货"
+     *                                       }
+     *                                       [6] => array(2) {
+     *                                       ["value"] => int(-4)
+     *                                       ["text"] => string(12) "申请退货"
+     *                                       }
+     *                                       }
      * @return array
      */
     public static function getConstArray($prefix, $keyValueModeForElement = true, $textPostFix = "_TEXT")

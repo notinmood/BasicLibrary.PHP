@@ -177,22 +177,6 @@ class StringHelper
     }
 
     /**
-     * 获取字符串分隔符前面的内容
-     * @param string $wholeStringData
-     * @param string $seperator
-     * @return string
-     */
-    public static function getStringBeforeSeparator($wholeStringData, $seperator)
-    {
-        if (self::isContains($wholeStringData, $seperator)) {
-            $array = explode($seperator, $wholeStringData);
-            return $array[0];
-        } else {
-            return $wholeStringData;
-        }
-    }
-
-    /**
      * 判断一个字符串是否被包含在另外一个字符串内
      * @param string $subStringData
      *            被查找的子字符串
@@ -211,7 +195,41 @@ class StringHelper
         }
     }
 
-    /**包装php的字符串替换(将各个参数名称进一步明确化)
+    /**
+     * 获取字符串分隔符前面的内容
+     * @param string $wholeStringData
+     * @param string $separator
+     * @return string
+     */
+    public static function getStringBeforeSeparator($wholeStringData, $separator)
+    {
+        if (self::isContains($wholeStringData, $separator)) {
+            $array = explode($separator, $wholeStringData);
+            return $array[0];
+        } else {
+            return $wholeStringData;
+        }
+    }
+
+    /**
+     * 获取字符串分隔符后面的内容
+     * @param string $wholeStringData
+     * @param string $separator
+     * @return string
+     */
+    public static function getStringAfterSeparator($wholeStringData, $separator)
+    {
+        if (self::isContains($wholeStringData, $separator)) {
+            $array = explode($separator, $wholeStringData);
+            return $array[1];
+        } else {
+            return $wholeStringData;
+        }
+    }
+
+
+    /**
+     * 包装php的字符串替换(将各个参数名称进一步明确化)
      * @param string $wholeStringData
      * @param string $oldStringDataOrRegex
      * @param string $newStringData
@@ -287,23 +305,29 @@ class StringHelper
         return $content;
     }
 
+
     /**
-     * 获取字符串分隔符后面的内容
-     * @param string $wholeStringData
-     * @param string $seperator
-     * @return string
+     * 获取某个子字符串在全字符串中出现的各个位置
+     * (因为一个全串可以包含多个子串，所以返回是一个有各个位置组成的一维数组)
+     * @param $wholeStringData
+     * @param $subStringData
+     * @return array
      */
-    public static function getStringAfterSeparator($wholeStringData, $seperator)
+    public static function getPosition($wholeStringData, $subStringData)
     {
-        if (self::isContains($wholeStringData, $seperator)) {
-            $array = explode($seperator, $wholeStringData);
-            return $array[1];
-        } else {
-            return $wholeStringData;
+        $_search_pos = mb_strpos($wholeStringData, $subStringData);
+
+        $_arr_positions = array();
+        while ($_search_pos > -1) {
+            $_arr_positions[] = $_search_pos;
+            $_search_pos = mb_strpos($wholeStringData, $subStringData, $_search_pos + 1);
         }
+
+        return $_arr_positions;
     }
 
-    /** 对带有占位符的字符串信息，进行格式化填充，形成完整的字符串。
+    /**
+     * 对带有占位符的字符串信息，进行格式化填充，形成完整的字符串。
      * 现在推荐直接使用 PHP系统自带的格式化方式,例如:"k的值为{$k}；v的值为{$v}"
      * @param $stringData          string 带有占位符的字符串信息（占位符用{?}表示），例如 "i like this {?},do you known {?}"
      * @param $realValueList       string[] 待填入的真实信息，用字符串数组表示，例如["qingdao","beijing"];

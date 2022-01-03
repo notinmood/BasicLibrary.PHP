@@ -242,8 +242,8 @@ class EnvHelper
         $request_path = $_SERVER['SCRIPT_FILENAME'];
         $request_path = realpath($request_path);
 
-        $current_path_array = StringHelper::explode($current_path, "\\");
-        $request_path_array = StringHelper::explode($request_path, "\\");
+        $current_path_array = StringHelper::explode($current_path, DIRECTORY_SEPARATOR);
+        $request_path_array = StringHelper::explode($request_path, DIRECTORY_SEPARATOR);
 
         $current_path_length = ObjectHelper::getLength($current_path_array);
         $request_path_length = ObjectHelper::getLength($request_path_array);
@@ -259,6 +259,24 @@ class EnvHelper
             }
         }
 
-        return StringHelper::implode($root_array, "\\");
+        $rootPath = StringHelper::implode($root_array, DIRECTORY_SEPARATOR);
+
+        /**
+         * 在实际项目中,此方法有可能是不被单元测试工具加载，单元测试工具又可能也在 vendor 目录下，
+         * 那么此种情况，就需要根据本文件所在的目录,移除到最后一个vendor(有可能目录其他部分还包含vendor),前面剩余的部分就是根目录。
+         */
+        if (StringHelper::isEndWith($rootPath, DIRECTORY_SEPARATOR . "vendor")) {
+            $pos = StringHelper::getPosition($current_path, DIRECTORY_SEPARATOR . "vendor");
+            $lastPosition = 0;
+            $count = getLength($pos);
+
+            if ($pos && $count > 0) {
+                $lastPosition = $pos[$count - 1];
+            }
+
+            return mb_substr($current_path, 0, $lastPosition);
+        } else {
+            return $rootPath;
+        }
     }
 }

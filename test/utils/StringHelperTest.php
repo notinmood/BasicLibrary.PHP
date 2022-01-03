@@ -15,6 +15,28 @@ use PHPUnit\Framework\TestCase;
 
 class StringHelperTest extends TestCase
 {
+    public function testGetPosition(){
+        $whole ="山东省枣庄市滕州市城市建设纲要";
+        $sub ="滕州市";
+        $actual = StringHelper::getPosition($whole,$sub);
+        $expected = [6];
+        self::assertEquals($expected,$actual);
+
+
+        $whole ="StringHelper::getPosition";
+        $sub ="e";
+        $actual = StringHelper::getPosition($whole,$sub);
+        $expected = [7,10,15];
+        self::assertEquals($expected,$actual);
+
+
+        $whole ="山东省枣庄市滕州市城市建设纲要";
+        $sub ="市";
+        $actual = StringHelper::getPosition($whole,$sub);
+        $expected = [5,8,10];
+        self::assertEquals($expected,$actual);
+    }
+    
     public function testIsEndWith()
     {
         $whole = "吴军信息传";
@@ -158,6 +180,12 @@ class StringHelperTest extends TestCase
         $whole ="i love你中国!";
         $actual = StringHelper::removeTail($whole,"中国");
         $expected = "i love你中国!";
+        self::assertEquals($expected,$actual);
+    }
+
+    public function testFormat(){
+        $actual = StringHelper::format("{?}喜欢{?}.","解大劦","qingdao");
+        $expected = "解大劦喜欢qingdao.";
         self::assertEquals($expected,$actual);
     }
 }

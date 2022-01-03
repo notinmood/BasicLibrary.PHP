@@ -10,6 +10,7 @@
 
 namespace Hiland\Utils\IO;
 
+use Hiland\Utils\Data\StringHelper;
 use PHPUnit\Framework\TestCase;
 
 class PathHelperTest extends TestCase
@@ -22,7 +23,7 @@ class PathHelperTest extends TestCase
         $p4= "dd.php";
 
         $real= PathHelper::combine($p1,$p2,$p3,$p4);
-        $desire= "aa\\bb\\cc\\dd.php";
+        $desire= StringHelper::format("aa{?}bb{?}cc{?}dd.php",DIRECTORY_SEPARATOR,DIRECTORY_SEPARATOR,DIRECTORY_SEPARATOR) ;
         self::assertEquals($desire, $real);
     }
 }
