@@ -39,32 +39,11 @@ class MateContainer
     }
 
     /**
+     * 为ORM设置数据库连接
      * @return void
      */
     private static function setConnection()
     {
-        Db::setConfig([
-            // 默认数据连接标识
-            'default' => 'defaultConnection',
-            // 数据库连接信息
-            'connections' => [
-                'defaultConnection' => [
-                    // 数据库类型
-                    'type' => 'mysql',
-                    // 主机地址
-                    'hostname' => '127.0.0.1',
-                    // 用户名
-                    'username' => 'root',
-                    // 数据库名
-                    'database' => 'mydemo',
-                    // 数据库编码默认采用utf8
-                    'charset' => 'utf8',
-                    // 数据库表前缀
-                    'prefix' => 'tmp_',
-                    // 数据库调试模式
-                    'debug' => true,
-                ],
-            ],
-        ]);
+        Db::setConfig(ConfigHelper::get("database"));
     }
 }
