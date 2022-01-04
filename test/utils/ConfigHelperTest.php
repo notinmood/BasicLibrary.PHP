@@ -28,15 +28,15 @@ class ConfigHelperTest extends TestCase
         self::assertEquals($expect, $actual);
 
         /**
-         * 测试上一步通过 get()第三个参数加载的配置文件的临时性,下次再使用 get 的时候，上次加载的临时配置文件就失效了
+         * 测试上一步通过 get()第三个参数加载的配置文件
          */
         $key = "archive.database";
         $actual = ConfigHelper::get($key, null);
-        $expect = null;
+        $expect = "archive";
         self::assertEquals($expect, $actual);
 
         /**
-         * 再次单独使用 get 方法的时候, 会使用长效的配置文件
+         * 再次单独使用 get 方法的时候, 会使用默认的配置文件
          */
         $key = "d.dA";
         $actual = ConfigHelper::get($key);
@@ -45,7 +45,6 @@ class ConfigHelperTest extends TestCase
     }
 
     /**
-     * @TODO
      * @return void
      */
     public function testGet2()
@@ -53,15 +52,18 @@ class ConfigHelperTest extends TestCase
         ConfigHelper::loadFile("demo.config.ini");
         self::assertEquals(1, 1);
 
-        // $key = "d.dA";
-        // $actual = ConfigHelper::get($key);
-        // $expect = null;
-        // self::assertEquals($expect, $actual);
-        //
-        // $key = "archive.database";
-        // $actual = ConfigHelper::get($key);
-        // $expect = "archive";
-        // self::assertEquals($expect, $actual);
+        /**
+         * 如果在第一次get前,明确使用 LoadFile时候，就不加载缺省的config.***文件了
+         */
+        $key = "d.dA";
+        $actual = ConfigHelper::get($key);
+        $expect = null;
+        self::assertEquals($expect, $actual);
+
+        $key = "archive.database";
+        $actual = ConfigHelper::get($key);
+        $expect = "archive";
+        self::assertEquals($expect, $actual);
     }
 
     /**

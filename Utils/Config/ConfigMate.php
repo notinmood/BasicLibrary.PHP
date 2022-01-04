@@ -48,65 +48,92 @@ class ConfigMate
 
     public function get($key, $default = null)
     {
-        $result = null;
-
         if (EnvHelper::isThinkPHP() && function_exists('config')) {
-            $result = config($key);
+            return config($key);
         } else {
-            //确保至少加载缺省的config.php文件
-            if (self::isNeedLoadDefaultConfig()) {
-                $this->loadFile();
+            if (ObjectHelper::isEmpty(self::$__configContentArray)) {
+                self::loadFile();
             }
 
-            $configContent = self::getCurrentConfigContent();
-            $result = ArrayHelper:: getNode($configContent, $key);
+            foreach (self::$__configContentArray as $configFileFullName => $currentConfigContent) {
+                $result = ArrayHelper::getNode($currentConfigContent, $key);
+                if ($result != null) {
+                    return $result;
+                }
+            }
+            return $default;
         }
-
-        if (ObjectHelper::isEmpty($result)) {
-            $result = $default;
-        }
-
-        return $result;
     }
 
-    /**
-     * 是否需要自动载入缺省的config文件
-     * @return bool
-     */
-    private function isNeedLoadDefaultConfig()
+    // /**
+    //  * 是否需要载入长效的config文件
+    //  * @return bool
+    //  */
+    // private function isNeedLoadDefaultConfig()
+    // {
+    //     if (self::$__longConfigFileName) {
+    //         return false;
+    //     } else {
+    //         return true;
+    //     }
+    // }
+
+    private function loadFileDetail($fileFullName)
     {
-        if (ArrayHelper::getLength(self::$__configContentArray) == 0) {
-            return true;
-        } else {
-            return false;
+        $thisFileLoaded = ArrayHelper::isContainsKey(self::$__configContentArray, $fileFullName);
+        if (!$thisFileLoaded) {
+            $_parser = self::getParser($fileFullName);
+
+            $fileContent = null;
+            if (file_exists($fileFullName)) {
+                $fileContent = $_parser->loadFileToArray($fileFullName);
+            }
+
+            self::$__configContentArray[$fileFullName] = $fileContent;
         }
     }
+
 
     public function loadFile($fileName = "")
     {
-        if (!$fileName) {
-            $fileName = "config.php";
-        }
+        $rootPath = EnvHelper::getRootPhysicalPath();
+        $defaultFileNames = ["config.php", "config.ini", "config.json"];
 
-        self::$__currentConfigFileName = $fileName;
-        $thisFileLoaded = ArrayHelper::isContains(self::$__configFileLoaded, $fileName);
-        if (!$thisFileLoaded) {
-            self::$__configFileLoaded[] = $fileName;
-
-            self::$__currentConfigParser = self::getParser($fileName);
-            if (!self::getCurrentConfigContent($fileName)) {
-                $result = null;
-                $rootPath = EnvHelper::getRootPhysicalPath();
-                $configFileFullName = PathHelper::combine($rootPath, $fileName);
+        $fileFullName = PathHelper::combine($rootPath, $fileName);
+        if (!$fileName || !file_exists($fileFullName)) {
+            foreach ($defaultFileNames as $defaultFileName) {
+                $configFileFullName = PathHelper::combine($rootPath, $defaultFileName);
                 if (file_exists($configFileFullName)) {
-                    $result = self::$__currentConfigParser->loadFileToArray($configFileFullName);
+                    // $fileName = $defaultFileName;
+                    $fileFullName = $configFileFullName;
+                    break;
                 }
-
-                self::$__configContentArray[$fileName] = $result;
             }
         }
 
+        self::loadFileDetail($fileFullName);
         return $this;
+
+
+        // self::$__currentConfigFileName = $fileName;
+        // $thisFileLoaded = ArrayHelper::isContains(self::$__configFileLoaded, $fileName);
+        // if (!$thisFileLoaded) {
+        //     self::$__configFileLoaded[] = $fileName;
+        //
+        //     self::$__currentConfigParser = self::getParser($fileName);
+        //     if (!self::getCurrentConfigContent($fileName)) {
+        //         $result = null;
+        //         $rootPath = EnvHelper::getRootPhysicalPath();
+        //         $configFileFullName = PathHelper::combine($rootPath, $fileName);
+        //         if (file_exists($configFileFullName)) {
+        //             $result = self::$__currentConfigParser->loadFileToArray($configFileFullName);
+        //         }
+        //
+        //         self::$__configContentArray[$fileName] = $result;
+        //     }
+        // }
+        //
+        // return $this;
     }
 
     private static function getParser($fileName)
@@ -125,13 +152,12 @@ class ConfigMate
         }
     }
 
-    private static function getCurrentConfigContent()
-    {
-        $fileName = self::$__currentConfigFileName;
-        if (ArrayHelper::isContainsKey(self::$__configContentArray, $fileName)) {
-            return self::$__configContentArray[$fileName];
-        } else {
-            return null;
-        }
-    }
+    // private static function getCurrentConfigContent($fileFullName)
+    // {
+    //     if (ArrayHelper::isContainsKey(self::$__configContentArray, $fileFullName)) {
+    //         return self::$__configContentArray[$fileFullName];
+    //     } else {
+    //         return null;
+    //     }
+    // }
 }

@@ -39,30 +39,34 @@ class ConfigMateTest extends TestCase
 
     public function testArrayGet()
     {
-        $actual = ConfigMate::Instance()->loadFile("demo.config.php")->get('a');
-        $expected = "AAA";
-        self::assertEquals("$expected", "$actual");
-
         $actual = ConfigMate::Instance()->loadFile("config_test.php")->get('a');
         $expected = "T.AAA";
         self::assertEquals("$expected", "$actual");
 
-        //在没有指定新的config.php文件前,使用最近一次加载的config.php配置文件
+        /**
+         * 如果加载的多个配置文件内，都含有某个配置项，那么从第一个配置文件内读取
+         * ────────────────────────
+         * 本例中，demo.config.php的配置项a的值为 AAA,但因为 config_test.php 在前面已经加载了，
+         * config_test.php内含有配置项a,其值为 T.AAA
+         */
+        $actual = ConfigMate::Instance()->loadFile("demo.config.php")->get('a');
+        $expected = "T.AAA";
+        self::assertEquals("$expected", "$actual");
+
+
         $actual = ConfigMate::Instance()->get('a');
         $expected = "T.AAA";
         self::assertEquals("$expected", "$actual");
 
-        $actual = ConfigMate::Instance()->loadFile("demo.config.php")->get('a');
-        $expected = "AAA";
-        self::assertEquals("$expected", "$actual");
 
         $actual = ConfigMate::Instance()->loadFile("demo.config.php")->get('d.dB.dBA');
-        $expected = "dba-content";
+        $expected = "T.dba-content";
         self::assertEquals("$expected", "$actual");
 
-        //判断不存在的配置文件
+        //加载不存在的配置文件,也不会抛出异常
         $actual = ConfigMate::Instance()->loadFile("config22.php")->get('a');
-        self::assertNull($actual);
+        $expected = "T.AAA";
+        self::assertEquals($expected,$actual);
     }
 
     public function testIniGet()
