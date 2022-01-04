@@ -29,6 +29,8 @@ class ConfigMate
     private static $__configFileLoaded = [];
     private static $__currentConfigFileName = "";
     private static $__currentConfigParser = null;
+    private static $__tempConfigFileName = "";
+    private static $__longConfigFileName = "";
 
     private function __construct()
     {

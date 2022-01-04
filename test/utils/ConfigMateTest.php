@@ -28,13 +28,13 @@ class ConfigMateTest extends TestCase
         } catch (ReflectionException $e) {
         }
         $parser = $parser->toString();
-        self::assertEquals(@"Hiland\Utils\Environment\ConfigParserJson", $parser);
+        self::assertEquals(@"Hiland\Utils\Config\ConfigParserJson", $parser);
 
         //2、方法2是对方法1的包装(方法查找、可视化设置、方法调用都进行了封装),
         //建议以后对私有成员的测试都采用此种方法
         $parser = ReflectionHelper::executeStaticMethod(ConfigMate::class, "getParser", "demo.config.php");
         $parser = $parser->toString();
-        self::assertEquals(@"Hiland\Utils\Environment\ConfigParserArray", $parser);
+        self::assertEquals(@"Hiland\Utils\Config\ConfigParserArray", $parser);
     }
 
     public function testArrayGet()
