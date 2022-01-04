@@ -12,6 +12,7 @@ namespace Hiland\Utils\Config;
 
 /**
  * 配置文件辅助类(向外部暴露的接口)
+ * (特别注意：如果在第一次使用 两个参数的get()方法前，使用了 三个参数的get或者loadFile,那么系统就不会再加载缺省的config.***文件了)
  */
 class ConfigHelper
 {

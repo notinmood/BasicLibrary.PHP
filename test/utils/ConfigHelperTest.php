@@ -13,6 +13,9 @@ namespace Hiland\Utils\Environment;
 use Hiland\Utils\Config\ConfigHelper;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * 由于本类型几个方法内使用的ConfigHelper 和 ConfigMate 会相互影响，本类型内的几个方法请分别单独测试。
+ */
 class ConfigHelperTest extends TestCase
 {
     public function testGet1()
@@ -106,7 +109,12 @@ class ConfigHelperTest extends TestCase
 
         $key = "office";
         $actual = ConfigHelper::get($key);
-        dump($actual);
+        $expect = null;
+        self::assertEquals($expect, $actual);
+
+        ConfigHelper::loadFile("config.php");
+        $key = "office";
+        $actual = ConfigHelper::get($key);
         $expect = ["MS", "WPS"];
         self::assertEquals($expect, $actual);
     }
