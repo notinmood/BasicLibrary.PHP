@@ -8,21 +8,25 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Utils\Environment;
+namespace Hiland\Utils\Config;
 
 use Hiland\Utils\Data\ArrayHelper;
 use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\StringHelper;
+use Hiland\Utils\Environment\EnvHelper;
 use Hiland\Utils\IO\FileHelper;
 use Hiland\Utils\IO\PathHelper;
 
+// use function Hiland\Utils\Environment\config;
+
 /**
- * 配置文件交互的核心类
+ * 配置文件交互的核心类(不直接向外暴露；外部请使用ConfigHelper访问配置信息)
  */
 class ConfigMate
 {
     private static $_instance = null;
     private static $__configContentArray = [];
+    private static $__configFileLoaded = [];
     private static $__currentConfigFileName = "";
     private static $__currentConfigParser = null;
 
@@ -52,22 +56,8 @@ class ConfigMate
                 $this->loadFile();
             }
 
-            $nameNodes = explode(".", $key);
-
             $configContent = self::getCurrentConfigContent();
-            if ($configContent) {
-                if ($nameNodes[0]) {
-                    $result = $configContent[$nameNodes[0]];
-                }
-
-                for ($i = 1; $i < count($nameNodes); $i++) {
-                    if (isset($result[$nameNodes[$i]])) {
-                        $result = $result[$nameNodes[$i]];
-                    } else {
-                        break;
-                    }
-                }
-            }
+            $result = ArrayHelper:: getNode($configContent, $key);
         }
 
         if (ObjectHelper::isEmpty($result)) {
@@ -90,19 +80,28 @@ class ConfigMate
         }
     }
 
-    public function loadFile($fileName = "config.php")
+    public function loadFile($fileName = "")
     {
-        self::$__currentConfigFileName = $fileName;
-        self::$__currentConfigParser = self::getParser($fileName);
-        if (!self::getCurrentConfigContent($fileName)) {
-            $result = null;
-            $rootPath = EnvHelper::getRootPhysicalPath();
-            $configFileFullName = PathHelper::combine($rootPath, $fileName);
-            if (file_exists($configFileFullName)) {
-                $result = self::$__currentConfigParser->loadFileToArray($configFileFullName);
-            }
+        if (!$fileName) {
+            $fileName = "config.php";
+        }
 
-            self::$__configContentArray[$fileName] = $result;
+        self::$__currentConfigFileName = $fileName;
+        $thisFileLoaded = ArrayHelper::isContains(self::$__configFileLoaded, $fileName);
+        if (!$thisFileLoaded) {
+            self::$__configFileLoaded[] = $fileName;
+
+            self::$__currentConfigParser = self::getParser($fileName);
+            if (!self::getCurrentConfigContent($fileName)) {
+                $result = null;
+                $rootPath = EnvHelper::getRootPhysicalPath();
+                $configFileFullName = PathHelper::combine($rootPath, $fileName);
+                if (file_exists($configFileFullName)) {
+                    $result = self::$__currentConfigParser->loadFileToArray($configFileFullName);
+                }
+
+                self::$__configContentArray[$fileName] = $result;
+            }
         }
 
         return $this;
@@ -114,7 +113,7 @@ class ConfigMate
         $extensionName = StringHelper::upperStringFirstChar($extensionName);
 
         $targetParserType = "ConfigParser{$extensionName}";
-        $targetParserClass = "Hiland\\Utils\\Environment\\{$targetParserType}";
+        $targetParserClass = "Hiland\\Utils\\Config\\{$targetParserType}";
         $targetFileBaseName = "{$targetParserType}.php";
         $targetFileFullName = PathHelper::combine(__DIR__, $targetFileBaseName);
         if (file_exists($targetFileFullName)) {

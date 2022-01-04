@@ -34,17 +34,16 @@ class ArrayHelper
      * @param $value
      * @return bool
      */
-    public static function isContainsValue($array, $value){
-        foreach ($array as $k=>$v){
-            if($v== $value){
+    public static function isContainsValue($array, $value)
+    {
+        foreach ($array as $k => $v) {
+            if ($v == $value) {
                 return true;
             }
         }
 
         return false;
     }
-
-
 
     /**
      * 在数组的开头添加新的元素(新元素的key是数字形式索引)
@@ -285,7 +284,6 @@ class ArrayHelper
 
         return $xml;
     }
-
 
     /**
      * 对数组的key和value进行翻转
@@ -612,6 +610,40 @@ class ArrayHelper
 
             if ($selector == $currentKey) {
                 $result[] = $values[$i];
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * 获取节点的值
+     * (结果可能为一个子数组，也可以为一个具体数值)
+     * @param array $arrayData
+     * @param string $key 节点的名称(可以包含多级别的名称，多级别间用 "." 连接)
+     * @param mixed $defaultValue
+     * @return mixed|null|array
+     */
+    public static function getNode($arrayData, $key, $defaultValue = null)
+    {
+        $keyNodes = explode(".", $key);
+
+        $configContent = $arrayData;
+        if (!$configContent) {
+            return $defaultValue;
+        }
+
+        $firstNodeName = $keyNodes[0];
+        $result = $configContent[$firstNodeName];
+        $keyNodeCount = count($keyNodes);
+
+        for ($i = 1; $i < $keyNodeCount; $i++) {
+            $currentNameNode = $keyNodes[$i];
+            if (isset($result[$currentNameNode])) {
+                $result = $result[$currentNameNode];
+            } else {
+                $result = $defaultValue;
+                break;
             }
         }
 

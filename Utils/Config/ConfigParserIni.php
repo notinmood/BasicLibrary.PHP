@@ -8,7 +8,10 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Utils\Environment;
+namespace Hiland\Utils\Config;
+
+use Hiland\Utils\Data\ObjectHelper;
+use Hiland\Utils\Data\ObjectTypes;
 
 /**
  * ini配置文件解析器
@@ -37,8 +40,12 @@ class ConfigParserIni extends ConfigParser
             }
 
             // overwrite / set current namespace values
-            foreach ($properties as $prop => $val) {
-                $config[$name][$prop] = $val;
+            if (ObjectHelper::getType($properties) == ObjectTypes::ARRAYS) {
+                foreach ($properties as $prop => $val) {
+                    $config[$name][$prop] = $val;
+                }
+            } else {
+                $config[$name] = $properties;
             }
         }
         return $config;

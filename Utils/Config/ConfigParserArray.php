@@ -8,7 +8,7 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Utils\Environment;
+namespace Hiland\Utils\Config;
 
 /**
  * 内部返回数组类型的并用.php文件表述的文件解析器(缺省的解析器)

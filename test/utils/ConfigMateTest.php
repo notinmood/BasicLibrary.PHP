@@ -10,6 +10,7 @@
 
 namespace Hiland\Utils\Environment;
 
+use Hiland\Utils\Config\ConfigMate;
 use Hiland\Utils\Data\ReflectionHelper;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;

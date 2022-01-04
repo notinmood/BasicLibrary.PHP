@@ -253,6 +253,31 @@ class ArrayHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
+    public function testGetNode()
+    {
+        $array = [
+            'mysql' => ['host' => '1', 'user' => 'reddit.com'],
+            'mongodb' => ['host' => 2, 'url' => 'twitter.com'],
+            'mssql' => ['id' => 3, 'address' => ["state"=>"WA","city"=>"Redmond"]],
+        ];
+
+        $actual = ArrayHelper::getNode($array, 'mysql');
+        $expected = ['host' => '1', 'user' => 'reddit.com'];
+        self::assertEquals($expected, $actual);
+
+        $actual = ArrayHelper::getNode($array, 'mysql.user', "root");
+        $expected = 'reddit.com';
+        self::assertEquals($expected, $actual);
+
+        $actual = ArrayHelper::getNode($array, 'mssql.address.city', "QD");
+        $expected = 'Redmond';
+        self::assertEquals($expected, $actual);
+
+        $actual = ArrayHelper::getNode($array, 'mssql.address.telephone', "110");
+        $expected = '110';
+        self::assertEquals($expected, $actual);
+    }
+
     public function testFlatten1()
     {
         $array = [
@@ -339,12 +364,12 @@ class ArrayHelperTest extends TestCase
         self::assertEquals($expected, $actual);
 
         $array2 = ["beijing", "shanghai", "qingdao"];
-        $actual = ArrayHelper::isContainsValue($array2,"qingdao");
+        $actual = ArrayHelper::isContainsValue($array2, "qingdao");
         $expected = true;
-        self::assertEquals($expected,$actual);
+        self::assertEquals($expected, $actual);
 
-        $actual = ArrayHelper::isContainsValue($array2,"guangzhou");
+        $actual = ArrayHelper::isContainsValue($array2, "guangzhou");
         $expected = false;
-        self::assertEquals($expected,$actual);
+        self::assertEquals($expected, $actual);
     }
 }

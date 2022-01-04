@@ -8,7 +8,7 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Utils\Environment;
+namespace Hiland\Utils\Config;
 
 /**
  * (抽象的)配置文件解析器

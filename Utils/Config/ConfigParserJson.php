@@ -8,7 +8,7 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Utils\Environment;
+namespace Hiland\Utils\Config;
 
 use Hiland\Utils\Data\JsonHelper;
 use Hiland\Utils\IO\FileHelper;
