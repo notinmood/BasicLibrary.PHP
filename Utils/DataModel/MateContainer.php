@@ -28,7 +28,8 @@ class MateContainer
              * 否则此处不需要处理，ThinkPHP会自动处理。
              */
             if (EnvHelper::isThinkPHP() == false) {
-                self::setConnection();
+                // 为ORM设置数据库连接
+                Db::setConfig(ConfigHelper::get("database"));
             }
 
             $mate = new ModelMate($name);
@@ -36,14 +37,5 @@ class MateContainer
 
             return $mate;
         }
-    }
-
-    /**
-     * 为ORM设置数据库连接
-     * @return void
-     */
-    private static function setConnection()
-    {
-        Db::setConfig(ConfigHelper::get("database"));
     }
 }

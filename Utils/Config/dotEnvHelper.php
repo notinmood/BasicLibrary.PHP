@@ -24,7 +24,6 @@ use Hiland\Utils\Environment\EnvHelper;
 class dotEnvHelper
 {
     static $loaded = false;
-    const ENV_PREFIX = 'PHP_';
     static $loadedArray = [];
 
     /**
@@ -39,21 +38,6 @@ class dotEnvHelper
 
         if (file_exists($filePath)) {
             self::$loadedArray = (new ConfigParserIni())->loadFileToArray($filePath);
-
-            // /**
-            //  * 往系统环境放入一份变量
-            //  */
-            // foreach (self::$loadedArray as $key => $val) {
-            //     $prefix = static::ENV_PREFIX . strtoupper($key);
-            //     if (is_array($val)) {
-            //         foreach ($val as $k => $v) {
-            //             $item = $prefix . '_' . strtoupper($k);
-            //             putenv("$item=$v");
-            //         }
-            //     } else {
-            //         putenv("$prefix=$val");
-            //     }
-            // }
         }
     }
 
@@ -82,17 +66,5 @@ class dotEnvHelper
         }else{
             return $default;
         }
-
-        // $result = getenv(static::ENV_PREFIX . strtoupper(str_replace('.', '_', $name)));
-        //
-        // if (false !== $result) {
-        //     if ('false' === $result) {
-        //         $result = false;
-        //     } elseif ('true' === $result) {
-        //         $result = true;
-        //     }
-        //     return $result;
-        // }
-        // return $result;
     }
 }

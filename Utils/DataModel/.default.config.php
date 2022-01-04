@@ -15,18 +15,6 @@
 use Hiland\Utils\Config\ConfigHelper;
 
 return [
-    'a' => 'AAA',
-    'b' => false,
-    'c' => 123,
-    'd' => [
-        'dA' => 'dA-content',
-        'dB' => [
-            'dBA' => 'dba-content',
-        ],
-    ],
-
-    'office' => ["MS", "WPS"],
-
     'database' => [
         // 默认使用的数据库连接配置
         'default' => 'mysql',

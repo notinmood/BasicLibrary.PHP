@@ -45,4 +45,9 @@ class ConfigHelper
         $result = $configMate->get($key, $default);
         return dotEnvHelper::get($key, $result);
     }
+
+    public static function getEnv($key, $defaultValue = null)
+    {
+        return dotEnvHelper::get($key, $defaultValue);
+    }
 }
