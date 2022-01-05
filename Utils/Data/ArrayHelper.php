@@ -64,7 +64,7 @@ class ArrayHelper
      * @param $value
      * @return array|mixed
      */
-    public static function addItem(&$array, $key, $value)
+    public static function addItem($array, $key, $value)
     {
         if ($array == null) {
             $array = [];
@@ -84,6 +84,22 @@ class ArrayHelper
     public static function addTail($array, ...$items)
     {
         return self::push($array, ...$items);
+    }
+
+    /**
+     * 安全地从数组中获取元素(即便没有这个元素也不会抛出异常)
+     * @param $array
+     * @param $key
+     * @param $defaultValue
+     * @return mixed|null
+     */
+    public static function getItem($array, $key, $defaultValue = null)
+    {
+        if (isset($array[$key])) {
+            return $array[$key];
+        } else {
+            return $defaultValue;
+        }
     }
 
     /**
@@ -619,9 +635,9 @@ class ArrayHelper
     /**
      * 获取节点的值
      * (结果可能为一个子数组，也可以为一个具体数值)
-     * @param array $arrayData
+     * @param array  $arrayData
      * @param string $key 节点的名称(可以包含多级别的名称，多级别间用 "." 连接)
-     * @param mixed $defaultValue
+     * @param mixed  $defaultValue
      * @return mixed|null|array
      */
     public static function getNode($arrayData, $key, $defaultValue = null)
@@ -634,7 +650,8 @@ class ArrayHelper
         }
 
         $firstNodeName = $keyNodes[0];
-        $result = $configContent[$firstNodeName];
+
+        $result = self::getItem($configContent,$firstNodeName);
         $keyNodeCount = count($keyNodes);
 
         for ($i = 1; $i < $keyNodeCount; $i++) {

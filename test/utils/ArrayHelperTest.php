@@ -14,6 +14,20 @@ use PHPUnit\Framework\TestCase;
 
 class ArrayHelperTest extends TestCase
 {
+    public function testGetItem()
+    {
+        $data["city"] = "qingdao";
+        $data["provence"] = "shandong";
+
+        $actual = ArrayHelper::getItem($data,"city");
+        $expected = "qingdao";
+        self::assertEquals($expected,$actual);
+
+        $actual = ArrayHelper::getItem($data,"street","");
+        $expected = "";
+        self::assertEquals($expected,$actual);
+    }
+
     public function testSort2D()
     {
         $myArray = [
@@ -258,7 +272,7 @@ class ArrayHelperTest extends TestCase
         $array = [
             'mysql' => ['host' => '1', 'user' => 'reddit.com'],
             'mongodb' => ['host' => 2, 'url' => 'twitter.com'],
-            'mssql' => ['id' => 3, 'address' => ["state"=>"WA","city"=>"Redmond"]],
+            'mssql' => ['id' => 3, 'address' => ["state" => "WA", "city" => "Redmond"]],
         ];
 
         $actual = ArrayHelper::getNode($array, 'mysql');

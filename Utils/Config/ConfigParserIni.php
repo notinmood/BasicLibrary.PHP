@@ -12,6 +12,7 @@ namespace Hiland\Utils\Config;
 
 use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\ObjectTypes;
+use Hiland\Utils\Data\StringHelper;
 
 /**
  * ini配置文件解析器
@@ -24,7 +25,13 @@ class ConfigParserIni extends ConfigParser
         $ini = parse_ini_file($fileFullName, true);
         $config = array();
         foreach ($ini as $namespace => $properties) {
-            list($name, $extends) = explode(':', $namespace);
+            if(StringHelper::isContains($namespace,":")){
+                list($name, $extends) = explode(':', $namespace);
+            }else{
+                $name= $namespace;
+                $extends= "";
+            }
+
             $name = trim($name);
             $extends = trim($extends);
             // create namespace if necessary
