@@ -64,7 +64,6 @@ class ModelDDLTest extends TestCase
         $newTableName="user_aa__";
         $ddl->duplicateTable($tableName,$newTableName);
 
-
         $actual = $ddl->isExistTable($newTableName);
         $expected = true;
         self::assertEquals($expected, $actual);

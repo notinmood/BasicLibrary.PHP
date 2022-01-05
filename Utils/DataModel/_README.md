@@ -1,15 +1,7 @@
 说明
 --
 
-## 配置说明
 
-以下两个文件复制到项目跟目录，并修改名称
-
-```shell
-1. .default.env 修改为 .env 
-2. .default.config.php 修改为 config.php
-```
-并且修改后的.env文件不嵌入vcs中。
 
 ## 从Connection上执行方法
 

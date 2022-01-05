@@ -95,8 +95,7 @@ class DatabaseUnitTestTest extends TestCase
 
         $condition[DatabaseEnum::WHEREOR] = ["sid" => 2, "score" => 87];
         $result = $mate->select($condition, "sid asc");
-        // dump(gettype($result));
-        // dump($result->count());
+
         $actual = $result->count();
         $expected = 2;
         self::assertEquals($expected, $actual);

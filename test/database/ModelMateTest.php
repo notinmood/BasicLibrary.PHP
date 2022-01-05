@@ -36,7 +36,6 @@ class ModelMateTest extends TestCase
         $mate = DatabaseClient::getMate("user");
         $queryObject = ReflectionHelper::getInstanceProperty(ModelMate::class, "queryObject", $mate);
 
-
         /**
          * 1. $queryObject->where() 的原生写法
          */
