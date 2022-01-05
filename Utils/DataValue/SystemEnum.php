@@ -10,6 +10,9 @@
 
 namespace Hiland\Utils\DataValue;
 
+/**
+ * 系统使用到的"枚举"类型
+ */
 class SystemEnum
 {
     //-- 随机数类型 -- Utils/Data/RandHelper.php
