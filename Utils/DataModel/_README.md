@@ -1,8 +1,6 @@
 说明
 --
 
-
-
 ## 从Connection上执行方法
 
 如果ModelMate的 queryObject或modelObject属性内，没有某数据库查询方法，那么可以使用 queryObject 对象的属性 Connection 上的方法：
