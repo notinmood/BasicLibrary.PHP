@@ -5,6 +5,7 @@ namespace Hiland\Utils\DataModel;
 use Hiland\Utils\Data\ArrayHelper;
 use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\ObjectTypes;
+use Hiland\Utils\DataValue\SystemEnum;
 use ReflectionException;
 use think\Config;
 use think\db\BaseQuery;
@@ -457,10 +458,10 @@ class ModelMate
     {
         foreach ($conditions as $key => $value) {
             switch ($key) {
-                case DatabaseEnum::WHEREOR:
+                case SystemEnum::WhereConnector_OR:
                     $this->_parseWhereOrCondition($value);
                     break;
-                case DatabaseEnum::WHEREAND:
+                case SystemEnum::WhereConnector_AND:
                     $this->_parseWhereAndCondition($value);
                     break;
                 default:

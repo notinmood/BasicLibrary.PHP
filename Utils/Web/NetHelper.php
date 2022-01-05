@@ -68,22 +68,22 @@ class NetHelper
      * 根据是否有$data值进行智能判断是发起post还是get请求
      * @param string $url
      *            被请求的url
-     * @param mixed $data
+     * @param mixed  $data
      *            post请求时发送的数据
-     * @param int   $timeOutSeconds
+     * @param int    $timeOutSeconds
      *            请求超时时间
-     * @param bool  $isSSLVerify
+     * @param bool   $isSSLVerify
      *            是否进行ssl验证
-     * @param array $headerArray
+     * @param array  $headerArray
      *            请求头信息
-     * @param bool  $isForceUnSafe
+     * @param bool   $isForceUnSafe
      *            是否强制启用非安全模式（php5.6下在向微信服务器上传资源的时候选用此选项）
-     * @param array $certificateFileArray
+     * @param array  $certificateFileArray
      *            请求的证书信息（证书需要带全部的物理路径）并且证书的文件名命名格式要求如下：
      *            cert证书 命名格式为 *****cert.pem
      *            key证书命名格式为 *****key.pem
      *            ca证书命名格式为 *****ca.pem
-     * @return mixed
+     * @return bool|string
      * @throws WechatException
      */
     public static function request($url, $data = null, $timeOutSeconds = 0, $isSSLVerify = false,

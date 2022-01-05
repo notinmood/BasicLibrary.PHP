@@ -6,7 +6,7 @@
  * Time: 9:39
  */
 
-namespace Hiland\Utils\Datas;
+namespace Hiland\Utils\DataValue;
 
 use Hiland\Utils\DataConstruct\ConstMate;
 

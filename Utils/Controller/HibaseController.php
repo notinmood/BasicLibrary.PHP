@@ -8,7 +8,7 @@ use Hiland\Biz\Logger\CommonLogger;
 use Hiland\Utils\Data\CipherHelper;
 use Hiland\Utils\DataModel\ModelMate;
 use Hiland\Utils\DataModel\ViewMate;
-use Hiland\Utils\Datas\SystemConst;
+use Hiland\Utils\DataValue\SystemConst;
 use Hiland\Utils\Web\WebHelper;
 
 /**TODO:需要调整,不能依赖ThinkPHP

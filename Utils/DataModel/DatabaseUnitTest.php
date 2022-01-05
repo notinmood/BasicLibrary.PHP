@@ -11,6 +11,7 @@
 namespace Hiland\Utils\DataModel;
 
 use Hiland\Utils\Data\RandHelper;
+use Hiland\Utils\DataValue\SystemEnum;
 
 class DatabaseUnitTest
 {
@@ -34,7 +35,7 @@ class DatabaseUnitTest
     public function __construct($tableName, $duplicateRowCount = -1, $autoDispose = True)
     {
         $this->autoDispose = $autoDispose;
-        $random = RandHelper::rand(8,"NUMBER");
+        $random = RandHelper::rand(8,SystemEnum::RandCategory_NUMBER);
         $this->newTableName = $tableName . "__dup_{$random}__";
 
         $this->ddl = DatabaseClient::getDDL();
@@ -80,6 +81,4 @@ class DatabaseUnitTest
     {
         return $this->mate;
     }
-
-
 }

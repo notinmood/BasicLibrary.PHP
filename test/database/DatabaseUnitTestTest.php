@@ -11,6 +11,7 @@
 namespace Hiland\Utils\DataModel;
 
 use Hiland\Test\database\_res\UserMocker;
+use Hiland\Utils\DataValue\SystemEnum;
 use PHPUnit\Framework\TestCase;
 
 class DatabaseUnitTestTest extends TestCase
@@ -93,7 +94,7 @@ class DatabaseUnitTestTest extends TestCase
         $biz = new DatabaseUnitTest($table_name);
         $mate = $biz->getMate();
 
-        $condition[DatabaseEnum::WHEREOR] = ["sid" => 2, "score" => 87];
+        $condition[SystemEnum::WhereConnector_OR] = ["sid" => 2, "score" => 87];
         $result = $mate->select($condition, "sid asc");
 
         $actual = $result->count();
@@ -110,7 +111,7 @@ class DatabaseUnitTestTest extends TestCase
         $biz = new DatabaseUnitTest($table_name);
         $mate = $biz->getMate();
 
-        $condition[DatabaseEnum::WHEREOR] = ["sid" => 2, "class" => "三"];
+        $condition[SystemEnum::WhereConnector_OR] = ["sid" => 2, "class" => "三"];
         $result = $mate->select($condition, "sid asc");
         $actual = $result->count();
         $expected = 4;
@@ -123,7 +124,7 @@ class DatabaseUnitTestTest extends TestCase
         $biz = new DatabaseUnitTest($table_name);
         $mate = $biz->getMate();
 
-        $condition[DatabaseEnum::WHEREAND] = ["score" => 100, "class" => "三"];
+        $condition[SystemEnum::WhereConnector_AND] = ["score" => 100, "class" => "三"];
         $result = $mate->select($condition, "sid asc");
         $actual = $result->count();
         $expected = 1;

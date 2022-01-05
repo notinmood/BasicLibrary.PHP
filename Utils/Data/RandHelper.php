@@ -2,14 +2,15 @@
 
 namespace Hiland\Utils\Data;
 
+use Hiland\Utils\DataValue\SystemEnum;
+
 class RandHelper
 {
     /**
      * 生成随机字符串
-     *
-     * @param int $length
+     * @param int    $length
      *            字符串长度
-     * @param string $format
+     * @param string $category
      *            可以出现在字符串中的字符类别，取值分别为
      *            ALL 包括大写小写字符、数字、特殊字符
      *            LETTER 大写小写字符
@@ -18,7 +19,7 @@ class RandHelper
      *            [任意值] 大写小写字符、数字（不包含特殊字符）
      * @return string
      */
-    public static function rand($length = 8, $format = 'ALL')
+    public static function rand($length = 8, $category = SystemEnum::RandCategory_ALL)
     {
         $result = '';
 
@@ -27,17 +28,17 @@ class RandHelper
         $digital = '0123456789';
         $special = '~!@#$%^&*()_+|}{<>?-=\/,.';
 
-        switch ($format) {
-            case 'ALL':
+        switch ($category) {
+            case SystemEnum::RandCategory_ALL:
                 $chars = $upperLetter . $lowerLetter . $digital . $special;
                 break;
-            case 'LETTER':
+            case SystemEnum::RandCategory_LETTER:
                 $chars = $upperLetter . $lowerLetter;
                 break;
-            case 'NUMBER':
+            case SystemEnum::RandCategory_NUMBER:
                 $chars = $digital;
                 break;
-            case 'SPECIAL':
+            case SystemEnum::RandCategory_SPECIAL:
                 $chars = $special;
                 break;
             default:
