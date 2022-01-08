@@ -95,8 +95,8 @@ class ObjectHelper
      */
     public static function equals($dataA, $dataB, $strictlyCompare = false)
     {
-        $typeA = self::getType($dataA);
-        $typeB = self::getType($dataB);
+        $typeA = self::getTypeName($dataA);
+        $typeB = self::getTypeName($dataB);
 
         if ($strictlyCompare) {
             if ($typeA != $typeB) {
@@ -126,7 +126,7 @@ class ObjectHelper
      * @param $data
      * @return string
      */
-    public static function getType($data)
+    public static function getTypeName($data)
     {
         if ($data instanceof DateTime) {
             return ObjectTypes::DATETIME;
@@ -171,7 +171,7 @@ class ObjectHelper
 
     public static function getString($data)
     {
-        $type = self::gettype($data);
+        $type = self::getTypeName($data);
         switch ($type) {
             case ObjectTypes::BOOLEAN:
                 if ($data == true) {
@@ -196,7 +196,7 @@ class ObjectHelper
 
     public static function isJson($data)
     {
-        if (self::getType($data) == ObjectTypes::STRING) {
+        if (self::getTypeName($data) == ObjectTypes::STRING) {
             json_decode($data);
             return (json_last_error() == JSON_ERROR_NONE);
         } else {
@@ -239,7 +239,7 @@ class ObjectHelper
             return true;
         }
 
-        $type = self::getType($data);
+        $type = self::getTypeName($data);
 
         $result = false;
         if ($memberName) {
@@ -284,7 +284,7 @@ class ObjectHelper
     {
         // return is_numeric($data);
 
-        $type = self::getType($data);
+        $type = self::getTypeName($data);
         if ($type == ObjectTypes::INTEGER || $type == ObjectTypes::DOUBLE || $type == ObjectTypes::FLOAT) {
             return true;
         } else {
@@ -300,7 +300,7 @@ class ObjectHelper
     public static function isMember($targetObject, $memberName)
     {
         $result = false;
-        $type = self::getType($targetObject);
+        $type = self::getTypeName($targetObject);
         switch ($type) {
             case ObjectTypes::ARRAYS:
                 $result = array_key_exists($memberName, $targetObject);
@@ -319,7 +319,7 @@ class ObjectHelper
     {
         if ($targetObject) {
             if (self::isMember($targetObject, $memberName)) {
-                $type = self::getType($targetObject);
+                $type = self::getTypeName($targetObject);
                 switch ($type) {
                     case ObjectTypes::ARRAYS:
                         $result = $targetObject[$memberName];
@@ -376,7 +376,7 @@ class ObjectHelper
      */
     public static function getLength($data)
     {
-        $type = self::getType($data);
+        $type = self::getTypeName($data);
         $result = 0;
 
         switch ($type) {

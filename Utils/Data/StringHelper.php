@@ -107,7 +107,7 @@ class StringHelper
      */
     public static function removeHead($wholeStringData, $lengthOrTail)
     {
-        if (ObjectHelper::getType($lengthOrTail) == ObjectTypes::STRING) {
+        if (ObjectHelper::getTypeName($lengthOrTail) == ObjectTypes::STRING) {
             if (StringHelper::isStartWith($wholeStringData, $lengthOrTail)) {
                 return self::getStringAfterSeparator($wholeStringData, $lengthOrTail);
             } else {
@@ -126,7 +126,7 @@ class StringHelper
      */
     public static function removeTail($wholeStringData, $lengthOrTail)
     {
-        if (ObjectHelper::getType($lengthOrTail) == ObjectTypes::STRING) {
+        if (ObjectHelper::getTypeName($lengthOrTail) == ObjectTypes::STRING) {
             if (StringHelper::isEndWith($wholeStringData, $lengthOrTail)) {
                 return self::getStringBeforeSeparator($wholeStringData, $lengthOrTail);
             } else {
@@ -342,7 +342,7 @@ class StringHelper
         // 替换字符的数组下标
         $i = 0;
 
-        if (ObjectHelper::getLength($realValueList) == 1 && ObjectHelper::getType($realValueList[0]) == ObjectTypes::ARRAYS) {
+        if (ObjectHelper::getLength($realValueList) == 1 && ObjectHelper::getTypeName($realValueList[0]) == ObjectTypes::ARRAYS) {
             $realValueList = $realValueList[0];
         }
 

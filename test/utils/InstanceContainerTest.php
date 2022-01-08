@@ -1,6 +1,6 @@
 <?php
 /**
- * @file   : InstanceHelperTest.php
+ * @file   : InstanceContainerTest.php
  * @time   : 20:15
  * @date   : 2021/9/21
  * @emailto: 9727005@qq.com
@@ -14,7 +14,7 @@ use Hiland\Test\_res\Student;
 use Hiland\Test\_res\Teacher;
 use PHPUnit\Framework\TestCase;
 
-class InstanceHelperTest extends TestCase
+class InstanceContainerTest extends TestCase
 {
     public function testGet()
     {
@@ -55,4 +55,24 @@ class InstanceHelperTest extends TestCase
             echo $actualTeacher->school;
         }
     }
+
+    // public function testReflectClass()
+    // {
+    //     $typeName = Teacher::class;
+    //     $ref = new ReflectionClass($typeName);
+    //     dump($ref);
+    //
+    //     $className = Teacher::class;
+    //     $actualTeacher = InstanceContainer::get($className);
+    //
+    //
+    //     $actualTeacher-> school;
+    //     // $p = new TypeResolver();
+    //     // $p = $p->resolve($typeName);
+    //     $p ="1";
+    //     settype($actualTeacher, $typeName);
+    //     // $actualTeacher->
+    //
+    //     dump($p);
+    // }
 }

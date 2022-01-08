@@ -1,6 +1,6 @@
 <?php
 /**
- * @file   : InstanceContainer.php
+ * @file   : InstanceContainerTest.php
  * @time   : 20:04
  * @date   : 2021/9/21
  * @emailto: 9727005@qq.com
@@ -12,6 +12,7 @@
 namespace Hiland\Utils\Pattern;
 
 use Hiland\Test\res\Teacher;
+use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\StringHelper;
 use Psr\Container\ContainerInterface;
 
@@ -25,7 +26,7 @@ use Psr\Container\ContainerInterface;
  * ════════════════════════
  * 使用方法：
  * $className = Student::class;
- * $actual = InstanceContainer::get($className, "张三", 20);
+ * $actual = InstanceContainerTest::get($className, "张三", 20);
  */
 class InstanceContainer
 {
@@ -36,7 +37,7 @@ class InstanceContainer
         $queryKey = self::builderQueryKey($classFullName, ...$constructArgs);
 
         if (array_key_exists($queryKey, self:: $_instances)) {
-            return self::$_instances[$queryKey];
+            $instance = self::$_instances[$queryKey];
         } else {
             if ($constructArgs) {
                 $instance = new $classFullName(...$constructArgs);
@@ -45,8 +46,10 @@ class InstanceContainer
             }
 
             self:: $_instances[$queryKey] = $instance;
-            return $instance;
         }
+
+        // ObjectHelper::getTypeName()
+        return $instance;
     }
 
     /**

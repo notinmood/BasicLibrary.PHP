@@ -480,7 +480,7 @@ class ModelMate
     private function _parseWhereOrConditionDetail($key, $value)
     {
         $queryObject = $this->queryObject;
-        if (ObjectHelper::getType($value) == ObjectTypes::ARRAYS) {
+        if (ObjectHelper::getTypeName($value) == ObjectTypes::ARRAYS) {
             if (ArrayHelper::getLevel($value) == 1) {
                 $queryObject->whereOr($key, array_keys($value)[0], array_values($value)[0]);
             } else {
@@ -503,7 +503,7 @@ class ModelMate
     private function _parseWhereAndConditionDetail($key, $value)
     {
         $queryObject = $this->queryObject;
-        if (ObjectHelper::getType($value) == ObjectTypes::ARRAYS) {
+        if (ObjectHelper::getTypeName($value) == ObjectTypes::ARRAYS) {
             if (ArrayHelper::getLevel($value) == 1) {
                 $queryObject->where($key, array_keys($value)[0], array_values($value)[0]);
             } else {

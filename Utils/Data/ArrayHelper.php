@@ -123,7 +123,7 @@ class ArrayHelper
      */
     public static function removeItem($array, $item)
     {
-        if (ObjectHelper::getType($array) == ObjectTypes::ARRAYS) {
+        if (ObjectHelper::getTypeName($array) == ObjectTypes::ARRAYS) {
             if ($idx = array_search($item, $array, true)) {
                 unset($array[$idx]);
             }
@@ -134,7 +134,7 @@ class ArrayHelper
 
     public static function removeIndex($array, $index)
     {
-        if (ObjectHelper::getType($array) == ObjectTypes::ARRAYS) {
+        if (ObjectHelper::getTypeName($array) == ObjectTypes::ARRAYS) {
             array_splice($array, $index, 1);
         }
 
@@ -148,7 +148,7 @@ class ArrayHelper
      */
     public static function removeHead($array)
     {
-        if (ObjectHelper::getType($array) == ObjectTypes::ARRAYS) {
+        if (ObjectHelper::getTypeName($array) == ObjectTypes::ARRAYS) {
             array_shift($array);
         }
 
@@ -162,7 +162,7 @@ class ArrayHelper
      */
     public static function removeTail($array)
     {
-        if (ObjectHelper::getType($array) == ObjectTypes::ARRAYS) {
+        if (ObjectHelper::getTypeName($array) == ObjectTypes::ARRAYS) {
             $length = self::getLength($array);
             $lastIndex = $length - 1;
             array_splice($array, $lastIndex, 1);
@@ -193,7 +193,7 @@ class ArrayHelper
 
         $result = array_keys($array);
         if ($result && isset($result[0])) {
-            if (ObjectHelper::getType($result[0]) == ObjectTypes::STRING) {
+            if (ObjectHelper::getTypeName($result[0]) == ObjectTypes::STRING) {
                 return true;
             }
         }
@@ -214,7 +214,7 @@ class ArrayHelper
 
         $result = array_keys($array);
         if ($result && isset($result[0])) {
-            if (ObjectHelper::getType($result[0]) == ObjectTypes::INTEGER) {
+            if (ObjectHelper::getTypeName($result[0]) == ObjectTypes::INTEGER) {
                 return true;
             }
         }
@@ -680,7 +680,7 @@ class ArrayHelper
         $results = [];
 
         foreach ($arrayData as $key => $value) {
-            if (ObjectHelper::getType($key) == ObjectTypes::INTEGER) {
+            if (ObjectHelper::getTypeName($key) == ObjectTypes::INTEGER) {
                 $key = $indexKeyPrefix . $key;
             }
 

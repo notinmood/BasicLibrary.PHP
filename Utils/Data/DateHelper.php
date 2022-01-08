@@ -92,7 +92,7 @@ class DateHelper
         }
 
         $result = false;
-        $type = ObjectHelper::getType($data);
+        $type = ObjectHelper::getTypeName($data);
         switch ($type) {
             case ObjectTypes::STRING:
                 try {
@@ -191,11 +191,11 @@ class DateHelper
      */
     public static function getInterval($startValue, $endValue)
     {
-        if (ObjectHelper::getType($startValue) == ObjectTypes::DATETIME) {
+        if (ObjectHelper::getTypeName($startValue) == ObjectTypes::DATETIME) {
             $startValue = self::getTimestamp($startValue);
         }
 
-        if (ObjectHelper::getType($endValue) == ObjectTypes::DATETIME) {
+        if (ObjectHelper::getTypeName($endValue) == ObjectTypes::DATETIME) {
             $endValue = self::getTimestamp($endValue);
         }
 
@@ -250,7 +250,7 @@ class DateHelper
             $dateValue = new DateTime();
         }
 
-        if (ObjectHelper::getType($dateValue) == ObjectTypes::STRING) {
+        if (ObjectHelper::getTypeName($dateValue) == ObjectTypes::STRING) {
             try {
                 $dateValue = new DateTime($dateValue);
             } catch (Exception $e) {
@@ -305,7 +305,7 @@ class DateHelper
      */
     public static function addInterval($originalValue = null, $intervalType = "d", $intervalValue = 1, $returnType = "ts")
     {
-        if (ObjectHelper::getType($originalValue) == ObjectTypes::DATETIME) {
+        if (ObjectHelper::getTypeName($originalValue) == ObjectTypes::DATETIME) {
             $source = $originalValue;
         } else {
             if ($originalValue) {

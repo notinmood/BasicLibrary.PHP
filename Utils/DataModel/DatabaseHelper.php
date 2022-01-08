@@ -75,7 +75,7 @@ class DatabaseHelper
      */
     public static function wrapSqlValue($data)
     {
-        $_type = ObjectHelper::getType($data);
+        $_type = ObjectHelper::getTypeName($data);
         if ($_type == ObjectTypes::STRING || $_type == ObjectTypes::DATETIME) {
             return "'{$data}'";
         } else {
