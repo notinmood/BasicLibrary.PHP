@@ -41,11 +41,22 @@ class ConfigMate
         return self::$_instance;
     }
 
+    /**
+     * 获取具体的配置项
+     * @param string $key
+     * @param mixed  $default
+     * @return array|mixed|null
+     */
     public function get($key, $default = null)
     {
-        if (EnvHelper::isThinkPHP() && function_exists('config')) {
-            return config($key);
-        } else {
+        /**
+         * 使用自己的配置系统，不再使用 ThinkPHP 的配置系统了
+         */
+
+        // if (EnvHelper::isThinkPHP() && function_exists('config')) {
+        //     return config($key);
+        // } else
+        {
             if (ObjectHelper::isEmpty(self::$__configContentArray)) {
                 self::loadFile();
             }

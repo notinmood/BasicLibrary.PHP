@@ -2,6 +2,7 @@
 
 namespace Hiland\Utils\Data;
 
+use Hiland\Utils\Web\RequestHelper;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
@@ -173,18 +174,19 @@ class ReflectionHelper
      * @param bool   $returnJson 是否返回JSON格式的数据（缺省为false）
      * @return false|mixed|string
      */
-    public static function executeFunctionEx($className, $funcName, $funcParam = null, $returnJson = false)
+    public static function executeFunctionWrapper($className, $funcName, $funcParam = null, $returnJson = false)
     {
         $object = new $className();
         $targetArray = array($object, $funcName);
 
-        $params = $funcParam;
-        if (StringHelper::isContains($funcParam, "^^")) {
-            $params = StringHelper::explode($funcParam, "^^");
+        if ($funcParam == null) {
+            $funcParam = RequestHelper::getInput("funcParam");
         }
 
-        if ($funcParam == null) {
-            $params = input("funcParam");
+        if (StringHelper::isContains($funcParam, "^^")) {
+            $params = StringHelper::explode($funcParam, "^^");
+        }else{
+            $params = $funcParam;
         }
 
         $result = self::executeFunction($targetArray, $params);
@@ -196,11 +198,12 @@ class ReflectionHelper
         }
     }
 
-    /**动态调用方法 (相比較ExecuteMethod，這個方法更常用)
-     *  这个方法1、即可以一个普通的function，那么第一个直接传入function的名称就可以了
-     *         2、也可以是一个对象的method，那么第一个参数要传入一个数组array(实体对象, 方法名称字符串)，例如array($this, "getUser");
-     * @param      $funcName
-     * @param null $funcParam
+    /**
+     * 动态调用方法 (相比較 ExecuteMethod，這個方法更常用)
+     *  这个方法 1、即可以一个普通的 function，那么第一个直接传入 function 的名称就可以了
+     *          2、也可以是一个对象的 method，那么第一个参数要传入一个数组 array(实体对象, 方法名称字符串)，例如 [$this, "getUser"];
+     * @param string $funcName
+     * @param null   $funcParam
      * @return mixed
      */
     public static function executeFunction($funcName, $funcParam = null)

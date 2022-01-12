@@ -23,7 +23,7 @@ class ReflectionHelperTest extends TestCase
     // }
 
     /**
-     * @throws ReflectionException
+     *
      */
     public function testExecuteInstanceMethod()
     {
@@ -52,8 +52,8 @@ class ReflectionHelperTest extends TestCase
     }
 
     /**
+     *
      * @return void
-     * @throws ReflectionException
      */
     public function testGetInstanceProperty(){
         $student = new Student("zhangsan", 20);
