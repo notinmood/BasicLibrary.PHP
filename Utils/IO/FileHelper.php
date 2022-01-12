@@ -8,7 +8,6 @@ class FileHelper
 {
     /**
      * 获取文件所在的目录信息
-     *
      * @param string $fileName
      *            带路径的全文件名
      */
@@ -20,9 +19,7 @@ class FileHelper
 
     /**
      * 获取文件的基本名称信息（不带路径的文件名称）
-     *
-     * @param string $fileName
-     *            带路径的全文件名
+     * @param string $fileName 带路径的全文件名
      */
     public static function getBaseName($fileName)
     {
@@ -59,11 +56,10 @@ class FileHelper
      * </form>
      * @param string $submitControlName <input type="file" name="file" id="file">的name值
      * @return bool|mixed 失败返回false，成功返回文件在服务器上的信息，其中
-     *
-     * $result["fullName"] 带路径的全文件名称（临时路径和临时文件）
-     * $result["name"] 文件名称;
-     * $result["type"] 文件类型;
-     * $result["size"] 文件大小
+     *                                  $result["fullName"] 带路径的全文件名称（临时路径和临时文件）
+     *                                  $result["name"] 文件名称;
+     *                                  $result["type"] 文件类型;
+     *                                  $result["size"] 文件大小
      */
     public static function getUploadedFileInfo($submitControlName = 'file')
     {
@@ -92,7 +88,7 @@ class FileHelper
 
     /**
      * 获取目标编码类型的文本
-     * @param $fileName
+     * @param        $fileName
      * @param string $targetEncoding
      * @return false|string|string[]|null
      */

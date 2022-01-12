@@ -13,7 +13,8 @@ use think\Request;
  */
 class RequestHelper
 {
-    /**判断当前是否为post请求
+    /**
+     * 判断当前是否为post请求
      * @return int|mixed
      */
     public static function isPost()
@@ -26,7 +27,8 @@ class RequestHelper
         }
     }
 
-    /**判断当前是否为get请求
+    /**
+     * 判断当前是否为get请求
      * @return bool|mixed
      */
     public static function isGet()
@@ -39,12 +41,62 @@ class RequestHelper
         }
     }
 
+    /**
+     * 从请求内获取数据
+     * @param $name    数据的名称
+     * @param $default 数据的缺省值
+     * @param $method  请求的方式(get、post等)
+     * @return mixed
+     */
     public static function getInput($name, $default = null, $method = RequestMethods::ALL)
     {
         if (ThinkHelper::isThinkPHP() && function_exists("input")) {
             return input($name, $default);
         } else {
-            //TODO:xiedali 需要手动实现
+            switch ($method) {
+                case RequestMethods::GET:
+                    $result = $_GET[$name];
+                    break;
+                case RequestMethods::POST:
+                    $result = $_POST[$name];
+                    break;
+                case RequestMethods::COOKIE:
+                    $result = $_COOKIE[$name];
+                    break;
+                case RequestMethods::SESSION:
+                    $result = $_SESSION[$name];
+                    break;
+                case RequestMethods::SERVER:
+                    $result = $_SERVER[$name];
+                    break;
+                default:
+                    $result = $_GET[$name];
+                    if ($result == null) {
+                        $result = $_POST[$name];
+                    }
+
+                    if ($result == null) {
+                        $result = $_POST[$name];
+                    }
+
+                    if ($result == null) {
+                        $result = $_COOKIE[$name];
+                    }
+
+                    if ($result == null) {
+                        $result = $_SESSION[$name];
+                    }
+
+                    if ($result == null) {
+                        $result = $_SERVER[$name];
+                    }
+            }
+
+            if ($result == null) {
+                return $default;
+            } else {
+                return $result;
+            }
         }
     }
 

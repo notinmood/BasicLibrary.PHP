@@ -498,7 +498,7 @@ class WechatHelper
      * @param string $appSecret
      * @return array
      * @example 把构建好的值传递到页面，页面上如此使用
-     *          <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+     *          <script src="http://_res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
      *          <script>
      *          wx.config({
      *          appId: '{$signPackage.appId}',
@@ -588,7 +588,7 @@ class WechatHelper
         $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=$accessToken";
 
         $res = json_decode(NetHelper::request($url));
-        //return $res;
+        //return $_res;
         $ticket = $res->ticket;
 
         return $ticket;

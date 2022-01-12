@@ -5,6 +5,7 @@ namespace Hiland\Utils\Web;
 use Hiland\Biz\ThinkAddon\TPCompatibleHelper;
 use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\StringHelper;
+use Hiland\Utils\IO\FileHelper;
 
 /**
  * @TODO   本类需要重构,将具体的实现方法分别分布到其他类型 helper中,
@@ -27,7 +28,7 @@ class WebHelper
 
         if (is_file($data)) {
             if (empty($newFileName)) {
-                $newFileName = $data;
+                $newFileName = FileHelper::getBaseName($data);
             }
 
             header('Content-Type:' . MimeHelper::getMime($data));
