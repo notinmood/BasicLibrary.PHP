@@ -15,30 +15,35 @@
 use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\StringHelper;
 use Hiland\Utils\Data\ThinkHelper;
+use Hiland\Utils\Environment\EnvHelper;
 use Hiland\Utils\Web\ServerHelper;
 
 
 if (!function_exists('dump') && ThinkHelper::isThinkPHP() == false) {
     /**
      * 将var_dump进行简短表示
-     * @param $value
+     * @param      $value
+     * @param bool $appendNewLineSymbol 是在末尾添加一个换行标志(缺省true)
      */
-    function dump($value)
+    function dump($value, $appendNewLineSymbol = true)
     {
         var_dump($value);
+        if ($appendNewLineSymbol == true) {
+            echo EnvHelper::getNewLineSymbol();
+        }
     }
 }
 
 
-if (!function_exists("exist")) {
+if (!function_exists("el")) {
     /**
-     * 判断标的物是否存在
+     * 用 echo 输出内容和一个新行标志
      * @param $value
-     * @return bool
+     * @return void
      */
-    function exist($value)
+    function el($value)
     {
-        return ObjectHelper::isExist($value);
+        echo $value . EnvHelper::getNewLineSymbol($value);
     }
 }
 

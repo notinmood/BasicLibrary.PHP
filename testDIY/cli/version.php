@@ -10,7 +10,7 @@
 
 use Hiland\Utils\Environment\EnvHelper;
 
-require "../vendor/autoload.php";
+require "../../vendor/autoload.php";
 
 echo phpversion() . EnvHelper::getNewLineSymbol();
 echo PHP_VERSION . EnvHelper::getNewLineSymbol();

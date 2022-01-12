@@ -11,7 +11,7 @@
 use Hiland\Utils\Environment\DeviceHelper;
 use Hiland\Utils\IO\ConsoleHelper;
 
-require "../vendor/autoload.php";
+require "../../vendor/autoload.php";
 
 $isMobile= DeviceHelper::isMobile();
 ConsoleHelper::echoBool($isMobile);

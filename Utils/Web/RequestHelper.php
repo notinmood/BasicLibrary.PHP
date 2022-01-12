@@ -43,9 +43,9 @@ class RequestHelper
 
     /**
      * 从请求内获取数据
-     * @param $name    数据的名称
-     * @param $default 数据的缺省值
-     * @param $method  请求的方式(get、post等)
+     * @param string         $name    数据的名称
+     * @param mixed          $default 数据的缺省值
+     * @param RequestMethods $method  请求的方式(get、post等)
      * @return mixed
      */
     public static function getInput($name, $default = null, $method = RequestMethods::ALL)
