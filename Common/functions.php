@@ -16,6 +16,7 @@ use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\StringHelper;
 use Hiland\Utils\Data\ThinkHelper;
 use Hiland\Utils\Environment\EnvHelper;
+use Hiland\Utils\IO\ConsoleHelper;
 use Hiland\Utils\Web\ServerHelper;
 
 
@@ -37,13 +38,14 @@ if (!function_exists('dump') && ThinkHelper::isThinkPHP() == false) {
 
 if (!function_exists("el")) {
     /**
-     * 用 echo 输出内容和一个新行标志
-     * @param $value
-     * @return void
+     * 带换行功能的echo(方法echoLine的别名)
+     * @param mixed $data               待输出信息
+     * @param bool  $bothBeforeAndAfter 如果true就在$data这一行前后都加入新行标志;
+     *                                  如果false就只在$data这一行后加入新行标志.
      */
-    function el($value)
+    function el($data = "", $bothBeforeAndAfter = false)
     {
-        echo $value . EnvHelper::getNewLineSymbol($value);
+        ConsoleHelper::el($data, $bothBeforeAndAfter);
     }
 }
 
