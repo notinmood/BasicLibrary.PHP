@@ -8,8 +8,16 @@
  * @company: HiLand & RainyTop
  */
 
+require "../../vendor/autoload.php";
 
 use Hiland\Utils\IO\ConsoleHelper;
+use Hiland\Utils\Web\RequestHelper;
+use Hiland\Utils\Web\RequestMethods;
+
+/**
+ * 本文件对请求的 post 方法进行验证
+ * 不要直接运本页面。请点击 RequestPostTest.html 页面的提交按钮,自动跳转到本页面。
+ */
 
 displayPostValue("myID");
 displayPostValue("myName");
@@ -18,12 +26,11 @@ displayPostValue("myCity");
 
 displayPostValue("myLike");
 displayPostValue("sex");
-echo "this is a demo!";
 
 
 function getPostValue($name)
 {
-    $myValue = $_POST[$name];
+    $myValue = RequestHelper::getInput($name, "", RequestMethods::POST);
     if ($myValue) {
         return $myValue;
     } else {
