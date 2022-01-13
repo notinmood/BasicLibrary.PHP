@@ -97,6 +97,14 @@ class ConfigHelperTest extends TestCase
         self::assertEquals($expect, $actual);
     }
 
+    public function testGet4()
+    {
+        $key = "needServerValidateSign";
+        $actual = ConfigHelper::get($key);
+        $expect = false;
+        self::assertEquals($expect, $actual);
+    }
+
     /**
      * TODO:这个方法单独执行没有问题，但整个文件一起执行，就报错。
      * @return void

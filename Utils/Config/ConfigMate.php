@@ -63,7 +63,7 @@ class ConfigMate
 
             foreach (self::$__configContentArray as $configFileFullName => $currentConfigContent) {
                 $result = ArrayHelper::getNode($currentConfigContent, $key);
-                if ($result != null) {
+                if ($result !== null) {
                     return $result;
                 }
             }
