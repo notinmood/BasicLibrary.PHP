@@ -52,23 +52,17 @@ class ConfigMate
         /**
          * 使用自己的配置系统，不再使用 ThinkPHP 的配置系统了
          */
-
-        // if (EnvHelper::isThinkPHP() && function_exists('config')) {
-        //     return config($key);
-        // } else
-        {
-            if (ObjectHelper::isEmpty(self::$__configContentArray)) {
-                self::loadFile();
-            }
-
-            foreach (self::$__configContentArray as $configFileFullName => $currentConfigContent) {
-                $result = ArrayHelper::getNode($currentConfigContent, $key);
-                if ($result !== null) {
-                    return $result;
-                }
-            }
-            return $default;
+        if (ObjectHelper::isEmpty(self::$__configContentArray)) {
+            self::loadFile();
         }
+
+        foreach (self::$__configContentArray as $configFileFullName => $currentConfigContent) {
+            $result = ArrayHelper::getNode($currentConfigContent, $key);
+            if (!is_null($result)) {
+                return $result;
+            }
+        }
+        return $default;
     }
 
     private function loadFileDetail($fileFullName)
@@ -126,5 +120,4 @@ class ConfigMate
             return new ConfigParserArray();
         }
     }
-
 }

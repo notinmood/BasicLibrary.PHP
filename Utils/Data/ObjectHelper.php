@@ -270,6 +270,14 @@ class ObjectHelper
         return $result;
     }
 
+    public static function isNull($data){
+        return is_null($data);
+    }
+
+    public static function isNotNull($data){
+        return !is_null($data);
+    }
+
     /**
      * 判断一个数据是否为数值类型
      * ════════════════════════
