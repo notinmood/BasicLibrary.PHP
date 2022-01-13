@@ -270,10 +270,21 @@ class ObjectHelper
         return $result;
     }
 
+    /**
+     * 判断是否为 null
+     * (本方法的目的是使用体验的平滑，其是对内置 is_null 方法的包装)
+     * @param $data
+     * @return bool
+     */
     public static function isNull($data){
         return is_null($data);
     }
 
+    /**
+     * 判断是否不为 null
+     * @param $data
+     * @return bool
+     */
     public static function isNotNull($data){
         return !is_null($data);
     }
