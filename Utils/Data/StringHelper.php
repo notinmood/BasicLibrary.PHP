@@ -305,6 +305,18 @@ class StringHelper
         return $content;
     }
 
+    /**
+     * 将一个字符串按照分隔符 ($oldDelimiter) 撕开，然后再用 $newDelimiter 进行缝合
+     * @param string $stringData
+     * @param string $oldDelimiter
+     * @param string $newDelimiter
+     * @return string
+     */
+    public static function splice($stringData, $oldDelimiter, $newDelimiter = "")
+    {
+        $tempArray = explode($oldDelimiter, $stringData);
+        return implode($newDelimiter, $tempArray);
+    }
 
     /**
      * 获取某个子字符串在全字符串中出现的各个位置

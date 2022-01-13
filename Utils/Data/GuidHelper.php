@@ -40,8 +40,9 @@ class GuidHelper
      */
     public static function newGuid($isBracket = false)
     {
-        $totalMilliseconds = (time() - TWOZEROZEROZEROYEAR) * 1000 + DateHelper::getCurrentMilliSecond();
-        $totalMillisecondsHex = base_convert($totalMilliseconds, 10, 16);
+        $totalMilliseconds = (string)((time() - TWOZEROZEROZEROYEAR) * 1000 + DateHelper::getCurrentMilliSecond());
+        $timespanString = StringHelper::splice($totalMilliseconds, ".", "");
+        $totalMillisecondsHex = base_convert($timespanString, 10, 16);
 
         // 左侧通过添加 0 补齐 11 位
         $totalMillisecondsHex = str_pad($totalMillisecondsHex, 11, 0, STR_PAD_LEFT);

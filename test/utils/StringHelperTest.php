@@ -15,28 +15,29 @@ use PHPUnit\Framework\TestCase;
 
 class StringHelperTest extends TestCase
 {
-    public function testGetPosition(){
-        $whole ="山东省枣庄市滕州市城市建设纲要";
-        $sub ="滕州市";
-        $actual = StringHelper::getPosition($whole,$sub);
+    public function testGetPosition()
+    {
+        $whole = "山东省枣庄市滕州市城市建设纲要";
+        $sub = "滕州市";
+        $actual = StringHelper::getPosition($whole, $sub);
         $expected = [6];
-        self::assertEquals($expected,$actual);
+        self::assertEquals($expected, $actual);
 
 
-        $whole ="StringHelper::getPosition";
-        $sub ="e";
-        $actual = StringHelper::getPosition($whole,$sub);
-        $expected = [7,10,15];
-        self::assertEquals($expected,$actual);
+        $whole = "StringHelper::getPosition";
+        $sub = "e";
+        $actual = StringHelper::getPosition($whole, $sub);
+        $expected = [7, 10, 15];
+        self::assertEquals($expected, $actual);
 
 
-        $whole ="山东省枣庄市滕州市城市建设纲要";
-        $sub ="市";
-        $actual = StringHelper::getPosition($whole,$sub);
-        $expected = [5,8,10];
-        self::assertEquals($expected,$actual);
+        $whole = "山东省枣庄市滕州市城市建设纲要";
+        $sub = "市";
+        $actual = StringHelper::getPosition($whole, $sub);
+        $expected = [5, 8, 10];
+        self::assertEquals($expected, $actual);
     }
-    
+
     public function testIsEndWith()
     {
         $whole = "吴军信息传";
@@ -104,17 +105,18 @@ class StringHelperTest extends TestCase
         self::assertEquals($expected, $actual);
 
         $data = "我是一个中国人,我骄傲!";
-        $actual = StringHelper::replace($data, "/我/i", "你",true);
+        $actual = StringHelper::replace($data, "/我/i", "你", true);
         $expected = "你是一个中国人,你骄傲!";
         self::assertEquals($expected, $actual);
 
         $data = "I_I_0.website.id";
-        $actual = StringHelper::replace($data, "/I_I_\d+/i", "",true);
+        $actual = StringHelper::replace($data, "/I_I_\d+/i", "", true);
         $expected = ".website.id";
         self::assertEquals($expected, $actual);
     }
-    
-    public function testConvertFromUTF8ToUnicode(){
+
+    public function testConvertFromUTF8ToUnicode()
+    {
         $data = "我";
         $actual = StringHelper::convertCharFromUTF8ToUnicode($data);
         $expected = "6211";
@@ -122,70 +124,90 @@ class StringHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testConvertFromUnicodeToUTF8(){
+    public function testConvertFromUnicodeToUTF8()
+    {
         $data = "6211";
         $actual = StringHelper::convertCharFromUnicodeToUTF8($data);
         $expected = "我";
 
         self::assertEquals($expected, $actual);
     }
-    
-    public function testRemoveHead(){
-        $whole ="i love china!";
-        $actual = StringHelper::removeHead($whole,3);
+
+    public function testRemoveHead()
+    {
+        $whole = "i love china!";
+        $actual = StringHelper::removeHead($whole, 3);
         $expected = "ove china!";
-        self::assertEquals($expected,$actual);
+        self::assertEquals($expected, $actual);
 
-        $actual = StringHelper::removeHead($whole,13);
+        $actual = StringHelper::removeHead($whole, 13);
         $expected = "";
-        self::assertEquals($expected,$actual);
+        self::assertEquals($expected, $actual);
 
-        $actual = StringHelper::removeHead($whole,14);
+        $actual = StringHelper::removeHead($whole, 14);
         $expected = "";
-        self::assertEquals($expected,$actual);
+        self::assertEquals($expected, $actual);
 
-        $actual = StringHelper::removeHead($whole,"i lo");
+        $actual = StringHelper::removeHead($whole, "i lo");
         $expected = "ve china!";
-        self::assertEquals($expected,$actual);
+        self::assertEquals($expected, $actual);
 
-        $actual = StringHelper::removeHead($whole,"i lol");
+        $actual = StringHelper::removeHead($whole, "i lol");
         $expected = "i love china!";
-        self::assertEquals($expected,$actual);
+        self::assertEquals($expected, $actual);
     }
 
-    public function testRemoveTail(){
-        $whole ="i love china!";
-        $actual = StringHelper::removeTail($whole,3);
+    public function testRemoveTail()
+    {
+        $whole = "i love china!";
+        $actual = StringHelper::removeTail($whole, 3);
         $expected = "i love chi";
-        self::assertEquals($expected,$actual);
+        self::assertEquals($expected, $actual);
 
-        $actual = StringHelper::removeTail($whole,13);
+        $actual = StringHelper::removeTail($whole, 13);
         $expected = "";
-        self::assertEquals($expected,$actual);
+        self::assertEquals($expected, $actual);
 
-        $actual = StringHelper::removeTail($whole,14);
+        $actual = StringHelper::removeTail($whole, 14);
         $expected = "";
-        self::assertEquals($expected,$actual);
+        self::assertEquals($expected, $actual);
 
-        $whole ="i love你中国!";
-        $actual = StringHelper::removeTail($whole,3);
+        $whole = "i love你中国!";
+        $actual = StringHelper::removeTail($whole, 3);
         $expected = "i love你";
-        self::assertEquals($expected,$actual);
+        self::assertEquals($expected, $actual);
 
-        $whole ="i love你中国!";
-        $actual = StringHelper::removeTail($whole,"国!");
+        $whole = "i love你中国!";
+        $actual = StringHelper::removeTail($whole, "国!");
         $expected = "i love你中";
-        self::assertEquals($expected,$actual);
+        self::assertEquals($expected, $actual);
 
-        $whole ="i love你中国!";
-        $actual = StringHelper::removeTail($whole,"中国");
+        $whole = "i love你中国!";
+        $actual = StringHelper::removeTail($whole, "中国");
         $expected = "i love你中国!";
-        self::assertEquals($expected,$actual);
+        self::assertEquals($expected, $actual);
     }
 
-    public function testFormat(){
-        $actual = StringHelper::format("{?}喜欢{?}.","解大劦","qingdao");
+    public function testFormat()
+    {
+        $actual = StringHelper::format("{?}喜欢{?}.", "解大劦", "qingdao");
         $expected = "解大劦喜欢qingdao.";
-        self::assertEquals($expected,$actual);
+        self::assertEquals($expected, $actual);
+    }
+
+    public function testSplice()
+    {
+        $data = "i love China.";
+        $od = " ";
+        $nd = "|";
+        $actual = StringHelper::splice($data, $od, $nd);
+        $expected = "i|love|China.";
+        self::assertEquals($expected, $actual);
+
+        $od = ".";
+        $nd = "!";
+        $actual = StringHelper::splice($data, $od, $nd);
+        $expected = "i love China!";
+        self::assertEquals($expected, $actual);
     }
 }
