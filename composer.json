@@ -20,7 +20,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Hiland\\Test\\": "",
+      "Hiland\\Test\\": "test",
       "Hiland\\": ""
     },
     "files": [

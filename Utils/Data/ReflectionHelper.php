@@ -2,11 +2,14 @@
 
 namespace Hiland\Utils\Data;
 
-use Hiland\Utils\Web\RequestHelper;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
 
+/**
+ * 反射帮助器
+ * (除私有方法外，对类型(或者实例)的各种方法的执行，建议统一使用 executeFunction)
+ */
 class ReflectionHelper
 {
     /**
@@ -59,7 +62,7 @@ class ReflectionHelper
     }
 
     /**
-     * 执行某个类里面的实例方法
+     * 执行某个类里面的实例方法(可以是 private 级别的方法)
      * (参数$instance 和 $constructArgs 设置其一即可)
      * @param string $className     类名称（如果有命名空间，请携带命名空间，如：Tencent\Model\Bar）
      * @param string $methodName    类内部的方法名称（可用是实例方法也可以是静态方法）
@@ -140,7 +143,7 @@ class ReflectionHelper
     }
 
     /**
-     * 执行某个类里面的静态方法
+     * 执行某个类里面的静态方法(可以是 private 级别的方法)
      * @param $className
      * @param $methodName
      * @param ...$methodArgs
@@ -167,51 +170,48 @@ class ReflectionHelper
         return $result;
     }
 
-    /**
-     * @param string $className  带命名空间的类型名称
-     * @param string $funcName   类型的方法名称
-     * @param null   $funcParam  传递给方法的参数（多个参数之间用^^分隔（主要用于通过url的多个参数的传递））
-     * @param bool   $returnJson 是否返回JSON格式的数据（缺省为false）
-     * @return false|mixed|string
-     */
-    public static function executeFunctionWrapper($className, $funcName, $funcParam = null, $returnJson = false)
-    {
-        $object = new $className();
-        $targetArray = array($object, $funcName);
-
-        if ($funcParam == null) {
-            $funcParam = RequestHelper::getInput("funcParam");
-        }
-
-        if (StringHelper::isContains($funcParam, "^^")) {
-            $params = StringHelper::explode($funcParam, "^^");
-        }else{
-            $params = $funcParam;
-        }
-
-        $result = self::executeFunction($targetArray, $params);
-
-        if ($returnJson) {
-            return json_encode($result);
-        } else {
-            return $result;
-        }
-    }
+    // /**
+    //  * @param string $className  带命名空间的类型名称
+    //  * @param string $funcName   类型的方法名称
+    //  * @param null   $funcParam  传递给方法的参数（多个参数之间用^^分隔（主要用于通过url的多个参数的传递））
+    //  * @param bool   $returnJson 是否返回JSON格式的数据（缺省为false）
+    //  * @return false|mixed|string
+    //  */
+    // public static function executeFunctionWrapper($className, $funcName, $funcParam = null, $returnJson = false)
+    // {
+    //     $object = new $className();
+    //     $targetArray = array($object, $funcName);
+    //
+    //     if ($funcParam == null) {
+    //         $funcParam = RequestHelper::getInput("funcParam");
+    //     }
+    //
+    //     if (StringHelper::isContains($funcParam, "^^")) {
+    //         $params = StringHelper::explode($funcParam, "^^");
+    //     }else{
+    //         $params = $funcParam;
+    //     }
+    //
+    //     $result = self::executeFunction($targetArray, $params);
+    //
+    //     if ($returnJson) {
+    //         return json_encode($result);
+    //     } else {
+    //         return $result;
+    //     }
+    // }
 
     /**
      * 动态调用方法 (相比較 ExecuteMethod，這個方法更常用)
      *  这个方法 1、即可以一个普通的 function，那么第一个直接传入 function 的名称就可以了
-     *          2、也可以是一个对象的 method，那么第一个参数要传入一个数组 array(实体对象, 方法名称字符串)，例如 [$this, "getUser"];
-     * @param string $funcName
-     * @param null   $funcParam
+     *          2、也可以是一个对象的实例 method，那么第一个参数要传入一个数组 array(实体对象, 方法名称字符串)，例如 [$this, "getUser"];
+     *          3、也可以是一个对象的静态 method，那么第一个参数要传入一个数组 array(类型的全名称, 方法名称字符串)，例如 [Student::class, "getUser"];
+     * @param string $funcFullName 函数的全名称(包含命名空间，类型信息的函数或方法名称)
+     * @param null   $funcParams 函数或者方法的参数信息
      * @return mixed
      */
-    public static function executeFunction($funcName, $funcParam = null)
+    public static function executeFunction($funcFullName, ...$funcParams)
     {
-        if (is_array($funcParam)) {
-            return call_user_func_array($funcName, $funcParam);
-        } else {
-            return call_user_func($funcName, $funcParam);
-        }
+        return call_user_func($funcFullName, ...$funcParams);
     }
 }

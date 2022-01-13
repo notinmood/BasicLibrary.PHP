@@ -21,22 +21,38 @@ class Student
     private $age;
     private $userName;
 
-    public function getUserName(){
+    public function getUserName()
+    {
         return $this->userName;
     }
 
-    private function setUserName($newUserName){
-        $this->userName= $newUserName;
+    private function setUserName($newUserName)
+    {
+        $this->userName = $newUserName;
     }
 
-    public static function getTypeName(){
+    public function changeData($userName, $age)
+    {
+        $this->userName = $userName;
+        $this->age = $age;
+        return "name:$this->userName,age:$this->age";
+    }
+
+    public static function getTypeName()
+    {
         return "这是一个学生";
     }
 
-    private static function getTypeNameEn($fixer=""){
-        return "This is a Student ".$fixer;
+    private static function getTypeNameEn($fixer = "")
+    {
+        return "This is a Student " . $fixer;
     }
 
-    public $only4Object2Array= "only4Object2Array";
-    public static  $staticOnly4Object2Array = "staticOnly4Object2Array";
+    public static function display($a,$b,$c)
+    {
+        return "传递的参数为:{$a}/{$b}/{$c}";
+    }
+
+    public $only4Object2Array = "only4Object2Array";
+    public static $staticOnly4Object2Array = "staticOnly4Object2Array";
 }
