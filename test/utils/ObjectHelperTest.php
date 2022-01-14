@@ -92,13 +92,20 @@ class ObjectHelperTest extends TestCase
         $data = "12.45";
         $actual = ObjectHelper::isNumber($data);
         self::assertFalse($actual);
+
+        /**
+         * 用双引号括起来的数值，使用 is_numeric 判断的时候返回 true.
+         */
+        $data = "12.45";
+        $actual = is_numeric($data);
+        self::assertTrue($actual);
     }
 
     public function testToArray()
     {
         $s = new Student("zhangsan", 20);
-        $actual =  ObjectHelper::convertTOArray($s);
-        $expected =  get_object_vars($s);
+        $actual = ObjectHelper::convertTOArray($s);
+        $expected = get_object_vars($s);
         // dump($actual);
         self::assertEquals($expected, $actual);
     }

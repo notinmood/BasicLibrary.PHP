@@ -86,7 +86,7 @@ class ServerHelper
      */
     public static function getPhysicalRoot()
     {
-        return EnvHelper::getRootPhysicalPath();
+        return EnvHelper::getPhysicalRootPath();
     }
 
     /**
@@ -118,7 +118,7 @@ class ServerHelper
         $pageWebRelativePathArray = StringHelper::explode($pageWebRelativePath, "/");
         $pageWebRelativePathArray = array_reverse($pageWebRelativePathArray);
 
-        $rootPhysicalPath = EnvHelper::getRootPhysicalPath();
+        $rootPhysicalPath = EnvHelper::getPhysicalRootPath();
         $rootPhysicalPath = StringHelper::replace($rootPhysicalPath, "/", "\\");
 
         $filePhysicalFullPath = $_SERVER["SCRIPT_FILENAME"];

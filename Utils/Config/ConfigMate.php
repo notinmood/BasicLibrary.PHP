@@ -87,7 +87,7 @@ class ConfigMate
      */
     public function loadFile($fileName = "")
     {
-        $rootPath = EnvHelper::getRootPhysicalPath();
+        $rootPath = EnvHelper::getPhysicalRootPath();
         $defaultFileNames = ["config.php", "config.ini", "config.json"];
 
         $fileFullName = PathHelper::combine($rootPath, $fileName);

@@ -51,7 +51,7 @@ class dotEnvHelper
     public static function get($name, $default = null)
     {
         if (!self::$loaded) {
-            $root = EnvHelper::getRootPhysicalPath();
+            $root = EnvHelper::getPhysicalRootPath();
             $envFile = $root . DIRECTORY_SEPARATOR . '.env';
             self::loadFile($envFile);
         }

@@ -2,6 +2,7 @@
 
 namespace Hiland\Utils\Environment;
 
+use Hiland\Utils\Config\ConfigHelper;
 use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\RegexHelper;
 use Hiland\Utils\Data\StringHelper;
@@ -223,7 +224,7 @@ class EnvHelper
 
 
     /**
-     * 获取web项目的根目录物理路径
+     * 获取web项目的物理根路径
      * ————————————————————
      *因为当前文件属于类库文件(假定名称为a),
      *客户浏览器请求的页面(假定为b)
@@ -232,7 +233,7 @@ class EnvHelper
      *因此可以通过以下逻辑获取到项目的根目录物理路径
      * @return string
      */
-    public static function getRootPhysicalPath()
+    public static function getPhysicalRootPath()
     {
         //当前文件的全物理路径文件名称
         $current_path = __FILE__;
@@ -278,5 +279,15 @@ class EnvHelper
         } else {
             return $rootPath;
         }
+    }
+
+    /**
+     * 获取站点的 web 根路径
+     * (由于 PHP 项目的特定,无法通过代码直接获取到 web 根目录，每个项目请通过 config 单独配置)
+     * @return string
+     */
+    public static function getWebRootPath()
+    {
+        return ConfigHelper::get("webRootPath", "/");
     }
 }

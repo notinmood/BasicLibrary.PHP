@@ -15,11 +15,16 @@ use PHPUnit\Framework\TestCase;
 
 class EnvHelperTest extends TestCase
 {
-    public function testGetRootPhysicalPath()
+    public function testGetPhysicalRootPath()
     {
-        $actual = EnvHelper::getRootPhysicalPath();
+        $actual = EnvHelper::getPhysicalRootPath();
         $expected = dirname(dirname(__DIR__));
         self::assertEquals($expected, $actual);
     }
 
+    public function testGetWebRootPath(){
+        $actual = "diyipingce/";
+        $expected = EnvHelper::getWebRootPath();
+        self::assertEquals($expected,$actual);
+    }
 }

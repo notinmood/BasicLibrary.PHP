@@ -43,4 +43,5 @@ return [
         ],
     ],
 
+    'needServerValidateSign' => false,
 ];
