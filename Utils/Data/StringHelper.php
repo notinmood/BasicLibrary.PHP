@@ -321,10 +321,10 @@ class StringHelper
     /**
      * 获取某个子字符串在全字符串中出现的各个位置
      * (因为一个全串可以包含多个子串，所以返回是一个有各个位置组成的一维数组)
-     * @param string $wholeStringData
-     * @param string $subStringData
-     * @param bool   $ignoreCaseSensitive
-     * @return array
+     * @param string $wholeStringData     被查找的全字符串
+     * @param string $subStringData       要查找的子字符串
+     * @param bool   $ignoreCaseSensitive 忽略字符大小写
+     * @return array 子字符串在全字符串中出现的各个位置的数组
      */
     public static function getPositions($wholeStringData, $subStringData, $ignoreCaseSensitive = false)
     {
@@ -351,19 +351,19 @@ class StringHelper
 
     /**
      * 获取子字符串第一次出现的位置
-     * @param $wholeStringData
-     * @param $subStringData
-     * @param $ignoreCaseSensitive
-     * @param $revertSearch
-     * @return int|mixed
+     * @param string $wholeStringData     被查找的全字符串
+     * @param string $subStringData       要查找的子字符串
+     * @param bool   $ignoreCaseSensitive 忽略字符大小写
+     * @param bool   $inverseSearch       从后向前反向查找
+     * @return int|mixed 子字符串第一次出现的位置
      */
-    public static function getFirstPosition($wholeStringData, $subStringData, $ignoreCaseSensitive = false, $revertSearch = false)
+    public static function getFirstPosition($wholeStringData, $subStringData, $ignoreCaseSensitive = false, $inverseSearch = false)
     {
         $positions = static::getPositions($wholeStringData, $subStringData, $ignoreCaseSensitive);
         if (ObjectHelper::isEmpty($positions)) {
             return -1;
         } else {
-            if ($revertSearch) {
+            if ($inverseSearch) {
                 return $positions[ArrayHelper::getLength($positions) - 1];
             } else {
                 return $positions[0];
