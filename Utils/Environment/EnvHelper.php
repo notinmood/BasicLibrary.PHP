@@ -267,7 +267,7 @@ class EnvHelper
          * 那么此种情况，就需要根据本文件所在的目录,移除到最后一个vendor(有可能目录其他部分还包含vendor),前面剩余的部分就是根目录。
          */
         if (StringHelper::isEndWith($rootPath, DIRECTORY_SEPARATOR . "vendor")) {
-            $pos = StringHelper::getPosition($current_path, DIRECTORY_SEPARATOR . "vendor");
+            $pos = StringHelper::getPositions($current_path, DIRECTORY_SEPARATOR . "vendor");
             $lastPosition = 0;
             $count = getLength($pos);
 

@@ -15,26 +15,63 @@ use PHPUnit\Framework\TestCase;
 
 class StringHelperTest extends TestCase
 {
-    public function testGetPosition()
+    public function testGetPositions()
     {
         $whole = "山东省枣庄市滕州市城市建设纲要";
         $sub = "滕州市";
-        $actual = StringHelper::getPosition($whole, $sub);
+        $actual = StringHelper::getPositions($whole, $sub);
         $expected = [6];
         self::assertEquals($expected, $actual);
 
-
-        $whole = "StringHelper::getPosition";
-        $sub = "e";
-        $actual = StringHelper::getPosition($whole, $sub);
-        $expected = [7, 10, 15];
+        $actual = StringHelper::getPositions($whole, $sub, true);
+        $expected = [6];
         self::assertEquals($expected, $actual);
 
 
         $whole = "山东省枣庄市滕州市城市建设纲要";
         $sub = "市";
-        $actual = StringHelper::getPosition($whole, $sub);
+        $actual = StringHelper::getPositions($whole, $sub);
         $expected = [5, 8, 10];
+        self::assertEquals($expected, $actual);
+
+
+        $whole = "StringHelper::getPosition";
+        $sub = "e";
+        $actual = StringHelper::getPositions($whole, $sub);
+        $expected = [7, 10, 15];
+        self::assertEquals($expected, $actual);
+
+        $whole = "StringHelper::getPosition";
+        $sub = "p";
+        $actual = StringHelper::getPositions($whole, $sub);
+        $expected = [9];
+        self::assertEquals($expected, $actual);
+
+        $whole = "StringHelper::getPosition";
+        $sub = "p";
+        $actual = StringHelper::getPositions($whole, $sub, true);
+        $expected = [9, 17];
+        self::assertEquals($expected, $actual);
+    }
+
+    public function testGetFirstPosition()
+    {
+        $whole = "StringHelper::getPosition";
+        $sub = "p";
+        $actual = StringHelper::getFirstPosition($whole, $sub, true);
+        $expected = 9;
+        self::assertEquals($expected, $actual);
+
+        $actual = StringHelper::getFirstPosition($whole, $sub, false);
+        $expected = 9;
+        self::assertEquals($expected, $actual);
+
+        $actual = StringHelper::getFirstPosition($whole, $sub, true, true);
+        $expected = 17;
+        self::assertEquals($expected, $actual);
+
+        $actual = StringHelper::getFirstPosition($whole, $sub, false, true);
+        $expected = 9;
         self::assertEquals($expected, $actual);
     }
 

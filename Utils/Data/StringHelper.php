@@ -321,21 +321,54 @@ class StringHelper
     /**
      * 获取某个子字符串在全字符串中出现的各个位置
      * (因为一个全串可以包含多个子串，所以返回是一个有各个位置组成的一维数组)
-     * @param $wholeStringData
-     * @param $subStringData
+     * @param string $wholeStringData
+     * @param string $subStringData
+     * @param bool   $ignoreCaseSensitive
      * @return array
      */
-    public static function getPosition($wholeStringData, $subStringData)
+    public static function getPositions($wholeStringData, $subStringData, $ignoreCaseSensitive = false)
     {
-        $_search_pos = mb_strpos($wholeStringData, $subStringData);
+        if ($ignoreCaseSensitive) {
+            return static::_getPositions($wholeStringData, $subStringData, "mb_stripos");
+        } else {
+            return static::_getPositions($wholeStringData, $subStringData, "mb_strpos");
+        }
+    }
+
+    private static function _getPositions($wholeStringData, $subStringData, $getPosFuncName)
+    {
+        $_search_pos = $getPosFuncName($wholeStringData, $subStringData);
 
         $_arr_positions = array();
         while ($_search_pos > -1) {
             $_arr_positions[] = $_search_pos;
-            $_search_pos = mb_strpos($wholeStringData, $subStringData, $_search_pos + 1);
+
+            $_search_pos = $getPosFuncName($wholeStringData, $subStringData, $_search_pos + 1);
         }
 
         return $_arr_positions;
+    }
+
+    /**
+     * 获取子字符串第一次出现的位置
+     * @param $wholeStringData
+     * @param $subStringData
+     * @param $ignoreCaseSensitive
+     * @param $revertSearch
+     * @return int|mixed
+     */
+    public static function getFirstPosition($wholeStringData, $subStringData, $ignoreCaseSensitive = false, $revertSearch = false)
+    {
+        $positions = static::getPositions($wholeStringData, $subStringData, $ignoreCaseSensitive);
+        if (ObjectHelper::isEmpty($positions)) {
+            return -1;
+        } else {
+            if ($revertSearch) {
+                return $positions[ArrayHelper::getLength($positions) - 1];
+            } else {
+                return $positions[0];
+            }
+        }
     }
 
     /**
