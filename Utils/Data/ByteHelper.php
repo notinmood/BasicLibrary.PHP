@@ -10,7 +10,7 @@ class ByteHelper
      * @param string $delimiter 数字和单位分隔符
      * @return string 格式化后的带单位的大小
      */
-    public static function friendlyDisplay($size, $delimiter = '')
+    public static function displayFriendly($size, $delimiter = '')
     {
         $units = array(
             'B',

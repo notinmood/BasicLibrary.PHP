@@ -11,15 +11,15 @@ use ReflectionException;
 class DBSetHelper
 {
     /**
-     * 获取数据集中第0行中的某个字段值
-     * @param array $dbSet
+     * 获取数据集中第 0行中的某个字段值
+     * @param array  $dbSet
      * @param string $fieldName
      * @return mixed
      */
-    public static function getFirstValueFromDBSet($dbSet, $fieldName)
+    public static function getSingleValue($dbSet, $fieldName, $rowIndex = 0)
     {
         $fieldValue = null;
-        $rowData = self::getRowFromDBSet($dbSet, 0);
+        $rowData = self::getRow($dbSet, $rowIndex);
         if ($rowData != null) {
             $fieldValue = $rowData[$fieldName];
         }
@@ -29,14 +29,11 @@ class DBSetHelper
 
     /**
      * 获取数据集中第某行的信息
-     *
-     * @param array $dbSet
-     *            数据集（二维数组）
-     * @param int $rowIndex
-     *            行索引值
+     * @param array $dbSet    数据集（二维数组）
+     * @param int   $rowIndex 行索引值
      * @return array 数据集中的某行（一维数组）
      */
-    public static function getRowFromDBSet($dbSet, $rowIndex = 0)
+    public static function getRow($dbSet, $rowIndex = 0)
     {
         $rowData = null;
         if ($dbSet != null && count($dbSet) > $rowIndex) {
@@ -64,8 +61,8 @@ class DBSetHelper
      * @return array 友好显示的数据集信息
      * @throws ReflectionException
      */
-    public static function friendlyDisplay(&$dbSet, $mapArray = null, $funcArray = null)
+    public static function displayFriendly(&$dbSet, $mapArray = null, $funcArray = null)
     {
-        return ArrayHelper::friendlyDisplayDbSet($dbSet, $mapArray, $funcArray);
+        return ArrayHelper::displayDbSetFriendly($dbSet, $mapArray, $funcArray);
     }
 }

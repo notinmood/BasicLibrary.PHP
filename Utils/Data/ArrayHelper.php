@@ -402,7 +402,7 @@ class ArrayHelper
      * @return array 友好显示的数据集信息
      * @throws ReflectionException
      */
-    public static function friendlyDisplayDbSet(&$dbSet, $mapArray = null, $funcArray = null)
+    public static function displayDbSetFriendly(&$dbSet, $mapArray = null, $funcArray = null)
     {
         if ($dbSet === false || $dbSet === null) {
             return $dbSet;
@@ -411,7 +411,7 @@ class ArrayHelper
         $dbSet = (array)$dbSet;
 
         foreach ($dbSet as $key => $row) {
-            self::friendlyDisplayEntity($dbSet[$key], $mapArray, $funcArray);
+            self::displayEntityFriendly($dbSet[$key], $mapArray, $funcArray);
         }
 
         return $dbSet;
@@ -435,7 +435,7 @@ class ArrayHelper
      * @return array 友好显示的数据实体
      * @throws ReflectionException
      */
-    public static function friendlyDisplayEntity(&$dataEntity, $mapArray = null, $funcArray = null)
+    public static function displayEntityFriendly(&$dataEntity, $mapArray = null, $funcArray = null)
     {
         if ($dataEntity === false || $dataEntity === null) {
             return $dataEntity;

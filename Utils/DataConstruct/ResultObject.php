@@ -2,29 +2,31 @@
 
 namespace Hiland\Utils\DataConstruct;
 
+use ArrayAccess;
 use Hiland\Utils\Data\ObjectHelper;
-use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use JetBrains\PhpStorm\Internal\TentativeType;
-use function PHPUnit\Framework\isNull;
+use stdClass;
 
-/**类型包括3个常用的属性和一个备用属性
- * 1.status, bool类型,表示返回的结果是成功还是失败
- * 2.message, string类型,表示返回信息的文本描述
- * 3.data, mixed类型,表示返回信息的具体信息
- * 4.其他要返回的信息，统一通过动态成员的方式放入标准对象misc里面，如下：
+/**
+ * 返回值对象
+ * ────────────────────────
+ * 类型包括 3个常用的属性和一个备用属性
+ * 1. status, bool类型,表示返回的结果是成功还是失败
+ * 2. message, string类型,表示返回信息的文本描述
+ * 3. data, mixed类型,表示返回信息的具体信息
+ * 4. 其他要返回的信息，统一通过动态成员的方式放入标准对象misc里面，如下：
  *  $r = new Returns(true, "very good!", "这个人还不错");
- *  $r->misc->pa = 'something';(其中pa就是misc的动态成员)
- * Class ResultObject
- * @package Hiland\Utils\DataConstruct
+ *  $r->misc->pa = 'something';(其中 pa 就是 misc 的动态成员)
+ *  或者
+ *  $r["pa"] = 'something';(使用 ArrayAccess 方式访问动态成员)
  */
-class ResultObject implements \ArrayAccess
+class ResultObject implements ArrayAccess
 {
     public function __construct($status, $message, $data = null)
     {
         $this->status = $status;
         $this->message = $message;
         $this->data = $data;
-        $this->misc = new \stdClass();
+        $this->misc = new stdClass();
     }
 
     public $status = true;
@@ -53,6 +55,7 @@ class ResultObject implements \ArrayAccess
     }
 
     /**
+     * (为便于传递)将返回值对象进行字符串化
      * @param ResultObject $resultObject
      * @return string
      */
@@ -62,7 +65,8 @@ class ResultObject implements \ArrayAccess
     }
 
 
-    /** 对给定格式的字符串进行解析，得到结构化表示的Returns对象
+    /**
+     * 对给定格式的字符串进行解析，得到结构化表示的 Returns 对象
      * @param string $stringData 给定json格式的字符串
      * @return ResultObject 结构化表示的返回值对象
      */
