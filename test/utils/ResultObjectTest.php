@@ -32,12 +32,31 @@ class ResultObjectTest extends TestCase
         $expected = "Engineer";
         $actual = $resultObject->getMiscItem($miscMyKey, $expected);
         self::assertEquals($expected, $actual);
+
+        /**
+         * 以下几段代码，测试 ArrayAccess 接口的功能
+         */
+        $miscMyKey = "message";
+        $expected = "我是一个标题";
+        $actual = $resultObject[$miscMyKey];
+        self::assertEquals($expected, $actual);
+
+        $miscMyKey = "myJob";
+        $expected = "Engineer";
+        $resultObject[$miscMyKey] = $expected;
+        $actual = $resultObject[$miscMyKey];
+        self::assertEquals($expected, $actual);
+
+        $miscNoKey = "NoKey";
+        $actual = $resultObject[$miscNoKey];
+        $expected = null;
+        self::assertEquals($expected, $actual);
     }
 
-    public function testCompose()
+    public function testStringify()
     {
         $resultObject = $this->builderResultObject();
-        $actual = ResultObject::compose($resultObject);
+        $actual = ResultObject::stringify($resultObject);
         $expected = $this->jsonString;
 
         self::assertEquals($expected, $actual);
@@ -59,7 +78,6 @@ class ResultObjectTest extends TestCase
     private function builderResultObject()
     {
         $message = "我是一个标题";
-        $desc = "这是一个DESC";
         $data = ["a" => "AA", "b" => "BB"];
         $resultObject = new ResultObject(true, $message, $data);
 

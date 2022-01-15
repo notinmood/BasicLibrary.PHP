@@ -283,7 +283,7 @@ class EnvHelper
 
     /**
      * 获取站点的 web 根路径
-     * (由于 PHP 项目的特定,无法通过代码直接获取到 web 根目录，每个项目请通过 config 单独配置)
+     * (由于 PHP 项目的特性,无法通过代码直接获取到 web 根目录，每个项目请通过文件 config.php/.env 进行单独配置)
      * @return string
      */
     public static function getWebRootPath()

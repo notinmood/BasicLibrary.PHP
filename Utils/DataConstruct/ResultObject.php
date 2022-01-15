@@ -3,6 +3,9 @@
 namespace Hiland\Utils\DataConstruct;
 
 use Hiland\Utils\Data\ObjectHelper;
+use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use JetBrains\PhpStorm\Internal\TentativeType;
+use function PHPUnit\Framework\isNull;
 
 /**类型包括3个常用的属性和一个备用属性
  * 1.status, bool类型,表示返回的结果是成功还是失败
@@ -14,7 +17,7 @@ use Hiland\Utils\Data\ObjectHelper;
  * Class ResultObject
  * @package Hiland\Utils\DataConstruct
  */
-class ResultObject
+class ResultObject implements \ArrayAccess
 {
     public function __construct($status, $message, $data = null)
     {
@@ -53,7 +56,7 @@ class ResultObject
      * @param ResultObject $resultObject
      * @return string
      */
-    public static function compose($resultObject)
+    public static function stringify($resultObject)
     {
         return json_encode($resultObject);
     }
@@ -75,5 +78,62 @@ class ResultObject
         $result = new ResultObject($type, $message, $data);
         $result->misc = $misc;
         return $result;
+    }
+
+    /**
+     * @param $offset
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        $result = ObjectHelper::isMember($this, $offset);
+        if (!$result) {
+            $result = ObjectHelper::isMember($this->misc, $offset);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param $offset
+     * @return mixed
+     */
+    public function offsetGet($offset)
+    {
+        $result = ObjectHelper::getMember($this, $offset, null);
+        if (ObjectHelper::isNull($result)) {
+            $result = ObjectHelper::getMember($this->misc, $offset, null);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param $offset
+     * @param $value
+     * @return void
+     */
+    public function offsetSet($offset, $value)
+    {
+        $isMember = ObjectHelper::isMember($this, $offset);
+        if ($isMember) {
+            $this->$offset = $value;
+        } else {
+            $this->setMiscItem($offset, $value);
+        }
+    }
+
+    /**
+     * @param $offset
+     * @return void
+     */
+    public function offsetUnset($offset)
+    {
+        $isMember = ObjectHelper::isMember($this, $offset);
+        if ($isMember) {
+            $this->$offset = null;
+        } else {
+            unset($this->misc->$offset);
+        }
     }
 }
