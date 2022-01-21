@@ -10,12 +10,13 @@
 
 namespace Hiland\Utils\Pattern;
 
+use Exception;
 use Hiland\Test\_res\Student;
 use PHPUnit\Framework\TestCase;
 
 class NullObjectTest extends TestCase
 {
-    public function getStudent($name, $age,$nullObjectAction= NullObject::NON)
+    public function getStudent($name, $age, $nullObjectAction = NullObject::NON)
     {
         if ($age < 25) {
             return new Student($name, $age);
@@ -44,13 +45,14 @@ class NullObjectTest extends TestCase
         $actual = $student->getUserName();
         $expected = null;
         self::assertEquals($expected, $actual);
+        self::expectOutputString("当前为一个空对象,在其上调用方法 getUserName 没有任何效果");
 
         /**
          * 以下演示断言异常的方法
          */
-        $this->expectException(\Exception::class);
+        $this->expectException(Exception::class);
         // $this->expectExceptionMessage("当前为一个空对象,在其上调用方法getUserName没有任何效果");
         $student = $this->getStudent($name, $age, NullObject::EXCEPTION);
-        $actual = $student->getUserName();
+        $student->getUserName();
     }
 }

@@ -35,7 +35,7 @@ class ResultObject implements ArrayAccess
     public $misc = null;
 
     /**
-     * 设定属性misc的各个子属性
+     * 设定属性 misc 的各个子属性
      * @param {*} name
      * @param {*} value
      */
@@ -45,7 +45,7 @@ class ResultObject implements ArrayAccess
     }
 
     /**
-     * 获取misc的各个子属性的值
+     * 获取 misc 的各个子属性的值
      * @param {*} name
      * @param {*} defaultValue
      */

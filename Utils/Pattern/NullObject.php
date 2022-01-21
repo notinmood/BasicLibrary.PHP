@@ -40,17 +40,18 @@ class NullObject
      */
     public function __call($method, $arg)
     {
+        $message = "当前为一个空对象,在其上调用方法 {$method} 没有任何效果";
         switch ($this->actionLevel) {
             case self::NON:
                 // do nothing;
                 break;
             case self::TIP:
-                echo "当前为一个空对象,在其上调用方法{$method}没有任何效果";
+                echo $message;
                 break;
             case self::ERROR:
             case self::EXCEPTION:
             default:
-                throw new Exception("当前为一个空对象,在上面调用方法{$method}没有任何效果");
+                throw new Exception($message);
         }
     }
 }
