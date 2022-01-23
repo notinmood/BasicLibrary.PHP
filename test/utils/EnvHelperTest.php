@@ -22,9 +22,9 @@ class EnvHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testGetWebRootPath(){
-        $actual = "diyipingce/";
-        $expected = EnvHelper::getWebRootPath();
-        self::assertEquals($expected,$actual);
-    }
+    // public function testGetWebRootPath(){
+    //     $actual = "diyipingce/";
+    //     $expected = EnvHelper::getWebRootPath();
+    //     self::assertEquals($expected,$actual);
+    // }
 }

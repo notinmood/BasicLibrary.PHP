@@ -13,6 +13,7 @@ use Hiland\Utils\Data\ReflectionHelper;
 use Hiland\Utils\Data\StringHelper;
 
 /**
+ * @TODO 本类型需要重新整理，尤其是变量 APP_DEBUG等信息需要重新确认
  * Class ConstMate
  * @package Vendor\Hiland\Utils\Data
  * 记录有业务常量的类型，继承此类。具体用法如下

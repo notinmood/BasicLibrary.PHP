@@ -16,5 +16,5 @@ echo phpversion() . EnvHelper::getNewLineSymbol();
 echo PHP_VERSION . EnvHelper::getNewLineSymbol();
 echo PHP_EXTRA_VERSION . EnvHelper::getNewLineSymbol();
 
-echo EnvHelper::getPHPFloatVersion() . EnvHelper::getNewLineSymbol();
-echo EnvHelper::getPHPWholeVersion() . EnvHelper::getNewLineSymbol();
+echo EnvHelper::getPhpFloatVersion() . EnvHelper::getNewLineSymbol();
+echo EnvHelper::getPhpWholeVersion() . EnvHelper::getNewLineSymbol();

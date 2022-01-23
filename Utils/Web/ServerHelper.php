@@ -75,12 +75,12 @@ class ServerHelper
     }
 
     /**
-     * 获取web项目的根目录物理路径
+     * 获取 web 项目的根目录物理路径
      * ————————————————————
-     *因为当前文件属于类库文件(假定名称为a),
-     *客户浏览器请求的页面(假定为b)
-     *当用composer加载的时候a的时候,
-     *a、b两个文件对应的物理文件,在根目录下是并列的存在的两个分支子目录.
+     *因为当前文件属于类库文件(假定名称为 a),
+     *客户浏览器请求的页面(假定为 b)
+     *当用 composer 加载的时候 a 的时候,
+     *a、b 两个文件对应的物理文件,在根目录下是并列的存在的两个分支子目录.
      *因此可以通过以下逻辑获取到项目的根目录物理路径
      * @return string
      */
@@ -95,13 +95,7 @@ class ServerHelper
      */
     public static function getWebRoot()
     {
-        $webRoot = "/";
-        $appName = self::getAppName();
-        if ($appName) {
-            $webRoot .= $appName . "/";
-        }
-
-        return $webRoot;
+        return EnvHelper::getWebRootPath();
     }
 
     /**
@@ -110,34 +104,6 @@ class ServerHelper
      */
     public static function getAppName()
     {
-        $pageWebRelativePath = $_SERVER['SCRIPT_NAME'];
-        if (StringHelper::isStartWith($pageWebRelativePath, "/")) {
-            $pageWebRelativePath = StringHelper::subString($pageWebRelativePath, 1);
-        }
-
-        $pageWebRelativePathArray = StringHelper::explode($pageWebRelativePath, "/");
-        $pageWebRelativePathArray = array_reverse($pageWebRelativePathArray);
-
-        $rootPhysicalPath = EnvHelper::getPhysicalRootPath();
-        $rootPhysicalPath = StringHelper::replace($rootPhysicalPath, "/", "\\");
-
-        $filePhysicalFullPath = $_SERVER["SCRIPT_FILENAME"];
-        $filePhysicalFullPath = StringHelper::replace($filePhysicalFullPath, "/", "\\");
-        $filePhysicalRelativePath = StringHelper::subString($filePhysicalFullPath, StringHelper::getLength($rootPhysicalPath));
-
-        $filePhysicalRelativePathArray = StringHelper::explode($filePhysicalRelativePath, "\\");
-        $filePhysicalRelativePathArray = array_reverse($filePhysicalRelativePathArray);
-
-        $pageWebRelativePathArrayLength = ArrayHelper::getLength($pageWebRelativePathArray);
-
-        if (isset($filePhysicalRelativePathArray[$pageWebRelativePathArrayLength - 1])) {
-            if ($pageWebRelativePathArray[$pageWebRelativePathArrayLength - 1] == $filePhysicalRelativePathArray[$pageWebRelativePathArrayLength - 1]) {
-                return "";
-            } else {
-                return $pageWebRelativePathArray[$pageWebRelativePathArrayLength - 1];
-            }
-        } else {
-            return $pageWebRelativePathArray[$pageWebRelativePathArrayLength - 1];
-        }
+        return EnvHelper::getAppName();
     }
 }

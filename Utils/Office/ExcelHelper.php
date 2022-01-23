@@ -2,8 +2,8 @@
 
 namespace Hiland\Utils\Office;
 /**
- * Created by PhpStorm.
- * User: xiedalie
+ * TODO: 由于 PHPExcel已经停止维护。改为使用 https://github.com/PHPOffice/PhpSpreadsheet，本代码需要同步调整
+ * User: xiedali
  * Date: 2017/6/10
  * Time: 9:51
  */

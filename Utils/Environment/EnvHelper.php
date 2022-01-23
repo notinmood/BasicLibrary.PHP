@@ -2,7 +2,7 @@
 
 namespace Hiland\Utils\Environment;
 
-use Hiland\Utils\Config\ConfigHelper;
+use Hiland\Utils\Data\ArrayHelper;
 use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\RegexHelper;
 use Hiland\Utils\Data\StringHelper;
@@ -142,7 +142,7 @@ class EnvHelper
      * 获取数字表示的php版本号（主版本号用整数表示，其他版本号在小数点后面排列）
      * @return float
      */
-    public static function getPHPFloatVersion()
+    public static function getPhpFloatVersion()
     {
         $version = '';
         $array = explode('.', PHP_VERSION);
@@ -161,7 +161,7 @@ class EnvHelper
      * 比如,5.3.6版本的返回值为 50306
      * @return int
      */
-    public static function getPHPWholeVersion()
+    public static function getPhpWholeVersion()
     {
         return PHP_VERSION_ID;
     }
@@ -283,11 +283,53 @@ class EnvHelper
 
     /**
      * 获取站点的 web 根路径
-     * (由于 PHP 项目的特性,无法通过代码直接获取到 web 根目录，每个项目请通过文件 config.php/.env 进行单独配置)
      * @return string
      */
     public static function getWebRootPath()
     {
-        return ConfigHelper::get("webRootPath", "/");
+        $webRoot = "/";
+        $appName = self::getAppName();
+        if ($appName) {
+            $webRoot .= $appName . "/";
+        }
+
+        return $webRoot;
+    }
+
+    /**
+     * 获取应用程序的名称
+     * @return mixed|string
+     */
+    public static function getAppName()
+    {
+        $pageWebRelativePath = $_SERVER['SCRIPT_NAME'];
+        if (StringHelper::isStartWith($pageWebRelativePath, "/")) {
+            $pageWebRelativePath = StringHelper::subString($pageWebRelativePath, 1);
+        }
+
+        $pageWebRelativePathArray = StringHelper::explode($pageWebRelativePath, "/");
+        $pageWebRelativePathArray = array_reverse($pageWebRelativePathArray);
+
+        $rootPhysicalPath = EnvHelper::getPhysicalRootPath();
+        $rootPhysicalPath = StringHelper::replace($rootPhysicalPath, "/", "\\");
+
+        $filePhysicalFullPath = $_SERVER["SCRIPT_FILENAME"];
+        $filePhysicalFullPath = StringHelper::replace($filePhysicalFullPath, "/", "\\");
+        $filePhysicalRelativePath = StringHelper::subString($filePhysicalFullPath, StringHelper::getLength($rootPhysicalPath));
+
+        $filePhysicalRelativePathArray = StringHelper::explode($filePhysicalRelativePath, "\\");
+        $filePhysicalRelativePathArray = array_reverse($filePhysicalRelativePathArray);
+
+        $pageWebRelativePathArrayLength = ArrayHelper::getLength($pageWebRelativePathArray);
+
+        if (isset($filePhysicalRelativePathArray[$pageWebRelativePathArrayLength - 1])) {
+            if ($pageWebRelativePathArray[$pageWebRelativePathArrayLength - 1] == $filePhysicalRelativePathArray[$pageWebRelativePathArrayLength - 1]) {
+                return "";
+            } else {
+                return $pageWebRelativePathArray[$pageWebRelativePathArrayLength - 1];
+            }
+        } else {
+            return $pageWebRelativePathArray[$pageWebRelativePathArrayLength - 1];
+        }
     }
 }
