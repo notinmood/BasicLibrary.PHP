@@ -9,6 +9,8 @@
  */
 
 /**
+ * 系统常用的功能性函数
+ * ────────────────────────
  * 将经常使用到的类型中的方法进行提取出来形成函数,便于使用.
  */
 
@@ -17,7 +19,7 @@ use Hiland\Utils\Data\StringHelper;
 use Hiland\Utils\Data\ThinkHelper;
 use Hiland\Utils\Environment\EnvHelper;
 use Hiland\Utils\IO\ConsoleHelper;
-use Hiland\Utils\Web\ServerHelper;
+use Hiland\Utils\Web\WebHelper;
 
 
 if (!function_exists('dump') && ThinkHelper::isThinkPHP() == false) {
@@ -49,6 +51,7 @@ if (!function_exists("el")) {
     }
 }
 
+
 if (!function_exists("exist")) {
     /**
      * 判断标的物是否存在
@@ -60,6 +63,7 @@ if (!function_exists("exist")) {
         return ObjectHelper::isExist($value);
     }
 }
+
 
 if (!function_exists("getLength")) {
     /**
@@ -76,13 +80,13 @@ if (!function_exists("getLength")) {
 
 if (!function_exists('fixUrl')) {
     /**
-     * @param string $mcaUrl 普通url或者MCA格式表示的url("Module/Controller/Action")
+     * @param string $mcaUrl 普通 url 或者 MCA 格式表示的 url("Module/Controller/Action")
      * @param string $entry  入口页面
      * @return string
      */
     function fixUrl($mcaUrl, $entry = "index.php")
     {
-        $webRoot = ServerHelper::getWebRoot();
+        $webRoot = WebHelper::getWebRoot();
         if (StringHelper::isStartWith($webRoot, "/") == false) {
             $webRoot = "/" . $webRoot;
         }
@@ -103,8 +107,8 @@ if (!function_exists('fixUrl')) {
 
         if (StringHelper::isStartWith($targetUrl, $enterUrl) == false) {
             $webRootLength = StringHelper::getLength($webRoot);
-            $targetUrl = StringHelper::subString($targetUrl, $webRootLength);
-            $targetUrl = $enterUrl . $targetUrl;
+            $targetUrl     = StringHelper::subString($targetUrl, $webRootLength);
+            $targetUrl     = $enterUrl . $targetUrl;
         }
 
         return $targetUrl;

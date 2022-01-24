@@ -11,10 +11,13 @@
 
 namespace Hiland\Utils\Web;
 
-use Hiland\Utils\Data\ArrayHelper;
-use Hiland\Utils\Data\StringHelper;
 use Hiland\Utils\Environment\EnvHelper;
 
+/**
+ * 提供访问服务器信息的统一接口
+ * ────────────────────────
+ * 本类型通过整合和暴露其他类型的功能而存在，自身不提供独立功能，
+ */
 class ServerHelper
 {
     /**
@@ -61,7 +64,7 @@ class ServerHelper
      */
     public static function getHostName()
     {
-        return isset($_SERVER['HTTP_X_FORWARDED_HOST']) ? $_SERVER['HTTP_X_FORWARDED_HOST'] : (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '');
+        return WebHelper::getHostName();
     }
 
     /**
