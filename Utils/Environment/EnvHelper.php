@@ -263,7 +263,7 @@ class EnvHelper
         $rootPath = StringHelper::implode($root_array, DIRECTORY_SEPARATOR);
 
         /**
-         * 在实际项目中,此方法有可能是不被单元测试工具加载，单元测试工具又可能也在 vendor 目录下，
+         * 在实际项目中,此方法有可能是被单元测试工具加载，单元测试工具又可能也在 vendor 目录下，
          * 那么此种情况，就需要根据本文件所在的目录,移除到最后一个vendor(有可能目录其他部分还包含vendor),前面剩余的部分就是根目录。
          */
         if (StringHelper::isEndWith($rootPath, DIRECTORY_SEPARATOR . "vendor")) {
@@ -298,6 +298,8 @@ class EnvHelper
 
     /**
      * 获取应用程序的名称
+     * ---------------------
+     * 原理：通过比较请求页面的 web 路径和（去除掉根目录的）物理路径，得出应用程序名称
      * @return mixed|string
      */
     public static function getAppName()
