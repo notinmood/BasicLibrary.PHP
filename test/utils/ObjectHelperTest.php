@@ -12,9 +12,21 @@ namespace Hiland\Utils\Data;
 
 use Hiland\Test\_res\Student;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class ObjectHelperTest extends TestCase
 {
+    public function testIsInstance(){
+        $s= new Student("zhangsan",20);
+        $actual = ObjectHelper::isInstance($s,Student::class);
+        $expected = true;
+        self::assertEquals($expected,$actual);
+
+        $s= new stdClass();
+        $actual = ObjectHelper::isInstance($s,Student::class);
+        $expected = false;
+        self::assertEquals($expected,$actual);
+    }
 
     public function testIsEmpty()
     {
@@ -22,7 +34,7 @@ class ObjectHelperTest extends TestCase
         self::assertEquals(false, $actual);
     }
 
-    public static function testGetClass()
+    public static function testGetClassName()
     {
         $student = new Student("zhangsan", 20);
 
@@ -36,43 +48,41 @@ class ObjectHelperTest extends TestCase
          */
         $object = "qingdao";
         $actual = ObjectHelper::getClassName($object);
-        self::assertNull($actual);
+        $expected = ObjectTypes::STRING;
+        self::assertEquals($expected,$actual);
 
         /**
          * 数字不是class类型
          */
         $object = 123;
         $actual = ObjectHelper::getClassName($object);
-        self::assertNull($actual);
+        $expected = ObjectTypes::INTEGER;
+        self::assertEquals($expected,$actual);
 
         /**
          * array不是class类型
          */
         $object = array();
         $actual = ObjectHelper::getClassName($object);
-        self::assertNull($actual);
+        $expected = ObjectTypes::ARRAYS;
+        self::assertEquals($expected,$actual);
 
         /**
          * 空对象是一个class类型
          */
-        $object = new \stdClass();
+        $object = new stdClass();
         $actual = ObjectHelper::getClassName($object);
         self::assertEquals("stdClass", $actual);
 
         /**
-         * 匿名函数是一个class类型,类型名称为 Closure
+         * 匿名函数是一个 class 类型,类型名称为 Closure
          */
-        $object = function () {
+        $object = function (){
+
         };
         $actual = ObjectHelper::getClassName($object);
-        self::assertEquals("Closure", $actual);
-
-        /**
-         * 方法对应的类型是一个null
-         */
-        $object = $student->getUserName();
-        $actual = ObjectHelper::getClassName($object);
-        self::assertNull($actual);
+        $expected = ObjectTypes::CLOSURE;
+        self::assertEquals($expected,$actual);
     }
 
     public function testIsNumber()

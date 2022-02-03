@@ -4,6 +4,7 @@ namespace Hiland\Utils\Data;
 
 use DateTime;
 use Exception;
+use PHPUnit\TextUI\XmlConfiguration\MigrationException;
 use stdClass;
 
 class ObjectHelper
@@ -79,7 +80,7 @@ class ObjectHelper
         // 将临时变量的值重新赋值到原变量
         $tmp = $var;
 
-        $var = 'tmp_value_' . mt_rand();
+        $var  = 'tmp_value_' . mt_rand();
         $name = array_search($var, $scope, true); // 根据值查找变量名称
 
         $var = $tmp;
@@ -122,7 +123,7 @@ class ObjectHelper
     }
 
     /**
-     * 判断数据类型（由于php本身的gettype函数有可能改变，此处使用自定义的函数进行判断）
+     * 判断系统内置的数据类型（由于 php 本身的 gettype 函数有可能改变，此处使用自定义的函数进行判断）
      * @param $data
      * @return string
      */
@@ -169,6 +170,32 @@ class ObjectHelper
         }
     }
 
+    /**
+     * 获取对象的数据类型(兼容 getTypeName)
+     * @param mixed $object
+     * @return string|null 得到的是一个内置数据类型的名称字符串(boolean、string等) 或者一个复杂 Class 的完全名称字符串(即包括命名空间在内的名称)
+     */
+    public static function getClassName($object)
+    {
+        $typeName = self::getTypeName($object);
+        if ($typeName != ObjectTypes::OBJECT) {
+            return $typeName;
+        }
+
+        try {
+            $result = get_class($object);
+        } catch (Exception $e) {
+            $result = null;
+        }
+
+        return $result;
+    }
+
+    /**
+     * 获取对象的字符串表示
+     * @param $data
+     * @return false|string
+     */
     public static function getString($data)
     {
         $type = self::getTypeName($data);
@@ -194,6 +221,11 @@ class ObjectHelper
         return $result;
     }
 
+    /**
+     * 判断当前对象是否为JSON格式的字符串
+     * @param $data
+     * @return bool
+     */
     public static function isJson($data)
     {
         if (self::getTypeName($data) == ObjectTypes::STRING) {
@@ -204,7 +236,8 @@ class ObjectHelper
         }
     }
 
-    /**判断一个对象是否存在
+    /**
+     * 判断一个对象是否存在
      * @param $data
      * @return bool
      */
@@ -276,7 +309,8 @@ class ObjectHelper
      * @param $data
      * @return bool
      */
-    public static function isNull($data){
+    public static function isNull($data)
+    {
         return is_null($data);
     }
 
@@ -285,7 +319,8 @@ class ObjectHelper
      * @param $data
      * @return bool
      */
-    public static function isNotNull($data){
+    public static function isNotNull($data)
+    {
         return !is_null($data);
     }
 
@@ -319,7 +354,7 @@ class ObjectHelper
     public static function isMember($targetObject, $memberName)
     {
         $result = false;
-        $type = self::getTypeName($targetObject);
+        $type   = self::getTypeName($targetObject);
         switch ($type) {
             case ObjectTypes::ARRAYS:
                 $result = array_key_exists($memberName, $targetObject);
@@ -359,29 +394,13 @@ class ObjectHelper
         }
     }
 
-    /**
-     * 获取对象对应的类型
-     * @param $object
-     * @return string|null 得到的是一个Class的完全名称(即包括命名空间在内的名称)
-     */
-    public static function getClassName($object)
-    {
-        try {
-            $result = get_class($object);
-        } catch (Exception $e) {
-            $result = null;
-        }
-
-        return $result;
-    }
-
     /**判断某个对象是否为某个类型的实例
      * 跟 运算符 a instanceof B 效果相同
      * @param $entity
      * @param $classFullName string 带命名空间的类型名称全名（调用的时候，获取某个类型的全名称可以使用::class关键字，即AAA::class）
      * @return bool
      * @example
-     *                       ObjectHelper::isInstance($entity1,ActiveCode::class);
+     *   ObjectHelper::isInstance($entity1,ActiveCode::class);
      */
     public static function isInstance($entity, $classFullName)
     {
@@ -395,7 +414,7 @@ class ObjectHelper
      */
     public static function getLength($data)
     {
-        $type = self::getTypeName($data);
+        $type   = self::getTypeName($data);
         $result = 0;
 
         switch ($type) {

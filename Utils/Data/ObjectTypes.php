@@ -11,14 +11,15 @@ namespace Hiland\Utils\Data;
 
 class ObjectTypes
 {
-    const STRING = "string";
-    const INTEGER = "integer";
-    const BOOLEAN = "boolean";
-    const DOUBLE = "double";
-    const FLOAT = "float";
+    const STRING   = "string";
+    const INTEGER  = "integer";
+    const BOOLEAN  = "boolean";
+    const DOUBLE   = "double";
+    const FLOAT    = "float";
     const RESOURCE = "resource";
-    const ARRAYS = "array";
-    const OBJECT = "object";
-    const NULL = "null";
-    const DATETIME="datetime";
+    const ARRAYS   = "array";
+    const OBJECT   = "object";
+    const NULL     = "null";
+    const DATETIME = "datetime";
+    const CLOSURE  = "Closure";
 }
