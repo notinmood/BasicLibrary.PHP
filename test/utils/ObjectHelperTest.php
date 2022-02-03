@@ -27,6 +27,23 @@ class ObjectHelperTest extends TestCase
         $expected = false;
         self::assertEquals($expected,$actual);
     }
+    
+    public function testIsJson(){
+        $data= "123";
+        $actual = ObjectHelper::isJson($data);
+        $expected = false;
+        self::assertEquals($expected,$actual);
+
+        $json = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
+        $actual = ObjectHelper::isJson($json);
+        $expected = true;
+        self::assertEquals($expected,$actual);
+
+        $json = '{"a","b"}';
+        $actual = ObjectHelper::isJson($json);
+        $expected = false;
+        self::assertEquals($expected,$actual);
+    }
 
     public function testIsEmpty()
     {

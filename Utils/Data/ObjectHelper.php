@@ -4,7 +4,6 @@ namespace Hiland\Utils\Data;
 
 use DateTime;
 use Exception;
-use PHPUnit\TextUI\XmlConfiguration\MigrationException;
 use stdClass;
 
 class ObjectHelper
@@ -229,11 +228,12 @@ class ObjectHelper
     public static function isJson($data)
     {
         if (self::getTypeName($data) == ObjectTypes::STRING) {
-            json_decode($data);
-            return (json_last_error() == JSON_ERROR_NONE);
-        } else {
-            return false;
+            $data = json_decode($data);
+            if ($data && is_object($data)) {
+                return true;
+            }
         }
+        return false;
     }
 
     /**
@@ -400,7 +400,7 @@ class ObjectHelper
      * @param $classFullName string 带命名空间的类型名称全名（调用的时候，获取某个类型的全名称可以使用::class关键字，即AAA::class）
      * @return bool
      * @example
-     *   ObjectHelper::isInstance($entity1,ActiveCode::class);
+     *                       ObjectHelper::isInstance($entity1,ActiveCode::class);
      */
     public static function isInstance($entity, $classFullName)
     {
