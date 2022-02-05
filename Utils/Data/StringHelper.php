@@ -88,10 +88,10 @@ class StringHelper
         } elseif (function_exists('iconv_substr')) {
             $slice = iconv_substr($originalStringData, $startPosition, $length, $charset);
         } else {
-            $re['utf-8'] = "/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xff][\x80-\xbf]{3}/";
+            $re['utf-8']  = "/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xff][\x80-\xbf]{3}/";
             $re['gb2312'] = "/[\x01-\x7f]|[\xb0-\xf7][\xa0-\xfe]/";
-            $re['gbk'] = "/[\x01-\x7f]|[\x81-\xfe][\x40-\xfe]/";
-            $re['big5'] = "/[\x01-\x7f]|[\x81-\xfe]([\x40-\x7e]|\xa1-\xfe])/";
+            $re['gbk']    = "/[\x01-\x7f]|[\x81-\xfe][\x40-\xfe]/";
+            $re['big5']   = "/[\x01-\x7f]|[\x81-\xfe]([\x40-\x7e]|\xa1-\xfe])/";
             preg_match_all($re[$charset], $originalStringData, $match);
             $slice = join("", array_slice($match[0], $startPosition, $length));
         }
@@ -133,7 +133,7 @@ class StringHelper
                 return $wholeStringData;
             }
         } else {
-            $length = $lengthOrTail;
+            $length    = $lengthOrTail;
             $allLength = self::getLength($wholeStringData);
             if ($allLength <= $length) {
                 return "";
@@ -152,8 +152,8 @@ class StringHelper
     public static function isEndWith($wholeStringData, $paddingStringData)
     {
         $paddingLength = strlen($paddingStringData);
-        $fullLength = strlen($wholeStringData);
-        $subString = substr($wholeStringData, $fullLength - $paddingLength);
+        $fullLength    = strlen($wholeStringData);
+        $subString     = substr($wholeStringData, $fullLength - $paddingLength);
         if ($subString == $paddingStringData) {
             return true;
         } else {
@@ -227,7 +227,6 @@ class StringHelper
         }
     }
 
-
     /**
      * 包装php的字符串替换(将各个参数名称进一步明确化)
      * @param string $wholeStringData
@@ -279,25 +278,25 @@ class StringHelper
         $content = '';
         $pattern = '/{\d*}/';
         $matches = null;
-        $result = preg_match_all($pattern, $formatter, $matches);
+        $result  = preg_match_all($pattern, $formatter, $matches);
         if ($result) {
             foreach ($matches[0] as $matchedWithQuotation) {
                 $matchedWithQuotationStartPosition = strpos($formatter, $matchedWithQuotation);
-                $matchedWithQuotationLength = strlen($matchedWithQuotation);
-                $separator = substr($formatter, 0, $matchedWithQuotationStartPosition);
-                $content .= $separator;
-                $separatorLength = strlen($separator);
-                $formatter = substr($formatter, $matchedWithQuotationLength + $separatorLength);
+                $matchedWithQuotationLength        = strlen($matchedWithQuotation);
+                $separator                         = substr($formatter, 0, $matchedWithQuotationStartPosition);
+                $content                           .= $separator;
+                $separatorLength                   = strlen($separator);
+                $formatter                         = substr($formatter, $matchedWithQuotationLength + $separatorLength);
 
                 $matchedNumber = StringHelper::getStringAfterSeparator($matchedWithQuotation, '{');
                 $matchedNumber = StringHelper::getStringBeforeSeparator($matchedNumber, '}');
                 $matchedNumber = (int)$matchedNumber;
-                $dataLength = strlen($stringData);
+                $dataLength    = strlen($stringData);
                 if ($dataLength >= $matchedNumber) {
-                    $content .= substr($stringData, 0, $matchedNumber);
+                    $content    .= substr($stringData, 0, $matchedNumber);
                     $stringData = substr($stringData, $matchedNumber);
                 } else {
-                    $content .= $stringData;
+                    $content    .= $stringData;
                     $stringData = '';
                 }
             }
@@ -440,7 +439,68 @@ class StringHelper
         return mb_strtolower($stringData);
     }
 
+
+    protected static $snakeCache  = [];
+    protected static $camelCache  = [];
+    protected static $studlyCache = [];
+
     /**
+     * 驼峰转下划线
+     * @param string $value
+     * @param string $delimiter
+     * @return string
+     */
+    public static function snake($value, $delimiter = '_')
+    {
+        $key = $value;
+
+        if (isset(static::$snakeCache[$key][$delimiter])) {
+            return static::$snakeCache[$key][$delimiter];
+        }
+
+        if (!ctype_lower($value)) {
+            $value = preg_replace('/\s+/u', '', ucwords($value));
+
+            $value = static::lower(preg_replace('/(.)(?=[A-Z])/u', '$1' . $delimiter, $value));
+        }
+
+        return static::$snakeCache[$key][$delimiter] = $value;
+    }
+
+    /**
+     * 下划线转驼峰(首字母小写)
+     * @param string $value
+     * @return string
+     */
+    public static function camel($value)
+    {
+        if (isset(static::$camelCache[$value])) {
+            return static::$camelCache[$value];
+        }
+
+        return static::$camelCache[$value] = lcfirst(static::studly($value));
+    }
+
+    /**
+     * 下划线转驼峰(首字母大写)
+     * @param string $value
+     * @return string
+     */
+    public static function studly($value)
+    {
+        $key = $value;
+
+        if (isset(static::$studlyCache[$key])) {
+            return static::$studlyCache[$key];
+        }
+
+        $value = ucwords(str_replace(['-', '_'], ' ', $value));
+
+        return static::$studlyCache[$key] = str_replace(' ', '', $value);
+    }
+
+    /**
+     * 在字符串的结尾填充其他字符(或字符串)
      * @param string $stringData 需要进行补充的原始字符串
      * @param int    $length
      * @param string $pad
@@ -452,6 +512,7 @@ class StringHelper
     }
 
     /**
+     * 在字符串的开头填充其他字符(或字符串)
      * @param string $stringData 需要进行补充的原始字符串
      * @param int    $length
      * @param string $pad

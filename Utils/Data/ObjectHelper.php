@@ -346,7 +346,8 @@ class ObjectHelper
         }
     }
 
-    /**判断一个成员是否属于某个对象
+    /**
+     * 判断一个成员是否属于某个对象
      * @param $targetObject
      * @param $memberName
      * @return bool
@@ -369,6 +370,13 @@ class ObjectHelper
         return $result;
     }
 
+    /**
+     * 获取对象的成员信息
+     * @param $targetObject
+     * @param $memberName
+     * @param $defaultValue
+     * @return mixed|null
+     */
     public static function getMember($targetObject, $memberName, $defaultValue = null)
     {
         if ($targetObject) {
