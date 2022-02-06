@@ -12,8 +12,8 @@ class ChineseHelper
      */
     static function getPinyin(string $chineseString, string $charCoding = 'UTF8'): string
     {
-        $charCoding = mb_strtolower($charCoding);
-        $_DataKey = "a|ai|an|ang|ao|ba|bai|ban|bang|bao|bei|ben|beng|bi|bian|biao|bie|bin|bing|bo|bu|ca|cai|can|cang|cao|ce|ceng|cha" .
+        $charCoding  = mb_strtolower($charCoding);
+        $_DataKey    = "a|ai|an|ang|ao|ba|bai|ban|bang|bao|bei|ben|beng|bi|bian|biao|bie|bin|bing|bo|bu|ca|cai|can|cang|cao|ce|ceng|cha" .
             "|chai|chan|chang|chao|che|chen|cheng|chi|chong|chou|chu|chuai|chuan|chuang|chui|chun|chuo|ci|cong|cou|cu|" .
             "cuan|cui|cun|cuo|da|dai|dan|dang|dao|de|deng|di|dian|diao|die|ding|diu|dong|dou|du|duan|dui|dun|duo|e|en|er" .
             "|fa|fan|fang|fei|fen|feng|fo|fou|fu|ga|gai|gan|gang|gao|ge|gei|gen|geng|gong|gou|gu|gua|guai|guan|guang|gui" .
@@ -29,7 +29,7 @@ class ChineseHelper
             "|xi|xia|xian|xiang|xiao|xie|xin|xing|xiong|xiu|xu|xuan|xue|xun|ya|yan|yang|yao|ye|yi|yin|ying|yo|yong|you" .
             "|yu|yuan|yue|yun|za|zai|zan|zang|zao|ze|zei|zen|zeng|zha|zhai|zhan|zhang|zhao|zhe|zhen|zheng|zhi|zhong|" .
             "zhou|zhu|zhua|zhuai|zhuan|zhuang|zhui|zhun|zhuo|zi|zong|zou|zu|zuan|zui|zun|zuo";
-        $_DataValue = "-20319|-20317|-20304|-20295|-20292|-20283|-20265|-20257|-20242|-20230|-20051|-20036|-20032|-20026|-20002|-19990" .
+        $_DataValue  = "-20319|-20317|-20304|-20295|-20292|-20283|-20265|-20257|-20242|-20230|-20051|-20036|-20032|-20026|-20002|-19990" .
             "|-19986|-19982|-19976|-19805|-19784|-19775|-19774|-19763|-19756|-19751|-19746|-19741|-19739|-19728|-19725" .
             "|-19715|-19540|-19531|-19525|-19515|-19500|-19484|-19479|-19467|-19289|-19288|-19281|-19275|-19270|-19263" .
             "|-19261|-19249|-19243|-19242|-19238|-19235|-19227|-19224|-19218|-19212|-19038|-19023|-19018|-19006|-19003" .
@@ -56,12 +56,15 @@ class ChineseHelper
             "|-11052|-11045|-11041|-11038|-11024|-11020|-11019|-11018|-11014|-10838|-10832|-10815|-10800|-10790|-10780" .
             "|-10764|-10587|-10544|-10533|-10519|-10331|-10329|-10328|-10322|-10315|-10309|-10307|-10296|-10281|-10274" .
             "|-10270|-10262|-10260|-10256|-10254";
-        $_TDataKey = explode('|', $_DataKey);
+        $_TDataKey   = explode('|', $_DataKey);
         $_TDataValue = explode('|', $_DataValue);
-        $_Data = array_combine($_TDataKey, $_TDataValue);
+        $_Data       = array_combine($_TDataKey, $_TDataValue);
         arsort($_Data);
-        reset($_Data);
-        if ($charCoding != 'gb2312') $chineseString = self::convertUTF8ToGB2312($chineseString);
+        // reset($_Data);
+        if ($charCoding != 'gb2312') {
+            $chineseString = self::convertUTF8ToGB2312($chineseString);
+        }
+
         $_Res = '';
         for ($i = 0; $i < strlen($chineseString); $i++) {
             $_P = ord(substr($chineseString, $i, 1));
@@ -75,29 +78,35 @@ class ChineseHelper
     }
 
     /**
-     * 将gb2312编码的字符串转成utf8编码的字符串
-     * @param string $chineseStringInGB2312Coding
+     * 将 utf8 编码的字符串转成 gb2312 编码的字符串
+     * @param string $chineseStringInUTF8
+     * @return string gb2312编码的字符串
+     */
+    public static function convertUTF8ToGB2312(string $chineseStringInUTF8): string
+    {
+        return iconv('UTF-8', 'GB2312', $chineseStringInUTF8);
+    }
+
+    /**
+     * 将 gb2312 编码的字符串转成 utf8 编码的字符串
+     * @param string $chineseStringInGB2312
      * @return string utf8编码的字符串
      */
-    public static function convertUTF8ToGB2312(string $chineseStringInGB2312Coding): string
+    public static function convertGB2312ToUTF8(string $chineseStringInGB2312): string
     {
-        $_String = '';
-        if ($chineseStringInGB2312Coding < 0x80) {
-            $_String .= $chineseStringInGB2312Coding;
-        } elseif ($chineseStringInGB2312Coding < 0x800) {
-            $_String .= chr(0xC0 | $chineseStringInGB2312Coding >> 6);
-            $_String .= chr(0x80 | $chineseStringInGB2312Coding & 0x3F);
-        } elseif ($chineseStringInGB2312Coding < 0x10000) {
-            $_String .= chr(0xE0 | $chineseStringInGB2312Coding >> 12);
-            $_String .= chr(0x80 | $chineseStringInGB2312Coding >> 6 & 0x3F);
-            $_String .= chr(0x80 | $chineseStringInGB2312Coding & 0x3F);
-        } elseif ($chineseStringInGB2312Coding < 0x200000) {
-            $_String .= chr(0xF0 | $chineseStringInGB2312Coding >> 18);
-            $_String .= chr(0x80 | $chineseStringInGB2312Coding >> 12 & 0x3F);
-            $_String .= chr(0x80 | $chineseStringInGB2312Coding >> 6 & 0x3F);
-            $_String .= chr(0x80 | $chineseStringInGB2312Coding & 0x3F);
-        }
-        return iconv('UTF-8', 'GB2312', $_String);
+        return iconv('UTF-8', 'GB2312', $chineseStringInGB2312);
+    }
+
+    /**
+     * 将源编码的字符串转成目标编码的字符串
+     * @param string $stringData
+     * @param string $fromEncoding
+     * @param string $toEncoding
+     * @return string 转码后的字符串
+     */
+    public static function convertEncoding(string $stringData, string $fromEncoding, string $toEncoding): string
+    {
+        return iconv($fromEncoding, $toEncoding, $stringData);
     }
 
     private static function getCharPinyin($_Num, $_Data)
@@ -130,10 +139,10 @@ class ChineseHelper
     public static function unicodeEncode(string $data, string $encoding = 'UTF-8', string $prefix = '\u', string $postfix = ''): string
     {
         $name = iconv($encoding, 'UCS-2', $data);
-        $len = strlen($name);
-        $str = '';
+        $len  = strlen($name);
+        $str  = '';
         for ($i = 0; $i < $len - 1; $i = $i + 2) {
-            $c = $name[$i];
+            $c  = $name[$i];
             $c2 = $name[$i + 1];
             if (ord($c) > 0) {
                 // 两个字节的文字
@@ -172,11 +181,11 @@ class ChineseHelper
             for ($j = 0; $j < count($matches[0]); $j++) {
                 $str = $matches[0][$j];
                 if (strpos($str, '\u') === 0) {
-                    $code = base_convert(substr($str, 2, 2), 16, 10);
+                    $code  = base_convert(substr($str, 2, 2), 16, 10);
                     $code2 = base_convert(substr($str, 4), 16, 10);
-                    $c = chr($code2) . chr($code);
-                    $c = iconv('UCS-2', $encoding, $c);
-                    $name .= $c;
+                    $c     = chr($code2) . chr($code);
+                    $c     = iconv('UCS-2', $encoding, $c);
+                    $name  .= $c;
                 } else {
                     $name .= $str;
                 }
@@ -214,7 +223,7 @@ class ChineseHelper
          * 中文字符串的首字符
          */
         $stringEncoded = iconv("UTF-8", "GBK", $chineseString);
-        $charCode = ord($stringEncoded[0]) * 256 + ord($stringEncoded[1]) - 65536;
+        $charCode      = ord($stringEncoded[0]) * 256 + ord($stringEncoded[1]) - 65536;
 
         if ($charCode >= -20319 and $charCode <= -20284) {
             return "A";
