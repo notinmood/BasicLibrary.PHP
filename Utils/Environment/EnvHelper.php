@@ -36,8 +36,8 @@ class EnvHelper
             '用户的IP地址' => $_SERVER['REMOTE_ADDR'],
             '剩余空间' => round((disk_free_space(".") / (1024 * 1024)), 2) . 'M',
             'MySQL数据库持续连接' => get_cfg_var("mysql.allow_persistent") ? "是 " : "否",
-            '脚本运行占用最大内存' => get_cfg_var("memory_limit") ? get_cfg_var("memory_limit") : "无",
-            '当前进程用户名' => Get_Current_User(),
+            '脚本运行占用最大内存' => get_cfg_var("memory_limit") ?: "无",
+            '当前进程用户名' => get_current_user(),
         ];
     }
 
@@ -194,7 +194,7 @@ class EnvHelper
         }
 
         $isIP = preg_match(RegexHelper::IP, $domainNameOrIP);
-        $isLocal = false;
+
         if ($isIP) {
             if (self::isPrivateIP($domainNameOrIP)) {
                 return true;

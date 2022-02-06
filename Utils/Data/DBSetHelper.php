@@ -45,7 +45,7 @@ class DBSetHelper
     }
 
     /**
-     * 友好的显示数据集信息
+     * 友好地显示数据集信息
      * @param array      $dbSet
      *            数据集
      * @param array|null $mapArray

@@ -19,7 +19,7 @@ class RandHelper
      *            [任意值] 大写小写字符、数字（不包含特殊字符）
      * @return string
      */
-    public static function getRand(int $length = 8, string $category = SystemEnum::RandCategory_ALL): string
+    public static function get(int $length = 8, string $category = SystemEnum::RandCategory_ALL): string
     {
         $result = '';
 

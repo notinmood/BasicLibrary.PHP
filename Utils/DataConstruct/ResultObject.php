@@ -23,16 +23,16 @@ class ResultObject implements ArrayAccess
 {
     public function __construct($status, $message, $data = null)
     {
-        $this->status = $status;
+        $this->status  = $status;
         $this->message = $message;
-        $this->data = $data;
-        $this->misc = new stdClass();
+        $this->data    = $data;
+        $this->misc    = new stdClass();
     }
 
-    public $status = true;
-    public $message = "";
-    public $data = null;
-    public $misc = null;
+    public bool      $status  = true;
+    public string    $message = "";
+    public           $data    = null;
+    public ?stdClass $misc    = null;
 
     /**
      * 设定属性 misc 的各个子属性
@@ -74,12 +74,12 @@ class ResultObject implements ArrayAccess
     {
         $jsonObject = json_decode($stringData);
 
-        $type = $jsonObject->status;
+        $type    = $jsonObject->status;
         $message = $jsonObject->message;
-        $data = $jsonObject->data;
-        $misc = $jsonObject->misc;
+        $data    = $jsonObject->data;
+        $misc    = $jsonObject->misc;
 
-        $result = new ResultObject($type, $message, $data);
+        $result       = new ResultObject($type, $message, $data);
         $result->misc = $misc;
         return $result;
     }
@@ -104,9 +104,9 @@ class ResultObject implements ArrayAccess
      */
     public function offsetGet($offset)
     {
-        $result = ObjectHelper::getMember($this, $offset, null);
+        $result = ObjectHelper::getMember($this, $offset);
         if (ObjectHelper::isNull($result)) {
-            $result = ObjectHelper::getMember($this->misc, $offset, null);
+            $result = ObjectHelper::getMember($this->misc, $offset);
         }
 
         return $result;

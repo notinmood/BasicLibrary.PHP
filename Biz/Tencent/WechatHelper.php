@@ -558,7 +558,7 @@ class WechatHelper
         $jsapiTicket = self::getJsApiTicket($accessToken);
         $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $timeStamp = time();
-        $nonceString = RandHelper::getRand(16);
+        $nonceString = RandHelper::get(16);
 
         // 这里参数的顺序要按照 key 值 ASCII 码升序排序
         $string = "jsapi_ticket=$jsapiTicket&noncestr=$nonceString&timestamp=$timeStamp&url=$url";

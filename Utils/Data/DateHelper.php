@@ -56,10 +56,8 @@ class DateHelper
             switch ($zoneName) {
                 case "Asia/Shanghai":
                     return new DateTimeZone("PRC");
-                    break;
                 default:
                     return new DateTimeZone($zoneName);
-
             }
         }
     }
@@ -102,7 +100,6 @@ class DateHelper
             return false;
         }
 
-        $result = false;
         $type   = ObjectHelper::getTypeName($data);
         switch ($type) {
             case ObjectTypes::STRING:
@@ -184,7 +181,6 @@ class DateHelper
 
         $ms4Diff = $ms4Main - $ms4Secondary;
 
-        $result = null;
         switch ($intervalType) {
             case "ms":
                 $result = $ms4Diff;
@@ -462,14 +458,11 @@ class DateHelper
         switch ($format) {
             case "n":
                 return $week;
-                break;
             case 'c':
                 return $result;
-                break;
             case 'cf':
             default:
                 return '星期' . $result;
-                break;
         }
     }
 

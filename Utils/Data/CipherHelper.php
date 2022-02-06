@@ -108,7 +108,7 @@ class CipherHelper
         $ckey_length = 4;
 
         // 密匙
-        $key = md5($key ? $key : 'seagull-20160215');
+        $key = md5($key ?: 'seagull-20160215');
 
         // 密匙a会参与加解密
         $keya = md5(substr($key, 0, 16));

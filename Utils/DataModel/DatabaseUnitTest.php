@@ -35,7 +35,7 @@ class DatabaseUnitTest
     public function __construct($tableName, $duplicateRowCount = -1, $autoDispose = True)
     {
         $this->autoDispose = $autoDispose;
-        $random = RandHelper::getRand(8, SystemEnum::RandCategory_NUMBER);
+        $random = RandHelper::get(8, SystemEnum::RandCategory_NUMBER);
         $this->newTableName = $tableName . "__dup_{$random}__";
 
         $this->ddl = DatabaseClient::getDDL();

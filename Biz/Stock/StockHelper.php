@@ -26,6 +26,7 @@ class StockHelper
             return "";
         } else {
             $standardCode = $stockCode;
+            /** @noinspection all */
             $bizCode = "{$prefix}{$standardCode}{$postfix}";
             $stockExchangeNameUpper = self::getStockExchangeName($standardCode);
             $stockExchangeNameLower = StringHelper::lower($stockExchangeNameUpper);

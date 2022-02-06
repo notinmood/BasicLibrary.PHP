@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: xiedalie
+ * User: xiedali
  * Date: 2016/7/26
  * Time: 9:17
  */
@@ -56,38 +56,28 @@ class MathHelper
      * @param callable $everyWindowCallbackFunc 对每个窗口周期进行计算的回调函数(传递出1个参数：包含当前窗口内的各个元素的array)
      * @return array
      */
-    public static function rolling(array $sourceArray, int $windowPeriod, string $targetFieldName = '', callable $everyWindowCallbackFunc): array
+    public static function rolling(array $sourceArray, int $windowPeriod, string $targetFieldName, callable $everyWindowCallbackFunc): array
     {
         $result = null;
         $level  = ArrayHelper::getLevel($sourceArray);
         $pIndex = $windowPeriod - 1;
         $data   = array_values($sourceArray);
-        $sum    = 0;
 
         $queue = new Queue();
 
         foreach ($data as $k => $v) {
-            $needRemoveValue = 0;
-
             if ($level == 1) {
                 $currentValue = $v;
-                if (($k - $pIndex) >= 0) {
-                    $needRemoveValue = $data[$k - $pIndex];
-                }
             } else {
                 $currentValue = $v[$targetFieldName];
-                if (($k - $pIndex) >= 0) {
-                    $needRemoveValue = $data[$k - $pIndex][$targetFieldName];
-                }
             }
 
-            // $sum += $currentValue;
             $queue->push($currentValue);
             if ($k < $pIndex) {
                 $item = 0;
             } else {
                 $item = $everyWindowCallbackFunc($queue->convertToArray());
-                $queue->pop($needRemoveValue);
+                $queue->pop();
             }
 
             $result[] = $item;

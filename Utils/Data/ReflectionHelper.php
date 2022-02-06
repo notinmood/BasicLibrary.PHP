@@ -25,7 +25,7 @@ class ReflectionHelper
             return new $className();
         } else {
             $class = self::getReflectionClass($className, $args);
-            return $class->newInstanceArgs((array)$args);
+            return $class->newInstanceArgs($args);
         }
     }
 

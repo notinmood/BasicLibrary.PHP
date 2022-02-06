@@ -8,7 +8,7 @@ namespace Hiland\Utils\Data;
  * @package Hiland\Utils\Data
  * https://gitee.com/fubinwei/morse-php/blob/master/morse.php#
  * 例子：
- * $data= MorseHelper::encode("这是一个伟大的时代，nihao！");
+ * $data= MorseHelper::encode("这是一个伟大的时代，hello！");
  * dump($data);
  * $data= MorseHelper::decode($data);
  * dump($data);
@@ -107,21 +107,26 @@ class MorseHelper
 
     //按utf分割字符串
 
-    private static function defaultOption($option = null): array
+    /**
+     * @param array|null $option
+     * @return array
+     */
+    private static function defaultOption(array $option = null): array
     {
         $option = $option || [];
         return [
-            isset($option['space']) ? $option['space'] : self::$option['space'],
-            isset($option['short']) ? $option['short'] : self::$option['short'],
-            isset($option['long']) ? $option['long'] : self::$option['long'],
+            $option['space'] ?? self::$option['space'],
+            $option['short'] ?? self::$option['short'],
+            $option['long'] ?? self::$option['long'],
         ];
     }
 
-    private static function mbStrSplit($stringData)
+    private static function mbStrSplit($stringData): array
     {
         $len = 1;
         $start = 0;
         $length = mb_strlen($stringData);
+        $array=[];
         while ($length) {
             $array[] = mb_substr($stringData, $start, $len, "utf8");
             $stringData = mb_substr($stringData, $len, $length, "utf8");
@@ -197,22 +202,6 @@ class MorseHelper
         } else {
             $mor = dechex($mor);
         }
-        return self::convertUnicodeToUtf8($mor);
-    }
-
-    /**
-     * Unicode字符转换成utf8字符
-     * @param  [type] $unicode_str Unicode字符
-     * @return string [type]              Utf-8字符
-     */
-    private static function convertUnicodeToUtf8($unicode_str): string
-    {
-        $utf8_str = '';
-        $code = intval(hexdec($unicode_str));
-        //这里注意转换出来的code一定得是整形，这样才会正确的按位操作
-        $ord_1 = decbin(0xe0 | ($code >> 12));
-        $ord_2 = decbin(0x80 | (($code >> 6) & 0x3f));
-        $ord_3 = decbin(0x80 | ($code & 0x3f));
-        return chr(bindec($ord_1)) . chr(bindec($ord_2)) . chr(bindec($ord_3));
+        return StringHelper::convertUnicodeToUTF8($mor);
     }
 }

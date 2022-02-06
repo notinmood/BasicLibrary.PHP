@@ -155,7 +155,7 @@ class StringHelperTest extends TestCase
     public function testConvertFromUTF8ToUnicode()
     {
         $data = "我";
-        $actual = StringHelper::convertCharFromUTF8ToUnicode($data);
+        $actual = StringHelper::convertUTF8ToUnicode($data);
         $expected = "6211";
 
         self::assertEquals($expected, $actual);
@@ -164,7 +164,7 @@ class StringHelperTest extends TestCase
     public function testConvertFromUnicodeToUTF8()
     {
         $data = "6211";
-        $actual = StringHelper::convertCharFromUnicodeToUTF8($data);
+        $actual = StringHelper::convertUnicodeToUTF8($data);
         $expected = "我";
 
         self::assertEquals($expected, $actual);

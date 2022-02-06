@@ -27,7 +27,7 @@ class CalculateMate
     //精度计算时保留的小数点位数
     public int $precision = 2;
     //计算结果
-    public $result = 0;
+    public int $result = 0;
 
     /**
      * AccuracyCal constructor.

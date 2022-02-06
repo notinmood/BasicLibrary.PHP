@@ -121,9 +121,9 @@ class LinkedList
 
                 $current = $current->next;
             }
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**

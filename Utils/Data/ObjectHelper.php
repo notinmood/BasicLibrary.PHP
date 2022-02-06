@@ -355,7 +355,6 @@ class ObjectHelper
      */
     public static function isMember($targetObject, $memberName): bool
     {
-        $result = false;
         $type   = self::getTypeName($targetObject);
         switch ($type) {
             case ObjectTypes::ARRAYS:

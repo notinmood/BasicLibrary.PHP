@@ -440,9 +440,9 @@ class StringHelper
     }
 
 
-    protected static $snakeCache  = [];
-    protected static $camelCache  = [];
-    protected static $studlyCache = [];
+    protected static array $snakeCache  = [];
+    protected static array $camelCache  = [];
+    protected static array $studlyCache = [];
 
     /**
      * 驼峰转下划线
@@ -569,9 +569,8 @@ class StringHelper
      * @param $utf8Char string
      * @return string      Unicode字符
      */
-    public static function convertCharFromUTF8ToUnicode(string $utf8Char): string
+    public static function convertUTF8ToUnicode(string $utf8Char): string
     {
-        $unicode = 0;
         $unicode = (ord($utf8Char[0]) & 0x1F) << 12;
         $unicode |= (ord($utf8Char[1]) & 0x3F) << 6;
         $unicode |= (ord($utf8Char[2]) & 0x3F);
@@ -583,7 +582,7 @@ class StringHelper
      * @param string $unicodeChar Unicode字符
      * @return string       Utf-8字符
      */
-    public static function convertCharFromUnicodeToUTF8(string $unicodeChar): string
+    public static function convertUnicodeToUTF8(string $unicodeChar): string
     {
         $code = intval(hexdec($unicodeChar));
         //这里注意转换出来的code一定得是整形，这样才会正确的按位操作

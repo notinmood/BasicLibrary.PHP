@@ -95,11 +95,7 @@ class ArrayHelper
      */
     public static function getItem($array, $key, $defaultValue = null)
     {
-        if (isset($array[$key])) {
-            return $array[$key];
-        } else {
-            return $defaultValue;
-        }
+        return $array[$key] ?? $defaultValue;
     }
 
     /**
@@ -307,7 +303,7 @@ class ArrayHelper
      * @param array $originalArray 有简单值构成key和value的名值对一维数组
      * @return array
      */
-    public static function exchangeKeyValue($originalArray): array
+    public static function exchangeKeyValue(array $originalArray): array
     {
         return array_flip($originalArray);
     }
@@ -403,9 +399,9 @@ class ArrayHelper
      * @return array 友好显示的数据集信息
      * @throws ReflectionException
      */
-    public static function displayDbSetFriendly(array &$dbSet, array $mapArray = null, array $funcArray = null)
+    public static function displayDbSetFriendly(array &$dbSet, array $mapArray = null, array $funcArray = null): ?array
     {
-        if ($dbSet === false || $dbSet === null) {
+        if ($dbSet == false || $dbSet === null) {
             return $dbSet;
         }
 
@@ -420,13 +416,13 @@ class ArrayHelper
 
     /**
      * 友好地显示数据集信息
-     * @param array $dataEntity
+     * @param array      $dataEntity
      *            数据实体
-     * @param array $mapArray
+     * @param array|null $mapArray
      *            转换数组（多维数组，第一维度表示要匹配的数据集字段名称，
      *            第二维度是对本字段的取值进行友好显示的枚举）,例如
      *            array('status'=>array(1=>'正常',-1=>'删除',0=>'禁用',2=>'未审核',3=>'草稿'))
-     * @param array $funcArray
+     * @param array|null $funcArray
      *            函数数组，多维数组，第一维度表示要匹配的数据集字段名称，
      *            第二维度是对本字段的取值进行友好显示的函数，
      *            此函数仅支持一个参数，即将数据库内的值作为本函数的参数
@@ -436,9 +432,9 @@ class ArrayHelper
      * @return array 友好显示的数据实体
      * @throws ReflectionException
      */
-    public static function displayEntityFriendly(&$dataEntity, $mapArray = null, $funcArray = null)
+    public static function displayEntityFriendly(array &$dataEntity, array $mapArray = null, array $funcArray = null): ?array
     {
-        if ($dataEntity === false || $dataEntity === null) {
+        if ($dataEntity == false || $dataEntity === null) {
             return $dataEntity;
         }
 
