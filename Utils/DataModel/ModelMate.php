@@ -6,8 +6,6 @@ use Hiland\Utils\Data\ArrayHelper;
 use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\ObjectTypes;
 use Hiland\Utils\DataValue\SystemEnum;
-use ReflectionException;
-use think\Config;
 use think\db\BaseQuery;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -48,19 +46,18 @@ class ModelMate
     public function __construct($model)
     {
         if (is_string($model)) {
-            try {
-                $this->modelObject = new CommonModel($model);
-            } catch (ReflectionException $e) {
-            }
+            $this->modelObject = new CommonModel($model);
 
             $className = "\\think\\facade\\Db";
             $exist     = class_exists("$className");
             if ($exist) {
+                /** @noinspection all */
                 $this->queryObject = Db::name($model);
             } else {
                 $className = "\\think\\Db";
                 $exist     = class_exists("$className");
                 if ($exist) {
+                    /** @noinspection all */
                     $this->queryObject = \think\Db::name($model);
                 }
             }
@@ -105,8 +102,8 @@ class ModelMate
      * @return mixed 符合条件的结果，一维数组
      * @example
      *                          $where= array();
-     *                          $where['shopid'] = $merchantScanedID;
-     *                          $where['openid'] = $openId;
+     *                          $where['shopID'] = $merchantScannedID;
+     *                          $where['openID'] = $openId;
      *                          $result = $buyerShopMate->find($where);
      */
     public function find(array $condition = array(), string $orderBy = '')
@@ -130,8 +127,8 @@ class ModelMate
      * @return mixed 符合条件的结果，多维数组
      * @example
      *                                 $where= array();
-     *                                 $where['shopid'] = $merchantScanedID;
-     *                                 $where['openid'] = $openId;
+     *                                 $where['shopID'] = $merchantScannedID;
+     *                                 $where['openID'] = $openId;
      *                                 $relation = $buyerShopMate->select($where);
      */
     public function select(array $condition = array(), string $orderBy = "", int $pageIndex = 0, int $itemCountPerPage = 0, int $limit = 0, string $fields = '')
@@ -189,7 +186,7 @@ class ModelMate
 
         /* 添加或新增基础内容 */
         if (empty($data[$keyName])) { // 新增数据
-            $recordID = $this->queryObject->insert($data, false, true);
+            $recordID = $this->queryObject->insert($data, false);
             $recordID = (int)$recordID;
 
             if (!$recordID) {
@@ -217,7 +214,7 @@ class ModelMate
 
         // 行为记录
         if ($recordID && $isAddOperation) {
-            // action_log('add_role', 'role', $recordid, UID);
+            // action_log('add_role', 'role', $recordID, UID);
         }
 
         // 内容添加或更新完成
@@ -270,7 +267,7 @@ class ModelMate
     {
         $condition[$keyName]  = $key;
         $query                = $this->getQueryObjectWithWhere($condition);
-        $data["{$fieldName}"] = $fieldValue;
+        $data["$fieldName"] = $fieldValue;
         try {
             return $query->update($data);
         } catch (DbException $e) {
