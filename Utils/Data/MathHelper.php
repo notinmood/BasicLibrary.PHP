@@ -59,20 +59,26 @@ class MathHelper
     public static function rolling(array $sourceArray, int $windowPeriod, string $targetFieldName = '', callable $everyWindowCallbackFunc): array
     {
         $result = null;
-        $level = ArrayHelper::getLevel($sourceArray);
+        $level  = ArrayHelper::getLevel($sourceArray);
         $pIndex = $windowPeriod - 1;
-        $data = array_values($sourceArray);
-        $sum = 0;
+        $data   = array_values($sourceArray);
+        $sum    = 0;
 
         $queue = new Queue();
 
         foreach ($data as $k => $v) {
+            $needRemoveValue = 0;
+
             if ($level == 1) {
                 $currentValue = $v;
-                $needRemoveValue = $data[$k - $pIndex] ? $data[$k - $pIndex] : 0;
+                if (($k - $pIndex) >= 0) {
+                    $needRemoveValue = $data[$k - $pIndex];
+                }
             } else {
                 $currentValue = $v[$targetFieldName];
-                $needRemoveValue = $data[$k - $pIndex][$targetFieldName] ? $data[$k - $pIndex][$targetFieldName] : 0;
+                if (($k - $pIndex) >= 0) {
+                    $needRemoveValue = $data[$k - $pIndex][$targetFieldName];
+                }
             }
 
             // $sum += $currentValue;

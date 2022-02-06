@@ -19,6 +19,7 @@
 
 2. 进行单元测试时候，请按照文件 test/_README.md的内容进行简单配置。
 3. 使用数据库访问的时候，请按照文件 Utils/Config/_README.md 的内容进行配置。
+4. 涉及时间问题的时候，需要在 php.ini 内设置 date.timezone 为 Asia/Shanghai
 
 ## 开发注意事项
 

@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class LinkedListTest extends TestCase
 {
-    private function prepareData()
+    private function prepareData(): LinkedList
     {
         $linkedList = new LinkedList();
 
@@ -29,11 +29,11 @@ class LinkedListTest extends TestCase
         return $linkedList;
     }
 
-    public function testGet()
+    public function testGetValue()
     {
         $linkedList = $this->prepareData();
 
-        $actual = $linkedList->get(0);
+        $actual = $linkedList->getValue(0);
         $expect = "beijing";
         self::assertEquals($expect, $actual);
     }
@@ -42,7 +42,7 @@ class LinkedListTest extends TestCase
     {
         $linkedList = $this->prepareData();
 
-        $actual = $linkedList->getNode(0);
+        $actual = $linkedList->getNodeWithValue("beijing");
         $expect = "beijing";
         self::assertEquals($expect, $actual->value);
     }
@@ -74,7 +74,7 @@ class LinkedListTest extends TestCase
         $value1 = "beijing";
         $newNode = $linkedList->addHead($value1);
 
-        $actual = $linkedList->get(0);
+        $actual = $linkedList->getValue(0);
         self::assertEquals($value1, $actual);
         self::assertEquals($value1, $newNode->value);
 
@@ -82,9 +82,9 @@ class LinkedListTest extends TestCase
         $value2 = "shanghai";
         $linkedList->addHead($value2);
 
-        $actual = $linkedList->get(0);
+        $actual = $linkedList->getValue(0);
         self::assertEquals($value2, $actual);
-        $actual = $linkedList->get(1);
+        $actual = $linkedList->getValue(1);
         self::assertEquals($value1, $actual);
     }
 
@@ -97,14 +97,14 @@ class LinkedListTest extends TestCase
         $value = "beijing";
         $linkedList->addTail($value);
 
-        $actual = $linkedList->get(0);
+        $actual = $linkedList->getValue(0);
         self::assertEquals($value, $actual);
         $linkedList = new LinkedList();
 
         $value = "shanghai";
         $linkedList->addTail($value);
         $lastIndex = ($linkedList->size) - 1;
-        $actual = $linkedList->get($lastIndex);
+        $actual = $linkedList->getValue($lastIndex);
         self::assertEquals($value, $actual);
     }
 
@@ -122,7 +122,7 @@ class LinkedListTest extends TestCase
         $index = 1;
         $linkedList->insert($index, $value);
 
-        $actual = $linkedList->get($index);
+        $actual = $linkedList->getValue($index);
         self::assertEquals($value, $actual);
     }
 
@@ -132,7 +132,7 @@ class LinkedListTest extends TestCase
         $index = 1;
         $value = "qingdao";
         $linkedList->update($index, $value);
-        $actual = $linkedList->get($index);
+        $actual = $linkedList->getValue($index);
         self::assertEquals($value, $actual);
     }
 
@@ -146,13 +146,13 @@ class LinkedListTest extends TestCase
         $linkedList->remove($index);
 
         self::assertEquals(2, $linkedList->size);
-        $actual = $linkedList->get($index);
+        $actual = $linkedList->getValue($index);
         // dump($actual);
         self::assertNotEquals("shanghai", $actual);
 
         $index = 0;
         $linkedList->remove($index);
-        $actual = $linkedList->get($index);
+        $actual = $linkedList->getValue($index);
         self::assertNotEquals("beijing", $actual);
     }
 }

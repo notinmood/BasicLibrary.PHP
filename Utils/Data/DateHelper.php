@@ -7,14 +7,20 @@ use DateTime;
 use DateTimeZone;
 use Exception;
 
-/** 2038年问题的核心是 timestamp最大支持2^31 - 1(即2,147,483,641)，超过这个值都会出现问题。
+
+// +--------------------------------------------------------------------------
+// |::说明：| 1.在 php.ini 内设置 date.timezone 为 Asia/Shanghai
+// |·······| 2.修复 2038年问题。( 2038年问题的核心是 timestamp 最大支持 2^31 - 1(即 2,147,483,641)，超过这个值都会出现问题。)
+// +--------------------------------------------------------------------------
+
+/**
  * Class DateHelper
  * @package Hiland\Utils\Data
  */
 class DateHelper
 {
     /**
-     * 获取2038年1月1日0时0分0秒的 时间戳
+     * 获取 2038年 1月 1日 0时 0分 0秒的时间戳
      * @return int
      */
     private static function get20380101Timestamp(): int
@@ -37,7 +43,8 @@ class DateHelper
         return $result;
     }
 
-    /**统一设置时区为PRC
+    /**
+     * 统一设置时区为 PRC
      * @return DateTimeZone
      */
     private static function getDateTimeZone(): DateTimeZone
@@ -55,9 +62,6 @@ class DateHelper
 
             }
         }
-        // return new DateTimeZone("PRC");
-        // return new DateTimeZone("UTC");
-        // return new DateTimeZone("Asia/Shanghai");
     }
 
 
@@ -409,9 +413,9 @@ class DateHelper
      * 获取某个制定的日期是星期几
      * @param int|null $timestamp 指定的日期（默认为当前日期）
      * @param string   $format    返回星期几的格式
-     *                          （默认（或者number,N,n）为数组0-7；
-     *                          chinese,C,c:汉字 一，。。。日；
-     *                          chinesefull,CF,cf:汉字全称 星期一。。。星期天）
+     *                            （默认（或者number,N,n）为数组0-7；
+     *                            chinese,C,c:汉字 一，。。。日；
+     *                            chinesefull,CF,cf:汉字全称 星期一。。。星期天）
      * @return string
      */
     public static function getWeekName(string $format = 'number', int $timestamp = null): string

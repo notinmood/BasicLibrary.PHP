@@ -28,7 +28,7 @@ class LinkedList
 
     /**
      * 头插法
-     * @param $value
+     * @param mixed $value
      * @return Node|null
      */
     public function addHead($value): ?Node
@@ -38,7 +38,7 @@ class LinkedList
 
     /**
      * 尾插法
-     * @param $value
+     * @param mixed $value
      * @return Node|null
      */
     public function addTail($value): ?Node
@@ -48,23 +48,23 @@ class LinkedList
 
     /**
      * 指定索引位置插入
-     * @param $index
-     * @param $value
+     * @param int   $index
+     * @param mixed $value
      * @return Node|null
      */
-    public function insert($index, $value): ?Node
+    public function insert(int $index, $value): ?Node
     {
         if ($index > $this->size) {
             return null;
         } else {
             $currentNodeOld = $this->head;
-            $prevNode = null;
+            $prevNode       = null;
             for ($i = 0; $i < $index; $i++) {
-                $prevNode = $currentNodeOld;
+                $prevNode       = $currentNodeOld;
                 $currentNodeOld = $currentNodeOld->next;
             }
 
-            if ($currentNodeOld->isNullNode) {
+            if (!$currentNodeOld || $currentNodeOld->isNullNode) {
                 $currentNodeNew = new Node($value, null);
             } else {
                 $currentNodeNew = new Node($value, $currentNodeOld);
@@ -84,11 +84,11 @@ class LinkedList
 
     /***
      * 编辑
-     * @param $index
-     * @param $value
+     * @param int   $index
+     * @param mixed $value
      * @return Node|mixed|void|null
      */
-    public function update($index, $value)
+    public function update(int $index, $value)
     {
         if ($index >= $this->size) {
             return null;
@@ -107,11 +107,10 @@ class LinkedList
 
     /**
      * 查询
-     * @param $index
-     * @return null
-     * @throws Exception
+     * @param int $index
+     * @return mixed
      */
-    public function get($index)
+    public function getValue(int $index)
     {
         if ($index < $this->size) {
             $current = $this->head;
@@ -127,7 +126,12 @@ class LinkedList
         }
     }
 
-    public function getNode($value)
+    /**
+     * 通过 Value 获取节点
+     * @param mixed $value
+     * @return Node|mixed|null
+     */
+    public function getNodeWithValue($value)
     {
         $current = $this->head;
         while ($current) {
@@ -144,13 +148,13 @@ class LinkedList
 
     /**
      * 删除
-     * @param $index
+     * @param int $index
      */
-    public function remove($index)
+    public function remove(int $index)
     {
         if ($index < $this->size) {
             $current = $this->head;
-            $prev = null;
+            $prev    = null;
             for ($i = 0; $i <= $index; $i++) {
                 if ($i == $index) {
                     if ($prev) {
@@ -160,7 +164,7 @@ class LinkedList
                     }
                 }
 
-                $prev = $current;
+                $prev    = $current;
                 $current = $current->next;
             }
 
@@ -170,7 +174,7 @@ class LinkedList
 
     /**
      * 检索值是否存在
-     * @param $value
+     * @param mixed $value
      * @return bool
      */
     public function isContains($value): bool
@@ -197,69 +201,9 @@ class LinkedList
 
         $r = [];
         while ($prev) {
-            $r[] = $prev->value;
+            $r[]  = $prev->value;
             $prev = $prev->next;
         }
         return implode('->', $r);
     }
-
-    // /**
-    //  * 删除指定的节点值
-    //  * @param $value
-    //  */
-    // public function removeFields($value)
-    // {
-    //     $prev = $this->head;
-    //     while ($prev->next) {
-    //         if ($prev->val == $value) {
-    //             $prev->val = $prev->next->val;
-    //             $prev->next = $prev->next->next;
-    //         } else {
-    //             $prev = $prev->next;
-    //         }
-    //     }
-    // }
-
-    // /**
-    //  * 通过递归方式删除指定的节点值
-    //  * @param $value
-    //  * @return mixed
-    //  */
-    // public function removeFieldsByRecursion($value)
-    // {
-    //     $this->head = $this->removeByRecursion($this->head, $value);
-    //     return $this->head;
-    // }
-    //
-    // public function removeByRecursion($node, $value, $level = 0)
-    // {
-    //     if ($node->next == null) {
-    //         $this->showDeep($level, $node->val);
-    //         return $node->val == $value ? $node->next : $node;
-    //     }
-    //
-    //     $this->showDeep($level, $node->val);
-    //     $node->next = $this->removeByRecursion($node->next, $value, ++$level);
-    //     $this->showDeep($level, $node->val);
-    //     return $node->val == $value ? $node->next : $node;
-    // }
-    //
-    // /**
-    //  * 显示深度
-    //  * 帮助理解递归执行过程，回调函数执行层序遵循系统栈
-    //  * @param int $level 深度层级
-    //  * @param     $val
-    //  * @return bool
-    //  */
-    // public function showDeep($level = 1, $val)
-    // {
-    //     if ($level < 1) {
-    //         return false;
-    //     }
-    //
-    //     while ($level--) {
-    //         echo '-';
-    //     }
-    //     echo "$val\n";
-    // }
 }

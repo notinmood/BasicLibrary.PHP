@@ -15,7 +15,6 @@ use PHPUnit\Framework\TestCase;
 
 class MathHelperTest extends TestCase
 {
-
     public static function _getMaxElement($windowArray)
     {
         return max($windowArray);
@@ -98,7 +97,7 @@ class MathHelperTest extends TestCase
     /**
      * @return array
      */
-    private function buildOriginalData()
+    private function buildOriginalData(): array
     {
         $original2[] = ["age" => 11, "height" => 180];
         $original2[] = ["age" => 12, "height" => 179];
