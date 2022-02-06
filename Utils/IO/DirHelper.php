@@ -15,7 +15,7 @@ class DirHelper
      * @param $fullPath
      * @return bool
      */
-    public static function ensurePathExist($fullPath)
+    public static function ensurePathExist($fullPath): bool
     {
         return self::makeDir($fullPath);
     }
@@ -42,7 +42,7 @@ class DirHelper
      * @param $dir
      * @return int
      */
-    public static function getFileCount($dir)
+    public static function getFileCount($dir): int
     {
         $files = scandir($dir);
         $count = 0;

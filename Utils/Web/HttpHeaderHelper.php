@@ -55,17 +55,17 @@ class HttpHeaderHelper
      * 转到一个新地址
      * @param string $url 目标地址
      */
-    public static function redirectUrl($url)
+    public static function redirectUrl(string $url)
     {
         self::set("Location: $url");
     }
 
     /**
      * 延迟转向
-     * @param string $url 目标地址
-     * @param int $seconds 延迟时间
+     * @param string $url     目标地址
+     * @param int    $seconds 延迟时间
      */
-    public static function redirectUrlDelay($url, $seconds = 10)
+    public static function redirectUrlDelay(string $url, int $seconds = 10)
     {
         self::set("Refresh: $seconds; url=$url");
     }

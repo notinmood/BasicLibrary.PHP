@@ -18,7 +18,7 @@ class Stack extends SimpleLinearConstruct
      * @param mixed $value
      * @return int
      */
-    public function push($value)
+    public function push($value): int
     {
         return array_push($this->dataArray, $value);
     }

@@ -13,10 +13,11 @@ namespace Hiland\Utils\Environment;
 use Hiland\Utils\Config\ConfigHelper;
 use PHPUnit\Framework\TestCase;
 
-/**
- * 由于本类型几个方法内使用的ConfigHelper 和 ConfigMate 会相互影响，本类型内的几个方法请分别单独测试。
- * (具体查看_README.md文件)
- */
+// +--------------------------------------------------------------------------
+// |::说明：| 由于本类型几个方法内使用的ConfigHelper 和 ConfigMate 会相互影响，本类型内的几个方法请分别单独测试。
+// |·······| (具体查看_README.md文件)
+// +--------------------------------------------------------------------------
+
 class ConfigHelperTest extends TestCase
 {
     public function testGet1()

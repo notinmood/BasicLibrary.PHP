@@ -21,7 +21,7 @@ class DatabaseClient
      * @param $tableName
      * @return ModelMate
      */
-    public static function getMate($tableName)
+    public static function getMate($tableName): ModelMate
     {
         return MateContainer::get($tableName);
     }
@@ -30,7 +30,7 @@ class DatabaseClient
      * 获取数据库操作 DDL(对数据库表结构进行操作)
      * @return ModelDDL
      */
-    public static function getDDL()
+    public static function getDDL(): ModelDDL
     {
         $ddlKey = "__database_ddl__";
         $ddl = Container::get($ddlKey);

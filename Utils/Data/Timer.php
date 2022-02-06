@@ -16,9 +16,9 @@ namespace Hiland\Utils\Data;
  */
 class Timer
 {
-    var $begin = 0;
-    var $end = 0;
-    var $elapsed = 0;
+    var int $begin   = 0;
+    var int $end     = 0;
+    var int $elapsed = 0;
 
     # Constructor
     function Timer($start = true)
@@ -42,7 +42,7 @@ class Timer
     }
 
     # Get Elapsed Time
-    function elapsed()
+    function elapsed(): int
     {
         if (!$this->elapsed) {
             $this->stop();
@@ -70,7 +70,7 @@ class Timer
     }
 
     # Compute elapsed time
-    private function _compute()
+    private function _compute(): int
     {
         return $this->end - $this->begin;
     }

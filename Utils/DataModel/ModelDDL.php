@@ -27,9 +27,10 @@ class ModelDDL
      * @param string $originalTableName
      * @param string $newTableName
      * @param int    $includeDataRowCount 复制数据的行数(缺省0，表示不复制数据行;-1表示复制所有行)
+     * @param bool   $dropTableIfExist
      * @return void
      */
-    public function duplicateTable($originalTableName, $newTableName = "", $includeDataRowCount = 0, $dropTableIfExist = True)
+    public function duplicateTable(string $originalTableName, string $newTableName = "", int $includeDataRowCount = 0, bool $dropTableIfExist = True)
     {
         if (ObjectHelper::isEmpty($newTableName)) {
             $newTableName = $originalTableName . "__duplication__";
@@ -60,7 +61,7 @@ class ModelDDL
      * @param bool   $bothStructAndData 是否同时删除表结构和数据(true(缺省值)全部删除;false仅删除数据，保留表结构)
      * @return void
      */
-    public function dropTable($tableName, $bothStructAndData = true)
+    public function dropTable(string $tableName, bool $bothStructAndData = true)
     {
         /**
          * 在不存在的表上，执行删除操作，系统会报错。因此本处需要做出是否存在的判断。
@@ -82,10 +83,10 @@ class ModelDDL
 
     /**
      * 判断某个表是否存在
-     * @param $tableName
+     * @param string $tableName
      * @return false
      */
-    public function isExistTable($tableName)
+    public function isExistTable(string $tableName): bool
     {
         try {
             $mate = DatabaseClient::getMate($tableName);
@@ -108,7 +109,7 @@ class ModelDDL
      * @param string $tableName 数据库表的名称,如果为None的话就直接从mate的构造函数中取数据库表名称
      * @return void
      */
-    public function getTableDefinition($tableName)
+    public function getTableDefinition(string $tableName)
     {
         $mate = DatabaseClient::getMate($tableName);
         $realTableName = $mate->getTableRealName();
@@ -129,30 +130,30 @@ class ModelDDL
 
     /**
      * 获取数据表数据内容的插入sql语句
-     * @param string $table_name
+     * @param string $tableName
      * @param int    $row_count 复制数据的行数(-1表示所有的行数，0-n表示具体行数)
      * @return string
      */
-    public function getContentSql($table_name, $row_count = -1)
+    public function getContentSql(string $tableName, int $row_count = -1): string
     {
-        $mate = DatabaseClient::getMate($table_name);
-        $real_table_name = $mate->getTableRealName();
+        $mate = DatabaseClient::getMate($tableName);
+        $realTableName = $mate->getTableRealName();
 
         if ($row_count < 0) {
-            $select_sql = "SELECT * FROM `{$real_table_name}`";
+            $select_sql = "SELECT * FROM `{$realTableName}`";
 
             # TODO:需要改成参数调用的方式
             # select_sql = "SELECT * FROM %s"
             # rows = mate.directly_query(select_sql, [real_table_name], FetchMode.MANY)
         } else {
-            $select_sql = "SELECT * FROM `{$real_table_name}` LIMIT {$row_count}";
+            $select_sql = "SELECT * FROM `{$realTableName}` LIMIT {$row_count}";
         }
 
         $rows = $mate->directlyQuery($select_sql);
 
         $result = "";
         if ($rows) {
-            $result = DatabaseHelper::buildInsertClause($real_table_name, $rows);
+            $result = DatabaseHelper::buildInsertClause($realTableName, $rows);
         }
 
         return $result;

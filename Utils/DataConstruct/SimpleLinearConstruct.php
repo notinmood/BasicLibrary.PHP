@@ -61,7 +61,7 @@ abstract class SimpleLinearConstruct
     /**
      * 获取长度 *
      */
-    public function getLength()
+    public function getLength(): int
     {
         return count($this->dataArray);
     }

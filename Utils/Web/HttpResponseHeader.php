@@ -19,6 +19,11 @@ use Hiland\Utils\Data\StringHelper;
  */
 class HttpResponseHeader
 {
+    /**
+     * @param $url
+     * @param $key
+     * @return false|mixed
+     */
     public static function get($url, $key)
     {
         $key = strtoupper($key);
@@ -33,7 +38,11 @@ class HttpResponseHeader
         return false;
     }
 
-    public static function getAll($url)
+    /**
+     * @param string $url
+     * @return array|mixed
+     */
+    public static function getAll(string $url)
     {
         $cacheKey = "HttpResponseHeader20160709-url-$url";
         $dataCached = TPCompatibleHelper::cache($cacheKey);

@@ -30,7 +30,7 @@ use Psr\Container\ContainerInterface;
  */
 class InstanceContainer
 {
-    private static $_instances = [];
+    private static array $_instances = [];
 
     public static function get($classFullName, ...$constructArgs)
     {
@@ -53,11 +53,11 @@ class InstanceContainer
     }
 
     /**
-     * @param       $classFullName
-     * @param array $constructArgs
-     * @return mixed|string
+     * @param string $classFullName
+     * @param array  $constructArgs
+     * @return string
      */
-    protected static function builderQueryKey($classFullName, ...$constructArgs)
+    protected static function builderQueryKey(string $classFullName, ...$constructArgs): string
     {
         $queryKey = $classFullName;
         if ($constructArgs) {
@@ -66,7 +66,12 @@ class InstanceContainer
         return $queryKey;
     }
 
-    public static function has($classFullName, ...$constructArgs)
+    /**
+     * @param string $classFullName
+     * @param array ...$constructArgs
+     * @return bool
+     */
+    public static function has(string $classFullName, ...$constructArgs): bool
     {
         $queryKey = self::builderQueryKey($classFullName, ...$constructArgs);
 

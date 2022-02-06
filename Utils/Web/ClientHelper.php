@@ -14,7 +14,7 @@ class ClientHelper
      * 返回类型为以下字符串：
      * MSIE、Weixin、Firefox、Chrome、Safari、Opera、Other
      */
-    public static function getBrowserName()
+    public static function getBrowserName(): string
     {
         if (!empty($_SERVER['HTTP_USER_AGENT'])) {
             $br = $_SERVER['HTTP_USER_AGENT'];
@@ -42,7 +42,7 @@ class ClientHelper
     /**判断是不是微信浏览器
      * @return bool
      */
-    public static function isWeixinBrowser()
+    public static function isWeixinBrowser(): bool
     {
         if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) {
             return true;
@@ -54,7 +54,7 @@ class ClientHelper
      * 获得访客浏览器语言
      * @return string
      */
-    public static function getLanguage()
+    public static function getLanguage(): string
     {
         if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             $lang = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
@@ -76,7 +76,7 @@ class ClientHelper
      * 获取访客操作系统
      * @return string
      */
-    public static function getOS()
+    public static function getOS(): string
     {
         if (!empty($_SERVER['HTTP_USER_AGENT'])) {
             $OS = $_SERVER['HTTP_USER_AGENT'];
@@ -103,7 +103,7 @@ class ClientHelper
      * 获取客户端ip
      * @return string
      */
-    public static function getIP()
+    public static function getIP(): string
     {
         if (getenv("HTTP_CLIENT_IP") && strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown")) {
             $ip = getenv("HTTP_CLIENT_IP");

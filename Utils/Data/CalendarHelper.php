@@ -7,13 +7,16 @@
  */
 
 namespace Hiland\Utils\Data;
-
+// +--------------------------------------------------------------------------
+// |::说明：|
+// +--------------------------------------------------------------------------
+//TODO:@xiedali 这个类内方法的参数需要重新命名
 
 class CalendarHelper
 {
-    private static $MINYEAR = 1891;
+    private static int $MINYEAR = 1891;
     //private static $MAX_YEAR = 2100;
-    private static $LUNARINFO = array(
+    private static array $LUNARINFO = array(
         array(0, 2, 9, 21936), array(6, 1, 30, 9656), array(0, 2, 17, 9584), array(0, 2, 6, 21168), array(5, 1, 26, 43344), array(0, 2, 13, 59728),
         array(0, 2, 2, 27296), array(3, 1, 22, 44368), array(0, 2, 10, 43856), array(8, 1, 30, 19304), array(0, 2, 19, 19168), array(0, 2, 8, 42352),
         array(5, 1, 29, 21096), array(0, 2, 16, 53856), array(0, 2, 4, 55632), array(4, 1, 25, 27304), array(0, 2, 13, 22176), array(0, 2, 2, 39632),
@@ -53,12 +56,12 @@ class CalendarHelper
 
     /**
      * 将阳历转换为阴历
-     * @param int $year 公历-年
+     * @param int $year  公历-年
      * @param int $month 公历-月
-     * @param int $day 公历-日
+     * @param int $day   公历-日
      * @return array
      */
-    static function convertSolarToLunar($year, $month, $day)
+    static function convertSolarToLunar(int $year, int $month, int $day): array
     {
         //debugger;
         $yearData = self::$LUNARINFO[$year - self::$MINYEAR];
@@ -70,11 +73,11 @@ class CalendarHelper
 
     /**
      * 根据距离正月初一的天数计算阴历日期
-     * @param int $year 阳历年
+     * @param int $year    阳历年
      * @param int $between 天数
      * @return array
      */
-    static function getLunarByBetween($year, $between)
+    static function getLunarByBetween(int $year, int $between): array
     {
         //debugger;
         $lunarArray = array();
@@ -113,7 +116,7 @@ class CalendarHelper
         return $lunarArray;
     }
 
-    private static function getLunarYearMonths($year)
+    private static function getLunarYearMonths($year): array
     {
         //debugger;
         $monthData = self::getLunarMonths($year);
@@ -136,7 +139,7 @@ class CalendarHelper
      * @param int $year
      * @return array
      */
-    private static function getLunarMonths($year)
+    private static function getLunarMonths(int $year): array
     {
         $yearData = self::$LUNARINFO[$year - self::$MINYEAR];
         $leapMonth = $yearData[0];
@@ -160,7 +163,7 @@ class CalendarHelper
      * 获取闰月
      * @param int $year 阴历年份
      */
-    private static function getLeapMonth($year)
+    private static function getLeapMonth(int $year)
     {
         $yearData = self::$LUNARINFO[$year - self::$MINYEAR];
         return $yearData[0];
@@ -171,7 +174,7 @@ class CalendarHelper
      * @param int $year 农历年份
      * @return mixed
      */
-    private static function getLunarYearDays($year)
+    private static function getLunarYearDays(int $year)
     {
         //$yearData = self::$LUNARINFO[$year - self::$MINYEAR];
         $monthArray = self::getLunarYearMonths($year);
@@ -181,11 +184,11 @@ class CalendarHelper
 
     /**
      * 获取数字的阴历叫法
-     * @param int $num 数字
+     * @param int  $num     数字
      * @param bool $isMonth 是否是月份的数字
      * @return string
      */
-    private static function getCapitalNum($num, $isMonth)
+    private static function getCapitalNum(int $num, bool $isMonth): string
     {
         $isMonth = $isMonth || false;
         $dateHash = array('0' => '', '1' => '一', '2' => '二', '3' => '三', '4' => '四', '5' => '五', '6' => '六', '7' => '七', '8' => '八', '9' => '九', '10' => '十 ');
@@ -214,7 +217,7 @@ class CalendarHelper
      * @param int $year
      * @return string
      */
-    private static function getLunarYearName($year)
+    private static function getLunarYearName(int $year): string
     {
         $sky = array('庚', '辛', '壬', '癸', '甲', '乙', '丙', '丁', '戊', '己');
         $earth = array('申', '酉', '戌', '亥', '子', '丑', '寅', '卯', '辰', '巳', '午', '未');
@@ -227,7 +230,7 @@ class CalendarHelper
      * @param int $year 阴历年
      * @return mixed
      */
-    private static function getYearZodiac($year)
+    private static function getYearZodiac(int $year)
     {
         $zodiac = array('猴', '鸡', '狗', '猪', '鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊');
         return $zodiac[$year % 12];
@@ -235,14 +238,14 @@ class CalendarHelper
 
     /**
      * 计算2个阳历日期之间的天数
-     * @param int $year 阳历年
+     * @param int $year   阳历年
      * @param int $cmonth
      * @param int $cdate
      * @param int $dmonth 阴历正月对应的阳历月份
-     * @param int $ddate 阴历初一对应的阳历天数
+     * @param int $ddate  阴历初一对应的阳历天数
      * @return float
      */
-    private static function getDaysBetweenSolar($year, $cmonth, $cdate, $dmonth, $ddate)
+    private static function getDaysBetweenSolar(int $year, int $cmonth, int $cdate, int $dmonth, int $ddate): float
     {
         $a = mktime(0, 0, 0, $cmonth, $cdate, $year);
         $b = mktime(0, 0, 0, $dmonth, $ddate, $year);
@@ -254,7 +257,7 @@ class CalendarHelper
      * @param int $month
      * @return array
      */
-    public static function convertSolarMonthToLunar($year, $month)
+    public static function convertSolarMonthToLunar(int $year, int $month): array
     {
         $yearData = self::$LUNARINFO[$year - self::$MINYEAR];
         if ($year == self::$MINYEAR && $month <= 2) {
@@ -277,19 +280,19 @@ class CalendarHelper
      * @param int $year
      * @return bool
      */
-    private static function isLeapYear($year)
+    private static function isLeapYear(int $year): bool
     {
         return (($year % 4 == 0 && $year % 100 != 0) || ($year % 400 == 0));
     }
 
     /**
      * 将阴历转换为阳历
-     * @param int $year 阴历-年
+     * @param int $year  阴历-年
      * @param int $month 阴历-月，闰月处理：例如如果当年闰五月，那么第二个五月就传六月，相当于阴历有13个月，只是有的时候第13个月的天数为0
-     * @param int $date 阴历-日
+     * @param int $date  阴历-日
      * @return array
      */
-    public static function convertLunarToSolar($year, $month, $date)
+    public static function convertLunarToSolar(int $year, int $month, int $date): array
     {
         $yearData = self::$LUNARINFO[$year - self::$MINYEAR];
         $between = self::getDaysBetweenLunar($year, $month, $date);
@@ -309,7 +312,7 @@ class CalendarHelper
      * @param int $date
      * @return int
      */
-    private static function getDaysBetweenLunar($year, $month, $date)
+    private static function getDaysBetweenLunar(int $year, int $month, int $date): int
     {
         $yearMonth = self::getLunarMonths($year);
         $res = 0;
@@ -322,11 +325,11 @@ class CalendarHelper
 
     /**
      * 获取阳历月份的天数
-     * @param int $year 阳历-年
+     * @param int $year  阳历-年
      * @param int $month 阳历-月
-     * @return mixed
+     * @return int
      */
-    public static function getSolarMonthDays($year, $month)
+    public static function getSolarMonthDays(int $year, int $month): int
     {
         $monthHash = array('1' => 31, '2' => self::isLeapYear($year) ? 29 : 28, '3' => 31, '4' => 30, '5' => 31, '6' => 30, '7' => 31, '8' => 31, '9' => 30, '10' => 31, '11' => 30, '12' => 31);
         return $monthHash["$month"];
@@ -334,11 +337,11 @@ class CalendarHelper
 
     /**
      * 获取阴历月份的天数
-     * @param int $year 阴历-年
+     * @param int $year  阴历-年
      * @param int $month 阴历-月，从一月开始
      * @return int
      */
-    public static function getLunarMonthDays($year, $month)
+    public static function getLunarMonthDays(int $year, int $month): int
     {
         $monthData = self::getLunarMonths($year);
         return $monthData[$month - 1];

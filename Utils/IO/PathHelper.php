@@ -20,7 +20,7 @@ class PathHelper
      * @param ...$paths
      * @return string
      */
-    public static function combine(...$paths)
+    public static function combine(...$paths): string
     {
         $result = "";
         for ($i = 0; $i < count($paths); $i++) {

@@ -10,7 +10,7 @@ class ChineseHelper
      * @param string $charCoding    中文编码（GBK页面可改为gb2312，其他随意填写为UTF8）
      * @return string 转换后的拼音
      */
-    static function getPinyin($chineseString, $charCoding = 'UTF8')
+    static function getPinyin(string $chineseString, string $charCoding = 'UTF8'): string
     {
         $charCoding = mb_strtolower($charCoding);
         $_DataKey = "a|ai|an|ang|ao|ba|bai|ban|bang|bao|bei|ben|beng|bi|bian|biao|bie|bin|bing|bo|bu|ca|cai|can|cang|cao|ce|ceng|cha" .
@@ -79,7 +79,7 @@ class ChineseHelper
      * @param string $chineseStringInGB2312Coding
      * @return string utf8编码的字符串
      */
-    public static function convertUTF8ToGB2312($chineseStringInGB2312Coding)
+    public static function convertUTF8ToGB2312(string $chineseStringInGB2312Coding): string
     {
         $_String = '';
         if ($chineseStringInGB2312Coding < 0x80) {
@@ -116,7 +116,7 @@ class ChineseHelper
     }
 
     /**
-     * 将汉字进行unicode（UCS-2类型）编码
+     * 将汉字进行 unicode（UCS-2 类型）编码
      * @param string $data     待转码的原始中文字符串
      * @param string $encoding 原始字符串的编码，默认UTF-8
      * @param string $prefix   编码后的前缀，默认"\\u"
@@ -127,7 +127,7 @@ class ChineseHelper
      *                         前缀 "\\u"通常搭配 后缀""
      *                         前缀 "&#"通常搭配 后缀";"
      */
-    public static function unicodeEncode($data, $encoding = 'UTF-8', $prefix = '\u', $postfix = '')
+    public static function unicodeEncode(string $data, string $encoding = 'UTF-8', string $prefix = '\u', string $postfix = ''): string
     {
         $name = iconv($encoding, 'UCS-2', $data);
         $len = strlen($name);
@@ -146,7 +146,7 @@ class ChineseHelper
     }
 
     /**
-     * 将unicode（UCS-2类型）解码为可识别汉字
+     * 将 unicode（UCS-2 类型）解码为可识别汉字
      * @param string $data     待解码的unicode字符串
      * @param string $encoding 原始字符串的编码，默认UTF-8
      * @param string $prefix   编码后的前缀，默认"\\u"
@@ -158,7 +158,7 @@ class ChineseHelper
      *                         前缀 "&#"通常搭配 后缀";"
      *                         TODO: 英文信息经过编码再解码就不对了，需要修改
      */
-    public static function unicodeDecode($data, $encoding = 'UTF-8', $prefix = '\u', $postfix = '')
+    public static function unicodeDecode(string $data, string $encoding = 'UTF-8', string $prefix = '\u', string $postfix = ''): string
     {
         $data = str_replace($prefix, '\u', $data);
         $data = str_replace($postfix, '', $data);
@@ -191,7 +191,7 @@ class ChineseHelper
      * @param string $chineseString 中文字符串
      * @return string
      */
-    public static function getFirstChar($chineseString)
+    public static function getFirstChar(string $chineseString): string
     {
         //手动添加未识别记录
         if (mb_substr($chineseString, 0, 1, 'utf-8') == "怡") {

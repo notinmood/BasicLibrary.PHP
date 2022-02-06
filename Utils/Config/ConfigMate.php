@@ -24,15 +24,18 @@ use Hiland\Utils\IO\PathHelper;
  */
 class ConfigMate
 {
-    private static $_instance = null;
-    private static $__configContentArray = [];
+    private static ?ConfigMate $_instance            = null;
+    private static array       $__configContentArray = [];
 
     private function __construct()
     {
         //do nothing;
     }
 
-    public static function Instance()
+    /**
+     * @return ConfigMate|null
+     */
+    public static function Instance(): ?ConfigMate
     {
         if (!self::$_instance) {
             self::$_instance = new self();
@@ -47,7 +50,7 @@ class ConfigMate
      * @param mixed  $default
      * @return array|mixed|null
      */
-    public function get($key, $default = null)
+    public function get(string $key, $default = null)
     {
         /**
          * 使用自己的配置系统，不再使用 ThinkPHP 的配置系统了
@@ -81,13 +84,14 @@ class ConfigMate
     }
 
     /**
+     * 载入配置文件
      * (因为有可能本方法位于链式操作，因此需要返回 this)
-     * @param $fileName
+     * @param string $fileName
      * @return $this
      */
-    public function loadFile($fileName = "")
+    public function loadFile(string $fileName = ""): ConfigMate
     {
-        $rootPath = EnvHelper::getPhysicalRootPath();
+        $rootPath         = EnvHelper::getPhysicalRootPath();
         $defaultFileNames = ["config.php", "config.ini", "config.json"];
 
         $fileFullName = PathHelper::combine($rootPath, $fileName);
@@ -110,8 +114,8 @@ class ConfigMate
         $extensionName = FileHelper::getExtensionName($fileName);
         $extensionName = StringHelper::upperStringFirstChar($extensionName);
 
-        $targetParserType = "ConfigParser{$extensionName}";
-        $targetParserClass = "Hiland\\Utils\\Config\\{$targetParserType}";
+        $targetParserType   = "ConfigParser{$extensionName}";
+        $targetParserClass  = "Hiland\\Utils\\Config\\{$targetParserType}";
         $targetFileBaseName = "{$targetParserType}.php";
         $targetFileFullName = PathHelper::combine(__DIR__, $targetFileBaseName);
         if (file_exists($targetFileFullName)) {

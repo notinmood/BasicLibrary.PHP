@@ -59,7 +59,7 @@ class ResultObject implements ArrayAccess
      * @param ResultObject $resultObject
      * @return string
      */
-    public static function stringify($resultObject)
+    public static function stringify(ResultObject $resultObject): string
     {
         return json_encode($resultObject);
     }
@@ -70,7 +70,7 @@ class ResultObject implements ArrayAccess
      * @param string $stringData 给定json格式的字符串
      * @return ResultObject 结构化表示的返回值对象
      */
-    public static function parse($stringData)
+    public static function parse(string $stringData): ResultObject
     {
         $jsonObject = json_decode($stringData);
 
@@ -88,7 +88,7 @@ class ResultObject implements ArrayAccess
      * @param $offset
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         $result = ObjectHelper::isMember($this, $offset);
         if (!$result) {

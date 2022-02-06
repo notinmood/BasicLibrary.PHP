@@ -13,7 +13,7 @@ class EnvHelper
     /**获取系统信息
      * @return array
      */
-    public static function getAllInfo()
+    public static function getAllInfo(): array
     {
         return [
             '操作系统' => PHP_OS,
@@ -51,7 +51,7 @@ class EnvHelper
      * 2.PHP 常量 PHP_SAPI 具有和 php_sapi_name() 相同的值。
      * 更多信息参考 https://www.php.net/manual/zh/function.php-sapi-name.php
      */
-    public static function isCGI()
+    public static function isCGI(): bool
     {
         /**
          * SAPI:the Server API,就是PHP跟服务器所使用的接口方式
@@ -67,7 +67,7 @@ class EnvHelper
      * 是否运行在windows系统内
      * @return bool
      */
-    public static function isWIN()
+    public static function isWIN(): bool
     {
         $pos = strpos(PHP_OS, 'WIN');
 
@@ -82,7 +82,7 @@ class EnvHelper
      * TODO:
      * @return bool
      */
-    public static function isDebug()
+    public static function isDebug(): bool
     {
         $result = true;
         // ConfigH
@@ -93,7 +93,7 @@ class EnvHelper
     /**
      * 是否在ThinkPHP环境内
      */
-    public static function isThinkPHP()
+    public static function isThinkPHP(): bool
     {
         return ThinkHelper::isThinkPHP();
     }
@@ -102,7 +102,7 @@ class EnvHelper
      * 获取换行标志(能兼容web,window本地,linux本地情形)
      * @return string
      */
-    public static function getNewLineSymbol()
+    public static function getNewLineSymbol(): string
     {
         if (self::isCLI()) {
             return PHP_EOL;
@@ -115,7 +115,7 @@ class EnvHelper
      * 是否运行在命令行模式下
      * @return bool
      */
-    public static function isCLI()
+    public static function isCLI(): bool
     {
         $sapi_type = php_sapi_name();
         if (isset($sapi_type) && substr($sapi_type, 0, 3) == 'cli') {
@@ -129,7 +129,7 @@ class EnvHelper
      * 判断当前服务器系统
      * @return string (返回值为Linux或者Windows)
      */
-    public static function getOS()
+    public static function getOS(): string
     {
         if (PATH_SEPARATOR == ':') {
             return 'Linux';
@@ -142,7 +142,7 @@ class EnvHelper
      * 获取数字表示的php版本号（主版本号用整数表示，其他版本号在小数点后面排列）
      * @return float
      */
-    public static function getPhpFloatVersion()
+    public static function getPhpFloatVersion(): float
     {
         $version = '';
         $array = explode('.', PHP_VERSION);
@@ -161,7 +161,7 @@ class EnvHelper
      * 比如,5.3.6版本的返回值为 50306
      * @return int
      */
-    public static function getPhpWholeVersion()
+    public static function getPhpWholeVersion(): int
     {
         return PHP_VERSION_ID;
     }
@@ -171,7 +171,7 @@ class EnvHelper
      * 获取托管平台的名称
      * @return string
      */
-    public static function getDepositoryPlatformName()
+    public static function getDepositoryPlatformName(): string
     {
         // 自动识别SAE环境
         if (function_exists('saeAutoLoader')) {
@@ -186,7 +186,7 @@ class EnvHelper
      * @param $domainNameOrIP string 域名或ip地址
      * @return bool
      */
-    public static function isLocalServer($domainNameOrIP)
+    public static function isLocalServer(string $domainNameOrIP): bool
     {
         //去掉后面的端口信息
         if (StringHelper::isContains($domainNameOrIP, ":")) {
@@ -217,7 +217,7 @@ class EnvHelper
      * @param $ip string ip格式必须为 ***.***.***.***,否则为其他格式则此方法返回true
      * @return bool
      */
-    public static function isPrivateIP($ip)
+    public static function isPrivateIP(string $ip): bool
     {
         return !filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
     }
@@ -233,7 +233,7 @@ class EnvHelper
      *因此可以通过以下逻辑获取到项目的根目录物理路径
      * @return string
      */
-    public static function getPhysicalRootPath()
+    public static function getPhysicalRootPath(): string
     {
         //当前文件的全物理路径文件名称
         $current_path = __FILE__;
@@ -285,7 +285,7 @@ class EnvHelper
      * 获取站点的 web 根路径
      * @return string
      */
-    public static function getWebRootPath()
+    public static function getWebRootPath(): string
     {
         $webRoot = "/";
         $appName = self::getAppName();

@@ -151,7 +151,7 @@ class Calendar
     var $ten = 0;
     var $twelve = 0;
 
-    public function Calc($Year, $Month, $Day)
+    public function Calc($Year, $Month, $Day): array
     {
         $Par = $this->myPub($Year, $Month, $Day);
 
@@ -173,7 +173,7 @@ class Calendar
             "week" => $week);
     }
 
-    private function myPub($cYear, $cMonth, $cDay)
+    private function myPub($cYear, $cMonth, $cDay): array
     {
         $total = 11;#阳历总天数 至1900年12月21日
         $mtotal = 0;#阴历总天数

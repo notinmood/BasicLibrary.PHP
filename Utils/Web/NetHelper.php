@@ -15,14 +15,13 @@ class NetHelper
 {
     /**
      * 模拟网络POST请求
-     *
      * @param string $url
-     * @param mixed $data
-     * @param null $optionalheaders
+     * @param mixed  $data
+     * @param null   $optionalHeaders
      * @return string
      * @throws Exception
      */
-    public static function post($url, $data = null, $optionalheaders = null)
+    public static function post(string $url, $data = null, $optionalHeaders = null): string
     {
         $params = array(
             'http' => array(
@@ -30,8 +29,8 @@ class NetHelper
                 'content' => $data
             )
         );
-        if ($optionalheaders !== null) {
-            $params['http']['header'] = $optionalheaders;
+        if ($optionalHeaders !== null) {
+            $params['http']['header'] = $optionalHeaders;
         }
         $ctx = stream_context_create($params);
         $fp = @fopen($url, 'rb', false, $ctx);
@@ -47,12 +46,11 @@ class NetHelper
 
     /**
      * 模拟网络Get请求
-     *
      * @param string $url
-     * @param bool $isCloseAtOnce 是否立即关闭连接
+     * @param bool   $isCloseAtOnce 是否立即关闭连接
      * @return string
      */
-    public static function get($url, $isCloseAtOnce = false)
+    public static function get(string $url, bool $isCloseAtOnce = false): string
     {
         if ($isCloseAtOnce) {
             $context = stream_context_create(array('http' => array('header' => 'Connection: close\r\n')));
@@ -86,9 +84,9 @@ class NetHelper
      * @return bool|string
      * @throws WechatException
      */
-    public static function request($url, $data = null, $timeOutSeconds = 0, $isSSLVerify = false,
-                                   $headerArray = array(), $certificateFileArray = array(),
-                                   $isForceUnSafe = false)
+    public static function request(string $url, $data = null, int $timeOutSeconds = 0, bool $isSSLVerify = false,
+                                   array  $headerArray = array(), array $certificateFileArray = array(),
+                                   bool   $isForceUnSafe = false)
     {
         if ($timeOutSeconds = 0) {
             $timeOutSeconds = 30;

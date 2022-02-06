@@ -11,7 +11,7 @@ class HashHelper
      * @param bool   $fix          当余数为0的时候，是否修正余数值为模数值（$maxRemainder），缺省不修正
      * @return int|string
      */
-    public static function getDigest($dataString, $maxRemainder = 0, $fix = false)
+    public static function getDigest(string $dataString, int $maxRemainder = 0, bool $fix = false)
     {
         $data = hash('sha256', $dataString);
         $data = base_convert($data, 16, 10);

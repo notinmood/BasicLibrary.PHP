@@ -13,22 +13,22 @@ namespace Hiland\Utils\Data;
 class JsonHelper
 {
     /**
-     * 将json字符串转换成array数组
-     * @param $jsonData
+     * 将json字符串转换成 array 数组
+     * @param string $jsonString
      * @return mixed
      */
-    public static function convertToArray($jsonData)
+    public static function convertToArray(string $jsonString)
     {
-        return json_decode($jsonData,true);
+        return json_decode($jsonString, true);
     }
 
     /**
      * 将json字符串转换成object对象
-     * @param $jsonData
+     * @param $jsonString
      * @return mixed
      */
-    public static function convertToObject($jsonData)
+    public static function convertToObject($jsonString)
     {
-        return json_decode($jsonData,false);
+        return json_decode($jsonString, false);
     }
 }

@@ -28,7 +28,7 @@ class RMB
      *                                          ‘;
      *                                          echo ‘金额(繁体):’,displayChineseValue($num,true,false);
      */
-    public static function displayChineseValue($num, $financeMode = true, $simpleMode = true)
+    public static function displayChineseValue($num, bool $financeMode = true, bool $simpleMode = true): string
     {
         if (!is_numeric($num)) return '含有非数字非小数点字符！';
         $char = $simpleMode ? array('零', '一', '二', '三', '四', '五', '六', '七', '八', '九')

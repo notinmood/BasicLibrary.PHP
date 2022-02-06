@@ -12,13 +12,13 @@ class ObjectHelper
      * 将带有名值对类型数组的各成员，赋值给复杂对象的属性上
      * 如果对象已经拥有该属性，那么数组成员的值将会覆盖对象原有的属性值
      * 如果对象没有该属性，那么将会为对象创建改属性，并赋数组成员的的值
-     * @param array  $array
+     * @param array       $array
      *            名值对类型的原数组
-     * @param object $object
+     * @param object|null $object
      *            目标对象
      * @return object 赋值后的对象
      */
-    public static function appendArrayToObject($array, $object = null)
+    public static function appendArrayToObject(array $array, object $object = null)
     {
         if ($object == null) {
             $object = new stdClass();
@@ -36,7 +36,7 @@ class ObjectHelper
      * @param array $array 名值对类型的一维或者多维数组
      * @return object
      */
-    public static function convertFromArray($array)
+    public static function convertFromArray(array $array): object
     {
         $json = json_encode($array);
         return json_decode($json);
@@ -47,7 +47,7 @@ class ObjectHelper
      * @param object $object
      * @return mixed
      */
-    public static function convertTOArray($object)
+    public static function convertTOArray(object $object)
     {
         $json = json_encode($object);
         return json_decode($json, true);
@@ -90,10 +90,10 @@ class ObjectHelper
      *判断两个值是否相等
      * @param      $dataA
      * @param      $dataB
-     * @param bool $strictlyCompare 是否进行严格比较（严格模式是先比较类型，再比较值；非严格模式下 trure和“true”是相等的）
+     * @param bool $strictlyCompare 是否进行严格比较（严格模式是先比较类型，再比较值；非严格模式下  true 和 “true” 是相等的）
      * @return bool
      */
-    public static function equals($dataA, $dataB, $strictlyCompare = false)
+    public static function equals($dataA, $dataB, bool $strictlyCompare = false): bool
     {
         $typeA = self::getTypeName($dataA);
         $typeB = self::getTypeName($dataB);
@@ -126,7 +126,7 @@ class ObjectHelper
      * @param $data
      * @return string
      */
-    public static function getTypeName($data)
+    public static function getTypeName($data): string
     {
         if ($data instanceof DateTime) {
             return ObjectTypes::DATETIME;
@@ -164,9 +164,10 @@ class ObjectHelper
             return ObjectTypes::RESOURCE;
         }
 
-        if (is_object($data)) {
-            return ObjectTypes::OBJECT;
-        }
+        /**
+         * 都不符合就返回 object 类型
+         */
+        return ObjectTypes::OBJECT;
     }
 
     /**
@@ -174,7 +175,7 @@ class ObjectHelper
      * @param mixed $object
      * @return string|null 得到的是一个内置数据类型的名称字符串(boolean、string等) 或者一个复杂 Class 的完全名称字符串(即包括命名空间在内的名称)
      */
-    public static function getClassName($object)
+    public static function getClassName($object): ?string
     {
         $typeName = self::getTypeName($object);
         if ($typeName != ObjectTypes::OBJECT) {
@@ -225,7 +226,7 @@ class ObjectHelper
      * @param $data
      * @return bool
      */
-    public static function isJson($data)
+    public static function isJson($data): bool
     {
         if (self::getTypeName($data) == ObjectTypes::STRING) {
             $data = json_decode($data);
@@ -241,7 +242,7 @@ class ObjectHelper
      * @param $data
      * @return bool
      */
-    public static function isExist($data)
+    public static function isExist($data): bool
     {
         return !self::isEmpty($data);
     }
@@ -262,7 +263,7 @@ class ObjectHelper
      * @param null $memberName
      * @return bool
      */
-    public static function isEmpty($data, $memberName = null)
+    public static function isEmpty($data, $memberName = null): bool
     {
         if (!isset($data)) {
             return true;
@@ -309,7 +310,7 @@ class ObjectHelper
      * @param $data
      * @return bool
      */
-    public static function isNull($data)
+    public static function isNull($data): bool
     {
         return is_null($data);
     }
@@ -319,7 +320,7 @@ class ObjectHelper
      * @param $data
      * @return bool
      */
-    public static function isNotNull($data)
+    public static function isNotNull($data): bool
     {
         return !is_null($data);
     }
@@ -334,7 +335,7 @@ class ObjectHelper
      * @param $data
      * @return bool
      */
-    public static function isNumber($data)
+    public static function isNumber($data): bool
     {
         // return is_numeric($data);
 
@@ -352,7 +353,7 @@ class ObjectHelper
      * @param $memberName
      * @return bool
      */
-    public static function isMember($targetObject, $memberName)
+    public static function isMember($targetObject, $memberName): bool
     {
         $result = false;
         $type   = self::getTypeName($targetObject);
@@ -410,7 +411,7 @@ class ObjectHelper
      * @example
      *                       ObjectHelper::isInstance($entity1,ActiveCode::class);
      */
-    public static function isInstance($entity, $classFullName)
+    public static function isInstance($entity, string $classFullName): bool
     {
         return is_a($entity, $classFullName);
     }
@@ -418,12 +419,11 @@ class ObjectHelper
     /**
      * 获取给定对象的元素长度（目前仅支持字符串和数组的长度求取）
      * @param $data
-     * @return false|int
+     * @return int
      */
-    public static function getLength($data)
+    public static function getLength($data): int
     {
         $type   = self::getTypeName($data);
-        $result = 0;
 
         switch ($type) {
             case ObjectTypes::ARRAYS:

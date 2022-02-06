@@ -33,7 +33,7 @@ class ServerHelper
      * 判断当前服务器操作系统的名称
      * @return string (返回值为Linux或者Windows)
      */
-    public static function getOSName()
+    public static function getOSName(): string
     {
         return EnvHelper::getOS();
     }
@@ -42,7 +42,7 @@ class ServerHelper
      * 是否运行在windows系统内
      * @return bool
      */
-    public static function isWIN()
+    public static function isWIN(): bool
     {
         return EnvHelper::isWIN();
     }
@@ -52,7 +52,7 @@ class ServerHelper
      * @param $domainNameOrIP string 域名或ip地址
      * @return bool
      */
-    public static function isLocalServer($domainNameOrIP)
+    public static function isLocalServer($domainNameOrIP): bool
     {
         return EnvHelper::isLocalServer($domainNameOrIP);
     }
@@ -62,7 +62,7 @@ class ServerHelper
      * 获取服务器域名 （例如app.rainytop.com）
      * @return string
      */
-    public static function getHostName()
+    public static function getHostName(): string
     {
         return WebHelper::getHostName();
     }
@@ -87,7 +87,7 @@ class ServerHelper
      *因此可以通过以下逻辑获取到项目的根目录物理路径
      * @return string
      */
-    public static function getPhysicalRoot()
+    public static function getPhysicalRoot(): string
     {
         return EnvHelper::getPhysicalRootPath();
     }
@@ -96,7 +96,7 @@ class ServerHelper
      * 获取应用程序的(网络)根路径
      * @return string
      */
-    public static function getWebRoot()
+    public static function getWebRoot(): string
     {
         return EnvHelper::getWebRootPath();
     }

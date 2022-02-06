@@ -4,7 +4,6 @@ namespace Hiland\Utils\Data;
 
 /**
  * PHP代码处理逻辑
- *
  * @author 然
  * @version 20131226
  */
@@ -12,12 +11,10 @@ class CodeHelper
 {
     /**
      * 去除代码中的注释，空格等对代码进行压缩
-     *
-     * @param string $content
-     *            待压缩代码
+     * @param string $content 待压缩代码
      * @return string 压缩后的代码
      */
-    public static function stripWhiteSpace($content)
+    public static function stripWhiteSpace(string $content): string
     {
         $stripStr = '';
         // 分析php源码
@@ -51,12 +48,10 @@ class CodeHelper
 
     /**
      * 去除PHP代码的开始和结束标记
-     *
-     * @param string $content
-     *            待处理代码
+     * @param string $content 待处理代码
      * @return string 处理后的代码
      */
-    public static function stripScriptTags($content)
+    public static function stripScriptTags(string $content): string
     {
         $content = trim($content);
         $content = ltrim($content, '<?php');

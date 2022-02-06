@@ -2,27 +2,27 @@
 
 namespace Hiland\Utils\Data;
 
+use Exception;
+
 /**
  * 加解密辅助器
- *
  * @author devel
- *
  */
 class CipherHelper
 {
     /**
      * 为内容生成签名
-     * @param string $content 签名内容
-     * @param string $key 签名秘钥
+     * @param string $content   签名内容
+     * @param string $key       签名秘钥
      * @param string $algorithm 签名算法（默认使用md5）
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
-    public static function signature($content, $key = '', $algorithm = 'md5')
+    public static function signature(string $content, string $key = '', string $algorithm = 'md5'): string
     {
         try {
             if (null == $content) {
-                throw new \Exception("签名内容不能为空" . "<br>");
+                throw new Exception("签名内容不能为空" . "<br>");
             }
 
             $signStr = $content;
@@ -32,20 +32,20 @@ class CipherHelper
 
             // return strtoupper(md5($signStr));
             return strtoupper(call_user_func($algorithm, $signStr));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             die($e->getMessage());
         }
     }
 
     /**
      * 验证签名是否正确
-     * @param string $content 签名内容
-     * @param string $key 签名秘钥
+     * @param string $content   签名内容
+     * @param string $key       签名秘钥
      * @param string $signature 待验证的签名
      * @param string $algorithm 签名算法（默认使用md5）
      * @return boolean
      */
-    public static function verifySignature($content, $signature, $key = '', $algorithm = 'md5')
+    public static function verifySignature(string $content, string $signature, string $key = '', string $algorithm = 'md5'): bool
     {
         $signStr = $content;
         if (!empty($key)) {
@@ -58,13 +58,13 @@ class CipherHelper
 
     /**
      * 加密
-     * @param string $string 待加密字符串
-     * @param string $key 加密秘钥
-     * @param int $expiry 过期时间
-     * @param bool $safeBase64 是否使用安全的base64编码（如果直接使用base64_encode和base64_decode方法的话，生成的字符串可能不适用URL地址。）
+     * @param string $string     待加密字符串
+     * @param string $key        加密秘钥
+     * @param int    $expiry     过期时间
+     * @param bool   $safeBase64 是否使用安全的base64编码（如果直接使用base64_encode和base64_decode方法的话，生成的字符串可能不适用URL地址。）
      * @return string 加密后的字符串
      */
-    public static function encrypt($string, $key = '', $expiry = 0, $safeBase64 = true)
+    public static function encrypt(string $string, string $key = '', int $expiry = 0, bool $safeBase64 = true): string
     {
         $result = self::cipherCode($string, 'ENCODE', $key, $expiry);
         if ($safeBase64) {
@@ -75,13 +75,13 @@ class CipherHelper
 
     /**
      * 解密
-     * @param string $string 待解密字符串
-     * @param string $key 解密秘钥
-     * @param int $expiry 过期时间
-     * @param bool $safeBase64 是否使用安全的base64编码（如果直接使用base64_encode和base64_decode方法的话，生成的字符串可能不适用URL地址。）
+     * @param string $string     待解密字符串
+     * @param string $key        解密秘钥
+     * @param int    $expiry     过期时间
+     * @param bool   $safeBase64 是否使用安全的base64编码（如果直接使用base64_encode和base64_decode方法的话，生成的字符串可能不适用URL地址。）
      * @return string 解密后的字符串
      */
-    public static function decrypt($string, $key = '', $expiry = 0, $safeBase64 = true)
+    public static function decrypt(string $string, string $key = '', int $expiry = 0, bool $safeBase64 = true): string
     {
         if ($safeBase64) {
             $string = str_replace(array('-', '_'), array('+', '/'), $string);
@@ -99,10 +99,10 @@ class CipherHelper
      * @param string $string
      * @param string $operation 取值'DECODE'表示解密，其他字符表示加密
      * @param string $key
-     * @param int $expiry
+     * @param int    $expiry
      * @return string
      */
-    private static function cipherCode($string, $operation = 'DECODE', $key = '', $expiry = 0)
+    private static function cipherCode(string $string, string $operation = 'DECODE', string $key = '', int $expiry = 0): string
     {
         // 动态密匙长度，相同的明文会生成不同密文就是依靠动态密匙
         $ckey_length = 4;

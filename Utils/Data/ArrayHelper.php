@@ -8,13 +8,13 @@ class ArrayHelper
 {
     /**
      * 判断一个项目是否存在array中。(其实是判断这个item的value是否存在于$array内)
-     * @param $array array
-     * @param $item  mixed
+     * @param $arrayData array
+     * @param $item      mixed
      * @return bool
      */
-    public static function isContains($array, $item)
+    public static function isContains(array $arrayData, $item): bool
     {
-        return in_array($item, $array);
+        return in_array($item, $arrayData);
     }
 
     /**
@@ -23,7 +23,7 @@ class ArrayHelper
      * @param $key
      * @return bool
      */
-    public static function isContainsKey($array, $key)
+    public static function isContainsKey($array, $key): bool
     {
         return array_key_exists($key, $array);
     }
@@ -34,7 +34,7 @@ class ArrayHelper
      * @param $value
      * @return bool
      */
-    public static function isContainsValue($array, $value)
+    public static function isContainsValue($array, $value): bool
     {
         foreach ($array as $k => $v) {
             if ($v == $value) {
@@ -81,7 +81,7 @@ class ArrayHelper
      * @param ...$items
      * @return array
      */
-    public static function addTail($array, ...$items)
+    public static function addTail($array, ...$items): array
     {
         return self::push($array, ...$items);
     }
@@ -109,7 +109,7 @@ class ArrayHelper
      * @param mixed ...$items
      * @return array
      */
-    public static function push(array $array, ...$items)
+    public static function push(array $array, ...$items): array
     {
         array_push($array, ...$items);
         return $array;
@@ -121,7 +121,7 @@ class ArrayHelper
      * @param $item
      * @return array
      */
-    public static function removeItem($array, $item)
+    public static function removeItem($array, $item): array
     {
         if (ObjectHelper::getTypeName($array) == ObjectTypes::ARRAYS) {
             if ($idx = array_search($item, $array, true)) {
@@ -163,7 +163,7 @@ class ArrayHelper
     public static function removeTail($array)
     {
         if (ObjectHelper::getTypeName($array) == ObjectTypes::ARRAYS) {
-            $length = self::getLength($array);
+            $length    = self::getLength($array);
             $lastIndex = $length - 1;
             array_splice($array, $lastIndex, 1);
         }
@@ -171,11 +171,12 @@ class ArrayHelper
         return $array;
     }
 
-    /**获取数组内元素的个数
+    /**
+     * 获取数组内元素的个数
      * @param $array
      * @return int
      */
-    public static function getLength($array)
+    public static function getLength($array): int
     {
         return count($array);
     }
@@ -185,7 +186,7 @@ class ArrayHelper
      * @param $array
      * @return bool
      */
-    public static function isAssociateArray($array)
+    public static function isAssociateArray($array): bool
     {
         if (ObjectHelper::isEmpty($array)) {
             return false;
@@ -206,7 +207,7 @@ class ArrayHelper
      * @param $array
      * @return bool
      */
-    public static function isIndexArray($array)
+    public static function isIndexArray($array): bool
     {
         if (ObjectHelper::isEmpty($array)) {
             return false;
@@ -227,7 +228,7 @@ class ArrayHelper
      * @param array $array 名值对类型的一维或者多维数组
      * @return object
      */
-    public static function convertToObject($array)
+    public static function convertToObject(array $array): object
     {
         return ObjectHelper::convertFromArray($array);
     }
@@ -246,7 +247,7 @@ class ArrayHelper
      * @param string $xml xml字符串
      * @return array    转换得到的数组
      */
-    public static function convertFromXml($xml)
+    public static function convertFromXml(string $xml): array
     {
         //禁止引用外部xml实体
         libxml_disable_entity_loader(true);
@@ -261,7 +262,7 @@ class ArrayHelper
      * @param bool   $includeHeader 是否在生成的xml文档中包含xml头部声明
      * @return string
      */
-    public static function convertToXml($array, $rootName = 'myXml', $includeHeader = true, $charset = 'utf8')
+    public static function convertToXml(array $array, string $rootName = 'myXml', bool $includeHeader = true, string $charset = 'utf8'): string
     {
         $xml = '';
         if ($includeHeader) {
@@ -277,7 +278,7 @@ class ArrayHelper
      * @param $value
      * @return string
      */
-    private static function toXmlInner($value)
+    private static function toXmlInner($value): string
     {
         $xml = '';
         if ((!is_array($value) && !is_object($value)) || count($value) <= 0) {
@@ -306,7 +307,7 @@ class ArrayHelper
      * @param array $originalArray 有简单值构成key和value的名值对一维数组
      * @return array
      */
-    public static function exchangeKeyValue($originalArray)
+    public static function exchangeKeyValue($originalArray): array
     {
         return array_flip($originalArray);
     }
@@ -362,7 +363,7 @@ class ArrayHelper
      *            ["OUT"] => string(3) "OUT"
      *            }
      */
-    public static function extract2DTo1D($originalArray, $newKeyName = '', $newValueName = '')
+    public static function extract2DTo1D(array $originalArray, string $newKeyName = '', string $newValueName = ''): array
     {
         $newArray = array();
         foreach ($originalArray as $k => $v) {
@@ -386,13 +387,13 @@ class ArrayHelper
 
     /**
      * 友好地显示数据集信息
-     * @param array $dbSet
+     * @param array      $dbSet
      *            数据集
-     * @param array $mapArray
+     * @param array|null $mapArray
      *            转换数组（多维数组，第一维度表示要匹配的数据集字段名称，
      *            第二维度是对本字段的取值进行友好显示的枚举）,例如
      *            array('status'=>array(1=>'正常',-1=>'删除',0=>'禁用',2=>'未审核',3=>'草稿'))
-     * @param array $funcArray
+     * @param array|null $funcArray
      *            函数数组，多维数组，第一维度表示要匹配的数据集字段名称，
      *            第二维度是对本字段的取值进行友好显示的函数，
      *            此函数仅支持一个参数，即将数据库内的值作为本函数的参数
@@ -402,7 +403,7 @@ class ArrayHelper
      * @return array 友好显示的数据集信息
      * @throws ReflectionException
      */
-    public static function displayDbSetFriendly(&$dbSet, $mapArray = null, $funcArray = null)
+    public static function displayDbSetFriendly(array &$dbSet, array $mapArray = null, array $funcArray = null)
     {
         if ($dbSet === false || $dbSet === null) {
             return $dbSet;
@@ -461,7 +462,7 @@ class ArrayHelper
                     if (strpos($func, '|') < 0) {
                         $result = call_user_func($func, $row[$col]);
                     } else {
-                        $className = StringHelper::getStringBeforeSeparator($func, '|');
+                        $className  = StringHelper::getStringBeforeSeparator($func, '|');
                         $methodName = StringHelper::getStringAfterSeparator($func, '|');
 
                         $result = ReflectionHelper::executeInstanceMethod($className, $methodName, null, null, array(
@@ -482,7 +483,7 @@ class ArrayHelper
      * @param array $array [description]
      * @return int      [description]
      */
-    public static function getLevel($array)
+    public static function getLevel(array $array): int
     {
         // scalar value has depth 0
         if (!is_array($array)) return 0;
@@ -506,7 +507,7 @@ class ArrayHelper
      * @param mixed ...$arrays
      * @return array
      */
-    public static function merge(...$arrays)
+    public static function merge(...$arrays): array
     {
         $targetArrays = [];
         foreach ($arrays as $item) {
@@ -547,7 +548,7 @@ class ArrayHelper
      *                           $actual = ArrayHelper::sort2D($myArray, "2011年");
      *                           var_dump($actual);
      */
-    public static function sort2D($array, $columnName, $sortType = SORT_ASC)
+    public static function sort2D(array $array, string $columnName, int $sortType = SORT_ASC): array
     {
         array_multisort(array_column($array, $columnName), $sortType, $array);
         return $array;
@@ -558,7 +559,7 @@ class ArrayHelper
      * @param array $arrayData
      * @return array
      */
-    public static function divide($arrayData)
+    public static function divide(array $arrayData): array
     {
         return [array_keys($arrayData), array_values($arrayData)];
     }
@@ -582,7 +583,7 @@ class ArrayHelper
      *                             3、--output--
      *                             ['reddit.com', 'twitter.com', 'dev.to']
      */
-    public static function pluck($arrayData, $selector, $withIndexKey = false)
+    public static function pluck(array $arrayData, string $selector, bool $withIndexKey = false): array
     {
         return self::select($arrayData, $selector, $withIndexKey);
     }
@@ -605,7 +606,7 @@ class ArrayHelper
      *                             3、--output--
      *                             ['reddit.com', 'twitter.com', 'dev.to']
      */
-    public static function select($arrayData, $selector, $withIndexKey = false)
+    public static function select(array $arrayData, string $selector, bool $withIndexKey = false): array
     {
         if ($withIndexKey) {
             $indexKeyPrefix = "";
@@ -614,8 +615,8 @@ class ArrayHelper
         }
 
         $flattenArray = self::flatten($arrayData, ".", "", $indexKeyPrefix);
-        $keys = array_keys($flattenArray);
-        $values = array_values($flattenArray);
+        $keys         = array_keys($flattenArray);
+        $values       = array_values($flattenArray);
 
         $result = [];
         for ($i = 0; $i < self::getLength($keys); $i++) {
@@ -640,7 +641,7 @@ class ArrayHelper
      * @param mixed  $defaultValue
      * @return mixed|null|array
      */
-    public static function getNode($arrayData, $key, $defaultValue = null)
+    public static function getNode(array $arrayData, string $key, $defaultValue = null)
     {
         $keyNodes = explode(".", $key);
 
@@ -651,7 +652,7 @@ class ArrayHelper
 
         $firstNodeName = $keyNodes[0];
 
-        $result = self::getItem($configContent,$firstNodeName);
+        $result       = self::getItem($configContent, $firstNodeName);
         $keyNodeCount = count($keyNodes);
 
         for ($i = 1; $i < $keyNodeCount; $i++) {
@@ -675,7 +676,7 @@ class ArrayHelper
      * @param string   $indexKeyPrefix 如果是索引性质的数组,想给索引key加一个前缀的名称,缺省为空
      * @return array
      */
-    public static function flatten($arrayData, $separator = ".", $prepend = '', $indexKeyPrefix = "")
+    public static function flatten(iterable $arrayData, string $separator = ".", string $prepend = '', string $indexKeyPrefix = ""): array
     {
         $results = [];
 
@@ -706,7 +707,7 @@ class ArrayHelper
      *         ────────────────────────
      *         $result 的值为 [[1,2,"a"],[3,4,"b"],[5,6,"c"]];
      */
-    public static function zip(...$arrayData)
+    public static function zip(...$arrayData): array
     {
         $arraysCount = count($arrayData);
         $arrayLength = array_map(function ($item) {
@@ -714,7 +715,7 @@ class ArrayHelper
         }, $arrayData);
 
         $arrayLengthMin = min($arrayLength);
-        $result = [];
+        $result         = [];
         for ($i = 0; $i < $arrayLengthMin; $i++) {
             $indexArray = [];
             for ($j = 0; $j < $arraysCount; $j++) {

@@ -6,25 +6,38 @@ class FontHelper
 {
     /**
      * 获取字符串设置为某种字体后的宽带信息
-     * @param int|string $font 字体
-     * @param int $fontSize 字号大小
-     * @param string $string 要测量的字符串
+     * @param int|string $font     字体
+     * @param int        $fontSize 字号大小
+     * @param string     $string   要测量的字符串
      * @return int
      */
-    public static function getWidth($font, $fontSize, $string)
+    public static function getWidth($font, int $fontSize, string $string): int
     {
         $array = self::getSize($font, $fontSize, $string);
         return $array[0];
     }
 
     /**
-     * 获取字符串设置为某种字体后的size信息
-     * @param int|string $font 字体
-     * @param int $fontSize 字号大小
-     * @param string $string 要测量的字符串
+     * 获取字符串设置为某种字体后的高度信息
+     * @param int|string $font     字体
+     * @param int        $fontSize 字号大小
+     * @param string     $string   要测量的字符串
+     * @return int
+     */
+    public static function getHeight($font, int $fontSize, string $string): int
+    {
+        $array = self::getSize($font, $fontSize, $string);
+        return $array[1];
+    }
+
+    /**
+     * 获取字符串设置为某种字体后的 size 信息
+     * @param int|string $font     字体
+     * @param int        $fontSize 字号大小
+     * @param string     $string   要测量的字符串
      * @return number[] 一维二元数组 元素0位宽带信息，元素1位高度信息
      */
-    public static function getSize($font, $fontSize, $string)
+    public static function getSize($font, int $fontSize, string $string): array
     {
         if (is_numeric($font)) {
             $fontWidth = imagefontwidth($font);
@@ -44,18 +57,5 @@ class FontHelper
             $wholeWidth,
             $wholeHeight
         );
-    }
-
-    /**
-     * 获取字符串设置为某种字体后的高度信息
-     * @param int|string $font 字体
-     * @param int $fontSize 字号大小
-     * @param string $string 要测量的字符串
-     * @return int
-     */
-    public static function getHeight($font, $fontSize, $string)
-    {
-        $array = self::getSize($font, $fontSize, $string);
-        return $array[1];
     }
 }

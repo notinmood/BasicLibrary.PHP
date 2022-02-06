@@ -11,7 +11,7 @@ class JavaScriptHelper
      * @param bool   $isExit 执行完js，是否退出当前请求/响应序列
      * @return void
      */
-    public static function alertNavigate($message, $url, $isExit = true)
+    public static function alertNavigate(string $message, string $url, bool $isExit = true)
     {
         $content= "alert('$message');location.href='$url';";
         self::javaScriptWrapper($content, $isExit);
@@ -23,7 +23,7 @@ class JavaScriptHelper
      * @param bool   $isExit 执行完js，是否退出当前请求/响应序列
      * @return void
      */
-    public static function alertBack($message, $isExit = true)
+    public static function alertBack(string $message, bool $isExit = true)
     {
         $content= "alert('$message');history.back();";
         self::javaScriptWrapper($content, $isExit);
@@ -35,7 +35,7 @@ class JavaScriptHelper
      * @param bool   $isExit 执行完js，是否退出当前请求/响应序列
      * @return void
      */
-    public static function navigate($url, $isExit = true)
+    public static function navigate(string $url, bool $isExit = true)
     {
         $content= "location.href='{$url}';";
         self::javaScriptWrapper($content, $isExit);
@@ -47,7 +47,7 @@ class JavaScriptHelper
      * @param bool   $isExit 执行完js，是否退出当前请求/响应序列
      * @return void
      */
-    public static function alertClose($message, $isExit = true)
+    public static function alertClose(string $message, bool $isExit = true)
     {
         $content= "alert('$message');close();";
         self::javaScriptWrapper($content, $isExit);
@@ -59,17 +59,17 @@ class JavaScriptHelper
      * @param bool   $isExit 执行完js，是否退出当前请求/响应序列
      * @return void js
      */
-    public static function alert($message, $isExit = true)
+    public static function alert(string $message, bool $isExit = true)
     {
         $content= "alert('$message');";
         self::javaScriptWrapper($content, $isExit);
     }
 
     /**
-     * @param $content
-     * @param $isExit
+     * @param string $content
+     * @param bool   $isExit
      */
-    private static function javaScriptWrapper($content, $isExit)
+    private static function javaScriptWrapper(string $content, bool $isExit)
     {
         echo "<script type='text/javascript'>{$content}</script>";
         if ($isExit) {

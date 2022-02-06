@@ -18,7 +18,7 @@ class EnvHelperTest extends TestCase
     public function testGetPhysicalRootPath()
     {
         $actual   = EnvHelper::getPhysicalRootPath();
-        $expected = dirname(dirname(__DIR__));
+        $expected = dirname(__DIR__, 2);
         self::assertEquals($expected, $actual);
     }
 

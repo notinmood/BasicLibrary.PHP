@@ -18,7 +18,7 @@ class ConsoleHelper
      * @param        $data
      * @param string $level
      */
-    public static function console($data, $level = 'log')
+    public static function console($data, string $level = 'log')
     {
         if (is_array($data) || is_object($data)) {
             $output = json_encode($data);
@@ -42,7 +42,7 @@ class ConsoleHelper
      * @param bool  $bothBeforeAndAfter 如果true就在$data这一行前后都加入新行标志;
      *                                  如果false就只在$data这一行后加入新行标志.
      */
-    public static function echoLine($data = "", $bothBeforeAndAfter = false)
+    public static function echoLine($data = "", bool $bothBeforeAndAfter = false)
     {
         if ($bothBeforeAndAfter) {
             echo EnvHelper::getNewLineSymbol();
@@ -57,7 +57,7 @@ class ConsoleHelper
      * @param bool  $bothBeforeAndAfter 如果true就在$data这一行前后都加入新行标志;
      *                                  如果false就只在$data这一行后加入新行标志.
      */
-    public static function el($data = "", $bothBeforeAndAfter = false)
+    public static function el($data = "", bool $bothBeforeAndAfter = false)
     {
         self::echoLine($data, $bothBeforeAndAfter);
     }
@@ -65,7 +65,7 @@ class ConsoleHelper
     /**
      * @param string $data
      */
-    public static function echoBool($data)
+    public static function echoBool(string $data)
     {
         echo BoolHelper::getText($data);
     }

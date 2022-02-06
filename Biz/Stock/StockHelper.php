@@ -16,9 +16,9 @@ class StockHelper
      *                        - 如果取SEN(StockExchangeName股票交易所名称),将会替换成SH(上海)或者SZ(深圳)
      *                        - 如果取sen(StockExchangeName股票交易所名称),将会替换成sh(上海)或者sz(深圳)
      * @param string $postfix 后缀信息.(格式同$prefix)
-     * @return mixed
+     * @return array|string|string[]|null
      */
-    public static function formatStockCode($stockCode, $prefix = "[SEN]", $postfix = "")
+    public static function formatStockCode($stockCode, string $prefix = "[SEN]", string $postfix = "")
     {
         $stockCode = self::getStandardStockCode($stockCode);
 
@@ -50,10 +50,10 @@ class StockHelper
 
     /**
      * 获取交易所名称
-     * @param $stockCode 股票代码
+     * @param string $stockCode 股票代码
      * @return string
      */
-    public static function getStockExchangeName($stockCode)
+    public static function getStockExchangeName(string $stockCode): string
     {
         $stockCode = self::getStandardStockCode($stockCode);
         if (!$stockCode) {

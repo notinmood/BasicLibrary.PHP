@@ -3,14 +3,15 @@
 namespace Hiland\Utils\Data;
 
 /**
- * @TODO: 需要写一个demo
+ * @TODO    : 需要写一个demo
+ * TODO:@xiedali 考虑是否可以使用json格式的数据代替
  * Class ExtentibleRepository
  * @package Hiland\Utils\Data
  */
 class ExtentibleRepository
 {
-    private $keys = '';
-    private $values = '';
+    private $keys      = '';
+    private $values    = '';
     private $isParserd = false;
 
     // / <summary>
@@ -30,7 +31,7 @@ class ExtentibleRepository
      */
     public function __construct($keys, $values)
     {
-        $this->keys = $keys;
+        $this->keys   = $keys;
         $this->values = $values;
     }
 
@@ -56,7 +57,7 @@ class ExtentibleRepository
     private function GetNVC()
     {
         if ($this->isParserd == false) {
-            $this->nvc = self::ConvertToNameValueCollection($this->keys, $this->values);
+            $this->nvc       = self::ConvertToNameValueCollection($this->keys, $this->values);
             $this->isParserd = true;
         }
     }
@@ -81,8 +82,8 @@ class ExtentibleRepository
 
             for ($i = 0; $i < ($keyCount / 4); $i++) {
                 $start = (int)($keyNames[($i * 4) + 2]);
-                $len = (int)($keyNames[($i * 4) + 3]);
-                $key = $keyNames[$i * 4];
+                $len   = (int)($keyNames[($i * 4) + 3]);
+                $key   = $keyNames[$i * 4];
 
                 // Future version will support more complex types
                 if ((($keyNames[($i * 4) + 1] == "S") && ($start >= 0)) && ($len > 0) && (strlen($values) >= ($start + $len))) {
@@ -139,7 +140,7 @@ class ExtentibleRepository
      */
     private static function convertToSerializerData($nvc)
     {
-        $sbKey = '';
+        $sbKey   = '';
         $sbValue = '';
 
         if ($nvc != null && count($nvc) > 0) {
@@ -151,15 +152,15 @@ class ExtentibleRepository
 
                 if (!empty($value)) {
                     $valuelength = strlen($value);
-                    $sbKey .= "$key:S:$index:$valuelength:";
-                    $sbValue .= $value;
-                    $index += $valuelength;
+                    $sbKey       .= "$key:S:$index:$valuelength:";
+                    $sbValue     .= $value;
+                    $index       += $valuelength;
                 }
             }
         }
 
         return array(
-            'keys' => $sbKey,
+            'keys'   => $sbKey,
             'values' => $sbValue,
         );
     }

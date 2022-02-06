@@ -18,7 +18,7 @@ class MathHelper
      * @param $data string 百分比字符串（可以带%也可以不带）
      * @return float
      */
-    public static function convertPercentToFloat($data)
+    public static function convertPercentToFloat(string $data)
     {
         return (float)$data / 100;
     }
@@ -29,7 +29,7 @@ class MathHelper
      * @param int $precision 精度位数
      * @return string 带%的百分比字符串
      */
-    public static function convertFloatToPercent($data, $precision = 2)
+    public static function convertFloatToPercent($data, int $precision = 2): string
     {
         $format = "%01." . $precision . "f";
         return sprintf($format, $data * 100) . '%';
@@ -43,7 +43,7 @@ class MathHelper
      * @param string $targetFieldName 如果是一维数组可以忽略本参数；如果是二维数组，请指定需要进行计算的字段名称。
      * @return array
      */
-    public static function ma($sourceArray, $windowPeriod, $targetFieldName = '')
+    public static function ma(array $sourceArray, int $windowPeriod, string $targetFieldName = ''): array
     {
         return self::rolling($sourceArray, $windowPeriod, $targetFieldName, [self::class, "_maCallback"]);
     }
@@ -56,7 +56,7 @@ class MathHelper
      * @param callable $everyWindowCallbackFunc 对每个窗口周期进行计算的回调函数(传递出1个参数：包含当前窗口内的各个元素的array)
      * @return array
      */
-    public static function rolling($sourceArray, $windowPeriod, $targetFieldName = '', $everyWindowCallbackFunc)
+    public static function rolling(array $sourceArray, int $windowPeriod, string $targetFieldName = '', callable $everyWindowCallbackFunc): array
     {
         $result = null;
         $level = ArrayHelper::getLevel($sourceArray);
@@ -90,7 +90,7 @@ class MathHelper
         return $result;
     }
 
-    private static function _maCallback($windowData)
+    private static function _maCallback($windowData): string
     {
         $sum = 0;
         foreach ($windowData as $item) {
@@ -109,7 +109,7 @@ class MathHelper
      * @param int    $toBase       转换到**进制
      * @return string
      */
-    public function convert($numberString, $fromBase, $toBase)
+    public function convert(string $numberString, int $fromBase, int $toBase): string
     {
         return self::convertBase($numberString, $fromBase, $toBase);
     }
@@ -121,7 +121,7 @@ class MathHelper
      * @param int    $toBase       转换到**进制
      * @return string
      */
-    public static function convertBase($numberString, $fromBase, $toBase)
+    public static function convertBase(string $numberString, int $fromBase, int $toBase): string
     {
         return base_convert($numberString, $fromBase, $toBase);
     }

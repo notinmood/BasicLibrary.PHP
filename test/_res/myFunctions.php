@@ -10,6 +10,7 @@
 
 namespace Hiland\Test\_res;
 
-function helloBar($someone){
+function helloBar($someone): string
+{
     return "hello $someone";
 }

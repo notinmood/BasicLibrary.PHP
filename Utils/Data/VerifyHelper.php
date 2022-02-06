@@ -10,7 +10,7 @@ class VerifyHelper
      * @param string $flag : int是否是整数，float是否是浮点型
      * @return bool
      */
-    public static function isNumber($data, $flag = 'float')
+    public static function isNumber($data, string $flag = 'float'): bool
     {
         if (!self::isEmpty($data)) return false;
         if (strtolower($flag) == 'int') {
@@ -25,7 +25,7 @@ class VerifyHelper
      * @param $data string
      * @return bool
      */
-    public static function isEmpty($data)
+    public static function isEmpty(string $data): bool
     {
         $data = trim($data);
         if (empty($data)) {
@@ -42,7 +42,7 @@ class VerifyHelper
      * @param string $charset 编码（默认utf-8,支持gb2312）
      * @return bool
      */
-    public static function isName($data, $chinese = true, $charset = 'utf-8')
+    public static function isName(string $data, bool $chinese = true, string $charset = 'utf-8'): bool
     {
         if (!self::isEmpty($data)) return false;
 
@@ -59,7 +59,7 @@ class VerifyHelper
      * @param $data string
      * @return bool
      */
-    public static function isEmail($data)
+    public static function isEmail(string $data): bool
     {
         // if (!self::isEmpty($data)) return false;
         // return (bool)preg_match(RegexHelper::EMAIL, $data);
@@ -75,7 +75,7 @@ class VerifyHelper
      * @param $data string
      * @return bool
      */
-    public static function isMobile($data)
+    public static function isMobile(string $data): bool
     {
         $exp = RegexHelper::MOBILE;
         if (preg_match($exp, $data)) {
@@ -90,7 +90,7 @@ class VerifyHelper
      * @param $data string
      * @return bool
      */
-    public static function isUrl($data)
+    public static function isUrl(string $data): bool
     {
         if (!self::isEmpty($data)) return false;
         return (bool)preg_match(RegexHelper::URL, $data);
@@ -102,7 +102,7 @@ class VerifyHelper
      * @param string $charset 编码（默认utf-8,支持gb2312）
      * @return bool
      */
-    public static function isChinese($data, $charset = 'utf-8')
+    public static function isChinese(string $data, string $charset = 'utf-8'): bool
     {
         if (!self::isEmpty($data)) return false;
         $match = (strtolower($charset) == 'gb2312') ? "/^[" . chr(0xa1) . "-" . chr(0xff) . "]+$/"
@@ -115,7 +115,7 @@ class VerifyHelper
      * @param $data string
      * @return bool
      */
-    public static function isUtf8($data)
+    public static function isUtf8(string $data): bool
     {
         if (!self::isEmpty($data)) return false;
         return (preg_match("/^([" . chr(228) . "-" . chr(233) . "]{1}[" . chr(128) . "-" . chr(191) . "]{1}[" . chr(128) . "-" . chr(191) . "]{1}){1}/", $data)
@@ -133,7 +133,7 @@ class VerifyHelper
      * @param string $charset 字符集
      * @return bool
      */
-    public static function length($data, $type = 3, $min = 0, $max = 0, $charset = 'utf-8')
+    public static function length($data, int $type = 3, int $min = 0, int $max = 0, string $charset = 'utf-8'): bool
     {
         if (!self::isEmpty($data)) return false;
         $len = mb_strlen($data, $charset);
@@ -156,7 +156,7 @@ class VerifyHelper
      * @param int    $maxLen
      * @return boolean
      */
-    public static function isPWD($data, $minLen = 6, $maxLen = 16)
+    public static function isPWD(string $data, int $minLen = 6, int $maxLen = 16): bool
     {
         $match = '/^[\\~!@#$%^&*()-_=+|{}\[\],.?\/:;\'\"\d\w]{' . $minLen . ',' . $maxLen . '}$/';
         $v = trim($data);
@@ -173,7 +173,7 @@ class VerifyHelper
      * @param string $charset
      * @return boolean
      */
-    public static function isNames($data, $minLen = 2, $maxLen = 16, $charset = 'ALL')
+    public static function isNames(string $data, int $minLen = 2, int $maxLen = 16, string $charset = 'ALL'): bool
     {
         if (empty($data))
             return false;
@@ -195,7 +195,7 @@ class VerifyHelper
      * @param string $data 待检测字符串
      * @return bool
      */
-    public static function checkZip($data)
+    public static function checkZip(string $data): bool
     {
         if (strlen($data) != 6) {
             return false;
@@ -211,7 +211,7 @@ class VerifyHelper
      * @param string $data 待检测字符串
      * @return bool
      */
-    public static function checkDate($data)
+    public static function checkDate(string $data): bool
     {
         $dateArr = explode("-", $data);
         if (is_numeric($dateArr[0]) && is_numeric($dateArr[1]) && is_numeric($dateArr[2])) {
@@ -228,7 +228,7 @@ class VerifyHelper
      * @param string $data 待检测字符串
      * @return bool
      */
-    public static function checkTime($data)
+    public static function checkTime(string $data): bool
     {
         $timeArr = explode(":", $data);
         if (is_numeric($timeArr[0]) && is_numeric($timeArr[1]) && is_numeric($timeArr[2])) {

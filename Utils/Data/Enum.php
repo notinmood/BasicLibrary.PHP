@@ -4,6 +4,7 @@ namespace Hiland\Utils\Data;
 
 use ReflectionClass;
 use ReflectionException;
+use UnexpectedValueException;
 
 /**
  * Abstract class that enables creation of PHP enums.
@@ -38,9 +39,9 @@ abstract class Enum
      * Constant with default value for creating enum object
      */
     const __default = null;
-    private static $constants = array();
-    private $value;
-    private $strict;
+    private static array $constants = array();
+    private      $value;
+    private bool $strict;
 
     /**
      * Creates new enum object.
@@ -51,9 +52,9 @@ abstract class Enum
      *            Any value that is exists in defined constants
      * @param bool  $strict
      *            If set to true, type and value must be equal
-     * @throws \UnexpectedValueException If value is not valid enum value
+     * @throws UnexpectedValueException If value is not valid enum value
      */
-    public function __construct($initialValue = null, $strict = true)
+    public function __construct($initialValue = null, bool $strict = true)
     {
         $class = get_class($this);
 
@@ -68,7 +69,7 @@ abstract class Enum
         $temp = self::$constants[$class];
 
         if (!in_array($initialValue, $temp, $strict)) {
-            throw new \UnexpectedValueException("Value is not in enum " . $class);
+            throw new UnexpectedValueException("Value is not in enum " . $class);
         }
 
         $this->value = $initialValue;
@@ -82,7 +83,7 @@ abstract class Enum
      *            If true, default value is included into return
      * @return array Array with constant values
      */
-    public function getConstList($includeDefault = false)
+    public function getConstList(bool $includeDefault = false): array
     {
         $class = get_class($this);
 
@@ -118,7 +119,7 @@ abstract class Enum
      * value cast to string.
      * @return string String representation of this enum's value
      */
-    public function toString()
+    public function toString(): string
     {
         return (string)$this->value;
     }
@@ -131,7 +132,7 @@ abstract class Enum
      * @param mixed $object
      * @return bool True if enums are equal
      */
-    public function equals($object)
+    public function equals($object): bool
     {
         if (!($object instanceof Enum)) {
             return false;

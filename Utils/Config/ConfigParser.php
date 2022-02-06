@@ -15,13 +15,10 @@ namespace Hiland\Utils\Config;
  */
 abstract class ConfigParser
 {
-    public function toString(){
+    public function toString(): string
+    {
         return get_called_class();
     }
-
-    // public function get($key){
-    //
-    // }
 
     /**
      * 从存储系统载入配置文件,并形成array数组返回

@@ -7,57 +7,57 @@ use Hiland\Utils\Data\ObjectHelper;
 
 class StockRealTimeQuote implements ArrayAccess
 {
-    public $stockCode = "";
-    public $stockName = "";
-    public $openPrice = 0.0;
-    public $preClosePrice = 0.0;
-    public $currentPrice = 0.0;
-    public $highestPrice = 0.0;
-    public $lowestPrice = 0.0;
-    public $buyPrice = 0.0; //竞买价，即“买一”报价；
-    public $salePrice = 0.0;//竞卖价，即“卖一”报价；
+    public string $stockCode     = "";
+    public string $stockName     = "";
+    public float  $openPrice     = 0.0;
+    public float  $preClosePrice = 0.0;
+    public float  $currentPrice  = 0.0;
+    public float  $highestPrice  = 0.0;
+    public float  $lowestPrice   = 0.0;
+    public float  $buyPrice      = 0.0; //竞买价，即“买一”报价；
+    public float  $salePrice     = 0.0; //竞卖价，即“卖一”报价；
 
     /**
      * 成交的股票数，由于股票交易以一百股为基本单位，所以在使用时，通常把该值除以一百；
      * @var int
      */
-    public $exchangedQuantity = 0;
+    public int $exchangedQuantity = 0;
 
     /**
      * 成交金额，单位为“元”，为了一目了然，通常以“万元”为成交金额的单位，所以通常把该值除以一万；
      * @var float
      */
-    public $exchangedAmount = 0.0;
+    public float $exchangedAmount = 0.0;
 
-    public $buy1Quantity = 0;
-    public $buy1Price = 0.0;
+    public int   $buy1Quantity = 0;
+    public float $buy1Price    = 0.0;
 
-    public $buy2Quantity = 0;
-    public $buy2Price = 0.0;
+    public int   $buy2Quantity = 0;
+    public float $buy2Price    = 0.0;
 
-    public $buy3Quantity = 0;
-    public $buy3Price = 0.0;
+    public int   $buy3Quantity = 0;
+    public float $buy3Price    = 0.0;
 
-    public $buy4Quantity = 0;
-    public $buy4Price = 0.0;
+    public int   $buy4Quantity = 0;
+    public float $buy4Price    = 0.0;
 
-    public $buy5Quantity = 0;
-    public $buy5Price = 0.0;
+    public int   $buy5Quantity = 0;
+    public float $buy5Price    = 0.0;
 
-    public $sale1Quantity = 0;
-    public $sale1Price = 0.0;
+    public int   $sale1Quantity = 0;
+    public float $sale1Price    = 0.0;
 
-    public $sale2Quantity = 0;
-    public $sale2Price = 0.0;
+    public int   $sale2Quantity = 0;
+    public float $sale2Price    = 0.0;
 
-    public $sale3Quantity = 0;
-    public $sale3Price = 0.0;
+    public int   $sale3Quantity = 0;
+    public float $sale3Price    = 0.0;
 
-    public $sale4Quantity = 0;
-    public $sale4Price = 0.0;
+    public int   $sale4Quantity = 0;
+    public float $sale4Price    = 0.0;
 
-    public $sale5Quantity = 0;
-    public $sale5Price = 0.0;
+    public int   $sale5Quantity = 0;
+    public float $sale5Price    = 0.0;
 
     /**
      * 日期
@@ -74,7 +74,7 @@ class StockRealTimeQuote implements ArrayAccess
      * @param mixed $offset
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return ObjectHelper::isExist($offset);
     }

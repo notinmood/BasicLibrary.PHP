@@ -14,9 +14,10 @@ class DBSetHelper
      * 获取数据集中第 0行中的某个字段值
      * @param array  $dbSet
      * @param string $fieldName
+     * @param int    $rowIndex
      * @return mixed
      */
-    public static function getSingleValue($dbSet, $fieldName, $rowIndex = 0)
+    public static function getSingleValue(array $dbSet, string $fieldName, int $rowIndex = 0)
     {
         $fieldValue = null;
         $rowData = self::getRow($dbSet, $rowIndex);
@@ -33,7 +34,7 @@ class DBSetHelper
      * @param int   $rowIndex 行索引值
      * @return array 数据集中的某行（一维数组）
      */
-    public static function getRow($dbSet, $rowIndex = 0)
+    public static function getRow(array $dbSet, int $rowIndex = 0): ?array
     {
         $rowData = null;
         if ($dbSet != null && count($dbSet) > $rowIndex) {
@@ -45,13 +46,13 @@ class DBSetHelper
 
     /**
      * 友好的显示数据集信息
-     * @param array $dbSet
+     * @param array      $dbSet
      *            数据集
-     * @param array $mapArray
+     * @param array|null $mapArray
      *            转换数组（多维数组，第一维度表示要匹配的数据集字段名称，
      *            第二维度是对本字段的取值进行友好显示的枚举）,例如
      *            array('status'=>array(1=>'正常',-1=>'删除',0=>'禁用',2=>'未审核',3=>'草稿'))
-     * @param array $funcArray
+     * @param array|null $funcArray
      *            函数数组，多维数组，第一维度表示要匹配的数据集字段名称，
      *            第二维度是对本字段的取值进行友好显示的函数，
      *            此函数仅支持一个参数，即将数据库内的值作为本函数的参数
@@ -61,7 +62,7 @@ class DBSetHelper
      * @return array 友好显示的数据集信息
      * @throws ReflectionException
      */
-    public static function displayFriendly(&$dbSet, $mapArray = null, $funcArray = null)
+    public static function displayFriendly(array &$dbSet, array $mapArray = null, array $funcArray = null): array
     {
         return ArrayHelper::displayDbSetFriendly($dbSet, $mapArray, $funcArray);
     }

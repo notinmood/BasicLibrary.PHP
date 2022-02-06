@@ -19,22 +19,22 @@ class DatabaseHelper
 {
     /**
      * 构建Insert语句
-     * @param string $table_name 待操作的数据库表名称
-     * @param        $entity_dict_or_list
+     * @param string $tableName 待操作的数据库表名称
+     * @param        $entityDictOrList
      * @return string
      */
-    public static function buildInsertClause($table_name, $entity_dict_or_list)
+    public static function buildInsertClause(string $tableName, $entityDictOrList): string
     {
-        $level = ArrayHelper::getLevel($entity_dict_or_list);
-        $isIndexArray = ArrayHelper::isIndexArray($entity_dict_or_list);
+        $level = ArrayHelper::getLevel($entityDictOrList);
+        $isIndexArray = ArrayHelper::isIndexArray($entityDictOrList);
 
         /**
          * 判断是实体还是实体集合
          */
         if ($level == 2 && $isIndexArray) {
             $result = "";
-            foreach ($entity_dict_or_list as $item) {
-                $single_sql = self::__buildInsertClause($table_name, $item);
+            foreach ($entityDictOrList as $item) {
+                $single_sql = self::__buildInsertClause($tableName, $item);
                 $single_sql = StringHelper::removeTail($single_sql, ";");
 
                 if ($result) {
@@ -51,12 +51,12 @@ class DatabaseHelper
         }
     }
 
-    private static function __buildInsertClause($table_name, $entity)
+    private static function __buildInsertClause($tableName, $entityArray): string
     {
         $keys = "";
         $values = "";
 
-        foreach ($entity as $k => $v) {
+        foreach ($entityArray as $k => $v) {
             $keys .= "`{$k}`,";
             $values .= self::wrapSqlValue($v) . ",";
         }
@@ -66,14 +66,14 @@ class DatabaseHelper
             $values = StringHelper::removeTail($values, 1);
         }
 
-        return "INSERT INTO `{$table_name}` ({$keys}) VALUES ({$values});";
+        return "INSERT INTO `{$tableName}` ({$keys}) VALUES ({$values});";
     }
 
     /**
      * @param $data
      * @return string
      */
-    public static function wrapSqlValue($data)
+    public static function wrapSqlValue($data): string
     {
         $_type = ObjectHelper::getTypeName($data);
         if ($_type == ObjectTypes::STRING || $_type == ObjectTypes::DATETIME) {

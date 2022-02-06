@@ -20,7 +20,7 @@ use Hiland\Utils\Data\StringHelper;
  */
 class ConfigParserIni extends ConfigParser
 {
-    public function loadFileToArray($fileFullName)
+    public function loadFileToArray($fileFullName): array
     {
         $ini = parse_ini_file($fileFullName, true);
         $config = array();

@@ -10,7 +10,7 @@ class ByteHelper
      * @param string $delimiter 数字和单位分隔符
      * @return string 格式化后的带单位的大小
      */
-    public static function displayFriendly($size, $delimiter = '')
+    public static function displayFriendly($size, string $delimiter = ''): string
     {
         $units = array(
             'B',
@@ -31,9 +31,9 @@ class ByteHelper
      * @return array 目标byte数组
      * @author Zikie
      */
-    public static function convertFromString($stringData)
+    public static function convertFromString(string $stringData): array
     {
-        $bytes = array();
+        $bytes  = array();
         $length = strlen($stringData);
         for ($i = 0; $i < $length; $i++) {
             $bytes[] = ord($stringData[$i]);
@@ -46,7 +46,7 @@ class ByteHelper
      * @param array $bytesData 字节数组
      * @return string 一个String类型的数据
      */
-    public static function convertToString($bytesData)
+    public static function convertToString(array $bytesData): string
     {
         $str = '';
         foreach ($bytesData as $ch) {

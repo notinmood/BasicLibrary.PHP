@@ -55,7 +55,7 @@ class ConstMate
      * @param string $textPostFix 文本后缀
      * @return mixed
      */
-    public static function getConstText($prefix, $value, $textPostFix = "_TEXT")
+    public static function getConstText($prefix, $value, string $textPostFix = "_TEXT")
     {
         $all = self::getConsts($prefix);
         $constKey = self::getConstName($prefix, $value);
@@ -68,7 +68,7 @@ class ConstMate
      * @param bool   $withText 是否将_TEXT后缀的条目一起获取到
      * @return array
      */
-    public static function getConsts($prefix = '', $withText = true)
+    public static function getConsts(string $prefix = '', bool $withText = true): array
     {
         $cacheKey = "Common-Model-BizConst-$prefix";
         if (APP_DEBUG) {
@@ -83,7 +83,7 @@ class ConstMate
         }
     }
 
-    private static function getConstsDetail($prefix, $withText)
+    private static function getConstsDetail($prefix, $withText): array
     {
         $className = get_called_class();
         $reflectionClass = ReflectionHelper::getReflectionClass($className);
@@ -175,7 +175,7 @@ class ConstMate
      *                                       }
      * @return array
      */
-    public static function getConstArray($prefix, $keyValueModeForElement = true, $textPostFix = "_TEXT")
+    public static function getConstArray(string $prefix, bool $keyValueModeForElement = true, string $textPostFix = "_TEXT"): array
     {
         $all = self::getConsts($prefix, true);
         $result = array();

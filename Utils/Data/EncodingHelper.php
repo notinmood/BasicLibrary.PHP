@@ -21,18 +21,18 @@ class EncodingHelper
     /**
      * js的 escape 功能之 php 实现
      * @param string $stringData the string want to be escaped
-     * @param string $in_encoding
-     * @param string $out_encoding
+     * @param string $inEncoding
+     * @param string $outEncoding
      * @return string
      */
-    public static function escape($stringData, $in_encoding = 'UTF-8', $out_encoding = 'UCS-2')
+    public static function escape(string $stringData, string $inEncoding = 'UTF-8', string $outEncoding = 'UCS-2'): string
     {
         $return = '';
         if (function_exists('mb_get_info')) {
-            for ($x = 0; $x < mb_strlen($stringData, $in_encoding); $x++) {
-                $str = mb_substr($stringData, $x, 1, $in_encoding);
+            for ($x = 0; $x < mb_strlen($stringData, $inEncoding); $x++) {
+                $str = mb_substr($stringData, $x, 1, $inEncoding);
                 if (strlen($str) > 1) { // 多字节字符
-                    $return .= '%u' . strtoupper(bin2hex(mb_convert_encoding($str, $out_encoding, $in_encoding)));
+                    $return .= '%u' . strtoupper(bin2hex(mb_convert_encoding($str, $outEncoding, $inEncoding)));
                 } else {
                     $return .= '%' . strtoupper(bin2hex($str));
                 }
@@ -46,7 +46,7 @@ class EncodingHelper
      * @param string $stringData
      * @return string
      */
-    public static function unescape($stringData)
+    public static function unescape(string $stringData): string
     {
         $ret = '';
         $len = strlen($stringData);

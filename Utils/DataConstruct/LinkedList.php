@@ -17,8 +17,8 @@ namespace Hiland\Utils\DataConstruct;
  */
 class LinkedList
 {
-    public $head; //头节点(默认一个虚拟头节点,当有第一个节点插入的时候，自动覆盖头节点)
-    public $size; //长度
+    public Node $head; //头节点(默认一个虚拟头节点,当有第一个节点插入的时候，自动覆盖头节点)
+    public int  $size; //长度
 
     public function __construct()
     {
@@ -31,7 +31,7 @@ class LinkedList
      * @param $value
      * @return Node|null
      */
-    public function addHead($value)
+    public function addHead($value): ?Node
     {
         return $this->insert(0, $value);
     }
@@ -41,7 +41,7 @@ class LinkedList
      * @param $value
      * @return Node|null
      */
-    public function addTail($value)
+    public function addTail($value): ?Node
     {
         return $this->insert($this->size, $value);
     }
@@ -52,7 +52,7 @@ class LinkedList
      * @param $value
      * @return Node|null
      */
-    public function insert($index, $value)
+    public function insert($index, $value): ?Node
     {
         if ($index > $this->size) {
             return null;
@@ -173,7 +173,7 @@ class LinkedList
      * @param $value
      * @return bool
      */
-    public function isContains($value)
+    public function isContains($value): bool
     {
         $current = $this->head;
         while ($current) {
@@ -191,7 +191,7 @@ class LinkedList
      * 转换为字符串
      * @return string
      */
-    public function toString()
+    public function toString(): string
     {
         $prev = $this->head;
 

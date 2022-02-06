@@ -16,13 +16,14 @@ namespace Hiland\Utils\Data;
 class Base64Helper
 {
     /**
-     * @param string $commonString
+     * 进行 base64 编码
+     * @param string $originalString 待编码的原始字符串
      * @param false  $safely 是否要进行安全转换(为了安全起见,(在url等场景中)需要将这两个字符 + / （加除，加粗）进行合理地替换)
      * @return array|string|string[]/
      */
-    public static function encode($commonString, $safely = false)
+    public static function encode(string $originalString, bool $safely = false)
     {
-        $result = base64_encode($commonString);
+        $result = base64_encode($originalString);
 
         if ($safely == true) {
             $result = self::getSafeBase64($result);
@@ -32,10 +33,11 @@ class Base64Helper
     }
 
     /**
-     * @param $base64String
+     * 进行 base64 解码
+     * @param string $base64String
      * @return false|string
      */
-    public static function decode($base64String)
+    public static function decode(string $base64String)
     {
         $base64String = self::getOriginalBase64($base64String);
         return base64_decode($base64String);
@@ -46,7 +48,7 @@ class Base64Helper
      * @param string $stringData
      * @return bool
      */
-    public static function isBase64($stringData)
+    public static function isBase64(string $stringData): bool
     {
         $length = StringHelper::getLength($stringData);
         if ($length % 4 != 0) {

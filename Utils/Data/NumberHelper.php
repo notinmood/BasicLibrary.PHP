@@ -18,12 +18,12 @@ class NumberHelper
      * @param int|float $number             带格式化的数字
      * @param int       $decimalLength      小数位数（缺省为0)
      * @param string    $decimalPoint       小数点符号(缺省为".")
-     * @param string    $thousandsSeperator 千分位分隔符(缺省为逗号",")
+     * @param string    $thousandsSeparator 千分位分隔符(缺省为逗号",")
      * @return string
      */
-    public static function format($number, $decimalLength = 0, $decimalPoint = ".", $thousandsSeperator = ",")
+    public static function format($number, int $decimalLength = 0, string $decimalPoint = ".", string $thousandsSeparator = ","): string
     {
-        return number_format($number, $decimalLength, $decimalPoint, $thousandsSeperator);
+        return number_format($number, $decimalLength, $decimalPoint, $thousandsSeparator);
     }
 
     /**
@@ -33,7 +33,7 @@ class NumberHelper
      * @param int    $toBase       转换到**进制
      * @return string
      */
-    public function convert($numberString, $fromBase, $toBase)
+    public function convert(string $numberString, int $fromBase, int $toBase): string
     {
         return MathHelper::convertBase($numberString, $fromBase, $toBase);
     }

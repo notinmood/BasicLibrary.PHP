@@ -54,12 +54,12 @@ class ModelMate
             }
 
             $className = "\\think\\facade\\Db";
-            $exist = class_exists("$className");
+            $exist     = class_exists("$className");
             if ($exist) {
                 $this->queryObject = Db::name($model);
             } else {
                 $className = "\\think\\Db";
-                $exist = class_exists("$className");
+                $exist     = class_exists("$className");
                 if ($exist) {
                     $this->queryObject = \think\Db::name($model);
                 }
@@ -76,7 +76,7 @@ class ModelMate
      * 获取数据库真实的表名称(包含了表前缀)
      * @return string
      */
-    public function getTableRealName()
+    public function getTableRealName(): string
     {
         return $this->tableRealName;
     }
@@ -87,15 +87,14 @@ class ModelMate
      * 按照主键获取信息
      * @param int|string $key     查询信息的主键值
      * @param string     $keyName 查询信息的主键名称
-     * @return array 模型实体数据
+     * @return array|null 模型实体数据
      */
-    public function get($key, $keyName = 'id')
+    public function get($key, string $keyName = 'id'): ?array
     {
         try {
             return self::getQueryObjectWithGet($key, $keyName)->find();
-        } catch (DataNotFoundException $e) {
-        } catch (ModelNotFoundException $e) {
-        } catch (DbException $e) {
+        } catch (DataNotFoundException|ModelNotFoundException|DbException $e) {
+            return null;
         }
     }
 
@@ -103,21 +102,20 @@ class ModelMate
      * 根据条件获取一条记录
      * @param array  $condition 过滤条件
      * @param string $orderBy
-     * @return array 符合条件的结果，一维数组
+     * @return mixed 符合条件的结果，一维数组
      * @example
      *                          $where= array();
      *                          $where['shopid'] = $merchantScanedID;
      *                          $where['openid'] = $openId;
      *                          $result = $buyerShopMate->find($where);
      */
-    public function find($condition = array(), $orderBy = '')
+    public function find(array $condition = array(), string $orderBy = '')
     {
         $query = $this->getQueryObjectWithWhere($condition);
         try {
             return $query->order($orderBy)->find();
-        } catch (DataNotFoundException $e) {
-        } catch (ModelNotFoundException $e) {
-        } catch (DbException $e) {
+        } catch (DataNotFoundException|ModelNotFoundException|DbException $e) {
+            return null;
         }
     }
 
@@ -129,14 +127,14 @@ class ModelMate
      * @param int    $itemCountPerPage 每页显示的信息条目数
      * @param int    $limit            查询信息的条目数
      * @param string $fields           需要在查询结果中显示的字段信息，缺省情况下显示全部字段
-     * @return array 符合条件的结果，多维数组
+     * @return mixed 符合条件的结果，多维数组
      * @example
      *                                 $where= array();
      *                                 $where['shopid'] = $merchantScanedID;
      *                                 $where['openid'] = $openId;
      *                                 $relation = $buyerShopMate->select($where);
      */
-    public function select($condition = array(), $orderBy = "", $pageIndex = 0, $itemCountPerPage = 0, $limit = 0, $fields = '')
+    public function select(array $condition = array(), string $orderBy = "", int $pageIndex = 0, int $itemCountPerPage = 0, int $limit = 0, string $fields = '')
     {
         if (empty($orderBy)) {
             $orderBy = "id desc";
@@ -147,16 +145,14 @@ class ModelMate
         if ($fields) {
             try {
                 return $query->field($fields)->select();
-            } catch (DataNotFoundException $e) {
-            } catch (ModelNotFoundException $e) {
-            } catch (DbException $e) {
+            } catch (DataNotFoundException|ModelNotFoundException|DbException $e) {
+                return null;
             }
         } else {
             try {
                 return $query->select();
-            } catch (DataNotFoundException $e) {
-            } catch (ModelNotFoundException $e) {
-            } catch (DbException $e) {
+            } catch (DataNotFoundException|ModelNotFoundException|DbException $e) {
+                return null;
             }
         }
     }
@@ -166,7 +162,7 @@ class ModelMate
      * @param array $condition
      * @return int
      */
-    public function getCount($condition = array())
+    public function getCount(array $condition = array()): int
     {
         $query = $this->getQueryObjectWithWhere($condition);
         return $query->count();
@@ -174,11 +170,11 @@ class ModelMate
 
     /**
      * 交互信息
-     * @param array  $data    待跟数据库交互的模型实体数据
-     * @param string $keyName 当前模型的数据库表的主键名称
+     * @param array|null $data    待跟数据库交互的模型实体数据
+     * @param string     $keyName 当前模型的数据库表的主键名称
      * @return boolean|number
      */
-    public function interact($data = null, $keyName = 'id')
+    public function interact(array $data = null, string $keyName = 'id')
     {
         if (empty($data)) {
             /* 获取数据对象 */
@@ -201,7 +197,7 @@ class ModelMate
                 return false;
             }
         } else { // 更新数据
-            $recordID = $data[$keyName];
+            $recordID       = $data[$keyName];
             $isAddOperation = false;
 
             $status = false;
@@ -228,43 +224,18 @@ class ModelMate
         return $recordID;
     }
 
-    // /**
-    //  * 按照主键集合批量更新数据
-    //  * @param string $keys    string 主键集合（用逗号分隔的主键字符串，例如“1,5,6”）
-    //  * @param array  $data    需要更新的数据（可以是目标实体的部分属性构成的 array，比如本 data 内只包含 status 信息，这样就可以批量更新数据库内的记录状态）
-    //  *                        如果不设置keys,那么也可以在data数组内设置一个键名称为 $keyName (就是名称为本方法第三个参数$keyName的元素项目) 的元素项
-    //  * @param string $keyName 主键的名称，缺省为“id”
-    //  * @return bool
-    //  */
-    // public function maintainData($data, $keys = "", $keyName = 'id')
-    // {
-    //     if (empty($keys) && array_key_exists($keyName, $data)) {
-    //         $keys = $data["$keyName"];
-    //     }
-    //
-    //     if (is_numeric($keys)) {
-    //         $keys = "$keys";
-    //     }
-    //
-    //     if (array_key_exists($keyName, $data)) {
-    //         unset($data["$keyName"]);
-    //     }
-    //
-    //     $condition = array("$keyName" => array("in", $keys));
-    //     return $this->modelObject->where($condition)->data($data)->save();
-    // }
-
     /**
      * 删除数据
      * @param array $condition
      * @return int 失败返回false；成功返回删除数据的条数
      */
-    public function delete($condition = array())
+    public function delete(array $condition = array()): int
     {
         $query = $this->getQueryObjectWithWhere($condition);
         try {
             return $query->delete();
         } catch (DbException $e) {
+            return false;
         }
     }
 
@@ -275,16 +246,15 @@ class ModelMate
      * @param string     $keyName
      * @return mixed 字段的值
      */
-    public function getValue($key, $fieldName, $keyName = 'id')
+    public function getValue($key, string $fieldName, string $keyName = 'id')
     {
         $condition[$keyName] = $key;
-        $query = $this->getQueryObjectWithWhere($condition);
+        $query               = $this->getQueryObjectWithWhere($condition);
         try {
             $result = $query->find();
             return $result[$fieldName];
-        } catch (DataNotFoundException $e) {
-        } catch (ModelNotFoundException $e) {
-        } catch (DbException $e) {
+        } catch (DataNotFoundException|ModelNotFoundException|DbException $e) {
+            return null;
         }
     }
 
@@ -294,51 +264,30 @@ class ModelMate
      * @param string     $fieldName
      * @param mixed      $fieldValue
      * @param string     $keyName
-     * @return int 成功时返回受影响的行数，失败时返回false
+     * @return int|bool 成功时返回受影响的行数，失败时返回false
      */
-    public function setValue($key, $fieldName, $fieldValue, $keyName = 'id')
+    public function setValue($key, string $fieldName, $fieldValue, string $keyName = 'id'): int
     {
-        $condition[$keyName] = $key;
-        $query = $this->getQueryObjectWithWhere($condition);
+        $condition[$keyName]  = $key;
+        $query                = $this->getQueryObjectWithWhere($condition);
         $data["{$fieldName}"] = $fieldValue;
         try {
             return $query->update($data);
         } catch (DbException $e) {
+            return false;
         }
     }
 
-    // /**
-    //  * 查找单个值
-    //  * @param string      $searcher 要查找的内容
-    //  * @param string|null $whereClause
-    //  * @return null|mixed
-    //  */
-    // public function findValue($searcher, $whereClause = null)
-    // {
-    //     $tableName = $this->queryObject->getTable();
-    //
-    //     $sql = "SELECT $searcher FROM $tableName";
-    //     if (!empty($whereClause)) {
-    //         $sql .= ' where ' . $whereClause;
-    //     }
-    //
-    //     $dbSet = $this->directlyQuery($sql);
-    //
-    //     if ($dbSet) {
-    //         return $dbSet[0][$searcher];
-    //     } else {
-    //         return null;
-    //     }
-    // }
+
 
     //------直接跟数据库交互的操作------------------------------------------------
 
     /**
      * 执行SQL语句，如果语句里面涉及到本模型对应的表名称，建议不要直接写。可以使用“关键字”  __MODELTABLENAME__,或者__MTN__,推荐使用 __TABLE__ ，本函数自动翻译为带前缀的表名称
-     * @param $sql
+     * @param string $sql
      * @return mixed
      */
-    public function directlyQuery($sql)
+    public function directlyQuery(string $sql)
     {
         $tableName = $this->queryObject->getTable();
 
@@ -355,10 +304,10 @@ class ModelMate
 
     /**
      * 执行原始的sql语句
-     * @param      $sql
+     * @param string $sql
      * @return false|int
      */
-    public function directlyExecute($sql)
+    public function directlyExecute(string $sql)
     {
         return $this->queryObject->getConnection()->execute($sql);
     }
@@ -394,11 +343,11 @@ class ModelMate
 
     /**
      * 获取get数据时候需要的 Query
-     * @param        $key
+     * @param mixed  $key
      * @param string $keyName
      * @return Query
      */
-    protected function getQueryObjectWithGet($key, $keyName = 'id')
+    protected function getQueryObjectWithGet($key, string $keyName = 'id')
     {
         $condition[$keyName] = $key;
         return self::getQueryObjectWithWhere($condition);
@@ -413,7 +362,7 @@ class ModelMate
      * @param int    $limit            查询信息的条目数
      * @return Model
      */
-    protected function getQueryObjectWithSelect($condition = array(), $orderBy = "id desc", $pageIndex = 0, $itemCountPerPage = 0, $limit = 0)
+    protected function getQueryObjectWithSelect(array $condition = array(), string $orderBy = "id desc", int $pageIndex = 0, int $itemCountPerPage = 0, int $limit = 0)
     {
         $query = $this->getQueryObjectWithWhere($condition);
 
@@ -432,14 +381,14 @@ class ModelMate
         return $query;
     }
 
-    private $queried = false;
+    private bool $queried = false;
 
     /**
      * 获取加入where过滤条件的 Query
      * @param array $condition
      * @return Query
      */
-    protected function getQueryObjectWithWhere($condition = array())
+    protected function getQueryObjectWithWhere(array $condition = array())
     {
         if ($this->queried) {
             $this->queryObject = $this->queryObject->newQuery();
@@ -454,7 +403,7 @@ class ModelMate
      * @param array $conditions
      * @return void
      */
-    private function _parseWhereCondition($conditions = [])
+    private function _parseWhereCondition(array $conditions = [])
     {
         foreach ($conditions as $key => $value) {
             switch ($key) {

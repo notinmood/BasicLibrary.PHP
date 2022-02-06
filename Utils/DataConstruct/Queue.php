@@ -5,17 +5,17 @@ namespace Hiland\Utils\DataConstruct;
 class Queue extends SimpleLinearConstruct
 {
     /**
-     * （尾部）入队 *
+     * （尾部）入队
      * @param mixed $value
      * @return int
      */
-    public function push($value)
+    public function push($value): int
     {
         return array_push($this->dataArray, $value);
     }
 
     /**
-     * （头部）出队*
+     * （头部）出队
      * @return Null|mixed
      */
     public function pop()

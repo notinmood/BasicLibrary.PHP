@@ -16,7 +16,7 @@ class BoolHelper
      * @param $value
      * @return bool
      */
-    public static function isRealTrue($value)
+    public static function isRealTrue($value): bool
     {
         if (is_bool($value) && $value == true) {
             return true;
@@ -30,7 +30,7 @@ class BoolHelper
      * @param $value
      * @return bool
      */
-    public static function isRealFalse($value)
+    public static function isRealFalse($value): bool
     {
         if (is_bool($value) && $value == false) {
             return true;
@@ -44,7 +44,7 @@ class BoolHelper
      * @param $value
      * @return string
      */
-    public static function getText($value)
+    public static function getText($value): string
     {
         if ($value) {
             return "true";
@@ -53,8 +53,10 @@ class BoolHelper
         }
     }
 
-    /**将字符串等数据类型转换成bool
-     * 因为一般的转换方式
+    /**
+     * 将字符串等数据类型转换成bool
+     * ────────────────────────
+     * 因为如果采用一般的转换方式,如下
      *  $string = 'false';
      * var_dump(settype($string, 'boolean'));
      * 得到的结果都是true。因此使用本方法进行操作。
@@ -62,7 +64,7 @@ class BoolHelper
      * @param bool  $return_null 转换失败是否返回null（默认false不转换null）
      * @return bool|mixed|null
      */
-    public static function isTrue($value, $return_null = false)
+    public static function isTrue($value, bool $return_null = false)
     {
         $boolVal = (is_string($value) ? filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) : (bool)$value);
         return ($boolVal === null && !$return_null ? false : $boolVal);

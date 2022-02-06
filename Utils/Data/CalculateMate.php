@@ -25,7 +25,7 @@ class CalculateMate
     //第一个要计算的数值
     public $number = 0;
     //精度计算时保留的小数点位数
-    public $precision = 2;
+    public int $precision = 2;
     //计算结果
     public $result = 0;
 
@@ -33,7 +33,7 @@ class CalculateMate
      * AccuracyCal constructor.
      * @param int $precision 精确计算是保留的小数位数,缺省为2位小数的精度
      */
-    public function __construct($number = 0, $precision = 2)
+    public function __construct($number = 0, int $precision = 2)
     {
         $this->number = $number;
         $this->precision = $precision;
@@ -41,9 +41,9 @@ class CalculateMate
 
     /**
      * 第一个参与运算的数值，如果调用，需在最前面调用
-     * @param $number 第一个要计算的数字
+     * @param mixed $number 第一个要计算的数字
      */
-    public function number($number)
+    public function number($number): CalculateMate
     {
         $this->result = $this->number = $number;
         return $this;
@@ -54,7 +54,7 @@ class CalculateMate
      * @param $number
      * @return $this
      */
-    public function add($number)
+    public function add($number): CalculateMate
     {
         $this->result = bcadd($this->result, $number, $this->precision);
         return $this;
@@ -65,7 +65,7 @@ class CalculateMate
      * @param $number
      * @return $this
      */
-    public function sub($number)
+    public function sub($number): CalculateMate
     {
         $this->result = bcsub($this->result, $number, $this->precision);
         return $this;
@@ -76,7 +76,7 @@ class CalculateMate
      * @param $number
      * @return $this
      */
-    public function mul($number)
+    public function mul($number): CalculateMate
     {
         $this->result = bcmul($this->result, $number, $this->precision);
         return $this;
@@ -87,7 +87,7 @@ class CalculateMate
      * @param $number
      * @return $this
      */
-    public function div($number)
+    public function div($number): CalculateMate
     {
         $this->result = bcdiv($this->result, $number, $this->precision);
         return $this;
@@ -95,9 +95,8 @@ class CalculateMate
 
     /**
      * 获取计算结果
-     * @return float
      */
-    public function getResult()
+    public function getResult(): float
     {
         return floatval($this->result);
     }

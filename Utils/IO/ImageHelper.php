@@ -5,9 +5,7 @@ namespace Hiland\Utils\IO;
 use Hiland\Utils\Web\MimeHelper;
 
 /**
- *
  * @author devel
- *
  */
 class ImageHelper
 {
@@ -41,14 +39,11 @@ class ImageHelper
 
     /**
      * 根据给定的图片全路径，将图片载入内存
-     *
-     * @param string $imageFileName
-     *            图片全路径
-     * @param string $imageType
-     *            图片类型（jpg,png等，默认为空的时候系统自动推断图片类型，或者设置一个未知的类型的时候系统使用file_get_contents载入图片）
+     * @param string $imageFileName 图片全路径
+     * @param string $imageType     图片类型（jpg,png等，默认为空的时候系统自动推断图片类型，或者设置一个未知的类型的时候系统使用file_get_contents载入图片）
      * @return resource 内存中的图片资源
      */
-    public static function loadImage($imageFileName, $imageType = '')
+    public static function loadImage(string $imageFileName, string $imageType = ''): bool
     {
         if (empty($imageType)) {
             $imageType = self::getImageType($imageFileName);
@@ -93,12 +88,10 @@ class ImageHelper
 
     /**
      * 获取图片的类型
-     *
-     * @param string $imageFileName
-     *            文件全路径
+     * @param string $imageFileName 文件全路径
      * @return string
      */
-    public static function getImageType($imageFileName)
+    public static function getImageType(string $imageFileName): string
     {
         if (extension_loaded('exif')) {
             return self::getImageTypeFromExif($imageFileName);
@@ -109,67 +102,65 @@ class ImageHelper
 
     /**
      * 获取图片的类型
-     *
-     * @param string $imageFileName
-     *            文件全路径
+     * ────────────────────────
+     *  php.ini中需要开通这个两个扩展模块
+     *     - extension=php_mbstring.dll
+     *     - extension=php_exif.dll
+     * @param string $imageFileName 文件全路径
      * @return string
-     *
-     * php.ini中需要开通这个两个扩展模块
-     * extension=php_mbstring.dll
-     * extension=php_exif.dll
      */
-    private static function getImageTypeFromExif($imageFileName)
+    private static function getImageTypeFromExif(string $imageFileName): string
     {
         $result = 'jpg';
-        $out = exif_imagetype($imageFileName);
+        $out    = exif_imagetype($imageFileName);
 
         switch ($out) {
-            case 1://IMAGETYPE_GIF
+            case 1:// IMAGE-TYPE_GIF
                 $result = 'gif';
                 break;
-            case 2://	IMAGETYPE_JPEG
+            case 2://	IMAGE-TYPE_JPEG
                 $result = 'jpg';
                 break;
-            case 3://	IMAGETYPE_PNG
+            case 3://	IMAGE-TYPE_PNG
                 $result = 'png';
                 break;
-            case 4:// 	IMAGETYPE_SWF
+            case 4:// 	IMAGE-TYPE_SWF
                 $result = 'swf';
                 break;
-            case 5:// 	IMAGETYPE_PSD
+            case 5:// 	IMAGE-TYPE_PSD
                 $result = 'psd';
                 break;
-            case 6 ://	IMAGETYPE_BMP
+            case 6 ://	IMAGE-TYPE_BMP
                 $result = 'bmp';
                 break;
-            case 7 ://	IMAGETYPE_TIFF_II（Intel 字节顺序）
+            case 7 ://	IMAGE-TYPE_TIFF_II（Intel 字节顺序）
                 $result = 'tiff';
                 break;
-            case 8 ://	IMAGETYPE_TIFF_MM（Motorola 字节顺序）
+            case 8 ://	IMAGE-TYPE_TIFF_MM（Motorola 字节顺序）
                 $result = 'tiff';
                 break;
-            case 9:// 	IMAGETYPE_JPC
+            case 9:// 	IMAGE-TYPE_JPC
                 $result = 'jpc';
                 break;
-            case 10 ://	IMAGETYPE_JP2
+            case 10 ://	IMAGE-TYPE_JP2
                 $result = 'jp2';
                 break;
-            case 11 ://	IMAGETYPE_JPX
+            case 11 ://	IMAGE-TYPE_JPX
                 $result = 'jpx';
                 break;
-            case 12 ://	IMAGETYPE_JB2
+            case 12 ://	IMAGE-TYPE_JB2
                 $result = 'gb2';
                 break;
-            case 13:// 	IMAGETYPE_SWC
+            case 13:// 	IMAGE-TYPE_SWC
                 $result = 'swc';
                 break;
-            case 14 ://	IMAGETYPE_IFF
+            case 14 ://	IMAGE-TYPE_IFF
                 $result = 'iff';
                 break;
-            case 15 ://	IMAGETYPE_WBMP
+            case 15 ://	IMAGE-TYPE_WBMP
                 $result = 'wbmp';
                 break;
-            case 16:// 	IMAGETYPE_XBM
+            case 16:// 	IMAGE-TYPE_XBM
                 $result = 'xbm';
                 break;
         }
@@ -179,12 +170,10 @@ class ImageHelper
 
     /**
      * 获取图片的类型
-     *
-     * @param string $imageFileName
-     *            文件全路径
+     * @param string $imageFileName 文件全路径
      * @return string
      */
-    private static function getImageTypeFromImageSize($imageFileName)
+    private static function getImageTypeFromImageSize(string $imageFileName): string
     {
         $array = getimagesize($imageFileName);
         // 索引 2 给出的是图像的类型，返回的是数字，
@@ -236,7 +225,7 @@ class ImageHelper
      * @param $fileName
      * @return bool|resource
      */
-    public static function imageCreateFromBMP($fileName)
+    public static function imageCreateFromBMP($fileName): bool
     {
         if (!$f1 = fopen($fileName, "rb")) {
             return FALSE;
@@ -246,15 +235,15 @@ class ImageHelper
         if ($FILE['file_type'] != 19778)
             return FALSE;
 
-        $BMP = unpack('Vheader_size/Vwidth/Vheight/vplanes/vbits_per_pixel' . '/Vcompression/Vsize_bitmap/Vhoriz_resolution' . '/Vvert_resolution/Vcolors_used/Vcolors_important', fread($f1, 40));
+        $BMP           = unpack('Vheader_size/Vwidth/Vheight/vplanes/vbits_per_pixel' . '/Vcompression/Vsize_bitmap/Vhoriz_resolution' . '/Vvert_resolution/Vcolors_used/Vcolors_important', fread($f1, 40));
         $BMP['colors'] = pow(2, $BMP['bits_per_pixel']);
         if ($BMP['size_bitmap'] == 0)
             $BMP['size_bitmap'] = $FILE['file_size'] - $FILE['bitmap_offset'];
-        $BMP['bytes_per_pixel'] = $BMP['bits_per_pixel'] / 8;
+        $BMP['bytes_per_pixel']  = $BMP['bits_per_pixel'] / 8;
         $BMP['bytes_per_pixel2'] = ceil($BMP['bytes_per_pixel']);
-        $BMP['decal'] = ($BMP['width'] * $BMP['bytes_per_pixel'] / 4);
-        $BMP['decal'] -= floor($BMP['width'] * $BMP['bytes_per_pixel'] / 4);
-        $BMP['decal'] = 4 - (4 * $BMP['decal']);
+        $BMP['decal']            = ($BMP['width'] * $BMP['bytes_per_pixel'] / 4);
+        $BMP['decal']            -= floor($BMP['width'] * $BMP['bytes_per_pixel'] / 4);
+        $BMP['decal']            = 4 - (4 * $BMP['decal']);
         if ($BMP['decal'] == 4)
             $BMP['decal'] = 0;
 
@@ -263,20 +252,20 @@ class ImageHelper
             $PALETTE = unpack('V' . $BMP['colors'], fread($f1, $BMP['colors'] * 4));
         }
 
-        $IMG = fread($f1, $BMP['size_bitmap']);
+        $IMG  = fread($f1, $BMP['size_bitmap']);
         $VIDE = chr(0);
 
         $res = imagecreatetruecolor($BMP['width'], $BMP['height']);
-        $P = 0;
-        $Y = $BMP['height'] - 1;
+        $P   = 0;
+        $Y   = $BMP['height'] - 1;
         while ($Y >= 0) {
             $X = 0;
             while ($X < $BMP['width']) {
                 if ($BMP['bits_per_pixel'] == 32) {
                     $COLOR = unpack("V", substr($IMG, $P, 3));
-                    $B = ord(substr($IMG, $P, 1));
-                    $G = ord(substr($IMG, $P + 1, 1));
-                    $R = ord(substr($IMG, $P + 2, 1));
+                    $B     = ord(substr($IMG, $P, 1));
+                    $G     = ord(substr($IMG, $P + 1, 1));
+                    $R     = ord(substr($IMG, $P + 2, 1));
                     $color = imagecolorexact($res, $R, $G, $B);
                     if ($color == -1)
                         $color = imagecolorallocate($res, $R, $G, $B);
@@ -285,13 +274,13 @@ class ImageHelper
                 } elseif ($BMP['bits_per_pixel'] == 24) {
                     $COLOR = unpack("V", substr($IMG, $P, 3) . $VIDE);
                 } elseif ($BMP['bits_per_pixel'] == 16) {
-                    $COLOR = unpack("v", substr($IMG, $P, 2));
-                    $blue = (($COLOR[1] & 0x001f) << 3) + 7;
-                    $green = (($COLOR[1] & 0x03e0) >> 2) + 7;
-                    $red = (($COLOR[1] & 0xfc00) >> 7) + 7;
+                    $COLOR    = unpack("v", substr($IMG, $P, 2));
+                    $blue     = (($COLOR[1] & 0x001f) << 3) + 7;
+                    $green    = (($COLOR[1] & 0x03e0) >> 2) + 7;
+                    $red      = (($COLOR[1] & 0xfc00) >> 7) + 7;
                     $COLOR[1] = $red * 65536 + $green * 256 + $blue;
                 } elseif ($BMP['bits_per_pixel'] == 8) {
-                    $COLOR = unpack("n", $VIDE . substr($IMG, $P, 1));
+                    $COLOR    = unpack("n", $VIDE . substr($IMG, $P, 1));
                     $COLOR[1] = $PALETTE[$COLOR[1] + 1];
                 } elseif ($BMP['bits_per_pixel'] == 4) {
                     $COLOR = unpack("n", $VIDE . substr($IMG, floor($P), 1));
@@ -335,10 +324,10 @@ class ImageHelper
 
     /**
      * 获取图片的高度
-     * @param $image 图片路径或者图片资源
+     * @param mixed $image 图片路径或者图片资源
      * @return int
      */
-    public static function getHeight($image)
+    public static function getHeight($image): int
     {
         if (is_string($image)) {
             $image = self::loadImage($image);
@@ -348,61 +337,57 @@ class ImageHelper
 
     /**
      * 实现等比例不失真缩放图片缩放
-     * (在本函数调用的地方，使用完成后请使用imagedestroy($newimage)对新资源进行销毁)
-     *
-     * @param resource $sourceimage
-     *            原来的图片资源
-     * @param int $targetmaxwidth
-     *            图片放缩后允许的最多宽度
-     * @param int $targetmaxheight
-     *            图片放缩后允许的最多高度
+     * (在本函数调用的地方，使用完成后请使用 imagedestroy($newimage) 对新资源进行销毁)
+     * @param resource $sourceImage     原来的图片资源
+     * @param int      $targetMaxWidth  图片放缩后允许的最多宽度
+     * @param int      $targetMaxHeight 图片放缩后允许的最多高度
      * @return resource 按比例放缩后的图片
      */
-    public static function resizeImage($sourceimage, $targetmaxwidth, $targetmaxheight)
+    public static function resizeImage($sourceImage, int $targetMaxWidth, int $targetMaxHeight)
     {
-        $sourcewidth = imagesx($sourceimage);
-        $sourceheight = imagesy($sourceimage);
+        $sourceWidth  = imagesx($sourceImage);
+        $sourceHeight = imagesy($sourceImage);
 
-        if (($targetmaxwidth && $sourcewidth > $targetmaxwidth) || ($targetmaxheight && $sourceheight > $targetmaxheight)) {
+        if (($targetMaxWidth && $sourceWidth > $targetMaxWidth) || ($targetMaxHeight && $sourceHeight > $targetMaxHeight)) {
 
-            $resizeWidthTag = false;
+            $resizeWidthTag  = false;
             $resizeHeightTag = false;
+            $widthRatio      = 1;
+            $heightRatio     = 1;
+            $ratio           = 1;
 
-            if ($targetmaxwidth && $sourcewidth > $targetmaxwidth) {
-                $widthratio = $targetmaxwidth / $sourcewidth;
+            if ($targetMaxWidth && $sourceWidth > $targetMaxWidth) {
+                $widthRatio     = $targetMaxWidth / $sourceWidth;
                 $resizeWidthTag = true;
             }
 
-            if ($targetmaxheight && $sourceheight > $targetmaxheight) {
-                $heightratio = $targetmaxheight / $sourceheight;
+            if ($targetMaxHeight && $sourceHeight > $targetMaxHeight) {
+                $heightRatio     = $targetMaxHeight / $sourceHeight;
                 $resizeHeightTag = true;
             }
 
             if ($resizeWidthTag && $resizeHeightTag) {
-                if ($widthratio < $heightratio)
-                    $ratio = $widthratio;
-                else
-                    $ratio = $heightratio;
+                $ratio = min($widthRatio, $heightRatio);
             }
 
             if ($resizeWidthTag && !$resizeHeightTag)
-                $ratio = $widthratio;
+                $ratio = $widthRatio;
             if ($resizeHeightTag && !$resizeWidthTag)
-                $ratio = $heightratio;
+                $ratio = $heightRatio;
 
-            $newwidth = $sourcewidth * $ratio;
-            $newheight = $sourceheight * $ratio;
+            $newWidth  = $sourceWidth * $ratio;
+            $newHeight = $sourceHeight * $ratio;
 
             if (function_exists("imagecopyresampled")) {
-                $newimage = imagecreatetruecolor($newwidth, $newheight);
-                imagecopyresampled($newimage, $sourceimage, 0, 0, 0, 0, $newwidth, $newheight, $sourcewidth, $sourceheight);
+                $newImage = imagecreatetruecolor($newWidth, $newHeight);
+                imagecopyresampled($newImage, $sourceImage, 0, 0, 0, 0, $newWidth, $newHeight, $sourceWidth, $sourceHeight);
             } else {
-                $newimage = imagecreate($newwidth, $newheight);
-                imagecopyresized($newimage, $sourceimage, 0, 0, 0, 0, $newwidth, $newheight, $sourcewidth, $sourceheight);
+                $newImage = imagecreate($newWidth, $newHeight);
+                imagecopyresized($newImage, $sourceImage, 0, 0, 0, 0, $newWidth, $newHeight, $sourceWidth, $sourceHeight);
             }
-            return $newimage;
+            return $newImage;
         } else {
-            return $sourceimage;
+            return $sourceImage;
         }
     }
 
@@ -410,19 +395,19 @@ class ImageHelper
      * 裁剪图片
      * @param resource $sourceImage
      *            待操作的图片资源
-     * @param int $topRemoveValue
+     * @param int      $topRemoveValue
      *            图片上部清除的数值（像素）
-     * @param int $bottomRemoveValue
+     * @param int      $bottomRemoveValue
      *            图片下部清除的数值（像素）
-     * @param int $leftRemoveValue
+     * @param int      $leftRemoveValue
      *            图片左部清除的数值（像素）
-     * @param int $rightRemoveValue
+     * @param int      $rightRemoveValue
      *            图片右部清除的数值（像素）
      * @return resource
      */
-    public static function cropImage($sourceImage, $topRemoveValue, $bottomRemoveValue = 0, $leftRemoveValue = 0, $rightRemoveValue = 0)
+    public static function cropImage($sourceImage, int $topRemoveValue, int $bottomRemoveValue = 0, int $leftRemoveValue = 0, int $rightRemoveValue = 0)
     {
-        $sourceWidth = imagesx($sourceImage);
+        $sourceWidth  = imagesx($sourceImage);
         $sourceHeight = imagesy($sourceImage);
 
         if ($topRemoveValue >= $sourceHeight) {
@@ -441,8 +426,8 @@ class ImageHelper
             $rightRemoveValue = 0;
         }
 
-        $newWidth = $sourceWidth - $leftRemoveValue - $rightRemoveValue;
-        $newHeight = $sourceHeight - $topRemoveValue - $bottomRemoveValue;
+        $newWidth     = $sourceWidth - $leftRemoveValue - $rightRemoveValue;
+        $newHeight    = $sourceHeight - $topRemoveValue - $bottomRemoveValue;
         $croppedImage = imagecreatetruecolor($newWidth, $newHeight);
 
         imagecopy($croppedImage, $sourceImage, 0, 0, $leftRemoveValue, $topRemoveValue, $newWidth, $newHeight);
@@ -452,12 +437,11 @@ class ImageHelper
 
     /**
      * 在浏览器中显示图片
-     *
      * @param resource $image
-     * @param string $imageType
-     * @param int $imageDisplayQuality 图片质量，jpg格式适用。取值范围0-100，默认为100
+     * @param string   $imageType
+     * @param int      $imageDisplayQuality 图片质量，jpg格式适用。取值范围0-100，默认为100
      */
-    public static function display($image, $imageType = 'jpg', $imageDisplayQuality = 100)
+    public static function display($image, string $imageType = 'jpg', int $imageDisplayQuality = 100)
     {
         $functionName = self::getImageOutputFunction($imageType);
 
@@ -478,12 +462,11 @@ class ImageHelper
 
     /**
      * 根据图片文件的扩展名称，确定图片的输出函数
-     *
      * @param string $imageExtensionFileNameWithoutDot
      *            不带小数点的图片扩展名称
      * @return string
      */
-    public static function getImageOutputFunction($imageExtensionFileNameWithoutDot)
+    public static function getImageOutputFunction(string $imageExtensionFileNameWithoutDot): string
     {
         $result = self::getImageFunctionInfo($imageExtensionFileNameWithoutDot, 'output');
         return $result;
@@ -492,8 +475,8 @@ class ImageHelper
     private static function getImageFunctionInfo($imageExtensionFileNameWithoutDot, $functionType)
     {
         $arrayFunctions = self::ImageFunctionArray();
-        $extFunctions = $arrayFunctions[$imageExtensionFileNameWithoutDot];
-        $result = $extFunctions[$functionType];
+        $extFunctions   = $arrayFunctions[$imageExtensionFileNameWithoutDot];
+        $result         = $extFunctions[$functionType];
         return $result;
     }
 
@@ -501,52 +484,49 @@ class ImageHelper
      * 获取图片操作函数数组
      * @return array
      */
-    private static function ImageFunctionArray()
+    private static function ImageFunctionArray(): array
     {
-        $array = array(
-            'jpg' => array(
-                'output' => 'imagejpeg',
+        return array(
+            'jpg'  => array(
+                'output'           => 'imagejpeg',
                 'outputParamCount' => 3,
-                'create' => 'imagecreatefromjpeg'
+                'create'           => 'imagecreatefromjpeg',
             ),
             'jpeg' => array(
-                'output' => 'imagejpeg',
+                'output'           => 'imagejpeg',
                 'outputParamCount' => 3,
-                'create' => 'imagecreatefromjpeg'
+                'create'           => 'imagecreatefromjpeg',
             ),
-            'png' => array(
-                'output' => 'imagepng',
+            'png'  => array(
+                'output'           => 'imagepng',
                 'outputParamCount' => 2,
-                'create' => 'imagecreatefrompng'
+                'create'           => 'imagecreatefrompng',
             ),
-            'gif' => array(
-                'output' => 'imagegif',
+            'gif'  => array(
+                'output'           => 'imagegif',
                 'outputParamCount' => 2,
-                'create' => 'imagecreatefromgif'
+                'create'           => 'imagecreatefromgif',
             ),
-            'bmp' => array(
-                'output' => 'imagejpeg',
+            'bmp'  => array(
+                'output'           => 'imagejpeg',
                 'outputParamCount' => 3,
-                'create' => 'imagecreatefromwbmp' //这个方法有问题
+                'create'           => 'imagecreatefromwbmp' //这个方法有问题
             ),
             'wbmp' => array(
-                'output' => 'image2wbmp',
+                'output'           => 'image2wbmp',
                 'outputParamCount' => 2,
-                'create' => 'imagecreatefromwbmp'
-            )
+                'create'           => 'imagecreatefromwbmp',
+            ),
         );
-
-        return $array;
     }
 
     /**
      * 根据图片文件的扩展名称，确定图片的载入函数
-     *
      * @param string $imageExtensionFileNameWithoutDot
      *            不带小数点的图片扩展名称
      * @return string
      */
-    public static function getImageCreateFunction($imageExtensionFileNameWithoutDot)
+    public static function getImageCreateFunction(string $imageExtensionFileNameWithoutDot): string
     {
         $result = self::getImageFunctionInfo($imageExtensionFileNameWithoutDot, 'create');
         return $result;
@@ -555,29 +535,29 @@ class ImageHelper
     /**
      * 保存到物理绝对路径中
      * @param resource $image
-     * @param int $imageDisplayQuality 图片质量，jpg格式适用。取值范围0-100，默认为100
-     * @param string $filePhysicalFullName 要保存的图片的物理路径全名称（物理路径、文件名和扩展名）
+     * @param int      $imageDisplayQuality  图片质量，jpg格式适用。取值范围0-100，默认为100
+     * @param string   $filePhysicalFullName 要保存的图片的物理路径全名称（物理路径、文件名和扩展名）
      * @return string 被保存的图片的物理路径全名称（物理路径、文件名和扩展名）
      */
-    public static function save($image, $filePhysicalFullName, $imageDisplayQuality = 80)
+    public static function save($image, string $filePhysicalFullName, int $imageDisplayQuality = 80): string
     {
         $filePhysicalFullName = str_replace('/', '\\', $filePhysicalFullName);
-        $imageType = strtolower(FileHelper::getExtensionName($filePhysicalFullName));
+        $imageType            = strtolower(FileHelper::getExtensionName($filePhysicalFullName));
 
         $functionName = self::getImageOutputFunction($imageType);
-        $paramCount = self::getImageOutputFunctionParamCount($imageType);
+        $paramCount   = self::getImageOutputFunctionParamCount($imageType);
 
         if (function_exists($functionName)) {
             switch ($paramCount) {
                 case 3:
-                    {
-                        $functionName($image, $filePhysicalFullName, $imageDisplayQuality);
-                        break;
-                    }
+                {
+                    $functionName($image, $filePhysicalFullName, $imageDisplayQuality);
+                    break;
+                }
                 default:
-                    {
-                        $functionName($image, $filePhysicalFullName);
-                    }
+                {
+                    $functionName($image, $filePhysicalFullName);
+                }
             }
         }
 
@@ -586,28 +566,27 @@ class ImageHelper
 
     /**
      * 根据图片文件的扩展名称，确定图片的输出函数
-     *
      * @param string $imageExtensionFileNameWithoutDot
      *            不带小数点的图片扩展名称
      * @return string
      */
-    public static function getImageOutputFunctionParamCount($imageExtensionFileNameWithoutDot)
+    public static function getImageOutputFunctionParamCount($imageExtensionFileNameWithoutDot): string
     {
         $result = self::getImageFunctionInfo($imageExtensionFileNameWithoutDot, 'outputParamCount');
         return $result;
     }
 
-    public static function fillText2Image($backGroudImage, $fontSize, $angle, $startX, $startY, $lineWidth, $textColor, $fontFileName, $content, $linesDistance, $firstLineIndent = 0)
+    public static function fillText2Image($backGroundImage, $fontSize, $angle, $startX, $startY, $lineWidth, $textColor, $fontFileName, $content, $linesDistance, $firstLineIndent = 0)
     {
         $length = mb_strlen($content);
 
-        $lineNumber = 0;
-        $charNumber = 0;
+        $lineNumber  = 0;
+        $charNumber  = 0;
         $lineContent = '';
         for ($i = 0; $i < $length; $i++) {
             $lineContent .= mb_substr($content, $i, 1);
             $charNumber++;
-            $data = imagettfbbox($fontSize, $angle, $fontFileName, $lineContent);
+            $data         = imagettfbbox($fontSize, $angle, $fontFileName, $lineContent);
             $currentWidth = $data[2] - $data[0];
             if ($lineNumber == 0) {
                 $currentWidth += $firstLineIndent;
@@ -618,7 +597,7 @@ class ImageHelper
                 if ($lineNumber == 0) {
                     $posX = $startX + $firstLineIndent;
                 }
-                imagefttext($backGroudImage, $fontSize, $angle, $posX, $posY, $textColor, $fontFileName, $lineContent);
+                imagefttext($backGroundImage, $fontSize, $angle, $posX, $posY, $textColor, $fontFileName, $lineContent);
                 $charNumber = 0;
                 $lineNumber++;
                 $lineContent = '';
@@ -630,8 +609,8 @@ class ImageHelper
     {
         $length = mb_strlen($content);
 
-        $lineNumber = 0;
-        $charNumber = 0;
+        $lineNumber  = 0;
+        $charNumber  = 0;
         $lineContent = '';
         for ($i = 0; $i < $length; $i++) {
             $lineContent .= mb_substr($content, $i, 1);
@@ -663,15 +642,15 @@ class ImageHelper
 
         // 调整调色板
         imagetruecolortopalette($im, true, $bits);
-        $width = imagesx($im);
-        $height = imagesy($im);
+        $width      = imagesx($im);
+        $height     = imagesy($im);
         $colors_num = imagecolorstotal($im);
 
         if ($bit <= 8) {
             // 颜色索引
             $rgb_quad = '';
             for ($i = 0; $i < $colors_num; $i++) {
-                $colors = imagecolorsforindex($im, $i);
+                $colors   = imagecolorsforindex($im, $i);
                 $rgb_quad .= chr($colors['blue']) . chr($colors['green']) . chr($colors['red']) . "\0";
             }
 
@@ -687,7 +666,7 @@ class ImageHelper
                 $compression = 0;
 
                 // 每行字节数必须为4的倍数，补齐。
-                $extra = '';
+                $extra   = '';
                 $padding = 4 - ceil($width / (8 / $bit)) % 4;
                 if ($padding % 4 != 0) {
                     $extra = str_repeat("\0", $padding);
@@ -696,12 +675,12 @@ class ImageHelper
                 for ($j = $height - 1; $j >= 0; $j--) {
                     $i = 0;
                     while ($i < $width) {
-                        $bin = 0;
+                        $bin   = 0;
                         $limit = $width - $i < 8 / $bit ? (8 / $bit - $width + $i) * $bit : 0;
 
                         for ($k = 8 - $bit; $k >= $limit; $k -= $bit) {
                             $index = imagecolorat($im, $i, $j);
-                            $bin |= $index << $k;
+                            $bin   |= $index << $k;
                             $i++;
                         }
 
@@ -714,7 +693,7 @@ class ImageHelper
             else if ($compression == 1 && $bit == 8) {
                 for ($j = $height - 1; $j >= 0; $j--) {
                     $last_index = "\0";
-                    $same_num = 0;
+                    $same_num   = 0;
                     for ($i = 0; $i <= $width; $i++) {
                         $index = imagecolorat($im, $i, $j);
                         if ($index !== $last_index || $same_num > 255) {
@@ -723,7 +702,7 @@ class ImageHelper
                             }
 
                             $last_index = $index;
-                            $same_num = 1;
+                            $same_num   = 1;
                         } else {
                             $same_num++;
                         }
@@ -739,7 +718,7 @@ class ImageHelper
             $size_data = strlen($bmp_data);
         } else {
             // 每行字节数必须为4的倍数，补齐。
-            $extra = '';
+            $extra   = '';
             $padding = 4 - ($width * ($bit / 8)) % 4;
             if ($padding % 4 != 0) {
                 $extra = str_repeat("\0", $padding);
@@ -750,7 +729,7 @@ class ImageHelper
 
             for ($j = $height - 1; $j >= 0; $j--) {
                 for ($i = 0; $i < $width; $i++) {
-                    $index = imagecolorat($im, $i, $j);
+                    $index  = imagecolorat($im, $i, $j);
                     $colors = imagecolorsforindex($im, $index);
 
                     if ($bit == 16) {
@@ -771,8 +750,8 @@ class ImageHelper
                 $bmp_data .= $extra;
             }
 
-            $size_quad = 0;
-            $size_data = strlen($bmp_data);
+            $size_quad  = 0;
+            $size_data  = strlen($bmp_data);
             $colors_num = 0;
         }
 

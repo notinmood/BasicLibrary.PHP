@@ -18,7 +18,7 @@ class PageHelper
         echo "</head>";
     }
 
-    private static function buildEncoding($coding = 'utf-8')
+    private static function buildEncoding($coding = 'utf-8'): string
     {
         return '<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=' . $coding . '"> <meta charset="' . $coding . '">';
     }
@@ -27,7 +27,7 @@ class PageHelper
      * 在页面的header标签内设置字符编码（页面html代码可见此设置的文本）
      * @param string $coding
      */
-    public static function renderEncoding($coding = 'utf-8')
+    public static function renderEncoding(string $coding = 'utf-8')
     {
         echo self::buildEncoding($coding);
     }
@@ -36,7 +36,7 @@ class PageHelper
      * 在页面响应流的header部分设置字符编码（页面html代码不可见此设置的文本）
      * @param string $coding
      */
-    public static function setEncoding($coding = 'utf-8')
+    public static function setEncoding(string $coding = 'utf-8')
     {
         header('Content-Type: text/html; charset=' . $coding);
     }

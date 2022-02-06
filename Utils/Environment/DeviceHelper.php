@@ -8,7 +8,7 @@ class DeviceHelper
      * 判断当前运行的设备是否为移动设备
      * @return boolean
      */
-    public static function isMobile()
+    public static function isMobile(): bool
     {
         $useragent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
         $useragent_commentsBlock = preg_match('|\(.*?\)|', $useragent, $matches) > 0 ? $matches[0] : '';

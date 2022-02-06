@@ -22,19 +22,20 @@ class ConfigHelper
      *                         (目前支持的文件类型有:.php(内部返回Array)、.ini和.json等多种格式)
      * @return void
      */
-    public static function loadFile($fileName = "")
+    public static function loadFile(string $fileName = "")
     {
         ConfigMate::Instance()->loadFile($fileName);
     }
 
     /**
-     * @param string $key
-     * @param null   $default
+     * 获取配置信息
+     * @param string $key 配置节点的名称
+     * @param null   $default 配置节点的缺省值
      * @param null   $fileName 配置文件(携带有相对于网站根目录的相对路径)
      *                         (目前支持的文件类型有:.php(内部返回Array)、.ini和.json等多种格式)
      * @return array|bool|string|null
      */
-    public static function get($key, $default = null, $fileName = null)
+    public static function get(string $key, $default = null, $fileName = null)
     {
         $configMate = ConfigMate::Instance();
 
@@ -46,7 +47,13 @@ class ConfigHelper
         return dotEnvHelper::get($key, $result);
     }
 
-    public static function getEnv($key, $defaultValue = null)
+    /**
+     * 从 .env 内获取配置信息
+     * @param string $key          配置节点的名称
+     * @param null   $defaultValue 配置节点的缺省值
+     * @return array|bool|string|null
+     */
+    public static function getEnv(string $key, $defaultValue = null)
     {
         return dotEnvHelper::get($key, $defaultValue);
     }

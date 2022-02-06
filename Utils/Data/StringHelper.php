@@ -12,7 +12,7 @@ class StringHelper
      * @param string $targetEncoding
      * @return false|string|string[]|null
      */
-    public static function getEncodingContent($stringData, $targetEncoding = 'UTF-8')
+    public static function getEncodingContent(string $stringData, string $targetEncoding = 'UTF-8')
     {
         $originalEncoding = self::getEncoding($stringData);
 
@@ -33,7 +33,7 @@ class StringHelper
      * 备注2：用mb_detect_encoding函数进行编码识别时，很多人都碰到过识别编码有误问题的说明
      * https://www.jb51.net/article/27282.htm
      */
-    public static function getEncoding($stringData = "")
+    public static function getEncoding(string $stringData = "")
     {
         return mb_detect_encoding($stringData, array("ASCII", "GB2312", "GBK", "UTF-8"));
     }
@@ -42,7 +42,7 @@ class StringHelper
      * 获取文本文件的回车换行符
      * @return string
      */
-    public static function getNewLineSymbol()
+    public static function getNewLineSymbol(): string
     {
         return EnvHelper::getNewLineSymbol();
     }
@@ -53,7 +53,7 @@ class StringHelper
      * @param string $encoding
      * @return false|int
      */
-    public static function getLength($stringData, $encoding = "utf-8")
+    public static function getLength(string $stringData, string $encoding = "utf-8")
     {
         return mb_strlen($stringData, $encoding);
     }
@@ -67,7 +67,7 @@ class StringHelper
      * @return string
      * @author 小墨 244349067@qq.com
      */
-    public static function subString($originalStringData, $startPosition, $length = 0, $charset = "utf-8")
+    public static function subString(string $originalStringData, int $startPosition, int $length = 0, string $charset = "utf-8"): string
     {
         $originalStringLength = strlen($originalStringData);
 
@@ -105,7 +105,7 @@ class StringHelper
      * @param int|string $lengthOrTail
      * @return string
      */
-    public static function removeHead($wholeStringData, $lengthOrTail)
+    public static function removeHead(string $wholeStringData, $lengthOrTail): string
     {
         if (ObjectHelper::getTypeName($lengthOrTail) == ObjectTypes::STRING) {
             if (StringHelper::isStartWith($wholeStringData, $lengthOrTail)) {
@@ -124,7 +124,7 @@ class StringHelper
      * @param int|string $lengthOrTail
      * @return string
      */
-    public static function removeTail($wholeStringData, $lengthOrTail)
+    public static function removeTail(string $wholeStringData, $lengthOrTail): string
     {
         if (ObjectHelper::getTypeName($lengthOrTail) == ObjectTypes::STRING) {
             if (StringHelper::isEndWith($wholeStringData, $lengthOrTail)) {
@@ -149,7 +149,7 @@ class StringHelper
      * @param string $wholeStringData   全句
      * @return bool
      */
-    public static function isEndWith($wholeStringData, $paddingStringData)
+    public static function isEndWith(string $wholeStringData, string $paddingStringData): bool
     {
         $paddingLength = strlen($paddingStringData);
         $fullLength    = strlen($wholeStringData);
@@ -166,7 +166,7 @@ class StringHelper
      * @param string $wholeStringData   全句
      * @return bool
      */
-    public static function isStartWith($wholeStringData, $paddingStringData)
+    public static function isStartWith(string $wholeStringData, string $paddingStringData): bool
     {
         $before = self::getStringBeforeSeparator($wholeStringData, $paddingStringData);
         if ($before == '') {
@@ -184,7 +184,7 @@ class StringHelper
      *            查找的母体字符串
      * @return boolean
      */
-    public static function isContains($wholeStringData, $subStringData)
+    public static function isContains(string $wholeStringData, string $subStringData): bool
     {
         $result = strstr($wholeStringData, $subStringData);
 
@@ -201,7 +201,7 @@ class StringHelper
      * @param string $separator
      * @return string
      */
-    public static function getStringBeforeSeparator($wholeStringData, $separator)
+    public static function getStringBeforeSeparator(string $wholeStringData, string $separator): string
     {
         if (self::isContains($wholeStringData, $separator)) {
             $array = explode($separator, $wholeStringData);
@@ -217,7 +217,7 @@ class StringHelper
      * @param string $separator
      * @return string
      */
-    public static function getStringAfterSeparator($wholeStringData, $separator)
+    public static function getStringAfterSeparator(string $wholeStringData, string $separator): string
     {
         if (self::isContains($wholeStringData, $separator)) {
             $array = explode($separator, $wholeStringData);
@@ -235,7 +235,7 @@ class StringHelper
      * @param bool   $useRegex
      * @return array|string|string[]
      */
-    public static function replace($wholeStringData, $oldStringDataOrRegex, $newStringData, $useRegex = false)
+    public static function replace(string $wholeStringData, string $oldStringDataOrRegex, string $newStringData, bool $useRegex = false)
     {
         if ($useRegex) {
             return preg_replace($oldStringDataOrRegex, $newStringData, $wholeStringData);
@@ -250,18 +250,18 @@ class StringHelper
      * @param $delimiter           string 分隔符
      * @return false|string[]
      */
-    public static function explode($wholeStringData, $delimiter)
+    public static function explode(string $wholeStringData, string $delimiter)
     {
         return explode($delimiter, $wholeStringData);
     }
 
     /**
      * 将一个数组的各个元素串联成一个字符串
-     * @param $arrayData
-     * @param $delimiter
+     * @param        $arrayData
+     * @param string $delimiter
      * @return string
      */
-    public static function implode($arrayData, $delimiter = "")
+    public static function implode($arrayData, string $delimiter = ""): string
     {
         return implode($delimiter, $arrayData);
     }
@@ -273,7 +273,7 @@ class StringHelper
      *                           '{4}-{2}-{2}'，或者'{4} {2} {2}'(中间用空格表示);
      * @return string
      */
-    public static function grouping($stringData, $formatter)
+    public static function grouping(string $stringData, string $formatter): string
     {
         $content = '';
         $pattern = '/{\d*}/';
@@ -311,7 +311,7 @@ class StringHelper
      * @param string $newDelimiter
      * @return string
      */
-    public static function splice($stringData, $oldDelimiter, $newDelimiter = "")
+    public static function splice(string $stringData, string $oldDelimiter, string $newDelimiter = ""): string
     {
         $tempArray = explode($oldDelimiter, $stringData);
         return implode($newDelimiter, $tempArray);
@@ -325,7 +325,7 @@ class StringHelper
      * @param bool   $ignoreCaseSensitive 忽略字符大小写
      * @return array 子字符串在全字符串中出现的各个位置的数组
      */
-    public static function getPositions($wholeStringData, $subStringData, $ignoreCaseSensitive = false)
+    public static function getPositions(string $wholeStringData, string $subStringData, bool $ignoreCaseSensitive = false): array
     {
         if ($ignoreCaseSensitive) {
             return static::_getPositions($wholeStringData, $subStringData, "mb_stripos");
@@ -334,7 +334,7 @@ class StringHelper
         }
     }
 
-    private static function _getPositions($wholeStringData, $subStringData, $getPosFuncName)
+    private static function _getPositions($wholeStringData, $subStringData, $getPosFuncName): array
     {
         $_search_pos = $getPosFuncName($wholeStringData, $subStringData);
 
@@ -356,7 +356,7 @@ class StringHelper
      * @param bool   $inverseSearch       从后向前反向查找
      * @return int|mixed 子字符串第一次出现的位置
      */
-    public static function getFirstPosition($wholeStringData, $subStringData, $ignoreCaseSensitive = false, $inverseSearch = false)
+    public static function getFirstPosition(string $wholeStringData, string $subStringData, bool $ignoreCaseSensitive = false, bool $inverseSearch = false)
     {
         $positions = static::getPositions($wholeStringData, $subStringData, $ignoreCaseSensitive);
         if (ObjectHelper::isEmpty($positions)) {
@@ -373,12 +373,12 @@ class StringHelper
     /**
      * 对带有占位符的字符串信息，进行格式化填充，形成完整的字符串。
      * 现在推荐直接使用 PHP系统自带的格式化方式,例如:"k的值为{$k}；v的值为{$v}"
-     * @param $stringData          string 带有占位符的字符串信息（占位符用{?}表示），例如 "i like this {?},do you known {?}"
-     * @param $realValueList       string[] 待填入的真实信息，用字符串数组表示，例如["qingdao","beijing"];
-     *                             或者使用用逗号分隔的各个独立的字符串表示,比如"qingdao","beijing"
+     * @param string   $stringData    带有占位符的字符串信息（占位符用{?}表示），例如 "i like this {?},do you known {?}"
+     * @param string[] $realValueList 待填入的真实信息，用字符串数组表示，例如["qingdao","beijing"];
+     *                                或者使用用逗号分隔的各个独立的字符串表示,比如"qingdao","beijing"
      * @return string
      */
-    public static function format($stringData, ...$realValueList)
+    public static function format(string $stringData, ...$realValueList): string
     {
         $needle = "{?}";
         // 查找?位置
@@ -401,40 +401,40 @@ class StringHelper
 
     /**
      * 将字符串中第一个单词的首字母大写
-     * @param $stringData
+     * @param string $stringData
      * @return string
      */
-    public static function upperStringFirstChar($stringData)
+    public static function upperStringFirstChar(string $stringData): string
     {
         return ucfirst($stringData);
     }
 
     /**
      * 将字符串中每一个单词的首字母大写
-     * @param $stringData
+     * @param string $stringData
      * @return string
      */
-    public static function upperWordsFirstChar($stringData)
+    public static function upperWordsFirstChar(string $stringData): string
     {
         return ucwords($stringData);
     }
 
     /**
      * 将字符串中每一个字母都转成大写
-     * @param $stringData
+     * @param string $stringData
      * @return string
      */
-    public static function upper($stringData)
+    public static function upper(string $stringData): string
     {
         return mb_strtoupper($stringData);
     }
 
     /**
      * 将字符串中每一个字母都转成小写
-     * @param $stringData
+     * @param string $stringData
      * @return string
      */
-    public static function lower($stringData)
+    public static function lower(string $stringData): string
     {
         return mb_strtolower($stringData);
     }
@@ -450,7 +450,7 @@ class StringHelper
      * @param string $delimiter
      * @return string
      */
-    public static function snake($value, $delimiter = '_')
+    public static function snake(string $value, string $delimiter = '_'): string
     {
         $key = $value;
 
@@ -472,7 +472,7 @@ class StringHelper
      * @param string $value
      * @return string
      */
-    public static function camel($value)
+    public static function camel(string $value): string
     {
         if (isset(static::$camelCache[$value])) {
             return static::$camelCache[$value];
@@ -486,7 +486,7 @@ class StringHelper
      * @param string $value
      * @return string
      */
-    public static function studly($value)
+    public static function studly(string $value): string
     {
         $key = $value;
 
@@ -506,7 +506,7 @@ class StringHelper
      * @param string $pad
      * @return string
      */
-    public static function paddingEnd($stringData, $length, $pad = " ")
+    public static function paddingEnd(string $stringData, int $length, string $pad = " "): string
     {
         return str_pad($stringData, $length, $pad);
     }
@@ -518,7 +518,7 @@ class StringHelper
      * @param string $pad
      * @return string
      */
-    public static function paddingBegin($stringData, $length, $pad = " ")
+    public static function paddingBegin(string $stringData, int $length, string $pad = " "): string
     {
         return str_pad($stringData, $length, $pad, STR_PAD_LEFT);
     }
@@ -528,7 +528,7 @@ class StringHelper
      * @param string $stringData 待翻转的字符串
      * @return string
      */
-    public static function reverse($stringData)
+    public static function reverse(string $stringData): string
     {
         return strrev($stringData);
     }
@@ -569,7 +569,7 @@ class StringHelper
      * @param $utf8Char string
      * @return string      Unicode字符
      */
-    public static function convertCharFromUTF8ToUnicode($utf8Char)
+    public static function convertCharFromUTF8ToUnicode(string $utf8Char): string
     {
         $unicode = 0;
         $unicode = (ord($utf8Char[0]) & 0x1F) << 12;
@@ -583,7 +583,7 @@ class StringHelper
      * @param string $unicodeChar Unicode字符
      * @return string       Utf-8字符
      */
-    public static function convertCharFromUnicodeToUTF8($unicodeChar)
+    public static function convertCharFromUnicodeToUTF8(string $unicodeChar): string
     {
         $code = intval(hexdec($unicodeChar));
         //这里注意转换出来的code一定得是整形，这样才会正确的按位操作

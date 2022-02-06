@@ -24,11 +24,11 @@ class ThreadHelper
      * @param array  $post_data
      * @return int|void
      */
-    public static function asyncRun($url, $post_data = array())
+    public static function asyncRun(string $url, array $post_data = array())
     {
         $url_array = parse_url($url);
         $hostname = $url_array['host'];
-        $port = isset($url_array['port']) ? $url_array['port'] : 80;
+        $port = $url_array['port'] ?? 80;
         @$requestPath = $url_array['path'] . "?" . $url_array['query'];
         $fp = fsockopen($hostname, $port, $errno, $errstr, 10);
 
@@ -132,7 +132,7 @@ class ThreadHelper
 
 
     /**
-     * hook函数fastcgi_finish_request执行
+     * hook函数 fastcgi_finish_request执行
      * 本方法在Windows 下因为没有php-fpm而无法执行。
      * @param callback $callback
      * @param array    $params
@@ -141,7 +141,7 @@ class ThreadHelper
      * AsyncHook::hook(array($this, 'sendEmail'), array());//面向对象调用
      * AsyncHook::hook('SmsService::sendSMS', array(trim($phone), $noticeWords));//面向过程方式调用
      */
-    public static function hook($callback, $params)
+    public static function hook(callable $callback, array $params)
     {
         self::$hook_list[] = array('callback' => $callback, 'params' => $params);
         if (self::$hooked == false) {

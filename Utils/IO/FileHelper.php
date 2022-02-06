@@ -11,7 +11,7 @@ class FileHelper
      * @param string $fileName
      *            带路径的全文件名
      */
-    public static function getDirName($fileName)
+    public static function getDirName(string $fileName)
     {
         $path = pathinfo($fileName);
         return $path['dirname'];
@@ -21,7 +21,7 @@ class FileHelper
      * 获取文件的基本名称信息（不带路径的文件名称）
      * @param string $fileName 带路径的全文件名
      */
-    public static function getBaseName($fileName)
+    public static function getBaseName(string $fileName)
     {
         $path = pathinfo($fileName);
         return $path['basename'];
@@ -31,7 +31,7 @@ class FileHelper
      * 获取文件的基本名称信息（不带路径不带扩张名的文件名称）
      * @param string $fileName 带路径的全文件名
      */
-    public static function getBaseNameWithoutExtension($fileName)
+    public static function getBaseNameWithoutExtension(string $fileName)
     {
         $path = pathinfo($fileName);
         return $path['filename'];
@@ -41,7 +41,7 @@ class FileHelper
      * 获取文件扩展名称信息（扩展名不带点（“.”））
      * @param string $fileName 带路径的全文件名
      */
-    public static function getExtensionName($fileName)
+    public static function getExtensionName(string $fileName)
     {
         $path = pathinfo($fileName);
         return $path['extension'];
@@ -61,7 +61,7 @@ class FileHelper
      *                                  $result["type"] 文件类型;
      *                                  $result["size"] 文件大小
      */
-    public static function getUploadedFileInfo($submitControlName = 'file')
+    public static function getUploadedFileInfo(string $submitControlName = 'file')
     {
         if ($_FILES[$submitControlName]["error"] > 0) {
             return false;
@@ -92,7 +92,7 @@ class FileHelper
      * @param string $targetEncoding
      * @return false|string|string[]|null
      */
-    public static function getEncodingContent($fileName, $targetEncoding = 'UTF-8')
+    public static function getEncodingContent($fileName, string $targetEncoding = 'UTF-8')
     {
         $content = file_get_contents($fileName);
         return StringHelper::getEncodingContent($content, $targetEncoding);

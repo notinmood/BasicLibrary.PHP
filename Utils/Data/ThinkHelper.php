@@ -18,7 +18,7 @@ class ThinkHelper
      * (目前是通过判断是否存在类型think\App或者think\Controller来判定的)
      * @return bool
      */
-    public static function isThinkPHP()
+    public static function isThinkPHP(): bool
     {
         if (class_exists("think\App")) {
             return true;
@@ -29,14 +29,6 @@ class ThinkHelper
         }
 
         return false;
-    }
-
-    /**获取thinkphp的主版本号
-     * @return int
-     */
-    public static function getPrimaryVersion()
-    {
-        return self::getSomeSubVersion(0);
     }
 
     private static function getSomeSubVersion($pos)
@@ -57,10 +49,10 @@ class ThinkHelper
     }
 
     /**
-     * 获取当前使用thinkphp的版本
+     * 获取当前使用 thinkphp 的版本
      * @return string
      */
-    public static function getVersion()
+    public static function getVersion(): string
     {
         //---------------------------------------------
         // thinkphp3和5.0中，版本号保存在THINK_VERSION里面；
@@ -75,10 +67,18 @@ class ThinkHelper
         return $version;
     }
 
+    /**获取 thinkphp 的主版本号
+     * @return int
+     */
+    public static function getPrimaryVersion(): int
+    {
+        return self::getSomeSubVersion(0);
+    }
+
     /**获取thinkphp的次版本号
      * @return int
      */
-    public static function getSecondaryVersion()
+    public static function getSecondaryVersion(): int
     {
         return self::getSomeSubVersion(1);
     }
@@ -86,7 +86,7 @@ class ThinkHelper
     /**获取thinkphp的修订版本号
      * @return int
      */
-    public static function getRevisionVersion()
+    public static function getRevisionVersion(): int
     {
         return self::getSomeSubVersion(2);
     }

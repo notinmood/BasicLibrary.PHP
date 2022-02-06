@@ -16,7 +16,7 @@ class StockDataSourceSina implements IStockDataSource
      * @param mixed ...$stockCodes
      * @return array 数组的元素是StockRealTimeQuote类型的对象
      */
-    public function getRealTimeQuote(...$stockCodes)
+    public function getRealTimeQuote(...$stockCodes): array
     {
         $stockCodeString = "";
         foreach ($stockCodes as $item) {
@@ -42,7 +42,7 @@ class StockDataSourceSina implements IStockDataSource
         return $resultArray;
     }
 
-    private function parseStringToQuoteEntity($stockString)
+    private function parseStringToQuoteEntity($stockString): StockRealTimeQuote
     {
         $parts = StringHelper::explode($stockString, "=");
         $firstPart = $parts[0];

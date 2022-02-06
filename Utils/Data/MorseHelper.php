@@ -16,12 +16,12 @@ namespace Hiland\Utils\Data;
 class MorseHelper
 {
     //加密代码
-    private static $option = array(
+    private static array $option   = array(
         'space' => '/',
         'short' => '.',
         'long' => '-',
     );
-    private static $standard = array(
+    private static array $standard = array(
         /* Letters                               */
         'A' => '01',      /* A                   */
         'B' => '1000',    /* B                   */
@@ -89,7 +89,7 @@ class MorseHelper
      * @param null   $option
      * @return string
      */
-    public static function encode($stringData, $option = null)
+    public static function encode(string $stringData, $option = null): string
     {
         $option = self::defaultOption($option); // 默认参数
         $morse = []; // 最终的 morse 结果
@@ -107,7 +107,7 @@ class MorseHelper
 
     //按utf分割字符串
 
-    private static function defaultOption($option = null)
+    private static function defaultOption($option = null): array
     {
         $option = $option || [];
         return [
@@ -130,7 +130,7 @@ class MorseHelper
         return $array;
     }
 
-    public static function unicodeHexMorse($ch)
+    public static function unicodeHexMorse($ch): string
     {
         $r = [];
         $length = mb_strlen($ch, 'UTF8');
@@ -162,7 +162,7 @@ class MorseHelper
      * @param null   $option
      * @return string
      */
-    public static function decode($morseStringData, $option = null)
+    public static function decode(string $morseStringData, $option = null): string
     {
         if (self::$standardReverse === null) {
             foreach (self::$standard as $key => $value) {
@@ -189,7 +189,7 @@ class MorseHelper
         return join('', $msg);
     }
 
-    private static function morseHexUnicode($mor)
+    private static function morseHexUnicode($mor): string
     {
         $mor = bindec($mor);
         if (!$mor) {
@@ -205,7 +205,7 @@ class MorseHelper
      * @param  [type] $unicode_str Unicode字符
      * @return string [type]              Utf-8字符
      */
-    private static function convertUnicodeToUtf8($unicode_str)
+    private static function convertUnicodeToUtf8($unicode_str): string
     {
         $utf8_str = '';
         $code = intval(hexdec($unicode_str));
