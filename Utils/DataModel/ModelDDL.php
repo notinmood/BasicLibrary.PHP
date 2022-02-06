@@ -10,10 +10,10 @@
 
 namespace Hiland\Utils\DataModel;
 
+use Exception;
 use Hiland\Utils\Data\ArrayHelper;
 use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\StringHelper;
-use think\db\exception\PDOException;
 
 
 /**
@@ -37,7 +37,7 @@ class ModelDDL
         }
 
         if ($dropTableIfExist) {
-            $this->dropTable($newTableName, true);
+            $this->dropTable($newTableName);
         }
 
         $create_sql = $this->getTableDefinition($originalTableName);
@@ -72,9 +72,9 @@ class ModelDDL
             $realTableName = $mate->getTableRealName();
 
             if ($bothStructAndData) {
-                $sql = "drop table `{$realTableName}`";
+                $sql = "drop table `$realTableName`";
             } else {
-                $sql = "truncate table `{$realTableName}`";
+                $sql = "truncate table `$realTableName`";
             }
 
             $mate->directlyExecute($sql);
@@ -90,12 +90,12 @@ class ModelDDL
     {
         try {
             $mate = DatabaseClient::getMate($tableName);
-        } catch (PDOException $ex) {
+        } catch (Exception $ex) {
             return false;
         }
 
         $realTableName = $mate->getTableRealName();
-        $sql = "SHOW TABLES like '{$realTableName}';";
+        $sql = "SHOW TABLES like '$realTableName';";
         $result = $mate->directlyQuery($sql);
 
         if ($result && getLength($result) > 0) {
@@ -107,14 +107,14 @@ class ModelDDL
 
     /**
      * @param string $tableName 数据库表的名称,如果为None的话就直接从mate的构造函数中取数据库表名称
-     * @return void
+     * @return string
      */
-    public function getTableDefinition(string $tableName)
+    public function getTableDefinition(string $tableName): string
     {
         $mate = DatabaseClient::getMate($tableName);
         $realTableName = $mate->getTableRealName();
 
-        $sql = "show create table `{$realTableName}`";
+        $sql = "show create table `$realTableName`";
         $result = $mate->directlyQuery($sql);
         if ($result && getLength($result) > 0) {
             return $result[0]["Create Table"];
@@ -140,13 +140,13 @@ class ModelDDL
         $realTableName = $mate->getTableRealName();
 
         if ($row_count < 0) {
-            $select_sql = "SELECT * FROM `{$realTableName}`";
+            $select_sql = "SELECT * FROM `$realTableName`";
 
             # TODO:需要改成参数调用的方式
             # select_sql = "SELECT * FROM %s"
             # rows = mate.directly_query(select_sql, [real_table_name], FetchMode.MANY)
         } else {
-            $select_sql = "SELECT * FROM `{$realTableName}` LIMIT {$row_count}";
+            $select_sql = "SELECT * FROM `$realTableName` LIMIT $row_count";
         }
 
         $rows = $mate->directlyQuery($select_sql);

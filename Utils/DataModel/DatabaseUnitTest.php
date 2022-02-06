@@ -22,15 +22,15 @@ class DatabaseUnitTest
     /**
      * @var string
      */
-    private $newTableName;
+    private string $newTableName;
     /**
      * @var ModelMate
      */
-    private $mate;
+    private ModelMate $mate;
     /**
      * @var ModelDDL
      */
-    private $ddl;
+    private ModelDDL $ddl;
 
     public function __construct($tableName, $duplicateRowCount = -1, $autoDispose = True)
     {
@@ -67,17 +67,17 @@ class DatabaseUnitTest
      * 获取复制的新表的表名称
      * @return string
      */
-    public function getNewTableName()
+    public function getNewTableName(): string
     {
         return $this->newTableName;
     }
 
-    public function getDDL()
+    public function getDDL(): ModelDDL
     {
         return $this->ddl;
     }
 
-    public function getMate()
+    public function getMate(): ModelMate
     {
         return $this->mate;
     }

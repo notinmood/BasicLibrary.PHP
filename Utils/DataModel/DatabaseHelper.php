@@ -20,12 +20,12 @@ class DatabaseHelper
     /**
      * 构建Insert语句
      * @param string $tableName 待操作的数据库表名称
-     * @param        $entityDictOrList
+     * @param array  $entityDictOrList
      * @return string
      */
-    public static function buildInsertClause(string $tableName, $entityDictOrList): string
+    public static function buildInsertClause(string $tableName, array $entityDictOrList): string
     {
-        $level = ArrayHelper::getLevel($entityDictOrList);
+        $level        = ArrayHelper::getLevel($entityDictOrList);
         $isIndexArray = ArrayHelper::isIndexArray($entityDictOrList);
 
         /**
@@ -39,7 +39,7 @@ class DatabaseHelper
 
                 if ($result) {
                     $values_sql = StringHelper::getStringAfterSeparator($single_sql, "VALUES");
-                    $result .= "," . $values_sql;
+                    $result     .= "," . $values_sql;
                 } else {
                     $result = $single_sql;
                 }
@@ -47,26 +47,26 @@ class DatabaseHelper
 
             return $result . ";";
         } else {
-            return self::__buildInsertClause();
+            return self::__buildInsertClause($tableName, $entityDictOrList);
         }
     }
 
     private static function __buildInsertClause($tableName, $entityArray): string
     {
-        $keys = "";
+        $keys   = "";
         $values = "";
 
         foreach ($entityArray as $k => $v) {
-            $keys .= "`{$k}`,";
+            $keys   .= "`$k`,";
             $values .= self::wrapSqlValue($v) . ",";
         }
 
         if (StringHelper::isEndWith($keys, ",")) {
-            $keys = StringHelper::removeTail($keys, 1);
+            $keys   = StringHelper::removeTail($keys, 1);
             $values = StringHelper::removeTail($values, 1);
         }
 
-        return "INSERT INTO `{$tableName}` ({$keys}) VALUES ({$values});";
+        return "INSERT INTO `$tableName` ($keys) VALUES ($values);";
     }
 
     /**
@@ -77,9 +77,9 @@ class DatabaseHelper
     {
         $_type = ObjectHelper::getTypeName($data);
         if ($_type == ObjectTypes::STRING || $_type == ObjectTypes::DATETIME) {
-            return "'{$data}'";
+            return "'$data'";
         } else {
-            return "{$data}";
+            return "$data";
         }
     }
 }
