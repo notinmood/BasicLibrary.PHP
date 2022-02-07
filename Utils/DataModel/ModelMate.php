@@ -166,7 +166,7 @@ class ModelMate
     }
 
     /**
-     * 交互信息
+     * 跟数据库的信息交互(insert 或者 update)
      * @param array|null $data    待跟数据库交互的模型实体数据
      * @param string     $keyName 当前模型的数据库表的主键名称
      * @return boolean|number
@@ -265,9 +265,9 @@ class ModelMate
      */
     public function setValue($key, string $fieldName, $fieldValue, string $keyName = 'id'): int
     {
-        $condition[$keyName]  = $key;
-        $query                = $this->getQueryObjectWithWhere($condition);
-        $data["$fieldName"] = $fieldValue;
+        $condition[$keyName] = $key;
+        $query               = $this->getQueryObjectWithWhere($condition);
+        $data["$fieldName"]  = $fieldValue;
         try {
             return $query->update($data);
         } catch (DbException $e) {

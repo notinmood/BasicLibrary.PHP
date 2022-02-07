@@ -24,4 +24,8 @@ class EmptyTest extends TestCase
         $expected = false;
         self::assertEquals($expected,$actual);
     }
+
+    // public function getSome(){
+    //
+    // }
 }
