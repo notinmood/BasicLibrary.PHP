@@ -14,8 +14,6 @@ use Hiland\Test\_res\Student;
 use PHPUnit\Framework\TestCase;
 
 
-require "../_res/myFunctions.php";
-
 class ReflectionHelperTest extends TestCase
 {
     /**
@@ -27,21 +25,21 @@ class ReflectionHelperTest extends TestCase
         /**
          * 不带参数的静态方法
          */
-        $className = Student::class;
-        $funcName = "getTypeName";
+        $className    = Student::class;
+        $funcName     = "getTypeName";
         $funcFullName = [$className, $funcName];
-        $actual = ReflectionHelper::executeFunction($funcFullName);
-        $expected = "这是一个学生";
+        $actual       = ReflectionHelper::executeFunction($funcFullName);
+        $expected     = "这是一个学生";
         self::assertEquals($expected, $actual);
 
         /**
          * 带参数的静态方法
          */
-        $className = Student::class;
-        $funcName = "display";
+        $className    = Student::class;
+        $funcName     = "display";
         $funcFullName = [$className, $funcName];
-        $actual = ReflectionHelper::executeFunction($funcFullName, "UK", "QD", "ShanDong");
-        $expected = "传递的参数为:UK/QD/ShanDong";
+        $actual       = ReflectionHelper::executeFunction($funcFullName, "UK", "QD", "ShanDong");
+        $expected     = "传递的参数为:UK/QD/ShanDong";
         self::assertEquals($expected, $actual);
     }
 
@@ -54,21 +52,21 @@ class ReflectionHelperTest extends TestCase
         /**
          * 不带参数的实例方法
          */
-        $instance = new Student("zhangsan", 20);
-        $funcName = "getUserName";
+        $instance     = new Student("zhangsan", 20);
+        $funcName     = "getUserName";
         $funcFullName = [$instance, $funcName];
-        $actual = ReflectionHelper::executeFunction($funcFullName);
-        $expected = "zhangsan";
+        $actual       = ReflectionHelper::executeFunction($funcFullName);
+        $expected     = "zhangsan";
         self::assertEquals($expected, $actual);
 
         /**
          * 带参数的实例方法
          */
-        $instance = new Student("zhangsan", 20);
-        $funcName = "changeData";
+        $instance     = new Student("zhangsan", 20);
+        $funcName     = "changeData";
         $funcFullName = [$instance, $funcName];
-        $actual = ReflectionHelper::executeFunction($funcFullName, "lisi", 21);
-        $expected = "name:lisi,age:21";
+        $actual       = ReflectionHelper::executeFunction($funcFullName, "lisi", 21);
+        $expected     = "name:lisi,age:21";
         self::assertEquals($expected, $actual);
     }
 
@@ -78,9 +76,12 @@ class ReflectionHelperTest extends TestCase
      */
     public function testExecuteFunction3()
     {
-        $funcFullName = "Hiland\Test\_res\helloBar";
-        $actual = ReflectionHelper::executeFunction($funcFullName, "zhangsan");
-        $expected = "hello zhangsan";
+        /**
+         * 函数 helloBar 是定义在 Common/functions.php 内一个段逻辑，本函数仅仅用于单元测试
+         */
+        $funcFullName = "helloBar";
+        $actual       = ReflectionHelper::executeFunction($funcFullName, "zhangsan");
+        $expected     = "hello zhangsan";
         self::assertEquals($expected, $actual);
     }
 
@@ -90,8 +91,8 @@ class ReflectionHelperTest extends TestCase
     public function testExecuteInstanceMethod()
     {
         $student = new Student("zhangsan", 20);
-        $actual = ReflectionHelper::executeInstanceMethod(Student::class, "getUserName", $student);
-        $expect = "zhangsan";
+        $actual  = ReflectionHelper::executeInstanceMethod(Student::class, "getUserName", $student);
+        $expect  = "zhangsan";
         self::assertEquals($expect, $actual);
 
         $methodArgs = ["lisi"];
@@ -117,12 +118,12 @@ class ReflectionHelperTest extends TestCase
      */
     public function testGetInstanceProperty()
     {
-        $student = new Student("zhangsan", 20);
-        $actual = ReflectionHelper::getInstanceProperty(Student::class, "userName", $student);
+        $student  = new Student("zhangsan", 20);
+        $actual   = ReflectionHelper::getInstanceProperty(Student::class, "userName", $student);
         $expected = "zhangsan";
         self::assertEquals($expected, $actual);
 
-        $actual = ReflectionHelper::getInstanceProperty(Student::class, "userName", null, ["zhangsan", 20]);
+        $actual   = ReflectionHelper::getInstanceProperty(Student::class, "userName", null, ["zhangsan", 20]);
         $expected = "zhangsan";
         self::assertEquals($expected, $actual);
     }

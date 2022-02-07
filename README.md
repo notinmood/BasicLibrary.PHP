@@ -35,3 +35,9 @@
    RandCategory_NUMBER,其中RandCategory表示当前在定义一个随机数种类，NUMBER表示定义的是数字类型的随机数种类)；
 3. 特别的枚举可以单独开一个文件定义,建议跟 SystemEnum.php 一样位于 Utils/DataValue/ 目录下
 
+### 关于类库文件的命名规则
+1. 如果仅提供静态复制方法的代码逻辑，那么通常建议类型命名为 ***Helper
+2. 如果提供实例方法的代码逻辑,那么建议类型命名为 ***Mate
+3. 通常 ***Mate类型不直接用 new() 构建:
+   1. 用 Container.get(名称) 实现单例调用(得到的同一个实例可以在项目内复用)。比如(MateContainer.get).
+   2. 包装在 ***Client 里面，调用静态方法。(比如 ConfigClient、DatabaseClient).

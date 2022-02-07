@@ -17,7 +17,6 @@ use Hiland\Utils\Environment\EnvHelper;
 use Hiland\Utils\IO\FileHelper;
 use Hiland\Utils\IO\PathHelper;
 
-// use function Hiland\Utils\Environment\config;
 
 /**
  * 配置文件交互的核心类(不直接向外暴露；外部请使用ConfigHelper访问配置信息)

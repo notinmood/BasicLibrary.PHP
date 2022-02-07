@@ -2,7 +2,7 @@
 
 namespace Hiland\Utils\DataModel;
 
-use Hiland\Utils\Config\ConfigHelper;
+use Hiland\Utils\Config\ConfigClient;
 use Hiland\Utils\Environment\EnvHelper;
 use think\facade\Db;
 
@@ -32,7 +32,7 @@ class MateContainer
                  * 为ORM设置数据库连接
                  */
                 /** @noinspection all */
-                Db::setConfig(ConfigHelper::get("database"));
+                Db::setConfig(ConfigClient::get("database"));
             }
 
             $mate = new ModelMate($name);

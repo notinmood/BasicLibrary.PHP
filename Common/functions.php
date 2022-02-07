@@ -28,7 +28,7 @@ if (!function_exists('dump') && ThinkHelper::isThinkPHP() == false) {
      * @param      $value
      * @param bool $appendNewLineSymbol 是在末尾添加一个换行标志(缺省true)
      */
-    function dump($value, $appendNewLineSymbol = true)
+    function dump($value, bool $appendNewLineSymbol = true)
     {
         var_dump($value);
         if ($appendNewLineSymbol == true) {
@@ -45,7 +45,7 @@ if (!function_exists("el")) {
      * @param bool  $bothBeforeAndAfter 如果true就在$data这一行前后都加入新行标志;
      *                                  如果false就只在$data这一行后加入新行标志.
      */
-    function el($data = "", $bothBeforeAndAfter = false)
+    function el($data = "", bool $bothBeforeAndAfter = false)
     {
         ConsoleHelper::el($data, $bothBeforeAndAfter);
     }
@@ -58,7 +58,7 @@ if (!function_exists("exist")) {
      * @param $value
      * @return bool
      */
-    function exist($value)
+    function exist($value): bool
     {
         return ObjectHelper::isExist($value);
     }
@@ -69,9 +69,9 @@ if (!function_exists("getLength")) {
     /**
      * 显示目标对象的长度(内部调用ObjectHelper::getLength()方法实现)
      * @param $data
-     * @return false|int
+     * @return int
      */
-    function getLength($data)
+    function getLength($data): int
     {
         return ObjectHelper::getLength($data);
     }
@@ -84,7 +84,7 @@ if (!function_exists('fixUrl')) {
      * @param string $entry  入口页面
      * @return string
      */
-    function fixUrl($mcaUrl, $entry = "index.php")
+    function fixUrl(string $mcaUrl, string $entry = "index.php"): string
     {
         $webRoot = WebHelper::getWebRoot();
         if (StringHelper::isStartWith($webRoot, "/") == false) {
@@ -112,5 +112,15 @@ if (!function_exists('fixUrl')) {
         }
 
         return $targetUrl;
+    }
+}
+
+/**
+ * 以下方法不要删除，存在的目的是在单元测试内使用
+ */
+if (!function_exists('helloBar')) {
+    function helloBar($someone): string
+    {
+        return "hello $someone";
     }
 }
