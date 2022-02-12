@@ -7,7 +7,7 @@
     "basic library",
     "codecs"
   ],
-  "type": "library",
+  "type": "string",
   "license": "Apache-2.0",
   "require": {
     "php": "^7.4",
@@ -19,7 +19,8 @@
     "ext-simplexml": "*",
     "ext-bcmath": "*",
     "ext-iconv": "*",
-    "ext-gd": "*"
+    "ext-gd": "*",
+    "ext-exif": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "9.*"

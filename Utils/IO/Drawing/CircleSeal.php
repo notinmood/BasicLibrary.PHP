@@ -52,18 +52,18 @@ class CircleSeal
      */
     public function __construct($str = '', $radius = 75, $rimWidth = 6, $startRadius = 24, $startAngle = 0, $charAngle = 0, $fontSize = 16, $innerRadius = 0)
     {
-        $this->sealString = empty($str) ? '印章测试字符串' : $str;
-        $this->strMaxLeng = 12;
-        $this->sealRadius = $radius;
-        $this->rimWidth = $rimWidth;
+        $this->sealString  = empty($str) ? '印章测试字符串' : $str;
+        $this->strMaxLeng  = 12;
+        $this->sealRadius  = $radius;
+        $this->rimWidth    = $rimWidth;
         $this->startRadius = $startRadius;
-        $this->startAngle = $startAngle;
-        $this->charAngle = $charAngle;
-        $this->centerDot = array('x' => $radius, 'y' => $radius);
-        $this->font = dirname(__FILE__) . '/fonts/simkai.ttf';
-        $this->fontSize = $fontSize;
+        $this->startAngle  = $startAngle;
+        $this->charAngle   = $charAngle;
+        $this->centerDot   = array('x' => $radius, 'y' => $radius);
+        $this->font        = dirname(__FILE__) . '/fonts/simkai.ttf';
+        $this->fontSize    = $fontSize;
         $this->innerRadius = $innerRadius;   //默认0,没有
-        $this->spacing = 1;
+        $this->spacing     = 1;
     }
 
     //创建图片资源
@@ -82,9 +82,9 @@ class CircleSeal
 
     private function createImg()
     {
-        $this->width = 2 * $this->sealRadius;
+        $this->width  = 2 * $this->sealRadius;
         $this->height = 2 * $this->sealRadius;
-        $this->img = imagecreate($this->width, $this->height);
+        $this->img    = imagecreate($this->width, $this->height);
         imagecolorresolvealpha($this->img, 255, 255, 255, 127);
         $this->backGround = imagecolorallocate($this->img, 255, 0, 0);
     }
@@ -117,18 +117,18 @@ class CircleSeal
 
         //相关计量
         $this->charRadius = $this->sealRadius - $this->rimWidth - $this->fontSize;  //字符串半径
-        $leng = mb_strlen($this->sealString, 'utf8');   //字符串长度
+        $leng             = mb_strlen($this->sealString, 'utf8');                   //字符串长度
         if ($leng > $this->strMaxLeng) $leng = $this->strMaxLeng;
         $avgAngle = 360 / ($this->strMaxLeng); //平均字符倾斜度
 
         //拆分并写入字符串
-        $words = array();  //字符数组
+        $words = array();                      //字符数组
         for ($i = 0; $i < $leng; $i++) {
             $words[] = mb_substr($this->sealString, $i, 1, 'utf8');
-            $r = 630 + $this->charAngle + $avgAngle * ($i - $leng / 2) + $this->spacing * ($i - 1);       //坐标角度
-            $R = 720 - $this->charAngle + $avgAngle * ($leng - 2 * $i - 1) / 2 + $this->spacing * (1 - $i); //字符角度
-            $x = $this->centerDot['x'] + $this->charRadius * cos(deg2rad($r));    //字符的x坐标
-            $y = $this->centerDot['y'] + $this->charRadius * sin(deg2rad($r));    //字符的y坐标
+            $r       = 630 + $this->charAngle + $avgAngle * ($i - $leng / 2) + $this->spacing * ($i - 1);         //坐标角度
+            $R       = 720 - $this->charAngle + $avgAngle * ($leng - 2 * $i - 1) / 2 + $this->spacing * (1 - $i); //字符角度
+            $x       = $this->centerDot['x'] + $this->charRadius * cos(deg2rad($r));                              //字符的x坐标
+            $y       = $this->centerDot['y'] + $this->charRadius * sin(deg2rad($r));                              //字符的y坐标
             imagettftext($this->img, $this->fontSize, $R, $x, $y, $this->backGround, $this->font, $words[$i]);
         }
     }
@@ -138,9 +138,9 @@ class CircleSeal
     private function drawStart()
     {
         $ang_out = 18 + $this->startAngle;
-        $ang_in = 56 + $this->startAngle;
+        $ang_in  = 56 + $this->startAngle;
         $rad_out = $this->startRadius;
-        $rad_in = $rad_out * 0.382;
+        $rad_in  = $rad_out * 0.382;
         for ($i = 0; $i < 5; $i++) {
             //五个顶点坐标
             $this->points[] = $rad_out * cos(2 * M_PI / 5 * $i - deg2rad($ang_out)) + $this->centerDot['x'];

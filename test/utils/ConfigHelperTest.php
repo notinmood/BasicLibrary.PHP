@@ -22,12 +22,12 @@ class ConfigHelperTest extends TestCase
 {
     public function testGet1(): void
     {
-        $key = "d.dA";
+        $key    = "d.dA";
         $actual = ConfigClient::get($key);
         $expect = "dA-content";
         self::assertEquals($expect, $actual);
 
-        $key = "archive.host";
+        $key    = "archive.host";
         $actual = ConfigClient::get($key, null, "demo.config.ini");
         $expect = "localhost";
         self::assertEquals($expect, $actual);
@@ -35,7 +35,7 @@ class ConfigHelperTest extends TestCase
         /**
          * 测试上一步通过 get()第三个参数加载的配置文件
          */
-        $key = "archive.database";
+        $key    = "archive.database";
         $actual = ConfigClient::get($key, null);
         $expect = "archive";
         self::assertEquals($expect, $actual);
@@ -43,7 +43,7 @@ class ConfigHelperTest extends TestCase
         /**
          * 再次单独使用 get 方法的时候, 会使用默认的配置文件
          */
-        $key = "d.dA";
+        $key    = "d.dA";
         $actual = ConfigClient::get($key);
         $expect = "dA-content";
         self::assertEquals($expect, $actual);
@@ -60,12 +60,12 @@ class ConfigHelperTest extends TestCase
         /**
          * 如果在第一次get前,明确使用 LoadFile时候，就不加载缺省的config.***文件了
          */
-        $key = "d.dA";
+        $key    = "d.dA";
         $actual = ConfigClient::get($key);
         $expect = null;
         self::assertEquals($expect, $actual);
 
-        $key = "archive.database";
+        $key    = "archive.database";
         $actual = ConfigClient::get($key);
         $expect = "archive";
         self::assertEquals($expect, $actual);
@@ -77,22 +77,22 @@ class ConfigHelperTest extends TestCase
      */
     public function testGet3(): void
     {
-        $key = "city";
+        $key    = "city";
         $actual = ConfigClient::get($key);
         $expect = "qingdao";
         self::assertEquals($expect, $actual);
 
-        $key = "base.host";
+        $key    = "base.host";
         $actual = ConfigClient::get($key);
         $expect = "env.localhost";
         self::assertEquals($expect, $actual);
 
-        $key = "www";
+        $key    = "www";
         $actual = ConfigClient::get($key, "");
         $expect = "";
         self::assertEquals($expect, $actual);
 
-        $key = "base.12w6ww";
+        $key    = "base.12w6ww";
         $actual = ConfigClient::get($key, "");
         $expect = "";
         self::assertEquals($expect, $actual);
@@ -100,7 +100,7 @@ class ConfigHelperTest extends TestCase
 
     public function testGet4(): void
     {
-        $key = "needServerValidateSign";
+        $key    = "needServerValidateSign";
         $actual = ConfigClient::get($key);
         $expect = false;
         self::assertEquals($expect, $actual);
@@ -112,18 +112,18 @@ class ConfigHelperTest extends TestCase
      */
     public function testGetSection1(): void
     {
-        $key = "archive.host";
+        $key    = "archive.host";
         $actual = ConfigClient::get($key, null, "demo.config.ini");
         $expect = "localhost";
         self::assertEquals($expect, $actual);
 
-        $key = "office";
+        $key    = "office";
         $actual = ConfigClient::get($key);
         $expect = null;
         self::assertEquals($expect, $actual);
 
         ConfigClient::loadFile("config.php");
-        $key = "office";
+        $key    = "office";
         $actual = ConfigClient::get($key);
         $expect = ["MS", "WPS"];
         self::assertEquals($expect, $actual);
@@ -131,11 +131,11 @@ class ConfigHelperTest extends TestCase
 
     public function testGetSection2(): void
     {
-        $key = "base";
+        $key    = "base";
         $actual = ConfigClient::get($key);
-        $expect = ["host" => "env.localhost",
-            "database" => "env.default",
-            "address" => "env.address"];
+        $expect = ["host"     => "env.localhost",
+                   "database" => "env.default",
+                   "address"  => "env.address"];
         self::assertEquals($expect, $actual);
     }
 
@@ -145,11 +145,11 @@ class ConfigHelperTest extends TestCase
      */
     public function testGetSection3(): void
     {
-        $key = "users";
+        $key    = "users";
         $actual = ConfigClient::get($key);
-        $expect = ["host" => "env.localhost",
-            "database" => "users",
-            "address" => "env.address"];
+        $expect = ["host"     => "env.localhost",
+                   "database" => "users",
+                   "address"  => "env.address"];
         self::assertEquals($expect, $actual);
     }
 }

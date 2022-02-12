@@ -355,7 +355,7 @@ class ObjectHelper
      */
     public static function isMember($targetObject, $memberName): bool
     {
-        $type   = self::getTypeName($targetObject);
+        $type = self::getTypeName($targetObject);
         switch ($type) {
             case ObjectTypes::ARRAYS:
                 $result = array_key_exists($memberName, $targetObject);
@@ -422,7 +422,7 @@ class ObjectHelper
      */
     public static function getLength($data): int
     {
-        $type   = self::getTypeName($data);
+        $type = self::getTypeName($data);
 
         switch ($type) {
             case ObjectTypes::ARRAYS:

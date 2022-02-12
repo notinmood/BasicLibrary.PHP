@@ -100,7 +100,7 @@ class DateHelper
             return false;
         }
 
-        $type   = ObjectHelper::getTypeName($data);
+        $type = ObjectHelper::getTypeName($data);
         switch ($type) {
             case ObjectTypes::STRING:
                 try {

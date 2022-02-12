@@ -68,7 +68,7 @@ class InstanceContainer
 
     /**
      * @param string $classFullName
-     * @param array ...$constructArgs
+     * @param array  ...$constructArgs
      * @return bool
      */
     public static function has(string $classFullName, ...$constructArgs): bool

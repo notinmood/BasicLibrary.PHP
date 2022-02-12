@@ -19,46 +19,46 @@ class ResultObjectTest extends TestCase
     {
         $resultObject = $this->builderResultObject();
 
-        $miscMyKey = "myCity";
+        $miscMyKey   = "myCity";
         $miscMyValue = "Qingdao青岛";
         $resultObject->setMiscItem($miscMyKey, $miscMyValue);
         $actual = $resultObject->getMiscItem($miscMyKey);
         self::assertEquals($miscMyValue, $actual);
 
         $miscMyKey = "mySchool";
-        $actual = $resultObject->getMiscItem($miscMyKey);
+        $actual    = $resultObject->getMiscItem($miscMyKey);
         self::assertNull($actual);
 
         $miscMyKey = "myJob";
-        $expected = "Engineer";
-        $actual = $resultObject->getMiscItem($miscMyKey, $expected);
+        $expected  = "Engineer";
+        $actual    = $resultObject->getMiscItem($miscMyKey, $expected);
         self::assertEquals($expected, $actual);
 
         /**
          * 以下几段代码，测试 ArrayAccess 接口的功能
          */
         $miscMyKey = "message";
-        $expected = "我是一个标题";
-        $actual = $resultObject[$miscMyKey];
+        $expected  = "我是一个标题";
+        $actual    = $resultObject[$miscMyKey];
         self::assertEquals($expected, $actual);
 
-        $miscMyKey = "myJob";
-        $expected = "Engineer";
+        $miscMyKey                = "myJob";
+        $expected                 = "Engineer";
         $resultObject[$miscMyKey] = $expected;
-        $actual = $resultObject[$miscMyKey];
+        $actual                   = $resultObject[$miscMyKey];
         self::assertEquals($expected, $actual);
 
         $miscNoKey = "NoKey";
-        $actual = $resultObject[$miscNoKey];
-        $expected = null;
+        $actual    = $resultObject[$miscNoKey];
+        $expected  = null;
         self::assertEquals($expected, $actual);
     }
 
     public function testStringify()
     {
         $resultObject = $this->builderResultObject();
-        $actual = ResultObject::stringify($resultObject);
-        $expected = $this->jsonString;
+        $actual       = ResultObject::stringify($resultObject);
+        $expected     = $this->jsonString;
 
         self::assertEquals($expected, $actual);
     }
@@ -66,7 +66,7 @@ class ResultObjectTest extends TestCase
 
     public function testParse()
     {
-        $actual = ResultObject::parse($this->jsonString);
+        $actual   = ResultObject::parse($this->jsonString);
         $expected = $this->builderResultObject();
         self::assertEquals($expected->data["a"], $actual->data->a);
         self::assertEquals($expected->misc->myNation, $actual->misc->myNation);
@@ -78,11 +78,11 @@ class ResultObjectTest extends TestCase
      */
     private function builderResultObject(): ResultObject
     {
-        $message = "我是一个标题";
-        $data = ["a" => "AA", "b" => "BB"];
+        $message      = "我是一个标题";
+        $data         = ["a" => "AA", "b" => "BB"];
         $resultObject = new ResultObject(true, $message, $data);
 
-        $miscMyKey = "myNation";
+        $miscMyKey   = "myNation";
         $miscMyValue = "China中国";
         $resultObject->setMiscItem($miscMyKey, $miscMyValue);
 

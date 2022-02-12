@@ -52,7 +52,7 @@ class ThinkHelper
      */
     public static function getVersion(): string
     {
-        $version= "0.0.0";
+        $version = "0.0.0";
         //---------------------------------------------
         // thinkphp3和5.0中，版本号保存在THINK_VERSION里面；
         // thinkphp5.1和6中，版本号保存在think\App::VERSION里面；

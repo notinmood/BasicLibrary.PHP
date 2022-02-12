@@ -149,7 +149,7 @@ class WebHelper
      */
     public static function jsonp($data, string $callbackClientFuncName = "", int $jsonOption = 0)
     {
-        return self::serverReturn($data, "JSONP", $jsonOption, $callbackClientFuncName);
+        self::serverReturn($data, "JSONP", $jsonOption, $callbackClientFuncName);
     }
 
     /**
@@ -180,7 +180,6 @@ class WebHelper
                 /**
                  * 1、先判断是否通过参数传递过来回调函数的信息
                  */
-                $handler = "";
                 if ($callbackClientFuncName) {
                     $handler = $_GET[$callbackClientFuncName];
 

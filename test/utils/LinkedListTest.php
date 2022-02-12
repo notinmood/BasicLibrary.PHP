@@ -52,15 +52,15 @@ class LinkedListTest extends TestCase
     {
         $linkedList = $this->prepareData();
 
-        $value = "beijing";
+        $value  = "beijing";
         $actual = $linkedList->isContains($value);
         $this->assertTrue($actual);
 
-        $value = "guangzhou";
+        $value  = "guangzhou";
         $actual = $linkedList->isContains($value);
         $this->assertTrue($actual);
 
-        $value = "shenzhen";
+        $value  = "shenzhen";
         $actual = $linkedList->isContains($value);
         $this->assertFalse($actual);
     }
@@ -71,7 +71,7 @@ class LinkedListTest extends TestCase
         $linkedList = new LinkedList();
 
 
-        $value1 = "beijing";
+        $value1  = "beijing";
         $newNode = $linkedList->addHead($value1);
 
         $actual = $linkedList->getValue(0);
@@ -104,7 +104,7 @@ class LinkedListTest extends TestCase
         $value = "shanghai";
         $linkedList->addTail($value);
         $lastIndex = ($linkedList->size) - 1;
-        $actual = $linkedList->getValue($lastIndex);
+        $actual    = $linkedList->getValue($lastIndex);
         self::assertEquals($value, $actual);
     }
 
@@ -129,8 +129,8 @@ class LinkedListTest extends TestCase
     public function testUpdate()
     {
         $linkedList = $this->prepareData();
-        $index = 1;
-        $value = "qingdao";
+        $index      = 1;
+        $value      = "qingdao";
         $linkedList->update($index, $value);
         $actual = $linkedList->getValue($index);
         self::assertEquals($value, $actual);

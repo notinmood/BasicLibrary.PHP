@@ -31,9 +31,9 @@ class RMB
     public static function displayChineseValue($num, bool $financeMode = true, bool $simpleMode = true): string
     {
         if (!is_numeric($num)) return '含有非数字非小数点字符！';
-        $char = $simpleMode ? array('零', '一', '二', '三', '四', '五', '六', '七', '八', '九')
+        $char   = $simpleMode ? array('零', '一', '二', '三', '四', '五', '六', '七', '八', '九')
             : array('零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖');
-        $unit = $simpleMode ? array('', '十', '百', '千', '', '万', '亿', '兆')
+        $unit   = $simpleMode ? array('', '十', '百', '千', '', '万', '亿', '兆')
             : array('', '拾', '佰', '仟', '', '萬', '億', '兆');
         $result = $financeMode ? '元' : '点';
 

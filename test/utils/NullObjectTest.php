@@ -28,22 +28,22 @@ class NullObjectTest extends TestCase
 
     public function testObject()
     {
-        $age = 20;
-        $name = "张三";
-        $student = $this->getStudent($name, $age);
-        $actual = $student->getUserName();
+        $age      = 20;
+        $name     = "张三";
+        $student  = $this->getStudent($name, $age);
+        $actual   = $student->getUserName();
         $expected = $name;
         self::assertEquals($expected, $actual);
 
-        $age = 28;
-        $name = "李四";
-        $student = $this->getStudent($name, $age);
-        $actual = $student->getUserName();
+        $age      = 28;
+        $name     = "李四";
+        $student  = $this->getStudent($name, $age);
+        $actual   = $student->getUserName();
         $expected = null;
         self::assertEquals($expected, $actual);
 
-        $student = $this->getStudent($name, $age, NullObject::TIP);
-        $actual = $student->getUserName();
+        $student  = $this->getStudent($name, $age, NullObject::TIP);
+        $actual   = $student->getUserName();
         $expected = null;
         self::assertEquals($expected, $actual);
         self::expectOutputString("当前为一个空对象,在其上调用方法 getUserName 没有任何效果");

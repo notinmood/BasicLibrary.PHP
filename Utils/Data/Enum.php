@@ -40,8 +40,8 @@ abstract class Enum
      */
     const __default = null;
     private static array $constants = array();
-    private      $value;
-    private bool $strict;
+    private              $value;
+    private bool         $strict;
 
     /**
      * Creates new enum object.
@@ -72,7 +72,7 @@ abstract class Enum
             throw new UnexpectedValueException("Value is not in enum " . $class);
         }
 
-        $this->value = $initialValue;
+        $this->value  = $initialValue;
         $this->strict = $strict;
     }
 

@@ -124,7 +124,7 @@ class RequestHelper
     public static function getFullPath()
     {
         $http_type = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
-        $hostName = WebHelper::getHostName();
+        $hostName  = WebHelper::getHostName();
         return $http_type . $hostName . $_SERVER['REQUEST_URI'];
     }
 }

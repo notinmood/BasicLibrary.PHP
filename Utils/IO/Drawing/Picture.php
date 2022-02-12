@@ -7,32 +7,33 @@ namespace Hiland\Utils\IO\Drawing;
  *  处理并保存历史记录的思路：当有图片有改动时自动生成一张新图片，
  *  命名方式可以考虑在原图片的基础上加上步骤，例如：图片名称+__第几步
  */
+
 class Picture
 {
-    var $PICTURE_URL; // 要处理的图片
+    var $PICTURE_URL;               // 要处理的图片
     var $DEST_URL = "temp__01.jpg"; // 生成目标图片位置
-    var $PICTURE_CREATE; // 要创建的图片
-    var $TURE_COLOR; // 新建一个真彩图象
-    var $PICTURE_WIDTH; // 原图片宽度
-    var $PICTURE_HEIGHT; // 原图片高度
+    var $PICTURE_CREATE;            // 要创建的图片
+    var $TURE_COLOR;                // 新建一个真彩图象
+    var $PICTURE_WIDTH;             // 原图片宽度
+    var $PICTURE_HEIGHT;            // 原图片高度
 
     /*
      * 水印的类型，默认的为水印文字
      */
-    var $MARK_TYPE = 1;
-    var $WORD; // 经过UTF-8后的文字
-    var $WORD_X; // 文字横坐标
-    var $WORD_Y; // 文字纵坐标
-    var $FONT_TYPE; // 字体类型
-    var $FONT_SIZE = "12"; // 字体大小
-    var $FONT_WORD; // 文字
-    var $ANGLE = 0; // 文字的角度，默认为0
-    var $FONT_COLOR = "#000000"; // 文字颜色
-    var $FONT_PATH = "font/simkai.ttf"; // 字体库，默认为宋体
+    var $MARK_TYPE  = 1;
+    var $WORD;                           // 经过UTF-8后的文字
+    var $WORD_X;                         // 文字横坐标
+    var $WORD_Y;                         // 文字纵坐标
+    var $FONT_TYPE;                      // 字体类型
+    var $FONT_SIZE  = "12";              // 字体大小
+    var $FONT_WORD;                      // 文字
+    var $ANGLE      = 0;                 // 文字的角度，默认为0
+    var $FONT_COLOR = "#000000";         // 文字颜色
+    var $FONT_PATH  = "font/simkai.ttf"; // 字体库，默认为宋体
 
-    var $FORCE_URL; // 水印图片
-    var $FORCE_X = 0; // 水印横坐标
-    var $FORCE_Y = 0; // 水印纵坐标
+    var $FORCE_URL;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 // 水印图片
+    var $FORCE_X       = 0;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         // 水印横坐标
+    var $FORCE_Y       = 0;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         // 水印纵坐标
     var $FORCE_START_X = 0; // 切起水印的图片横坐标
     var $FORCE_START_Y = 0; // 切起水印的图片纵坐标
     var $PICTURE_TYPE; // 图片类型
@@ -41,18 +42,18 @@ class Picture
     /*
      * 缩放比例为1的话就按缩放高度和宽度缩放
      */
-    var $ZOOM = 1; // 缩放类型
+    var $ZOOM = 1;      // 缩放类型
     var $ZOOM_MULTIPLE; // 缩放比例
-    var $ZOOM_WIDTH; // 缩放宽度
-    var $ZOOM_HEIGHT; // 缩放高度
+    var $ZOOM_WIDTH;    // 缩放宽度
+    var $ZOOM_HEIGHT;   // 缩放高度
 
     /*
      * 裁切，按比例和固定长度、宽度
      */
-    var $CUT_TYPE = 1; // 裁切类型
-    var $CUT_X = 0; // 裁切的横坐标
-    var $CUT_Y = 0; // 裁切的纵坐标
-    var $CUT_; // 裁切的宽度
+    var $CUT_TYPE   = 1;   // 裁切类型
+    var $CUT_X      = 0;   // 裁切的横坐标
+    var $CUT_Y      = 0;   // 裁切的纵坐标
+    var $CUT_;             // 裁切的宽度
     var $CUT_HEIGHT = 100; // 裁切的高度
 
     /*
@@ -63,7 +64,7 @@ class Picture
     /*
      * 透明度处理
      */
-    var $ALPHA = '100'; // 透明度在0-127之间
+    var $ALPHA   = '100'; // 透明度在0-127之间
     var $ALPHA_X = "90";
     var $ALPHA_Y = "50";
 
@@ -76,7 +77,7 @@ class Picture
      * 出错信息
      */
     var $ERROR = array(
-        'unalviable' => '没有找到相关图片!'
+        'unalviable' => '没有找到相关图片!',
     );
 
     /*
@@ -106,18 +107,18 @@ class Picture
         switch ($SIZE [2]) {
             case 1 :
                 $this->PICTURE_CREATE = imagecreatefromgif($PICTURE_URL);
-                $this->PICTURE_TYPE = "imagejpeg";
-                $this->PICTURE_EXT = "jpg";
+                $this->PICTURE_TYPE   = "imagejpeg";
+                $this->PICTURE_EXT    = "jpg";
                 break;
             case 2 :
                 $this->PICTURE_CREATE = imagecreatefromjpeg($PICTURE_URL);
-                $this->PICTURE_TYPE = "imagegif";
-                $this->PICTURE_EXT = "gif";
+                $this->PICTURE_TYPE   = "imagegif";
+                $this->PICTURE_EXT    = "gif";
                 break;
             case 3 :
                 $this->PICTURE_CREATE = imagecreatefrompng($PICTURE_URL);
-                $this->PICTURE_TYPE = "imagepng";
-                $this->PICTURE_EXT = "png";
+                $this->PICTURE_TYPE   = "imagepng";
+                $this->PICTURE_EXT    = "png";
                 break;
         }
 
@@ -126,9 +127,9 @@ class Picture
          */
         preg_match_all("/([0-f]){2,2}/i", $this->FONT_COLOR, $MATCHES);
         if (count($MATCHES) == 3) {
-            $this->RED = hexdec($MATCHES [0] [0]);
+            $this->RED   = hexdec($MATCHES [0] [0]);
             $this->GREEN = hexdec($MATCHES [0] [1]);
-            $this->BLUE = hexdec($MATCHES [0] [2]);
+            $this->BLUE  = hexdec($MATCHES [0] [2]);
         }
     }
 
@@ -141,9 +142,9 @@ class Picture
     {
         preg_match_all("/([0-f]){2,2}/i", $this->FONT_COLOR, $MATCHES);
         if (count($MATCHES) == 3) {
-            $this->RED = hexdec($MATCHES [0] [0]);
+            $this->RED   = hexdec($MATCHES [0] [0]);
             $this->GREEN = hexdec($MATCHES [0] [1]);
-            $this->BLUE = hexdec($MATCHES [0] [2]);
+            $this->BLUE  = hexdec($MATCHES [0] [2]);
         }
     }
 
@@ -165,7 +166,7 @@ class Picture
         }
         // 新建一个真彩图象
         $this->TRUE_COLOR = imagecreatetruecolor($this->ZOOM_WIDTH, $this->ZOOM_HEIGHT);
-        $WHITE = imagecolorallocate($this->TRUE_COLOR, 255, 255, 255);
+        $WHITE            = imagecolorallocate($this->TRUE_COLOR, 255, 255, 255);
         imagefilledrectangle($this->TRUE_COLOR, 0, 0, $this->ZOOM_WIDTH, $this->ZOOM_HEIGHT, $WHITE);
         imagecopyresized($this->TRUE_COLOR, $this->PICTURE_CREATE, 0, 0, 0, 0, $this->ZOOM_WIDTH, $this->ZOOM_HEIGHT, $this->PICTURE_WIDTH, $this->PICTURE_HEIGHT);
     }
@@ -185,13 +186,13 @@ class Picture
     function _mark_text()
     {
         $this->TRUE_COLOR = imagecreatetruecolor($this->PICTURE_WIDTH, $this->PICTURE_HEIGHT);
-        $this->WORD = mb_convert_encoding($this->FONT_WORD, 'utf-8', 'gb2312');
+        $this->WORD       = mb_convert_encoding($this->FONT_WORD, 'utf-8', 'gb2312');
         /*
          * 取得使用 TrueType 字体的文本的范围
          */
-        $TEMP = imagettfbbox($this->FONT_SIZE, 0, $this->FONT_PATH, $this->WORD);
+        $TEMP        = imagettfbbox($this->FONT_SIZE, 0, $this->FONT_PATH, $this->WORD);
         $WORD_LENGTH = strlen($this->WORD);
-        $WORD_WIDTH = $TEMP [2] - $TEMP [6];
+        $WORD_WIDTH  = $TEMP [2] - $TEMP [6];
         $WORD_HEIGHT = $TEMP [3] - $TEMP [7];
         /*
          * 文字水印的默认位置为右下角
@@ -227,15 +228,15 @@ class Picture
         switch ($SIZE [2]) {
             case 1 :
                 $FORCE_PICTURE_CREATE = imagecreatefromgif($this->FORCE_URL);
-                $FORCE_PICTURE_TYPE = "gif";
+                $FORCE_PICTURE_TYPE   = "gif";
                 break;
             case 2 :
                 $FORCE_PICTURE_CREATE = imagecreatefromjpeg($this->FORCE_URL);
-                $FORCE_PICTURE_TYPE = "jpg";
+                $FORCE_PICTURE_TYPE   = "jpg";
                 break;
             case 3 :
                 $FORCE_PICTURE_CREATE = imagecreatefrompng($this->FORCE_URL);
-                $FORCE_PICTURE_TYPE = "png";
+                $FORCE_PICTURE_TYPE   = "png";
                 break;
         }
         /*
@@ -260,7 +261,7 @@ class Picture
          * 创建一个画布
          */
         $NEW_PICTURE_CREATE = imagecreatetruecolor($CREATE_WIDTH, $CREATE_HEIGHT);
-        $WHITE = imagecolorallocate($NEW_PICTURE_CREATE, 255, 255, 255);
+        $WHITE              = imagecolorallocate($NEW_PICTURE_CREATE, 255, 255, 255);
         /*
          * 将背景图拷贝到画布中
          */
@@ -277,14 +278,14 @@ class Picture
     function alpha_()
     {
         $this->TRUE_COLOR = imagecreatetruecolor($this->PICTURE_WIDTH, $this->PICTURE_HEIGHT);
-        $rgb = "#CDCDCD";
-        $tran_color = "#000000";
+        $rgb              = "#CDCDCD";
+        $tran_color       = "#000000";
         for ($j = 0; $j <= $this->PICTURE_HEIGHT - 1; $j++) {
             for ($i = 0; $i <= $this->PICTURE_WIDTH - 1; $i++) {
-                $rgb = imagecolorat($this->PICTURE_CREATE, $i, $j);
-                $r = ($rgb >> 16) & 0xFF;
-                $g = ($rgb >> 8) & 0xFF;
-                $b = $rgb & 0xFF;
+                $rgb       = imagecolorat($this->PICTURE_CREATE, $i, $j);
+                $r         = ($rgb >> 16) & 0xFF;
+                $g         = ($rgb >> 8) & 0xFF;
+                $b         = $rgb & 0xFF;
                 $now_color = imagecolorallocate($this->PICTURE_CREATE, $r, $g, $b);
                 if ($now_color == $tran_color) {
                     continue;
@@ -326,7 +327,7 @@ class Picture
     {
         $this->TRUE_COLOR = imagecreatetruecolor($this->PICTURE_WIDTH, $this->PICTURE_HEIGHT);
         imageCopyResized($this->TRUE_COLOR, $this->PICTURE_CREATE, 0, 0, 0, 0, $this->PICTURE_WIDTH, $this->PICTURE_HEIGHT, $this->PICTURE_WIDTH, $this->PICTURE_HEIGHT);
-        $WHITE = imagecolorallocate($this->TRUE_COLOR, 255, 255, 255);
+        $WHITE            = imagecolorallocate($this->TRUE_COLOR, 255, 255, 255);
         $this->TRUE_COLOR = imagerotate($this->TRUE_COLOR, $this->CIRCUMROTATE, $WHITE);
     }
 
@@ -336,17 +337,17 @@ class Picture
     function sharp()
     {
         $this->TRUE_COLOR = imagecreatetruecolor($this->PICTURE_WIDTH, $this->PICTURE_HEIGHT);
-        $cnt = 0;
+        $cnt              = 0;
         for ($x = 0; $x < $this->PICTURE_WIDTH; $x++) {
             for ($y = 0; $y < $this->PICTURE_HEIGHT; $y++) {
                 $src_clr1 = imagecolorsforindex($this->TRUE_COLOR, imagecolorat($this->PICTURE_CREATE, $x - 1, $y - 1));
                 $src_clr2 = imagecolorsforindex($this->TRUE_COLOR, imagecolorat($this->PICTURE_CREATE, $x, $y));
-                $r = intval($src_clr2 ["red"] + $this->SHARP * ($src_clr2 ["red"] - $src_clr1 ["red"]));
-                $g = intval($src_clr2 ["green"] + $this->SHARP * ($src_clr2 ["green"] - $src_clr1 ["green"]));
-                $b = intval($src_clr2 ["blue"] + $this->SHARP * ($src_clr2 ["blue"] - $src_clr1 ["blue"]));
-                $r = min(255, max($r, 0));
-                $g = min(255, max($g, 0));
-                $b = min(255, max($b, 0));
+                $r        = intval($src_clr2 ["red"] + $this->SHARP * ($src_clr2 ["red"] - $src_clr1 ["red"]));
+                $g        = intval($src_clr2 ["green"] + $this->SHARP * ($src_clr2 ["green"] - $src_clr1 ["green"]));
+                $b        = intval($src_clr2 ["blue"] + $this->SHARP * ($src_clr2 ["blue"] - $src_clr1 ["blue"]));
+                $r        = min(255, max($r, 0));
+                $g        = min(255, max($g, 0));
+                $b        = min(255, max($b, 0));
                 if (($DST_CLR = imagecolorexact($this->PICTURE_CREATE, $r, $g, $b)) == -1)
                     $DST_CLR = imagecolorallocate($this->PICTURE_CREATE, $r, $g, $b);
                 $cnt++;
@@ -366,7 +367,7 @@ class Picture
          * 创建一个画布
          */
         $NEW_PICTURE_CREATE = imagecreate($this->PICTURE_WIDTH, $this->PICTURE_HEIGHT);
-        $WHITE = imagecolorallocate($NEW_PICTURE_CREATE, 255, 255, 255);
+        $WHITE              = imagecolorallocate($NEW_PICTURE_CREATE, 255, 255, 255);
         /*
          * 将背景图拷贝到画布中
          */

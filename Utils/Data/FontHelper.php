@@ -40,22 +40,22 @@ class FontHelper
     public static function getSize($font, int $fontSize, string $string): array
     {
         if (is_numeric($font)) {
-            $fontWidth = imagefontwidth($font);
+            $fontWidth  = imagefontwidth($font);
             $fontHeight = imagefontheight($font);
 
             // 计算字体所占宽高
             $word_length = strlen($string);
-            $wholeWidth = $fontWidth * $word_length;
+            $wholeWidth  = $fontWidth * $word_length;
             $wholeHeight = $fontHeight;
         } else {
-            $arr = imagettfbbox($fontSize, 0, $font, $string);
-            $wholeWidth = abs($arr[0] - $arr[2]);
+            $arr         = imagettfbbox($fontSize, 0, $font, $string);
+            $wholeWidth  = abs($arr[0] - $arr[2]);
             $wholeHeight = abs($arr[7] - $arr[1]);
         }
 
         return array(
             $wholeWidth,
-            $wholeHeight
+            $wholeHeight,
         );
     }
 }

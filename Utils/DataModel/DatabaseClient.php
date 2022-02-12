@@ -33,7 +33,7 @@ class DatabaseClient
     public static function getDDL(): ModelDDL
     {
         $ddlKey = "__database_ddl__";
-        $ddl = Container::get($ddlKey);
+        $ddl    = Container::get($ddlKey);
 
         if ($ddl == null) {
             $ddl = new ModelDDL();

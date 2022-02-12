@@ -26,7 +26,7 @@ class PathHelper
         for ($i = 0; $i < count($paths); $i++) {
             $currentNode = $paths[$i];
             if (StringHelper::isEndWith($currentNode, "\\") || StringHelper::isEndWith($currentNode, "/")) {
-                $len = ObjectHelper::getLength($currentNode);
+                $len         = ObjectHelper::getLength($currentNode);
                 $currentNode = substr($currentNode, 0, $len - 1);
             }
 

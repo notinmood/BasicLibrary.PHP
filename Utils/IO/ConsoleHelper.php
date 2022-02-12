@@ -21,7 +21,7 @@ class ConsoleHelper
     public static function console($data, string $level = 'log')
     {
         if (is_array($data) || is_object($data)) {
-            $output = json_encode($data);
+            $output     = json_encode($data);
             $jsonDecode = json_decode($output);
             if (empty($jsonDecode) && !empty($data)) {
                 echo "<script>console.{$level}('不支持输出')</script>";

@@ -32,7 +32,7 @@ class Stack extends SimpleLinearConstruct
         if (empty($this->dataArray)) {
             return null;
         } else {
-            $data = $this->dataArray;
+            $data   = $this->dataArray;
             $length = count($data);
             return $data[$length - 1];
         }

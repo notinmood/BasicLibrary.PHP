@@ -35,7 +35,7 @@ class CalculateMate
      */
     public function __construct($number = 0, int $precision = 2)
     {
-        $this->number = $number;
+        $this->number    = $number;
         $this->precision = $precision;
     }
 

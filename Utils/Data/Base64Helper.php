@@ -18,7 +18,7 @@ class Base64Helper
     /**
      * 进行 base64 编码
      * @param string $originalString 待编码的原始字符串
-     * @param false  $safely 是否要进行安全转换(为了安全起见,(在url等场景中)需要将这两个字符 + / （加除，加粗）进行合理地替换)
+     * @param false  $safely         是否要进行安全转换(为了安全起见,(在url等场景中)需要将这两个字符 + / （加除，加粗）进行合理地替换)
      * @return array|string|string[]/
      */
     public static function encode(string $originalString, bool $safely = false)
@@ -84,7 +84,7 @@ class Base64Helper
     private static function getSafeBase64($commonBase64String)
     {
         $string = str_replace(array('+', '/', '='), array('_', '|', '-'), $commonBase64String);
-        $mod4 = strlen($string) % 4;
+        $mod4   = strlen($string) % 4;
         if ($mod4) {
             $string .= substr('====', $mod4);
         }

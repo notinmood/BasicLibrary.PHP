@@ -29,8 +29,8 @@ class ConfigClient
 
     /**
      * 获取配置信息
-     * @param string $key 配置节点的名称
-     * @param null   $default 配置节点的缺省值
+     * @param string $key      配置节点的名称
+     * @param null   $default  配置节点的缺省值
      * @param null   $fileName 配置文件(携带有相对于网站根目录的相对路径)
      *                         (目前支持的文件类型有:.php(内部返回Array)、.ini和.json等多种格式)
      * @return array|bool|string|null

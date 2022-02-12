@@ -10,7 +10,6 @@ use Hiland\Utils\IO\FileHelper;
 /**
  * @TODO:这个文件需要修改和验证，里面不能出现 WechatException.
  */
-
 class NetHelper
 {
     /**
@@ -25,15 +24,15 @@ class NetHelper
     {
         $params = array(
             'http' => array(
-                'method' => 'POST',
-                'content' => $data
-            )
+                'method'  => 'POST',
+                'content' => $data,
+            ),
         );
         if ($optionalHeaders !== null) {
             $params['http']['header'] = $optionalHeaders;
         }
         $ctx = stream_context_create($params);
-        $fp = @fopen($url, 'rb', false, $ctx);
+        $fp  = @fopen($url, 'rb', false, $ctx);
         if (!$fp) {
             throw new Exception("Problem with $url");
         }
@@ -54,7 +53,7 @@ class NetHelper
     {
         if ($isCloseAtOnce) {
             $context = stream_context_create(array('http' => array('header' => 'Connection: close\r\n')));
-            $result = file_get_contents($url, false, $context);
+            $result  = file_get_contents($url, false, $context);
         } else {
             $result = file_get_contents($url);
         }

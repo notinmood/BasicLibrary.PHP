@@ -52,7 +52,7 @@ class CipherHelper
             $signStr .= "&key=" . $key;
         }
         $calculateSign = strtoupper(call_user_func($algorithm, $signStr));
-        $signature = strtoupper($signature);
+        $signature     = strtoupper($signature);
         return $calculateSign == $signature;
     }
 
@@ -85,7 +85,7 @@ class CipherHelper
     {
         if ($safeBase64) {
             $string = str_replace(array('-', '_'), array('+', '/'), $string);
-            $mod4 = strlen($string) % 4;
+            $mod4   = strlen($string) % 4;
             if ($mod4) {
                 $string .= substr('====', $mod4);
             }
@@ -118,33 +118,33 @@ class CipherHelper
         $keyc = $ckey_length ? ($operation == 'DECODE' ? substr($string, 0, $ckey_length) :
             substr(md5(microtime()), -$ckey_length)) : '';
         // 参与运算的密匙
-        $cryptkey = $keya . md5($keya . $keyc);
+        $cryptkey   = $keya . md5($keya . $keyc);
         $key_length = strlen($cryptkey);
         // 明文，前10位用来保存时间戳，解密时验证数据有效性，10到26位用来保存$keyb(密匙b)，
         //解密时会通过这个密匙验证数据完整性
         // 如果是解码的话，会从第 $ckey_length 位开始，因为密文前$ckey_length位保存 动态密匙，以保证解密正确
-        $string = $operation == 'DECODE' ? base64_decode(substr($string, $ckey_length)) :
+        $string        = $operation == 'DECODE' ? base64_decode(substr($string, $ckey_length)) :
             sprintf('%010d', $expiry ? $expiry + time() : 0) . substr(md5($string . $keyb), 0, 16) . $string;
         $string_length = strlen($string);
-        $result = '';
-        $box = range(0, 255);
-        $rndkey = array();
+        $result        = '';
+        $box           = range(0, 255);
+        $rndkey        = array();
         // 产生密匙簿
         for ($i = 0; $i <= 255; $i++) {
             $rndkey[$i] = ord($cryptkey[$i % $key_length]);
         }
         // 用固定的算法，打乱密匙簿，增加随机性，好像很复杂，实际上对并不会增加密文的强度
         for ($j = $i = 0; $i < 256; $i++) {
-            $j = ($j + $box[$i] + $rndkey[$i]) % 256;
-            $tmp = $box[$i];
+            $j       = ($j + $box[$i] + $rndkey[$i]) % 256;
+            $tmp     = $box[$i];
             $box[$i] = $box[$j];
             $box[$j] = $tmp;
         }
         // 核心加解密部分
         for ($a = $j = $i = 0; $i < $string_length; $i++) {
-            $a = ($a + 1) % 256;
-            $j = ($j + $box[$a]) % 256;
-            $tmp = $box[$a];
+            $a       = ($a + 1) % 256;
+            $j       = ($j + $box[$a]) % 256;
+            $tmp     = $box[$a];
             $box[$a] = $box[$j];
             $box[$j] = $tmp;
             // 从密匙簿得出密匙进行异或，再转成字符

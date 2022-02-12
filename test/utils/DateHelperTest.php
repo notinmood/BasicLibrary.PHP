@@ -20,7 +20,7 @@ class DateHelperTest extends TestCase
     public function testGetInterval()
     {
         $startValue = new DateTime("2021-09-10");
-        $endValue = new DateTime("2021-10-10");
+        $endValue   = new DateTime("2021-10-10");
 
         $actual = null;
         try {
@@ -33,7 +33,7 @@ class DateHelperTest extends TestCase
          * ════════════════════════
          */
         $startValue = new DateTime("2021-09-10");
-        $endValue = new DateTime("2021-8-10");
+        $endValue   = new DateTime("2021-8-10");
 
         $actual = null;
         try {
@@ -47,7 +47,7 @@ class DateHelperTest extends TestCase
     {
 
         $timespan = 2145888000;
-        $actual = "";
+        $actual   = "";
         try {
             $actual = DateHelper::getDateTime($timespan);
         } catch (Exception $e) {
@@ -68,12 +68,12 @@ class DateHelperTest extends TestCase
     public function testParseDateTimeSafely()
     {
         $dateString = "";
-        $actual = DateHelper::parseDateTimeSafely($dateString);
+        $actual     = DateHelper::parseDateTimeSafely($dateString);
         self::assertEquals(false, $actual);
 
         $dateString = 2145888000;
-        $actual = DateHelper::parseDateTimeSafely($dateString);
-        $expected = new DateTime("2038-1-1 0:0:0");
+        $actual     = DateHelper::parseDateTimeSafely($dateString);
+        $expected   = new DateTime("2038-1-1 0:0:0");
         self::assertEquals($expected, $actual);
     }
 

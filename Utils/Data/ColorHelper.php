@@ -22,7 +22,7 @@ class ColorHelper
             $ii++;
         }
 
-        Return $result;
+        return $result;
     }
 
     /**

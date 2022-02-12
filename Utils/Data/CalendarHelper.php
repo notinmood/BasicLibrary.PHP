@@ -51,7 +51,7 @@ class CalendarHelper
         array(4, 1, 24, 42448), array(0, 2, 12, 42416), array(0, 2, 2, 21168), array(3, 1, 22, 43320), array(0, 2, 9, 26928), array(7, 1, 29, 29336),
         array(0, 2, 17, 27296), array(0, 2, 6, 44368), array(5, 1, 26, 19880), array(0, 2, 14, 19296), array(0, 2, 3, 42352), array(4, 1, 24, 21104),
         array(0, 2, 10, 53856), array(8, 1, 30, 59696), array(0, 2, 18, 54560), array(0, 2, 7, 55968), array(6, 1, 27, 27472), array(0, 2, 15, 22224),
-        array(0, 2, 5, 19168), array(4, 1, 25, 42216), array(0, 2, 12, 42192), array(0, 2, 1, 53584), array(2, 1, 21, 55592), array(0, 2, 9, 54560)
+        array(0, 2, 5, 19168), array(4, 1, 25, 42216), array(0, 2, 12, 42192), array(0, 2, 1, 53584), array(2, 1, 21, 55592), array(0, 2, 9, 54560),
     );
 
     /**
@@ -82,8 +82,8 @@ class CalendarHelper
         //debugger;
         $lunarArray = array();
         //$yearMonth = array();
-        $t = 0;
-        $e = 0;
+        $t         = 0;
+        $e         = 0;
         $leapMonth = 0;
         //$m = '';
         if ($between == 0) {
@@ -91,10 +91,10 @@ class CalendarHelper
             $t = 1;
             $e = 1;
         } else {
-            $year = $between > 0 ? $year : ($year - 1);
+            $year      = $between > 0 ? $year : ($year - 1);
             $yearMonth = self::getLunarYearMonths($year);
             $leapMonth = self::getLeapMonth($year);
-            $between = $between > 0 ? $between : (self::getLunarYearDays($year) + $between);
+            $between   = $between > 0 ? $between : (self::getLunarYearDays($year) + $between);
             for ($i = 0; $i < 13; $i++) {
                 if ($between == $yearMonth[$i]) {
                     $t = $i + 2;
@@ -112,7 +112,7 @@ class CalendarHelper
         array_push($lunarArray, self::getLunarYearName($year));// 天干地支
         array_push($lunarArray, $t, $e);
         array_push($lunarArray, self::getYearZodiac($year));// 12生肖
-        array_push($lunarArray, $leapMonth);// 闰几月
+        array_push($lunarArray, $leapMonth);                // 闰几月
         return $lunarArray;
     }
 
@@ -120,10 +120,10 @@ class CalendarHelper
     {
         //debugger;
         $monthData = self::getLunarMonths($year);
-        $res = array();
+        $res       = array();
         //$temp = 0;
         $yearData = self::$LUNARINFO[$year - self::$MINYEAR];
-        $len = ($yearData[0] == 0 ? 12 : 13);
+        $len      = ($yearData[0] == 0 ? 12 : 13);
         for ($i = 0; $i < $len; $i++) {
             $temp = 0;
             for ($j = 0; $j <= $i; $j++) {
@@ -141,9 +141,9 @@ class CalendarHelper
      */
     private static function getLunarMonths(int $year): array
     {
-        $yearData = self::$LUNARINFO[$year - self::$MINYEAR];
+        $yearData  = self::$LUNARINFO[$year - self::$MINYEAR];
         $leapMonth = $yearData[0];
-        $bit = decbin($yearData[3]);
+        $bit       = decbin($yearData[3]);
 
         $bitArray = null;
         for ($i = 0; $i < strlen($bit); $i++) {
@@ -178,7 +178,7 @@ class CalendarHelper
     {
         //$yearData = self::$LUNARINFO[$year - self::$MINYEAR];
         $monthArray = self::getLunarYearMonths($year);
-        $len = count($monthArray);
+        $len        = count($monthArray);
         return ($monthArray[$len - 1] == 0 ? $monthArray[$len - 2] : $monthArray[$len - 1]);
     }
 
@@ -190,10 +190,10 @@ class CalendarHelper
      */
     private static function getCapitalNum(int $num, bool $isMonth): string
     {
-        $isMonth = $isMonth || false;
-        $dateHash = array('0' => '', '1' => '一', '2' => '二', '3' => '三', '4' => '四', '5' => '五', '6' => '六', '7' => '七', '8' => '八', '9' => '九', '10' => '十 ');
+        $isMonth   = $isMonth || false;
+        $dateHash  = array('0' => '', '1' => '一', '2' => '二', '3' => '三', '4' => '四', '5' => '五', '6' => '六', '7' => '七', '8' => '八', '9' => '九', '10' => '十 ');
         $monthHash = array('0' => '', '1' => '正月', '2' => '二月', '3' => '三月', '4' => '四月', '5' => '五月', '6' => '六月', '7' => '七月', '8' => '八月', '9' => '九月', '10' => '十月', '11' => '冬月', '12' => '腊月');
-        $res = '';
+        $res       = '';
         if ($isMonth) {
             $res = $monthHash[$num];
         } else {
@@ -219,9 +219,9 @@ class CalendarHelper
      */
     private static function getLunarYearName(int $year): string
     {
-        $sky = array('庚', '辛', '壬', '癸', '甲', '乙', '丙', '丁', '戊', '己');
+        $sky   = array('庚', '辛', '壬', '癸', '甲', '乙', '丙', '丁', '戊', '己');
         $earth = array('申', '酉', '戌', '亥', '子', '丑', '寅', '卯', '辰', '巳', '午', '未');
-        $year = $year . '';
+        $year  = $year . '';
         return $sky[$year{3}] . $earth[$year % 12];
     }
 
@@ -264,12 +264,12 @@ class CalendarHelper
             return array(1891, '正月', '初一', '辛卯', 1, 1, '兔');
         }
         $month_days_ary = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-        $dd = $month_days_ary[$month];
+        $dd             = $month_days_ary[$month];
         if (self::isLeapYear($year) && $month == 2) $dd++;
         $lunar_ary = array();
         for ($i = 1; $i < $dd; $i++) {
-            $array = self::getLunarByBetween($year, self::getDaysBetweenSolar($year, $month, $i, $yearData[1], $yearData[2]));
-            $array[] = $year . '-' . $month . '-' . $i;
+            $array         = self::getLunarByBetween($year, self::getDaysBetweenSolar($year, $month, $i, $yearData[1], $yearData[2]));
+            $array[]       = $year . '-' . $month . '-' . $i;
             $lunar_ary[$i] = $array;
         }
         return $lunar_ary;
@@ -295,13 +295,13 @@ class CalendarHelper
     public static function convertLunarToSolar(int $year, int $month, int $date): array
     {
         $yearData = self::$LUNARINFO[$year - self::$MINYEAR];
-        $between = self::getDaysBetweenLunar($year, $month, $date);
-        $res = mktime(0, 0, 0, $yearData[1], $yearData[2], $year);
-        $res = date('Y-m-d', $res + $between * 24 * 60 * 60);
-        $day = explode('-', $res);
-        $year = $day[0];
-        $month = $day[1];
-        $day = $day[2];
+        $between  = self::getDaysBetweenLunar($year, $month, $date);
+        $res      = mktime(0, 0, 0, $yearData[1], $yearData[2], $year);
+        $res      = date('Y-m-d', $res + $between * 24 * 60 * 60);
+        $day      = explode('-', $res);
+        $year     = $day[0];
+        $month    = $day[1];
+        $day      = $day[2];
         return array($year, $month, $day);
     }
 
@@ -315,7 +315,7 @@ class CalendarHelper
     private static function getDaysBetweenLunar(int $year, int $month, int $date): int
     {
         $yearMonth = self::getLunarMonths($year);
-        $res = 0;
+        $res       = 0;
         for ($i = 1; $i < $month; $i++) {
             $res += $yearMonth[$i - 1];
         }

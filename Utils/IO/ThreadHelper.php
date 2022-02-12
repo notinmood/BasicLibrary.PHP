@@ -27,8 +27,8 @@ class ThreadHelper
     public static function asyncRun(string $url, array $post_data = array())
     {
         $url_array = parse_url($url);
-        $hostname = $url_array['host'];
-        $port = $url_array['port'] ?? 80;
+        $hostname  = $url_array['host'];
+        $port      = $url_array['port'] ?? 80;
         @$requestPath = $url_array['path'] . "?" . $url_array['query'];
         $fp = fsockopen($hostname, $port, $errno, $errstr, 10);
 
@@ -59,11 +59,11 @@ class ThreadHelper
                 $_post[] = $k . "=" . urlencode($v);//必须做url转码以防模拟post提交的数据中有&符而导致post参数键值对紊乱
             }
 
-            $_post = implode('&', $_post);
+            $_post  = implode('&', $_post);
             $header .= "Content-Type: application/x-www-form-urlencoded\r\n";//POST数据
-            $header .= "Content-Length: " . strlen($_post) . "\r\n";//POST数据的长度
-            $header .= "Connection: Close\r\n\r\n";//长连接关闭
-            $header .= $_post; //传递POST数据
+            $header .= "Content-Length: " . strlen($_post) . "\r\n";         //POST数据的长度
+            $header .= "Connection: Close\r\n\r\n";                          //长连接关闭
+            $header .= $_post;                                               //传递POST数据
         } else {
             $header .= "Connection: Close\r\n\r\n";//长连接关闭
         }
@@ -86,7 +86,7 @@ class ThreadHelper
         //设置一个空数组
         $curl_Arr = [];
 
-        $urlCount= count($urls);
+        $urlCount = count($urls);
         for ($i = 0; $i < $urlCount; $i++) {
             //开启curl连接
             $curl_Arr[$i] = curl_init($urls[$i]);
@@ -128,7 +128,7 @@ class ThreadHelper
 
     //--以下代码属于hook的逻辑----------------------------------------------------------------
     private static $hook_list = array();
-    private static $hooked = false;
+    private static $hooked    = false;
 
 
     /**
@@ -149,7 +149,6 @@ class ThreadHelper
             register_shutdown_function(array(__CLASS__, '__run'));
         }
     }
-
 
 
     /**
@@ -173,7 +172,7 @@ class ThreadHelper
         }
         foreach (self::$hook_list as $hook) {
             $callback = $hook['callback'];
-            $params = $hook['params'];
+            $params   = $hook['params'];
             call_user_func_array($callback, $params);
         }
     }

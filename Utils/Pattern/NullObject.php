@@ -21,9 +21,9 @@ use Exception;
  */
 class NullObject
 {
-    const NON = "non";
-    const ERROR = "error";
-    const TIP = "tip";
+    const NON       = "non";
+    const ERROR     = "error";
+    const TIP       = "tip";
     const EXCEPTION = "exception";
 
     private $actionLevel = 0;

@@ -12,13 +12,12 @@ use function PHPUnit\Framework\assertEquals;
 class StockDataSourceSinaTest extends TestCase
 {
     /**
-     * @throws ReflectionException
      */
     public function testParseStockString()
     {
         $originalData = 'var hq_str_sh600690="海尔智家,26.670,26.720,27.200,27.330,26.120,27.200,27.210,45225256,1217253909.000,2800,27.200,22300,27.190,16300,27.180,35000,27.170,18800,27.160,20100,27.210,34200,27.220,19000,27.230,79800,27.240,43400,27.250,2021-10-29,15:00:02,00,"';
-        $methodArgs = [$originalData];
-        $entity = new StockDataSourceSina();
+        $methodArgs   = [$originalData];
+        $entity       = new StockDataSourceSina();
 
         $returnObject = ReflectionHelper::executeInstanceMethod(StockDataSourceSina::class, "parseStringToQuoteEntity", $entity, null, $methodArgs);
 

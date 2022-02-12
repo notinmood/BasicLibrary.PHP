@@ -35,8 +35,8 @@ class Node
 
     public function __construct($value = null, $next = null, $isNullNode = false)
     {
-        $this->value = $value;
-        $this->next = $next;
+        $this->value      = $value;
+        $this->next       = $next;
         $this->isNullNode = $isNullNode;
     }
 }

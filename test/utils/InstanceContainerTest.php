@@ -23,7 +23,7 @@ class InstanceContainerTest extends TestCase
          * 构造函数带参数的sample
          */
         $className = Student::class;
-        $actual1 = InstanceContainer::get($className, "张三", 20);
+        $actual1   = InstanceContainer::get($className, "张三", 20);
         $this->assertInstanceOf($className, $actual1);
 
 
@@ -45,7 +45,7 @@ class InstanceContainerTest extends TestCase
         /**
          * 构造函数不带参数的sample
          */
-        $className = Teacher::class;
+        $className     = Teacher::class;
         $actualTeacher = InstanceContainer::get($className);
         $this->assertInstanceOf($className, $actualTeacher);
 

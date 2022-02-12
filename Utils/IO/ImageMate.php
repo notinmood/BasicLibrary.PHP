@@ -7,7 +7,7 @@ use Hiland\Utils\Data\FontHelper;
 
 /**
  *图像处理基础类
- * @author devel
+ * @author  devel
  * @example 使用说明 分为三个步骤
  *          1、生成实例$image = new Images($url);
  *          2、设置各种信息$image->setMaskWord()等
@@ -15,29 +15,21 @@ use Hiland\Utils\Data\FontHelper;
  *          示例如下：
  *          $url = 'http://www.sinaimg.cn/dy/slidenews/2_img/2016_05/72682_1705091_624995.jpg';
  *          $image = new Images($url);
- *
  *          $image->setMaskPosition(3);
- *
  *          $textfont = PHYSICAL_ROOT_PATH . C('WEIXIN_RECOMMEND_TEXTFONT');
- *
  *          $image->setMaskWord('Wecome to 山东润拓');
  *          $image->setMaskFont($textfont);
  *          $image->setMaskFontSize(20);
- *
  *          // $logo = PHYSICAL_ROOT_PATH . '/Public/Admin/images/login_logo.png';
  *          // $image->setMaskImage($logo);
  *          // $image->setMaskOffsetY(-30);
- *
  *          $image->setImageBorder();
- *
  *          // $image->flipX();
  *          // $image->flipY();
  *          // $image->flipY();
- *
  *          // $image->setCutType(2);
  *          // $image->setCutRectangle(600, 500);
  *          // $image->setCutPositionOnSourceImage(100,20);
- *
  *          $destImage = $image->createImage(600, 500);
  *          ImageHelper::display($destImage, 'jpg', 80);
  */
@@ -61,7 +53,6 @@ class imageMate
 
     /**
      * 图片缩放比例（取值0-1之间表示缩小，1-X之间表示放大）
-     *
      * @var int
      */
     var $imageScale = 1;
@@ -135,14 +126,12 @@ class imageMate
 
     /**
      * 传递过来的图片是资源信息还是文本路径信息
-     *
      * @var bool
      */
     var $sourceImageIsResource = false;
 
     /**
      * 构造函数
-     *
      * @param string $sourceImage
      *            待操作的图片信息，其可以为null，
      *            1、如果为null，则需要通过方法单独设置原图信息
@@ -154,18 +143,17 @@ class imageMate
     public function __construct($sourceImage = null, $sourceImageType = '')
     {
         $this->maskFontMainColor = "#ffffff";
-        $this->maskFont = 2;
-        $this->mastFontSize = 12;
+        $this->maskFont          = 2;
+        $this->mastFontSize      = 12;
 
         self::setSourceImage($sourceImage, $sourceImageType);
     }
 
     /**
-     *
      * @param resource|string $sourceImage
      *            1、也可以是图片的全路径（如果是路径信息，那么系统可以推断第二个参数的类型）
      *            2、也可以是图片的资源信息(如果是图片的资源信息,必须设置第二个参数-图片的类型为jpg、gif、png等)
-     * @param string $sourceImageType
+     * @param string          $sourceImageType
      *            图片的类型为jpg、gif、png等不带小数点的扩展名
      */
     public function setSourceImage($sourceImage, $sourceImageType = '')
@@ -174,17 +162,17 @@ class imageMate
 
         if (!empty($sourceImage)) {
             if (is_resource($sourceImage)) {
-                $this->sourceImage = $sourceImage;
+                $this->sourceImage           = $sourceImage;
                 $this->sourceImageIsResource = true;
             } else {
-                $this->sourceImage = ImageHelper::loadImage($sourceImage);
+                $this->sourceImage           = ImageHelper::loadImage($sourceImage);
                 $this->sourceImageIsResource = false;
                 if (empty($this->sourceImageType)) {
                     $this->sourceImageType = ImageHelper::getImageType($sourceImage);
                 }
             }
 
-            $this->sourceImageWidth = $this->getImageWidth($this->sourceImage);
+            $this->sourceImageWidth  = $this->getImageWidth($this->sourceImage);
             $this->sourceImageHeight = $this->getImageHeight($this->sourceImage);
         }
     }
@@ -219,7 +207,6 @@ class imageMate
 
     /**
      * 设置图片的显示质量
-     *
      * @param string $n
      *            质量
      */
@@ -230,7 +217,6 @@ class imageMate
 
     /**
      * 设置图片的生成质量
-     *
      * @param string $n
      *            质量
      */
@@ -241,7 +227,6 @@ class imageMate
 
     /**
      * 设置水印文字
-     *
      * @param string $word
      *            水印文字
      */
@@ -252,11 +237,10 @@ class imageMate
 
     /**
      * 设置水印字体信息
-     *
      * @param int|string $font
-     * @param int $size
-     * @param string $mainColor 正面字体颜色
-     * @param string $sideColor 侧面字体颜色
+     * @param int        $size
+     * @param string     $mainColor 正面字体颜色
+     * @param string     $sideColor 侧面字体颜色
      */
     public function setMaskFontInfo($font = 2, $size = 12, $mainColor = "#ffffff", $sideColor = "#888888")
     {
@@ -267,7 +251,6 @@ class imageMate
 
     /**
      * 设置水印字体
-     *
      * @param string|integer $font
      *            字体
      */
@@ -291,7 +274,6 @@ class imageMate
 
     /**
      * 设置字体颜色
-     *
      * @param string $mainColor 正面字体颜色
      * @param string $sideColor 侧面字体颜色
      */
@@ -303,7 +285,6 @@ class imageMate
 
     /**
      * 设置图片水印
-     *
      * @param string $imageFileName
      *            水印图片源
      */
@@ -311,14 +292,13 @@ class imageMate
     {
         $this->maskImageFileName = $imageFileName;
 
-        $this->maskImage = ImageHelper::loadImage($this->maskImageFileName);
-        $this->maskImageWidth = $this->getImageWidth($this->maskImage);
+        $this->maskImage       = ImageHelper::loadImage($this->maskImageFileName);
+        $this->maskImageWidth  = $this->getImageWidth($this->maskImage);
         $this->maskImageHeight = $this->getImageHeight($this->maskImage);
     }
 
     /**
      * 设置水印横向偏移
-     *
      * @param integer $x
      *            横向偏移量
      */
@@ -329,7 +309,6 @@ class imageMate
 
     /**
      * 设置水印纵向偏移
-     *
      * @param integer $y
      *            纵向偏移量
      */
@@ -340,7 +319,6 @@ class imageMate
 
     /**
      * 指定水印位置
-     *
      * @param integer $position
      *            位置,1:左上,2:左下,3:右上,0/4:右下
      */
@@ -351,7 +329,6 @@ class imageMate
 
     /**
      * 设置图片合并程度
-     *
      * @param integer $n
      *            合并程度
      */
@@ -362,7 +339,6 @@ class imageMate
 
     /**
      * 设置文字合并程度
-     *
      * @param integer $n
      *            合并程度
      */
@@ -373,13 +349,12 @@ class imageMate
 
     /**
      * 设置缩略图边框
-     *
-     * @param int $size
+     * @param int    $size
      * @param string $color
      */
     public function setImageBorder($size = 1, $color = "#000000")
     {
-        $this->imageBorderSize = (int)$size;
+        $this->imageBorderSize  = (int)$size;
         $this->imageBorderColor = $color;
     }
 
@@ -401,7 +376,6 @@ class imageMate
 
     /**
      * 设置剪切类型
-     *
      * @param int $type
      *            取值为
      *            0：X方向保持全图缩放，不裁切
@@ -423,7 +397,6 @@ class imageMate
 
     /**
      * 创建图片,主函数
-     *
      * @param integer $a
      *            当缺少第二个参数时，此参数将用作百分比，缩放比例取值0-1之间表示缩小，1-X之间表示放大，
      *            否则作为宽度值
@@ -435,7 +408,7 @@ class imageMate
     {
         $num = func_num_args();
         if (1 == $num) {
-            $r = (float)$a;
+            $r                = (float)$a;
             $this->imageScale = $r;
             $this->setNewImageSize($r);
         }
@@ -471,7 +444,6 @@ class imageMate
 
     /**
      * 设置新图尺寸
-     *
      * @param integer $newImageWidthOrScale
      *            目标宽度(或者缩放比例（取值0-1之间表示缩小，1-X之间表示放大），设置为缩放比例的时候，第二个参数省略)
      * @param integer $newImageHeight
@@ -484,22 +456,22 @@ class imageMate
             $this->imageScale = $newImageWidthOrScale; // 如果只有一个参数，则第一个参数作为缩放比例
             // dump($this->sourceImageWidth .'--'.$this->imageScale);
 
-            $this->filledImageWidth = round($this->sourceImageWidth * $this->imageScale) - $this->imageBorderSize * 2;
+            $this->filledImageWidth  = round($this->sourceImageWidth * $this->imageScale) - $this->imageBorderSize * 2;
             $this->filledImageHeight = round($this->sourceImageHeight * $this->imageScale) - $this->imageBorderSize * 2;
 
             // 源文件起始坐标
             $this->sourceImagePaintX = 0;
             $this->sourceImagePaintY = 0;
-            $this->copyedImageWidth = $this->sourceImageWidth;
+            $this->copyedImageWidth  = $this->sourceImageWidth;
             $this->copyedImageHeight = $this->sourceImageHeight;
 
             // 目标尺寸
-            $this->destImageWidth = $this->filledImageWidth + $this->imageBorderSize * 2;
+            $this->destImageWidth  = $this->filledImageWidth + $this->imageBorderSize * 2;
             $this->destImageHeight = $this->filledImageHeight + $this->imageBorderSize * 2;
         }
 
         if (2 == $num) {
-            $tempFillWidth = (int)$newImageWidthOrScale - $this->imageBorderSize * 2;
+            $tempFillWidth  = (int)$newImageWidthOrScale - $this->imageBorderSize * 2;
             $tempFillHeight = (int)$newImageHeight - $this->imageBorderSize * 2;
             if ($tempFillWidth < 0 || $tempFillHeight < 0) {
                 die("图片边框过大，已超过了图片的宽度");
@@ -510,85 +482,85 @@ class imageMate
             switch ($this->cutType) {
                 // 自动裁切 1：Y方向保持全图缩放，不裁切
                 case 1:
-                    {
-                        // 如果图片是缩小剪切才进行操作
-                        if ($rate_w >= 1 && $rate_h >= 1) {
-                            if ($this->sourceImageWidth > $this->sourceImageHeight) {
-                                $src_x = round($this->sourceImageWidth - $this->sourceImageHeight) / 2;
-                                $this->setCutPositionOnSourceImage($src_x, 0);
-                                $this->setCutRectangle($tempFillHeight, $tempFillHeight);
+                {
+                    // 如果图片是缩小剪切才进行操作
+                    if ($rate_w >= 1 && $rate_h >= 1) {
+                        if ($this->sourceImageWidth > $this->sourceImageHeight) {
+                            $src_x = round($this->sourceImageWidth - $this->sourceImageHeight) / 2;
+                            $this->setCutPositionOnSourceImage($src_x, 0);
+                            $this->setCutRectangle($tempFillHeight, $tempFillHeight);
 
-                                $this->copyedImageWidth = $this->sourceImageHeight;
-                                $this->copyedImageHeight = $this->sourceImageHeight;
-                            } elseif ($this->sourceImageWidth < $this->sourceImageHeight) {
-                                $src_y = round($this->sourceImageHeight - $this->sourceImageWidth) / 2;
-                                $this->setCutPositionOnSourceImage(0, $src_y);
-                                $this->setCutRectangle($tempFillWidth, $tempFillHeight);
+                            $this->copyedImageWidth  = $this->sourceImageHeight;
+                            $this->copyedImageHeight = $this->sourceImageHeight;
+                        } elseif ($this->sourceImageWidth < $this->sourceImageHeight) {
+                            $src_y = round($this->sourceImageHeight - $this->sourceImageWidth) / 2;
+                            $this->setCutPositionOnSourceImage(0, $src_y);
+                            $this->setCutRectangle($tempFillWidth, $tempFillHeight);
 
-                                $this->copyedImageWidth = $this->sourceImageWidth;
-                                $this->copyedImageHeight = $this->sourceImageWidth;
-                            } else {
-                                $this->setCutPositionOnSourceImage(0, 0);
-                                $this->copyedImageWidth = $this->sourceImageWidth;
-                                $this->copyedImageHeight = $this->sourceImageWidth;
-                                $this->setCutRectangle($tempFillWidth, $tempFillHeight);
-                            }
+                            $this->copyedImageWidth  = $this->sourceImageWidth;
+                            $this->copyedImageHeight = $this->sourceImageWidth;
                         } else {
                             $this->setCutPositionOnSourceImage(0, 0);
-                            $this->setCutRectangle($this->sourceImageWidth, $this->sourceImageHeight);
-
-                            $this->copyedImageWidth = $this->sourceImageWidth;
-                            $this->copyedImageHeight = $this->sourceImageHeight;
+                            $this->copyedImageWidth  = $this->sourceImageWidth;
+                            $this->copyedImageHeight = $this->sourceImageWidth;
+                            $this->setCutRectangle($tempFillWidth, $tempFillHeight);
                         }
+                    } else {
+                        $this->setCutPositionOnSourceImage(0, 0);
+                        $this->setCutRectangle($this->sourceImageWidth, $this->sourceImageHeight);
 
-                        // 目标尺寸
-                        $this->destImageWidth = $this->filledImageWidth + $this->imageBorderSize * 2;
-                        $this->destImageHeight = $this->filledImageHeight + $this->imageBorderSize * 2;
-
-                        break;
+                        $this->copyedImageWidth  = $this->sourceImageWidth;
+                        $this->copyedImageHeight = $this->sourceImageHeight;
                     }
+
+                    // 目标尺寸
+                    $this->destImageWidth  = $this->filledImageWidth + $this->imageBorderSize * 2;
+                    $this->destImageHeight = $this->filledImageHeight + $this->imageBorderSize * 2;
+
+                    break;
+                }
 
                 // 手工裁切 2：指定位置和大小后后手工裁切，X、Y方向均取得部分图像
                 case 2:
-                    {
-                        $this->copyedImageWidth = $this->filledImageWidth;
-                        $this->copyedImageHeight = $this->filledImageHeight;
+                {
+                    $this->copyedImageWidth  = $this->filledImageWidth;
+                    $this->copyedImageHeight = $this->filledImageHeight;
 
-                        // 目标尺寸
-                        $this->destImageWidth = $this->filledImageWidth + $this->imageBorderSize * 2;
-                        $this->destImageHeight = $this->filledImageHeight + $this->imageBorderSize * 2;
+                    // 目标尺寸
+                    $this->destImageWidth  = $this->filledImageWidth + $this->imageBorderSize * 2;
+                    $this->destImageHeight = $this->filledImageHeight + $this->imageBorderSize * 2;
 
-                        break;
-                    }
+                    break;
+                }
                 // 自动裁切0：X方向保持全图缩放，不裁切
                 case 0:
                 default:
-                    {
-                        // 如果原图大于缩略图，产生缩小，否则不缩小
-                        if ($rate_w < 1 && $rate_h < 1) {
-                            $this->filledImageWidth = (int)$this->sourceImageWidth;
-                            $this->filledImageHeight = (int)$this->sourceImageHeight;
+                {
+                    // 如果原图大于缩略图，产生缩小，否则不缩小
+                    if ($rate_w < 1 && $rate_h < 1) {
+                        $this->filledImageWidth  = (int)$this->sourceImageWidth;
+                        $this->filledImageHeight = (int)$this->sourceImageHeight;
+                    } else {
+                        if ($rate_w >= $rate_h) {
+                            $this->filledImageWidth  = (int)$tempFillWidth;
+                            $this->filledImageHeight = round($this->sourceImageHeight / $rate_w);
                         } else {
-                            if ($rate_w >= $rate_h) {
-                                $this->filledImageWidth = (int)$tempFillWidth;
-                                $this->filledImageHeight = round($this->sourceImageHeight / $rate_w);
-                            } else {
-                                $this->filledImageWidth = round($this->sourceImageWidth / $rate_h);
-                                $this->filledImageHeight = (int)$tempFillHeight;
-                            }
+                            $this->filledImageWidth  = round($this->sourceImageWidth / $rate_h);
+                            $this->filledImageHeight = (int)$tempFillHeight;
                         }
-
-                        $this->sourceImagePaintX = 0;
-                        $this->sourceImagePaintY = 0;
-
-                        $this->copyedImageWidth = $this->sourceImageWidth;
-                        $this->copyedImageHeight = $this->sourceImageHeight;
-
-                        // 目标尺寸
-                        $this->destImageWidth = $this->filledImageWidth + $this->imageBorderSize * 2;
-                        $this->destImageHeight = $this->filledImageHeight + $this->imageBorderSize * 2;
-                        break;
                     }
+
+                    $this->sourceImagePaintX = 0;
+                    $this->sourceImagePaintY = 0;
+
+                    $this->copyedImageWidth  = $this->sourceImageWidth;
+                    $this->copyedImageHeight = $this->sourceImageHeight;
+
+                    // 目标尺寸
+                    $this->destImageWidth  = $this->filledImageWidth + $this->imageBorderSize * 2;
+                    $this->destImageHeight = $this->filledImageHeight + $this->imageBorderSize * 2;
+                    break;
+                }
             }
         }
 
@@ -599,7 +571,6 @@ class imageMate
 
     /**
      * 设置源图剪切起始坐标点(仅在裁切模式cuteType为2手工裁切模式下有效)
-     *
      * @param $x
      * @param $y
      */
@@ -611,20 +582,18 @@ class imageMate
 
     /**
      * 设置图片剪切
-     *
      * @param int $width
-     *            矩形剪切的宽度
+     *                    矩形剪切的宽度
      * @param int $height 矩形剪切的高度
      */
     public function setCutRectangle($width, $height)
     {
-        $this->filledImageWidth = (int)$width;
+        $this->filledImageWidth  = (int)$width;
         $this->filledImageHeight = (int)$height;
     }
 
     /**
      * 水平翻转
-     *
      * @param resource $src
      *            图片源
      */
@@ -642,7 +611,6 @@ class imageMate
 
     /**
      * 垂直翻转
-     *
      * @param resource $src
      *            图片源
      */
@@ -667,8 +635,8 @@ class imageMate
 
         if ($this->maskWord) {
             // 获取水印文本所占用的高宽信息
-            $maskImageSize = FontHelper::getSize($this->maskFont, $this->mastFontSize, $this->maskWord);
-            $this->maskImageWidth = $maskImageSize[0];
+            $maskImageSize         = FontHelper::getSize($this->maskFont, $this->mastFontSize, $this->maskWord);
+            $this->maskImageWidth  = $maskImageSize[0];
             $this->maskImageHeight = $maskImageSize[1];
 
             if ($this->isMaskBiggerThanBackground()) {
@@ -720,7 +688,7 @@ class imageMate
      */
     private function isMaskBiggerThanBackground()
     {
-        Return ($this->maskImageWidth + $this->maskOffsetX > $this->filledImageWidth || $this->maskImageHeight + $this->maskOffsetY > $this->filledImageHeight) ? true : false;
+        return ($this->maskImageWidth + $this->maskOffsetX > $this->filledImageWidth || $this->maskImageHeight + $this->maskOffsetY > $this->filledImageHeight) ? true : false;
     }
 
     /**
@@ -729,7 +697,7 @@ class imageMate
     private function drawImageBorder()
     {
         if (!empty($this->imageBorderSize)) {
-            $c = ColorHelper::Hex2RGB($this->imageBorderColor);
+            $c     = ColorHelper::Hex2RGB($this->imageBorderColor);
             $color = imagecolorallocate($this->sourceImage, $c[0], $c[1], $c[2]);
             imagefilledrectangle($this->destImage, 0, 0, $this->destImageWidth, $this->destImageHeight, $color); // 填充背景色
         }
@@ -745,10 +713,10 @@ class imageMate
         $this->checkMaskValid();
 
         $mainColorArray = ColorHelper::Hex2RGB($this->maskFontMainColor);
-        $mainColor = imagecolorallocatealpha($backGroundImage, $mainColorArray[0], $mainColorArray[1], $mainColorArray[2], $this->maskTxtPct);
+        $mainColor      = imagecolorallocatealpha($backGroundImage, $mainColorArray[0], $mainColorArray[1], $mainColorArray[2], $this->maskTxtPct);
 
         $sideColorArray = ColorHelper::Hex2RGB($this->maskFontSideColor);
-        $sideColor = imagecolorallocatealpha($backGroundImage, $sideColorArray[0], $sideColorArray[1], $sideColorArray[2], $this->maskTxtPct);
+        $sideColor      = imagecolorallocatealpha($backGroundImage, $sideColorArray[0], $sideColorArray[1], $sideColorArray[2], $this->maskTxtPct);
 
         // dump('text'.$this->maskPositionY);
         if (is_numeric($this->maskFont)) {

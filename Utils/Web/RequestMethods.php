@@ -13,19 +13,19 @@ namespace Hiland\Utils\Web;
 
 class RequestMethods
 {
-    const ALL= "all";
-    const GET = "get";
-    const POST = "post";
-    const PUT = "put";
-    const PATCH = "patch";
-    const DELETE = "delete";
-    const ROUTE = "route";
-    const PARAM = "param";
+    const ALL     = "all";
+    const GET     = "get";
+    const POST    = "post";
+    const PUT     = "put";
+    const PATCH   = "patch";
+    const DELETE  = "delete";
+    const ROUTE   = "route";
+    const PARAM   = "param";
     const REQUEST = "request";
     const SESSION = "session";
-    const COOKIE = "cookie";
-    const SERVER = "server";
-    const ENV = "env";
-    const PATH = "path";
-    const FILE = "file";
+    const COOKIE  = "cookie";
+    const SERVER  = "server";
+    const ENV     = "env";
+    const PATH    = "path";
+    const FILE    = "file";
 }

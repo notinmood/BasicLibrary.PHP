@@ -17,7 +17,7 @@ class GuidHelper
 {
     /**
      * 空值guid
-     * @param bool $isBracket     是否在guid两端加入括号
+     * @param bool $isBracket 是否在guid两端加入括号
      * @return string
      */
     public static function genEmpty(bool $isBracket = false): string
@@ -38,18 +38,18 @@ class GuidHelper
      */
     public static function newGuid(bool $isBracket = false): string
     {
-        $totalMilliseconds = (string)((time() - TWOZEROZEROZEROYEAR) * 1000 + DateHelper::getCurrentMilliSecond());
-        $timespanString = StringHelper::splice($totalMilliseconds, ".", "");
+        $totalMilliseconds    = (string)((time() - TWOZEROZEROZEROYEAR) * 1000 + DateHelper::getCurrentMilliSecond());
+        $timespanString       = StringHelper::splice($totalMilliseconds, ".", "");
         $totalMillisecondsHex = base_convert($timespanString, 10, 16);
 
         // 左侧通过添加 0 补齐 11 位
         $totalMillisecondsHex = str_pad($totalMillisecondsHex, 11, 0, STR_PAD_LEFT);
 
-        $charID = md5(uniqid(mt_rand(), true));
+        $charID               = md5(uniqid(mt_rand(), true));
         $totalMillisecondsHex = strtoupper($totalMillisecondsHex . substr($charID, 0, 21));
 
         $hyphen = chr(45); // "-"
-        $guid = substr($totalMillisecondsHex, 0, 8) . $hyphen
+        $guid   = substr($totalMillisecondsHex, 0, 8) . $hyphen
             . substr($totalMillisecondsHex, 8, 4) . $hyphen
             . substr($totalMillisecondsHex, 12, 4) . $hyphen
             . substr($totalMillisecondsHex, 16, 4) . $hyphen
@@ -64,7 +64,7 @@ class GuidHelper
 
     /**
      * 清除guid内部的分隔符“-”
-     * @param string $guidWithHyphen     带有分隔符 “-” 的 guid 字符串
+     * @param string $guidWithHyphen 带有分隔符 “-” 的 guid 字符串
      * @return string 清除后不带有分隔符“-”的guid字符串
      */
     public static function cleanHyphen(string $guidWithHyphen): string
@@ -81,7 +81,7 @@ class GuidHelper
      */
     public static function addonHyphen(string $guidWithoutHyphen): string
     {
-        $guidWithoutHyphen = StringHelper::getStringAfterSeparator($guidWithoutHyphen, chr(123)); // "{"
+        $guidWithoutHyphen = StringHelper::getStringAfterSeparator($guidWithoutHyphen, chr(123));  // "{"
         $guidWithoutHyphen = StringHelper::getStringBeforeSeparator($guidWithoutHyphen, chr(125)); // "}"
 
         $hyphen = chr(45); // "-"
@@ -99,8 +99,8 @@ class GuidHelper
      */
     public static function determine($data): bool
     {
-        $data = StringHelper::getStringAfterSeparator($data, chr(123)); // "{"
-        $data = StringHelper::getStringBeforeSeparator($data, chr(125)); // "}"
+        $data    = StringHelper::getStringAfterSeparator($data, chr(123));  // "{"
+        $data    = StringHelper::getStringBeforeSeparator($data, chr(125)); // "}"
         $pattern = RegexHelper::GUID;
         if (preg_match($pattern, $data)) {
             return true;

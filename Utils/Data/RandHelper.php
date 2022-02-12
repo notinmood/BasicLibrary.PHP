@@ -25,8 +25,8 @@ class RandHelper
 
         $upperLetter = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $lowerLetter = 'abcdefghijklmnopqrstuvwxyz';
-        $digital = '0123456789';
-        $special = '~!@#$%^&*()_+|}{<>?-=\/,.';
+        $digital     = '0123456789';
+        $special     = '~!@#$%^&*()_+|}{<>?-=\/,.';
 
         switch ($category) {
             case SystemEnum::RandCategory_ALL:
@@ -49,7 +49,7 @@ class RandHelper
         $charCount = strlen($chars) - 1;
         for ($i = 0; $i < $length; $i++) {
             $position = mt_rand(0, $charCount);
-            $result .= $chars[$position];
+            $result   .= $chars[$position];
         }
 
         return $result;

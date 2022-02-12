@@ -13,7 +13,7 @@ class JavaScriptHelper
      */
     public static function alertNavigate(string $message, string $url, bool $isExit = true)
     {
-        $content= "alert('$message');location.href='$url';";
+        $content = "alert('$message');location.href='$url';";
         self::javaScriptWrapper($content, $isExit);
     }
 
@@ -25,7 +25,7 @@ class JavaScriptHelper
      */
     public static function alertBack(string $message, bool $isExit = true)
     {
-        $content= "alert('$message');history.back();";
+        $content = "alert('$message');history.back();";
         self::javaScriptWrapper($content, $isExit);
     }
 
@@ -37,7 +37,7 @@ class JavaScriptHelper
      */
     public static function navigate(string $url, bool $isExit = true)
     {
-        $content= "location.href='{$url}';";
+        $content = "location.href='{$url}';";
         self::javaScriptWrapper($content, $isExit);
     }
 
@@ -49,7 +49,7 @@ class JavaScriptHelper
      */
     public static function alertClose(string $message, bool $isExit = true)
     {
-        $content= "alert('$message');close();";
+        $content = "alert('$message');close();";
         self::javaScriptWrapper($content, $isExit);
     }
 
@@ -61,7 +61,7 @@ class JavaScriptHelper
      */
     public static function alert(string $message, bool $isExit = true)
     {
-        $content= "alert('$message');";
+        $content = "alert('$message');";
         self::javaScriptWrapper($content, $isExit);
     }
 

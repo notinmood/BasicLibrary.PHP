@@ -20,7 +20,7 @@ class DBSetHelper
     public static function getSingleValue(array $dbSet, string $fieldName, int $rowIndex = 0)
     {
         $fieldValue = null;
-        $rowData = self::getRow($dbSet, $rowIndex);
+        $rowData    = self::getRow($dbSet, $rowIndex);
         if ($rowData != null) {
             $fieldValue = $rowData[$fieldName];
         }

@@ -44,26 +44,26 @@ class dotEnvHelper
     /**
      * 获取环境变量值
      * @access public
-     * @param string      $name    环境变量名（支持二级 . 号分割）
-     * @param null $default 默认值
+     * @param string $name    环境变量名（支持二级 . 号分割）
+     * @param null   $default 默认值
      * @return array|bool|string|null
      */
     public static function get(string $name, $default = null)
     {
         if (!self::$loaded) {
-            $root = EnvHelper::getPhysicalRootPath();
+            $root    = EnvHelper::getPhysicalRootPath();
             $envFile = $root . DIRECTORY_SEPARATOR . '.env';
             self::loadFile($envFile);
         }
 
-        $result =$default;
-        if(ObjectHelper::isExist(self::$loadedArray)){
-            $result= ArrayHelper::getNode(self::$loadedArray,$name);
+        $result = $default;
+        if (ObjectHelper::isExist(self::$loadedArray)) {
+            $result = ArrayHelper::getNode(self::$loadedArray, $name);
         }
 
-        if($result){
+        if ($result) {
             return $result;
-        }else{
+        } else {
             return $default;
         }
     }

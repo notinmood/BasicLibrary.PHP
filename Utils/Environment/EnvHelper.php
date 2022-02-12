@@ -16,28 +16,28 @@ class EnvHelper
     public static function getAllInfo(): array
     {
         return [
-            '操作系统' => PHP_OS,
-            '运行环境' => $_SERVER["SERVER_SOFTWARE"],
-            '主机名' => $_SERVER['SERVER_NAME'],
-            '服务器CPU信息' => $_SERVER['PROCESSOR_IDENTIFIER'],
-            '服务器系统目录' => $_SERVER['SystemRoot'],
-            'WEB服务端口' => $_SERVER['SERVER_PORT'],
-            '网站文档目录' => $_SERVER["DOCUMENT_ROOT"],
-            '浏览器信息' => substr($_SERVER['HTTP_USER_AGENT'], 0, 40),
-            '通信协议' => $_SERVER['SERVER_PROTOCOL'],
-            '请求方法' => $_SERVER['REQUEST_METHOD'],
-            'PHP版本' => phpversion(),
-            'PHP运行方式' => php_sapi_name(),
-            '上传附件限制' => ini_get('upload_max_filesize'),
-            '执行时间限制' => ini_get('max_execution_time') . '秒',
-            '服务器时间' => date("Y年n月j日 H:i:s"),
-            '北京时间' => gmdate("Y年n月j日 H:i:s", time() + 8 * 3600),
-            '服务器域名/IP' => $_SERVER['SERVER_NAME'] . ' [ ' . gethostbyname($_SERVER['SERVER_NAME']) . ' ]',
-            '用户的IP地址' => $_SERVER['REMOTE_ADDR'],
-            '剩余空间' => round((disk_free_space(".") / (1024 * 1024)), 2) . 'M',
+            '操作系统'         => PHP_OS,
+            '运行环境'         => $_SERVER["SERVER_SOFTWARE"],
+            '主机名'          => $_SERVER['SERVER_NAME'],
+            '服务器CPU信息'     => $_SERVER['PROCESSOR_IDENTIFIER'],
+            '服务器系统目录'      => $_SERVER['SystemRoot'],
+            'WEB服务端口'      => $_SERVER['SERVER_PORT'],
+            '网站文档目录'       => $_SERVER["DOCUMENT_ROOT"],
+            '浏览器信息'        => substr($_SERVER['HTTP_USER_AGENT'], 0, 40),
+            '通信协议'         => $_SERVER['SERVER_PROTOCOL'],
+            '请求方法'         => $_SERVER['REQUEST_METHOD'],
+            'PHP版本'        => phpversion(),
+            'PHP运行方式'      => php_sapi_name(),
+            '上传附件限制'       => ini_get('upload_max_filesize'),
+            '执行时间限制'       => ini_get('max_execution_time') . '秒',
+            '服务器时间'        => date("Y年n月j日 H:i:s"),
+            '北京时间'         => gmdate("Y年n月j日 H:i:s", time() + 8 * 3600),
+            '服务器域名/IP'     => $_SERVER['SERVER_NAME'] . ' [ ' . gethostbyname($_SERVER['SERVER_NAME']) . ' ]',
+            '用户的IP地址'      => $_SERVER['REMOTE_ADDR'],
+            '剩余空间'         => round((disk_free_space(".") / (1024 * 1024)), 2) . 'M',
             'MySQL数据库持续连接' => get_cfg_var("mysql.allow_persistent") ? "是 " : "否",
-            '脚本运行占用最大内存' => get_cfg_var("memory_limit") ?: "无",
-            '当前进程用户名' => get_current_user(),
+            '脚本运行占用最大内存'   => get_cfg_var("memory_limit") ?: "无",
+            '当前进程用户名'      => get_current_user(),
         ];
     }
 
@@ -145,7 +145,7 @@ class EnvHelper
     public static function getPhpFloatVersion(): float
     {
         $version = '';
-        $array = explode('.', PHP_VERSION);
+        $array   = explode('.', PHP_VERSION);
         foreach ($array as $item) {
             if (!StringHelper::isContains($version, '.')) {
                 $version .= $item . '.';
@@ -267,9 +267,9 @@ class EnvHelper
          * 那么此种情况，就需要根据本文件所在的目录,移除到最后一个vendor(有可能目录其他部分还包含vendor),前面剩余的部分就是根目录。
          */
         if (StringHelper::isEndWith($rootPath, DIRECTORY_SEPARATOR . "vendor")) {
-            $pos = StringHelper::getPositions($current_path, DIRECTORY_SEPARATOR . "vendor");
+            $pos          = StringHelper::getPositions($current_path, DIRECTORY_SEPARATOR . "vendor");
             $lastPosition = 0;
-            $count = getLength($pos);
+            $count        = getLength($pos);
 
             if ($pos && $count > 0) {
                 $lastPosition = $pos[$count - 1];
@@ -315,8 +315,8 @@ class EnvHelper
         $rootPhysicalPath = EnvHelper::getPhysicalRootPath();
         $rootPhysicalPath = StringHelper::replace($rootPhysicalPath, "/", "\\");
 
-        $filePhysicalFullPath = $_SERVER["SCRIPT_FILENAME"];
-        $filePhysicalFullPath = StringHelper::replace($filePhysicalFullPath, "/", "\\");
+        $filePhysicalFullPath     = $_SERVER["SCRIPT_FILENAME"];
+        $filePhysicalFullPath     = StringHelper::replace($filePhysicalFullPath, "/", "\\");
         $filePhysicalRelativePath = StringHelper::subString($filePhysicalFullPath, StringHelper::getLength($rootPhysicalPath));
 
         $filePhysicalRelativePathArray = StringHelper::explode($filePhysicalRelativePath, "\\");

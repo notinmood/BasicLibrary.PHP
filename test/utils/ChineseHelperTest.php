@@ -17,22 +17,22 @@ class ChineseHelperTest extends TestCase
 {
     public function testGetPinyin(): void
     {
-        $data= "解放军";
+        $data     = "解放军";
         $expected = "jiefangjun";
-        $actual = ChineseHelper::getPinyin($data);
-        self::assertEquals($expected,$actual);
+        $actual   = ChineseHelper::getPinyin($data);
+        self::assertEquals($expected, $actual);
 
-        $data= "中国人";
+        $data     = "中国人";
         $expected = "zhongguoren";
-        $actual = ChineseHelper::getPinyin($data);
-        self::assertEquals($expected,$actual);
+        $actual   = ChineseHelper::getPinyin($data);
+        self::assertEquals($expected, $actual);
     }
 
     public function testGetFirstChar(): void
     {
-        $data = "中国人";
+        $data     = "中国人";
         $expected = "Z";
-        $actual = ChineseHelper::getFirstChar($data);
-        self::assertEquals($expected,$actual);
+        $actual   = ChineseHelper::getFirstChar($data);
+        self::assertEquals($expected, $actual);
     }
 }

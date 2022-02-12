@@ -52,7 +52,7 @@ class ServerHelper
      * @param $domainNameOrIP string 域名或ip地址
      * @return bool
      */
-    public static function isLocalServer($domainNameOrIP): bool
+    public static function isLocalServer(string $domainNameOrIP): bool
     {
         return EnvHelper::isLocalServer($domainNameOrIP);
     }

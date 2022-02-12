@@ -40,7 +40,7 @@ class ConfigMateTest extends TestCase
 
     public function testArrayGet()
     {
-        $actual = ConfigMate::Instance()->loadFile("config_test.php")->get('a');
+        $actual   = ConfigMate::Instance()->loadFile("config_test.php")->get('a');
         $expected = "T.AAA";
         self::assertEquals("$expected", "$actual");
 
@@ -50,39 +50,39 @@ class ConfigMateTest extends TestCase
          * 本例中，demo.config.php的配置项a的值为 AAA,但因为 config_test.php 在前面已经加载了，
          * config_test.php内含有配置项a,其值为 T.AAA
          */
-        $actual = ConfigMate::Instance()->loadFile("demo.config.php")->get('a');
+        $actual   = ConfigMate::Instance()->loadFile("demo.config.php")->get('a');
         $expected = "T.AAA";
         self::assertEquals("$expected", "$actual");
 
 
-        $actual = ConfigMate::Instance()->get('a');
+        $actual   = ConfigMate::Instance()->get('a');
         $expected = "T.AAA";
         self::assertEquals("$expected", "$actual");
 
 
-        $actual = ConfigMate::Instance()->loadFile("demo.config.php")->get('d.dB.dBA');
+        $actual   = ConfigMate::Instance()->loadFile("demo.config.php")->get('d.dB.dBA');
         $expected = "T.dba-content";
         self::assertEquals("$expected", "$actual");
 
         //加载不存在的配置文件,也不会抛出异常
-        $actual = ConfigMate::Instance()->loadFile("config22.php")->get('a');
+        $actual   = ConfigMate::Instance()->loadFile("config22.php")->get('a');
         $expected = "T.AAA";
-        self::assertEquals($expected,$actual);
+        self::assertEquals($expected, $actual);
     }
 
     public function testIniGet()
     {
         ConfigMate::Instance()->loadFile("demo.config.ini")->get('ga.non_section_node');
 
-        $actual = ConfigMate::Instance()->get('base.host');
+        $actual   = ConfigMate::Instance()->get('base.host');
         $expected = "localhost";
         self::assertEquals("$expected", "$actual");
 
-        $actual = ConfigMate::Instance()->get('base.database');
+        $actual   = ConfigMate::Instance()->get('base.database');
         $expected = "default";
         self::assertEquals("$expected", "$actual");
 
-        $actual = ConfigMate::Instance()->get('archive.database');
+        $actual   = ConfigMate::Instance()->get('archive.database');
         $expected = "archive";
         self::assertEquals("$expected", "$actual");
     }
@@ -91,15 +91,15 @@ class ConfigMateTest extends TestCase
     {
         ConfigMate::Instance()->loadFile("demo.config.json")->get('ga.non_section_node');
 
-        $actual = ConfigMate::Instance()->get('1.0');
+        $actual   = ConfigMate::Instance()->get('1.0');
         $expected = "a";
         self::assertEquals("$expected", "$actual");
 
-        $actual = ConfigMate::Instance()->get('2');
+        $actual   = ConfigMate::Instance()->get('2');
         $expected = "qingdao";
         self::assertEquals("$expected", "$actual");
 
-        $actual = ConfigMate::Instance()->get('3.0');
+        $actual   = ConfigMate::Instance()->get('3.0');
         $expected = 1;
         self::assertEquals("$expected", "$actual");
     }

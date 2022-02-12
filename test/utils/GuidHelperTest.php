@@ -17,7 +17,7 @@ class GuidHelperTest extends TestCase
 {
     public function testNewGuid()
     {
-        $actual = getLength(GuidHelper::newGuid());
+        $actual   = getLength(GuidHelper::newGuid());
         $expected = 36;
         self::assertEquals($expected, $actual);
     }

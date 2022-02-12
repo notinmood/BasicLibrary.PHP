@@ -22,17 +22,17 @@ class ConfigParserIni extends ConfigParser
 {
     public function loadFileToArray($fileFullName): array
     {
-        $ini = parse_ini_file($fileFullName, true);
+        $ini    = parse_ini_file($fileFullName, true);
         $config = array();
         foreach ($ini as $namespace => $properties) {
-            if(StringHelper::isContains($namespace,":")){
+            if (StringHelper::isContains($namespace, ":")) {
                 list($name, $extends) = explode(':', $namespace);
-            }else{
-                $name= $namespace;
-                $extends= "";
+            } else {
+                $name    = $namespace;
+                $extends = "";
             }
 
-            $name = trim($name);
+            $name    = trim($name);
             $extends = trim($extends);
             // create namespace if necessary
             if (!isset($config[$name])) {

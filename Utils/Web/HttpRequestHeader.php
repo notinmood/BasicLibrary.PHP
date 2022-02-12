@@ -11,7 +11,7 @@ class HttpRequestHeader
 
     public static function get($key)
     {
-        $key = strtoupper($key);
+        $key     = strtoupper($key);
         $headers = self::getAll();
         foreach ($headers as $k => $v) {
             if ($k == $key) {
@@ -106,8 +106,8 @@ class HttpRequestHeader
 
     /**
      * 延迟转向
-     * @param string $url 目标地址
-     * @param int $seconds 延迟时间
+     * @param string $url     目标地址
+     * @param int    $seconds 延迟时间
      */
     public static function redirectUrlDelay($url, $seconds = 10)
     {

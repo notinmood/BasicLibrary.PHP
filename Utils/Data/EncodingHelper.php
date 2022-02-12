@@ -67,7 +67,7 @@ class EncodingHelper
             } else
                 if ($stringData[$i] == '%') {
                     $ret .= urldecode(substr($stringData, $i, 3));
-                    $i += 2;
+                    $i   += 2;
                 } else
                     $ret .= $stringData[$i];
         }

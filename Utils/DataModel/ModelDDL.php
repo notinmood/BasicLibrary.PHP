@@ -68,7 +68,7 @@ class ModelDDL
          */
         $isExist = $this->isExistTable($tableName);
         if ($isExist) {
-            $mate = DatabaseClient::getMate($tableName);
+            $mate          = DatabaseClient::getMate($tableName);
             $realTableName = $mate->getTableRealName();
 
             if ($bothStructAndData) {
@@ -95,8 +95,8 @@ class ModelDDL
         }
 
         $realTableName = $mate->getTableRealName();
-        $sql = "SHOW TABLES like '$realTableName';";
-        $result = $mate->directlyQuery($sql);
+        $sql           = "SHOW TABLES like '$realTableName';";
+        $result        = $mate->directlyQuery($sql);
 
         if ($result && getLength($result) > 0) {
             return ArrayHelper::isContainsValue($result[0], $realTableName);
@@ -111,10 +111,10 @@ class ModelDDL
      */
     public function getTableDefinition(string $tableName): string
     {
-        $mate = DatabaseClient::getMate($tableName);
+        $mate          = DatabaseClient::getMate($tableName);
         $realTableName = $mate->getTableRealName();
 
-        $sql = "show create table `$realTableName`";
+        $sql    = "show create table `$realTableName`";
         $result = $mate->directlyQuery($sql);
         if ($result && getLength($result) > 0) {
             return $result[0]["Create Table"];
@@ -136,7 +136,7 @@ class ModelDDL
      */
     public function getContentSql(string $tableName, int $row_count = -1): string
     {
-        $mate = DatabaseClient::getMate($tableName);
+        $mate          = DatabaseClient::getMate($tableName);
         $realTableName = $mate->getTableRealName();
 
         if ($row_count < 0) {

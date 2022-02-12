@@ -13,7 +13,7 @@ use Hiland\Utils\Data\ReflectionHelper;
 use Hiland\Utils\Data\StringHelper;
 
 /**
- * @TODO 本类型需要重新整理，尤其是变量 APP_DEBUG等信息需要重新确认
+ * @TODO    本类型需要重新整理，尤其是变量 APP_DEBUG等信息需要重新确认
  * Class ConstMate
  * @package Vendor\Hiland\Utils\Data
  * 记录有业务常量的类型，继承此类。具体用法如下
@@ -57,7 +57,7 @@ class ConstMate
      */
     public static function getConstText($prefix, $value, string $textPostFix = "_TEXT")
     {
-        $all = self::getConsts($prefix);
+        $all      = self::getConsts($prefix);
         $constKey = self::getConstName($prefix, $value);
         return $all[$constKey . $textPostFix];
     }
@@ -85,9 +85,9 @@ class ConstMate
 
     private static function getConstsDetail($prefix, $withText): array
     {
-        $className = get_called_class();
+        $className       = get_called_class();
         $reflectionClass = ReflectionHelper::getReflectionClass($className);
-        $all = $reflectionClass->getConstants();
+        $all             = $reflectionClass->getConstants();
 
         $result = array();
         if (empty($prefix)) {
@@ -177,7 +177,7 @@ class ConstMate
      */
     public static function getConstArray(string $prefix, bool $keyValueModeForElement = true, string $textPostFix = "_TEXT"): array
     {
-        $all = self::getConsts($prefix, true);
+        $all    = self::getConsts($prefix, true);
         $result = array();
         foreach ($all as $key => $value) {
             if (!StringHelper::isEndWith($key, "_TEXT")) {
@@ -186,7 +186,7 @@ class ConstMate
                 } else {
                     $result[] = array(
                         "value" => $value,
-                        "text" => $all[$key . $textPostFix],
+                        "text"  => $all[$key . $textPostFix],
                     );
                 }
             }

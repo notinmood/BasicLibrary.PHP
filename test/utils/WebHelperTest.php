@@ -15,14 +15,15 @@ use PHPUnit\Framework\TestCase;
 
 class WebHelperTest extends TestCase
 {
-    public function testGetWebMetas(){
-        $url= 'https://www.jb51.net';
-        $result= WebHelper::getWebMetas($url);
+    public function testGetWebMetas()
+    {
+        $url    = 'https://www.jb51.net';
+        $result = WebHelper::getWebMetas($url);
         dump($result);
-        
-        $result = WebHelper::getWebMetas($url,"keyword");
+
+        $result = WebHelper::getWebMetas($url, "keyword");
         dump($result);
-        
+
         self::assertEquals(true, true);
     }
 

@@ -67,9 +67,9 @@ class FileHelper
             return false;
         } else {
             $result["fullName"] = $_FILES[$submitControlName]["tmp_name"];
-            $result["name"] = $_FILES[$submitControlName]["name"];
-            $result["type"] = $_FILES[$submitControlName]["type"];
-            $result["size"] = $_FILES[$submitControlName]["size"];
+            $result["name"]     = $_FILES[$submitControlName]["name"];
+            $result["type"]     = $_FILES[$submitControlName]["type"];
+            $result["size"]     = $_FILES[$submitControlName]["size"];
 
             return $result;
         }
