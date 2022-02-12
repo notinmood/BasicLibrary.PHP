@@ -25,7 +25,7 @@ class Base64Helper
     {
         $result = base64_encode($originalString);
 
-        if ($safely == true) {
+        if ($safely === true) {
             $result = self::getSafeBase64($result);
         }
 
@@ -51,7 +51,7 @@ class Base64Helper
     public static function isBase64(string $stringData): bool
     {
         $length = StringHelper::getLength($stringData);
-        if ($length % 4 != 0) {
+        if ($length % 4 !== 0) {
             return false;
         }
 
@@ -66,7 +66,7 @@ class Base64Helper
             if ($currentChar >= '0' && $currentChar <= '9') {
                 continue;
             }
-            if ($currentChar == '+' || $currentChar == '\\' || $currentChar == '=') {
+            if ($currentChar === '+' || $currentChar === '\\' || $currentChar === '=') {
                 continue;
             }
 

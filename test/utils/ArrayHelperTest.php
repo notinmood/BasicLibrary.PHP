@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 class ArrayHelperTest extends TestCase
 {
-    public function testGetItem()
+    public function testGetItem(): void
     {
         $data["city"] = "qingdao";
         $data["provence"] = "shandong";
@@ -29,7 +29,7 @@ class ArrayHelperTest extends TestCase
         self::assertEquals($expected,$actual);
     }
 
-    public function testSort2D()
+    public function testSort2D(): void
     {
         $myArray = [
             [

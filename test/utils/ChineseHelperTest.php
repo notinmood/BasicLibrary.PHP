@@ -15,7 +15,8 @@ use PHPUnit\Framework\TestCase;
 
 class ChineseHelperTest extends TestCase
 {
-    public function testGetPinyin(){
+    public function testGetPinyin(): void
+    {
         $data= "解放军";
         $expected = "jiefangjun";
         $actual = ChineseHelper::getPinyin($data);
@@ -27,7 +28,8 @@ class ChineseHelperTest extends TestCase
         self::assertEquals($expected,$actual);
     }
 
-    public function testGetFirstChar(){
+    public function testGetFirstChar(): void
+    {
         $data = "中国人";
         $expected = "Z";
         $actual = ChineseHelper::getFirstChar($data);

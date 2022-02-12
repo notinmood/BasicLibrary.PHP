@@ -20,7 +20,7 @@ use PHPUnit\Framework\TestCase;
 
 class ConfigHelperTest extends TestCase
 {
-    public function testGet1()
+    public function testGet1(): void
     {
         $key = "d.dA";
         $actual = ConfigClient::get($key);
@@ -52,7 +52,7 @@ class ConfigHelperTest extends TestCase
     /**
      * @return void
      */
-    public function testGet2()
+    public function testGet2(): void
     {
         ConfigClient::loadFile("demo.config.ini");
         self::assertEquals(1, 1);
@@ -75,7 +75,7 @@ class ConfigHelperTest extends TestCase
      * 测试 .env 优先生效
      * @return void
      */
-    public function testGet3()
+    public function testGet3(): void
     {
         $key = "city";
         $actual = ConfigClient::get($key);
@@ -98,7 +98,7 @@ class ConfigHelperTest extends TestCase
         self::assertEquals($expect, $actual);
     }
 
-    public function testGet4()
+    public function testGet4(): void
     {
         $key = "needServerValidateSign";
         $actual = ConfigClient::get($key);
@@ -110,7 +110,7 @@ class ConfigHelperTest extends TestCase
      * TODO:这个方法单独执行没有问题，但整个文件一起执行，就报错。
      * @return void
      */
-    public function testGetSection1()
+    public function testGetSection1(): void
     {
         $key = "archive.host";
         $actual = ConfigClient::get($key, null, "demo.config.ini");
@@ -129,7 +129,7 @@ class ConfigHelperTest extends TestCase
         self::assertEquals($expect, $actual);
     }
 
-    public function testGetSection2()
+    public function testGetSection2(): void
     {
         $key = "base";
         $actual = ConfigClient::get($key);
@@ -143,7 +143,7 @@ class ConfigHelperTest extends TestCase
      * 测试 .env 内的数据
      * @return void
      */
-    public function testGetSection3()
+    public function testGetSection3(): void
     {
         $key = "users";
         $actual = ConfigClient::get($key);
