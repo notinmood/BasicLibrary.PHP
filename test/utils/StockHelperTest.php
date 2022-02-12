@@ -1,7 +1,8 @@
 <?php
 
-namespace Hiland\Biz\Stock;
+namespace Hiland\Test\utils;
 
+use Hiland\Biz\Stock\StockHelper;
 use PHPUnit\Framework\TestCase;
 use function PHPUnit\Framework\assertEquals;
 

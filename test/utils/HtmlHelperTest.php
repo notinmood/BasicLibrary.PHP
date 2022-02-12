@@ -8,8 +8,9 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Utils\Data;
+namespace Hiland\Test\utils;
 
+use Hiland\Utils\Data\HtmlHelper;
 use PHPUnit\Framework\TestCase;
 
 class HtmlHelperTest extends TestCase

@@ -8,8 +8,9 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Utils\DataConstruct;
+namespace Hiland\Test\utils;
 
+use Hiland\Utils\DataConstruct\ResultObject;
 use PHPUnit\Framework\TestCase;
 
 class ResultObjectTest extends TestCase

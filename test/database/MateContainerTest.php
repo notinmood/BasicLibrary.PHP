@@ -8,8 +8,9 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Utils\DataModel;
+namespace Hiland\Test\database;
 
+use Hiland\Utils\DataModel\MateContainer;
 use PHPUnit\Framework\TestCase;
 
 class MateContainerTest extends TestCase

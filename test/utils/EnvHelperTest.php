@@ -8,7 +8,7 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Test;
+namespace Hiland\Test\utils;
 
 use Hiland\Utils\Environment\EnvHelper;
 use PHPUnit\Framework\TestCase;

@@ -8,9 +8,11 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Utils\DataModel;
+namespace Hiland\Test\database;
 
 use Hiland\Test\database\_res\UserMocker;
+use Hiland\Utils\DataModel\DatabaseClient;
+use Hiland\Utils\DataModel\DatabaseUnitTest;
 use Hiland\Utils\DataValue\SystemEnum;
 use PHPUnit\Framework\TestCase;
 
@@ -32,7 +34,7 @@ class DatabaseUnitTestTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function test_is_exist_table2()
+    public function test_is_exist_table2(): string
     {
         $table_name = "user";
         $biz        = new DatabaseUnitTest($table_name, 2);
@@ -230,7 +232,7 @@ class DatabaseUnitTestTest extends TestCase
         $data["birthday"] = "2021-12-31 01:13:25";
         $data["score"]    = 88;
 
-        $recordID = $mate->interact($data);
+        $mate->interact($data);
 
         $entity   = $mate->find(["email" => "mpp@qq.com", "score" => 88]);
         $expected = "zhao";

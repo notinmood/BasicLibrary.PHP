@@ -8,10 +8,11 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Utils\Data;
+namespace Hiland\Test\utils;
 
 use DateTime;
 use Exception;
+use Hiland\Utils\Data\DateHelper;
 use PHPUnit\Framework\TestCase;
 
 class DateHelperTest extends TestCase

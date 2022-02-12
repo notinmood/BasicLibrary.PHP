@@ -8,8 +8,10 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Utils\IO;
+namespace Hiland\Test\utils;
 
+use Hiland\Utils\IO\FileHelper;
+use Hiland\Utils\IO\PathHelper;
 use PHPUnit\Framework\TestCase;
 
 class FileHelperTest extends TestCase

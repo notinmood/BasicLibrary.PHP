@@ -8,9 +8,11 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Utils\Data;
+namespace Hiland\Test\utils;
 
 use Hiland\Test\_res\Student;
+use Hiland\Utils\Data\ObjectHelper;
+use Hiland\Utils\Data\ObjectTypes;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 

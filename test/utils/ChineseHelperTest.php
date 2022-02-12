@@ -8,8 +8,9 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Utils\Data;
+namespace Hiland\Test\utils;
 
+use Hiland\Utils\Data\ChineseHelper;
 use PHPUnit\Framework\TestCase;
 
 class ChineseHelperTest extends TestCase

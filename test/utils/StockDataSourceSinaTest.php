@@ -1,7 +1,8 @@
 <?php
 
-namespace Hiland\Biz\Stock\StockDataSource;
+namespace Hiland\Test\utils;
 
+use Hiland\Biz\Stock\StockDataSource\StockDataSourceSina;
 use Hiland\Biz\Stock\StockRealTimeQuote;
 use Hiland\Utils\Data\ReflectionHelper;
 use PHPUnit\Framework\TestCase;

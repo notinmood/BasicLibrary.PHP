@@ -8,7 +8,7 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Utils\Environment;
+namespace Hiland\Test\utils;
 
 use Hiland\Utils\Config\ConfigClient;
 use PHPUnit\Framework\TestCase;

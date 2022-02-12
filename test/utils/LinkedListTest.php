@@ -8,8 +8,9 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Utils\DataConstruct;
+namespace Hiland\Test\utils;
 
+use Hiland\Utils\DataConstruct\LinkedList;
 use PHPUnit\Framework\TestCase;
 
 class LinkedListTest extends TestCase

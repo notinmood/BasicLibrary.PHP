@@ -8,9 +8,10 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Utils\IO;
+namespace Hiland\Test\utils;
 
 use Hiland\Utils\Data\StringHelper;
+use Hiland\Utils\IO\PathHelper;
 use PHPUnit\Framework\TestCase;
 
 class PathHelperTest extends TestCase

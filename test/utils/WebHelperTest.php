@@ -8,8 +8,9 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Utils\Web;
+namespace Hiland\Test\utils;
 
+use Hiland\Utils\Web\WebHelper;
 use PHPUnit\Framework\TestCase;
 
 class WebHelperTest extends TestCase

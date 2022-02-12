@@ -8,8 +8,9 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Utils\Data;
+namespace Hiland\Test\utils;
 
+use Hiland\Utils\Data\NumberHelper;
 use PHPUnit\Framework\TestCase;
 
 class NumberHelperTest extends TestCase

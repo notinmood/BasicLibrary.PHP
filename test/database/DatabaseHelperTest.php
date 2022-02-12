@@ -8,8 +8,9 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Utils\DataModel;
+namespace Hiland\Test\database;
 
+use Hiland\Utils\DataModel\DatabaseHelper;
 use PHPUnit\Framework\TestCase;
 
 class DatabaseHelperTest extends TestCase

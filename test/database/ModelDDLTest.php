@@ -8,9 +8,10 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Utils\DataModel;
+namespace Hiland\Test\database;
 
 use Hiland\Utils\Data\StringHelper;
+use Hiland\Utils\DataModel\DatabaseClient;
 use PHPUnit\Framework\TestCase;
 
 class ModelDDLTest extends TestCase

@@ -1,7 +1,8 @@
 <?php
 
-namespace Hiland\Biz\Stock;
+namespace Hiland\Test\utils;
 
+use Hiland\Biz\Stock\StockMate;
 use Hiland\Utils\Data\ObjectHelper;
 use PHPUnit\Framework\TestCase;
 

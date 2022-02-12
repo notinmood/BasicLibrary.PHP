@@ -8,8 +8,9 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Utils\Data;
+namespace Hiland\Test\utils;
 
+use Hiland\Utils\Data\GuidHelper;
 use PHPUnit\Framework\TestCase;
 
 class GuidHelperTest extends TestCase

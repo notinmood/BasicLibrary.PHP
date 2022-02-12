@@ -8,8 +8,9 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Utils\Data;
+namespace Hiland\Test\utils;
 
+use Hiland\Utils\Data\Base64Helper;
 use PHPUnit\Framework\TestCase;
 
 class Base64HelperTest extends TestCase

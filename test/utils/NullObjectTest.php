@@ -8,10 +8,11 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Utils\Pattern;
+namespace Hiland\Test\utils;
 
 use Exception;
 use Hiland\Test\_res\Student;
+use Hiland\Utils\Pattern\NullObject;
 use PHPUnit\Framework\TestCase;
 
 class NullObjectTest extends TestCase

@@ -8,7 +8,7 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Test\Utils\Data;
+namespace Hiland\Test\utils;
 
 use Hiland\Utils\Data\StringHelper;
 use PHPUnit\Framework\TestCase;

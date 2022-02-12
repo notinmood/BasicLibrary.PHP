@@ -14,7 +14,6 @@ use Hiland\Utils\Data\ReflectionHelper;
 use Hiland\Utils\DataModel\DatabaseClient;
 use Hiland\Utils\DataModel\ModelMate;
 use PHPUnit\Framework\TestCase;
-use ReflectionException;
 
 /**
  * 对Mate的测试，大部分都统一在 DatabaseUnitTestTest.php 内进行。
