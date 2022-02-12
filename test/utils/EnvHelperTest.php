@@ -3,7 +3,7 @@
  * @file   : EnvHelperTest.php
  * @time   : 19:26
  * @date   : 2021/12/30
- * @emailto: 9727005@qq.com
+ * @mail   : 9727005@qq.com
  * @creator: ShanDong Xiedali
  * @company: HiLand & RainyTop
  */

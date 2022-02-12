@@ -3,7 +3,7 @@
  * @file   : ChineseHelperTest.php
  * @time   : 9:25
  * @date   : 2021/11/7
- * @emailto: 9727005@qq.com
+ * @mail   : 9727005@qq.com
  * @creator: ShanDong Xiedali
  * @company: HiLand & RainyTop
  */

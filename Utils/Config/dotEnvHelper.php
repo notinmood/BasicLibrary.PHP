@@ -3,7 +3,7 @@
  * @file   : dotEnvHelper.php
  * @time   : 0:00
  * @date   : 2022/1/4
- * @emailto: 9727005@qq.com
+ * @mail   : 9727005@qq.com
  * @creator: ShanDong Xiedali
  * @company: HiLand & RainyTop
  */

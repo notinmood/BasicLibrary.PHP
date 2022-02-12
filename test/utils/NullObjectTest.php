@@ -3,7 +3,7 @@
  * @file   : NullObjectTest.php
  * @time   : 10:35
  * @date   : 2021/10/12
- * @emailto: 9727005@qq.com
+ * @mail   : 9727005@qq.com
  * @creator: ShanDong Xiedali
  * @company: HiLand & RainyTop
  */

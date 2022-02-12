@@ -3,7 +3,7 @@
  * @file   : MathHelperTest.php
  * @time   : 8:56
  * @date   : 2021/8/8
- * @emailto: 9727005@qq.com
+ * @mail   : 9727005@qq.com
  * @creator: ShanDong Xiedali
  * @company: HiLand & RainyTop
  */

@@ -3,7 +3,7 @@
  * @file   : UserMocker.php
  * @time   : 15:04
  * @date   : 2022/1/1
- * @emailto: 9727005@qq.com
+ * @mail   : 9727005@qq.com
  * @creator: ShanDong Xiedali
  * @company: HiLand & RainyTop
  */
