@@ -68,7 +68,6 @@ class LinkedListTest extends TestCase
 
     public function testAddHead()
     {
-        // $linkedList = $this-> prepareData();
         $linkedList = new LinkedList();
 
 

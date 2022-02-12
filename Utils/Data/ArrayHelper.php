@@ -36,7 +36,7 @@ class ArrayHelper
      */
     public static function isContainsValue($array, $value): bool
     {
-        foreach ($array as $k => $v) {
+        foreach ($array as $v) {
             if ($v == $value) {
                 return true;
             }
@@ -405,8 +405,6 @@ class ArrayHelper
             return $dbSet;
         }
 
-        $dbSet = (array)$dbSet;
-
         foreach ($dbSet as $key => $row) {
             self::displayEntityFriendly($dbSet[$key], $mapArray, $funcArray);
         }
@@ -437,8 +435,6 @@ class ArrayHelper
         if ($dataEntity == false || $dataEntity === null) {
             return $dataEntity;
         }
-
-        $dataEntity = (array)$dataEntity;
 
         if ($mapArray != null && is_array($mapArray)) {
             foreach ($mapArray as $col => $pair) {

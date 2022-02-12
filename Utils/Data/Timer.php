@@ -37,7 +37,7 @@ class Timer
     # Stop counting time
     function stop()
     {
-        $this->end = $this->_getTime();
+        $this->end     = $this->_getTime();
         $this->elapsed = $this->_compute();
     }
 
@@ -54,8 +54,8 @@ class Timer
     # Resets Timer so it can be used again
     function reset()
     {
-        $this->begin = 0;
-        $this->end = 0;
+        $this->begin   = 0;
+        $this->end     = 0;
         $this->elapsed = 0;
     }
 

@@ -76,7 +76,7 @@ class ResultObjectTest extends TestCase
     /**
      * @return ResultObject
      */
-    private function builderResultObject()
+    private function builderResultObject(): ResultObject
     {
         $message = "我是一个标题";
         $data = ["a" => "AA", "b" => "BB"];
@@ -89,5 +89,5 @@ class ResultObjectTest extends TestCase
         return $resultObject;
     }
 
-    private $jsonString = '{"status":true,"message":"\u6211\u662f\u4e00\u4e2a\u6807\u9898","data":{"a":"AA","b":"BB"},"misc":{"myNation":"China\u4e2d\u56fd"}}';
+    private string $jsonString = '{"status":true,"message":"\u6211\u662f\u4e00\u4e2a\u6807\u9898","data":{"a":"AA","b":"BB"},"misc":{"myNation":"China\u4e2d\u56fd"}}';
 }

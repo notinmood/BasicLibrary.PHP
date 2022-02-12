@@ -58,7 +58,7 @@ class ConfigMate
             self::loadFile();
         }
 
-        foreach (self::$__configContentArray as $configFileFullName => $currentConfigContent) {
+        foreach (self::$__configContentArray as $currentConfigContent) {
             $result = ArrayHelper::getNode($currentConfigContent, $key);
             if (!is_null($result)) {
                 return $result;
@@ -112,10 +112,10 @@ class ConfigMate
     {
         $extensionName = FileHelper::getExtensionName($fileName);
         $extensionName = StringHelper::upperStringFirstChar($extensionName);
-
+        /** @noinspection all */
         $targetParserType   = "ConfigParser{$extensionName}";
-        $targetParserClass  = "Hiland\\Utils\\Config\\{$targetParserType}";
-        $targetFileBaseName = "{$targetParserType}.php";
+        $targetParserClass  = "Hiland\\Utils\\Config\\$targetParserType";
+        $targetFileBaseName = "$targetParserType.php";
         $targetFileFullName = PathHelper::combine(__DIR__, $targetFileBaseName);
         if (file_exists($targetFileFullName)) {
             return new $targetParserClass();

@@ -3,8 +3,6 @@
 
 namespace Hiland\Utils\Data;
 
-use think\App;
-use think\facade\Config;
 
 /**
  * 对thinkphp的包装，主要用于thinkphp各个版本的兼容
@@ -31,18 +29,18 @@ class ThinkHelper
         return false;
     }
 
-    private static function getSomeSubVersion($pos)
+    private static function getSomeSubVersion($index)
     {
         $result = 0;
 
-        $version = self::getVersion();
-        $firstNode = StringHelper::getStringBeforeSeparator($version, " ");
+        $version    = self::getVersion();
+        $firstNode  = StringHelper::getStringBeforeSeparator($version, " ");
         $secondNode = StringHelper::getStringAfterSeparator($version, " ");
-        $arr = explode(".", $firstNode);
-        $arr[] = $secondNode;
+        $arr        = explode(".", $firstNode);
+        $arr[]      = $secondNode;
 
-        if (ArrayHelper::isContainsKey($arr, $pos)) {
-            $result = $arr[$pos];
+        if (ArrayHelper::isContainsKey($arr, $index)) {
+            $result = $arr[$index];
         }
 
         return $result;
@@ -54,13 +52,17 @@ class ThinkHelper
      */
     public static function getVersion(): string
     {
+        $version= "0.0.0";
         //---------------------------------------------
         // thinkphp3和5.0中，版本号保存在THINK_VERSION里面；
         // thinkphp5.1和6中，版本号保存在think\App::VERSION里面；
         //---------------------------------------------
         if (defined('think\App::VERSION')) {
+            /** @noinspection all */
             $version = \think\App::VERSION;
-        } else {
+        }
+        if (defined('THINK_VERSION')) {
+            /** @noinspection all */
             $version = THINK_VERSION;
         }
 

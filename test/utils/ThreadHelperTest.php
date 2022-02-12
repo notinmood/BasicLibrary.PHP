@@ -36,7 +36,7 @@ class ThreadHelperTest extends TestCase
      */
     public function testAsyncRun()
     {
-        // $data = array('name' => 'guoyu', 'pwd' => '123456');
+        // $data = array('name' => 'zhangsan', 'pwd' => '123456');
         // $url = 'http://localhost/PHP.Study/ThreadsStudy/S02AsyncThread/server.php';
         //
         // ThreadHelper::asyncRun($url, $data);

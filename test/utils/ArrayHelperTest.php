@@ -72,7 +72,7 @@ class ArrayHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    private function prepareIndexArray()
+    private function prepareIndexArray(): array
     {
         return ['A', 'B', 'C', 'D'];
     }
@@ -96,7 +96,7 @@ class ArrayHelperTest extends TestCase
         self::assertEquals(false, $actual);
     }
 
-    private function prepareAssociateArray1()
+    private function prepareAssociateArray1(): array
     {
         $array1['a'] = "1A";
         $array1['b'] = "1B";
@@ -219,7 +219,7 @@ class ArrayHelperTest extends TestCase
     /**
      * @return array
      */
-    private function prepareAssociateArray2()
+    private function prepareAssociateArray2(): array
     {
         $array2['c'] = "2C";
         $array2['d'] = "2D";

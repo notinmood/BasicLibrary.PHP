@@ -71,8 +71,7 @@ class ConfigMateTest extends TestCase
 
     public function testIniGet()
     {
-        $actual = ConfigMate::Instance()->loadFile("demo.config.ini")->get('ga.non_section_node');
-        // self::assertNull("$actual");
+        ConfigMate::Instance()->loadFile("demo.config.ini")->get('ga.non_section_node');
 
         $actual = ConfigMate::Instance()->get('base.host');
         $expected = "localhost";
@@ -89,11 +88,7 @@ class ConfigMateTest extends TestCase
 
     public function testJsonGet()
     {
-        $actual = ConfigMate::Instance()->loadFile("demo.config.json")->get('ga.non_section_node');
-        // self::assertNull("$actual");
-
-        // $tt= ConfigMate::Instance()->getCurrentConfigContent();
-        // var_dump($tt);
+        ConfigMate::Instance()->loadFile("demo.config.json")->get('ga.non_section_node');
 
         $actual = ConfigMate::Instance()->get('1.0');
         $expected = "a";

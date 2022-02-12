@@ -102,8 +102,8 @@ class StringHelperTest extends TestCase
     public function testGrouping()
     {
         $data = "13573290346";
-        $formator = "{3}-{4}-{4}";
-        $actual = StringHelper::grouping($data, $formator);
+        $formatter = "{3}-{4}-{4}";
+        $actual = StringHelper::grouping($data, $formatter);
         $expected = "135-7329-0346";
         self::assertEquals($expected, $actual);
     }
