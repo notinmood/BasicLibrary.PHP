@@ -5,10 +5,9 @@ namespace Hiland\Utils\Data;
 class XmlHelper
 {
     /**
-     * 将xml转换成json
-     * @param string $xmlData
-     *                                待转换的xml 其可以是一个xml文件地址，也可以是一个xml原始字符串
-     * @param bool   $escapeToUnicode 是否将中文等信息进行unicode转码（缺省true，转码）
+     * 将 xml 转换成 json
+     * @param string $xmlData         待转换的 xml 其可以是一个 xml 文件地址，也可以是一个 xml 原始字符串
+     * @param bool   $escapeToUnicode 是否将中文等信息进行 unicode 转码（缺省 true，转码）
      * @return string
      */
     public static function convertToJson(string $xmlData, bool $escapeToUnicode = true): string
@@ -31,7 +30,7 @@ class XmlHelper
     }
 
     /**
-     * 将json转换成xml
+     * 将 json 转换成 xml
      * @param string $jsonString
      * @param string $charset
      * @return boolean|string

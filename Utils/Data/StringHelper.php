@@ -178,10 +178,8 @@ class StringHelper
 
     /**
      * 判断一个字符串是否被包含在另外一个字符串内
-     * @param string $subStringData
-     *            被查找的子字符串
-     * @param string $wholeStringData
-     *            查找的母体字符串
+     * @param string $subStringData   被查找的子字符串
+     * @param string $wholeStringData 查找的母体字符串
      * @return boolean
      */
     public static function isContains(string $wholeStringData, string $subStringData): bool

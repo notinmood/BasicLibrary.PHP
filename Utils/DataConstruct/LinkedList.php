@@ -17,8 +17,17 @@ namespace Hiland\Utils\DataConstruct;
  */
 class LinkedList
 {
-    public Node $head; //头节点(默认一个虚拟头节点,当有第一个节点插入的时候，自动覆盖头节点)
-    public int  $size; //长度
+    /**
+     * 头节点(默认一个虚拟头节点,当有第一个节点插入的时候，自动覆盖头节点)
+     * @var Node
+     */
+    public Node $head;
+
+    /**
+     * 长度
+     * @var int
+     */
+    public int $size;
 
     public function __construct()
     {
@@ -83,7 +92,7 @@ class LinkedList
 
 
     /***
-     * 编辑
+     * 更新
      * @param int   $index
      * @param mixed $value
      * @return Node|mixed|void|null

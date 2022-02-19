@@ -38,6 +38,9 @@ class ConfigMateTest extends TestCase
         self::assertEquals(@"Hiland\Utils\Config\ConfigParserArray", $parser);
     }
 
+    /**
+     * @return void
+     */
     public function testArrayGet()
     {
         $actual   = ConfigMate::Instance()->loadFile("config_test.php")->get('a');
@@ -70,6 +73,9 @@ class ConfigMateTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
+    /**
+     * @return void
+     */
     public function testIniGet()
     {
         ConfigMate::Instance()->loadFile("demo.config.ini")->get('ga.non_section_node');
