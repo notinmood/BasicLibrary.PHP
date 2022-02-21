@@ -8,18 +8,18 @@
  * @company: HiLand & RainyTop
  */
 
-/**
- * 系统常用的功能性函数
- * ────────────────────────
- * 将经常使用到的类型中的方法进行提取出来形成函数,便于使用.
- */
+
+// +--------------------------------------------------------------------------
+// |::说明·| 系统常用的功能性函数
+// |::一一·| 将经常使用到的类型中的方法进行提取出来形成函数,便于使用.
+// +--------------------------------------------------------------------------
 
 use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\StringHelper;
 use Hiland\Utils\Data\ThinkHelper;
 use Hiland\Utils\Environment\EnvHelper;
 use Hiland\Utils\IO\ConsoleHelper;
-use Hiland\Utils\Web\WebHelper;
+use Hiland\Utils\Web\ServerHelper;
 
 
 if (!function_exists('dump') && ThinkHelper::isThinkPHP() == false) {
@@ -86,7 +86,7 @@ if (!function_exists('fixUrl')) {
      */
     function fixUrl(string $mcaUrl, string $entry = "index.php"): string
     {
-        $webRoot = WebHelper::getWebRoot();
+        $webRoot = ServerHelper::getWebRoot();
         if (StringHelper::isStartWith($webRoot, "/") == false) {
             $webRoot = "/" . $webRoot;
         }
