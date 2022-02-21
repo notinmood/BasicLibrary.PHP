@@ -19,8 +19,7 @@
     "ext-simplexml": "*",
     "ext-bcmath": "*",
     "ext-iconv": "*",
-    "ext-gd": "*",
-    "ext-exif": "*"
+    "ext-gd": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "9.*"
