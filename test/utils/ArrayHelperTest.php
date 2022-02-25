@@ -17,11 +17,13 @@ class ArrayHelperTest extends TestCase
 {
     public function testGetItem(): void
     {
+        // @formatter:off
         $data["city"]     = "qingdao";
         $data["provence"] = "shandong";
+        // @formatter:on
 
-        $actual   = ArrayHelper::getItem($data, "city");
-        $expected = "qingdao";
+        $actual   = ArrayHelper::getItem($data, 'city');
+        $expected = 'qingdao';
         self::assertEquals($expected, $actual);
 
         $actual   = ArrayHelper::getItem($data, "street", "");

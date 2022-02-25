@@ -30,8 +30,8 @@ class CalculateMate
     public int $result = 0;
 
     /**
-     * AccuracyCal constructor.
-     * @param int $precision 精确计算是保留的小数位数,缺省为2位小数的精度
+     * 精确计算器的构造方法
+     * @param int $precision 精确计算是保留的小数位数,缺省为 2位小数的精度
      */
     public function __construct($number = 0, int $precision = 2)
     {
@@ -65,7 +65,7 @@ class CalculateMate
      * @param $number
      * @return $this
      */
-    public function sub($number): CalculateMate
+    public function subtract($number): CalculateMate
     {
         $this->result = bcsub($this->result, $number, $this->precision);
         return $this;
@@ -76,7 +76,7 @@ class CalculateMate
      * @param $number
      * @return $this
      */
-    public function mul($number): CalculateMate
+    public function multiply($number): CalculateMate
     {
         $this->result = bcmul($this->result, $number, $this->precision);
         return $this;
@@ -87,7 +87,7 @@ class CalculateMate
      * @param $number
      * @return $this
      */
-    public function div($number): CalculateMate
+    public function divide($number): CalculateMate
     {
         $this->result = bcdiv($this->result, $number, $this->precision);
         return $this;

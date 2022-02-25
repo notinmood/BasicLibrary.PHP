@@ -50,8 +50,8 @@ class ConfigMateTest extends TestCase
         /**
          * 如果加载的多个配置文件内，都含有某个配置项，那么从第一个配置文件内读取
          * ────────────────────────
-         * 本例中，demo.config.php的配置项a的值为 AAA,但因为 config_test.php 在前面已经加载了，
-         * config_test.php内含有配置项a,其值为 T.AAA
+         * 本例中，demo.config.php 的配置项 a 的值为 AAA，但因为 config_test.php 在前面已经加载了，
+         * config_test.php 内含有配置项 a，其值为 T.AAA
          */
         $actual   = ConfigMate::Instance()->loadFile("demo.config.php")->get('a');
         $expected = "T.AAA";

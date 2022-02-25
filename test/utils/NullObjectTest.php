@@ -54,6 +54,7 @@ class NullObjectTest extends TestCase
         $this->expectException(Exception::class);
         // $this->expectExceptionMessage("当前为一个空对象,在其上调用方法getUserName没有任何效果");
         $student = $this->getStudent($name, $age, NullObject::EXCEPTION);
-        $student->getUserName();
+        $userName= $student->getUserName();
+        dump($userName);
     }
 }

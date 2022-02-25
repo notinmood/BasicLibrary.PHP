@@ -20,15 +20,18 @@ class ByteHelper
             'TB',
             'PB',
         );
-        for ($i = 0; $size >= 1024 && $i < 5; $i++)
+
+        for ($i = 0; $size >= 1024 && $i < 5; $i++) {
             $size /= 1024;
+        }
+
         return round($size, 2) . $delimiter . $units[$i];
     }
 
     /**
-     * 转换一个String字符串为byte数组
+     * 转换一个String字符串为 byte 数组
      * @param string $stringData 需要转换的字符串
-     * @return array 目标byte数组
+     * @return array 目标 byte 数组
      * @author Zikie
      */
     public static function convertFromString(string $stringData): array
@@ -42,7 +45,7 @@ class ByteHelper
     }
 
     /**
-     * 将字节数组转化为String类型的数据
+     * 将字节数组转化为 String 类型的数据
      * @param array $bytesData 字节数组
      * @return string 一个String类型的数据
      */

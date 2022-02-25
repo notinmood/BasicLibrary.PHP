@@ -26,7 +26,7 @@ class BoolHelper
     }
 
     /**
-     * 判断变量是否为真实的布尔型false
+     * 判断变量是否为真实的布尔型 false
      * @param $value
      * @return bool
      */
@@ -54,7 +54,7 @@ class BoolHelper
     }
 
     /**
-     * 将字符串等数据类型转换成bool
+     * 将字符串等数据类型转换成 bool
      * ────────────────────────
      * 因为如果采用一般的转换方式,如下
      *  $string = 'false';
