@@ -453,16 +453,16 @@
         },
         {
             "name": "topthink/think-orm",
-            "version": "v2.0.52",
+            "version": "v2.0.53",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-orm.git",
-                "reference": "407a60658f37fc57422ab95a9922c6f69af90f46"
+                "reference": "06783eda65547a70ea686360a897759e1f873fff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-orm/zipball/407a60658f37fc57422ab95a9922c6f69af90f46",
-                "reference": "407a60658f37fc57422ab95a9922c6f69af90f46",
+                "url": "https://api.github.com/repos/top-think/think-orm/zipball/06783eda65547a70ea686360a897759e1f873fff",
+                "reference": "06783eda65547a70ea686360a897759e1f873fff",
                 "shasum": ""
             },
             "require": {
@@ -502,9 +502,9 @@
             ],
             "support": {
                 "issues": "https://github.com/top-think/think-orm/issues",
-                "source": "https://github.com/top-think/think-orm/tree/v2.0.52"
+                "source": "https://github.com/top-think/think-orm/tree/v2.0.53"
             },
-            "time": "2022-01-25T06:00:05+00:00"
+            "time": "2022-02-28T14:54:22+00:00"
         }
     ],
     "packages-dev": [
@@ -1346,16 +1346,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.5.15",
+            "version": "9.5.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "dc738383c519243b0a967f63943a848d3fd861aa"
+                "reference": "1883687169c017d6ae37c58883ca3994cfc34189"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/dc738383c519243b0a967f63943a848d3fd861aa",
-                "reference": "dc738383c519243b0a967f63943a848d3fd861aa",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1883687169c017d6ae37c58883ca3994cfc34189",
+                "reference": "1883687169c017d6ae37c58883ca3994cfc34189",
                 "shasum": ""
             },
             "require": {
@@ -1371,7 +1371,7 @@
                 "phar-io/version": "^3.0.2",
                 "php": ">=7.3",
                 "phpspec/prophecy": "^1.12.1",
-                "phpunit/php-code-coverage": "^9.2.12",
+                "phpunit/php-code-coverage": "^9.2.7",
                 "phpunit/php-file-iterator": "^3.0.5",
                 "phpunit/php-invoker": "^3.1.1",
                 "phpunit/php-text-template": "^2.0.3",
@@ -1433,7 +1433,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.15"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.14"
             },
             "funding": [
                 {
@@ -1445,7 +1445,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-02-23T08:53:20+00:00"
+            "time": "2022-02-18T12:54:07+00:00"
         },
         {
             "name": "sebastian/cli-parser",

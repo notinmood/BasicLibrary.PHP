@@ -24,7 +24,7 @@ class Complex {
 		$validComplex = preg_match('/^([\-\+]?(\d+\.?\d*|\d*\.?\d+)([Ee][\-\+]?[0-2]?\d{1,3})?)([\-\+]?(\d+\.?\d*|\d*\.?\d+)([Ee][\-\+]?[0-2]?\d{1,3})?)?(([\-\+]?)([ij]?))$/ui',$complexNumber,$complexParts);
 
 		if (!$validComplex) {
-			//	Neither real nor imaginary part, so test to see if we actually have a suffix
+			//	Neither real nor imaginary part, so .test to see if we actually have a suffix
 			$validComplex = preg_match('/^([\-\+]?)([ij])$/ui',$complexNumber,$complexParts);
 			if (!$validComplex) {
 				throw new Exception('COMPLEX: Invalid complex number');

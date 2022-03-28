@@ -673,7 +673,7 @@ class PHPExcel_Calculation_Functions {
 //
 //	There are a few mathematical functions that aren't available on all versions of PHP for all platforms
 //	These functions aren't available in Windows implementations of PHP prior to version 5.3.0
-//	So we test if they do exist for this version of PHP/operating platform; and if not we create them
+//	So we .test if they do exist for this version of PHP/operating platform; and if not we create them
 //
 if (!function_exists('acosh')) {
 	function acosh($x) {

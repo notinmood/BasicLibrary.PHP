@@ -26,10 +26,10 @@ class BoolHelperTest extends TestCase
     //
     // }
 
-    public function testIsRealTrue()
-    {
-
-    }
+    // public function testIsRealTrue()
+    // {
+    //
+    // }
 
     public function testIsRealFalse()
     {

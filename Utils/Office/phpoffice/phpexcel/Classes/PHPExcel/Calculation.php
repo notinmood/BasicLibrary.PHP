@@ -2759,9 +2759,9 @@ class PHPExcel_Calculation {
 		$index = 0;
 		$stack = new PHPExcel_Calculation_Token_Stack;
 		$output = array();
-		$expectingOperator = FALSE;					//	We use this test in syntax-checking the expression to determine when a
+		$expectingOperator = FALSE;					//	We use this .test in syntax-checking the expression to determine when a
 													//		- is a negation or + is a positive operator rather than an operation
-		$expectingOperand = FALSE;					//	We use this test in syntax-checking the expression to determine whether an operand
+		$expectingOperand = FALSE;					//	We use this .test in syntax-checking the expression to determine whether an operand
 													//		should be null in a function call
 		//	The guts of the lexical parser
 		//	Loop through the formula extracting each operator and operand in turn
@@ -3510,7 +3510,7 @@ class PHPExcel_Calculation {
 			if ($operand > '' && $operand{0} == '"') { $operand = self::_unwrapResult($operand); }
 			//	If the string is a numeric value, we treat it as a numeric, so no further testing
 			if (!is_numeric($operand)) {
-				//	If not a numeric, test to see if the value is an Excel error, and so can't be used in normal binary operations
+				//	If not a numeric, .test to see if the value is an Excel error, and so can't be used in normal binary operations
 				if ($operand > '' && $operand{0} == '#') {
 					$stack->push('Value', $operand);
 					$this->_debugLog->writeDebugLog('Evaluation Result is ', $this->_showTypeDetails($operand));

@@ -321,11 +321,11 @@ class PHPExcel_Shared_Date
 		// Try checking for any of the date formatting characters that don't appear within square braces
 		if (preg_match('/(^|\])[^\[]*['.self::$possibleDateFormatCharacters.']/i',$pFormatCode)) {
 			//	We might also have a format mask containing quoted strings...
-			//		we don't want to test for any of our characters within the quoted blocks
+			//		we don't want to .test for any of our characters within the quoted blocks
 			if (strpos($pFormatCode,'"') !== FALSE) {
 				$segMatcher = FALSE;
 				foreach(explode('"',$pFormatCode) as $subVal) {
-					//	Only test in alternate array entries (the non-quoted blocks)
+					//	Only .test in alternate array entries (the non-quoted blocks)
 					if (($segMatcher = !$segMatcher) &&
 						(preg_match('/(^|\])[^\[]*['.self::$possibleDateFormatCharacters.']/i',$subVal))) {
 						return TRUE;

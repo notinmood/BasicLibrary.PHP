@@ -1529,7 +1529,7 @@ class simple_html_dom_node
                     $debugObject->debugLog(2, "testing node: " . $node->tag . " for attribute: " . $key . $exp . $val . " where nodes value is: " . $nodeKeyValue);
                 }
 
-                // PaperG - If lowercase is set, do a case insensitive test of the value of the selector.
+                // PaperG - If lowercase is set, do a case insensitive .test of the value of the selector.
                 if ($lowercase) {
                     $check = $this->match($exp, strtolower($val), strtolower($nodeKeyValue));
                 } else {

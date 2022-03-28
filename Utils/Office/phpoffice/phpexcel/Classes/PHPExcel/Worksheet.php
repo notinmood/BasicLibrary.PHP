@@ -2468,7 +2468,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
             for ($col = $minCol; $col != $maxCol; ++$col) {
                 $cRef = ($returnCellRef) ? $col : ++$c;
                 //    Using getCell() will create a new cell if it doesn't already exist. We don't want that to happen
-                //        so we test and retrieve directly against _cellCollection
+                //        so we .test and retrieve directly against _cellCollection
                 if ($this->_cellCollection->isDataSet($col.$row)) {
                     // Cell exists
                     $cell = $this->_cellCollection->getCacheData($col.$row);

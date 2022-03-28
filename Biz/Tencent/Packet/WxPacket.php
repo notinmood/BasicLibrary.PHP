@@ -93,10 +93,10 @@ class WxPacket
      * appid： wxd111665abv58f4f
      * mch_id： 10000100
      * device_info： 1000
-     * Body： test
+     * Body： .test
      * nonce_str： ibuaiVcKdpRxkhJA
      * 第一步：对参数按照 key=value 的格式，并按照参数名 ASCII 字典序排序如下：
-     * stringA="appid=wxd930ea5d5a258f4f&body=test&device_info=1000&mch_i
+     * stringA="appid=wxd930ea5d5a258f4f&body=.test&device_info=1000&mch_i
      * d=10000100&nonce_str=ibuaiVcKdpRxkhJA";
      * 第二步：拼接支付密钥：
      * stringSignTemp="stringA&key=192006250b4c09247ec02edce69f6a2d"

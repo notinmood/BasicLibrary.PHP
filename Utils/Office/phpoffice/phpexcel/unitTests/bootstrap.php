@@ -37,7 +37,7 @@ set_include_path(implode(PATH_SEPARATOR, array(
 
 /**
  * @todo Sort out xdebug in vagrant so that this works in all sandboxes
- * For now, it is safer to test for it rather then remove it.
+ * For now, it is safer to .test for it rather then remove it.
  */
 echo "PHPExcel tests beginning\n";
 

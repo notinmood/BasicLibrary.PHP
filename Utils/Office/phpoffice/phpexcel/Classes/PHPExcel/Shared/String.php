@@ -665,7 +665,7 @@ class PHPExcel_Shared_String
 	 * Identify whether a string contains a fractional numeric value,
 	 *    and convert it to a numeric if it is
 	 *
-	 * @param string &$operand string value to test
+	 * @param string &$operand string value to .test
 	 * @return boolean
 	 */
 	public static function convertToNumberIfFraction(&$operand) {

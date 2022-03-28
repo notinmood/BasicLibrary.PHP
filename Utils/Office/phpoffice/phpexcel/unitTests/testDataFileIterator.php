@@ -47,9 +47,9 @@ class testDataFileIterator implements Iterator
 
     private function _parseNextDataset()
     {
-        //    Read a line of test data from the file
+        //    Read a line of .test data from the file
         do {
-            //    Only take lines that contain test data and that aren't commented out
+            //    Only take lines that contain .test data and that aren't commented out
             $testDataRow = trim(fgets($this->file));
         } while (($testDataRow > '') && ($testDataRow{0} === '#'));
 
@@ -88,7 +88,7 @@ class testDataFileIterator implements Iterator
     private function _parseDataValue($dataValue) {
         //    discard any white space
         $dataValue = trim($dataValue);
-        //    test for the required datatype and convert accordingly
+        //    .test for the required datatype and convert accordingly
         if (!is_numeric($dataValue)) {
             if($dataValue == '') {
                 $dataValue = NULL;

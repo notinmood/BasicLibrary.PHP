@@ -39,7 +39,7 @@ require_once dirname(__FILE__) . '/../Classes/PHPExcel.php';
 
 
 /*
-After doing some test, I've got these results benchmarked
+After doing some .test, I've got these results benchmarked
 for writing to Excel2007:
 
 	Number of rows	Seconds to generate

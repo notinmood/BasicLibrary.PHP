@@ -72,8 +72,8 @@ class PHPExcel_ReferenceHelper
 	 * Compare two column addresses
 	 * Intended for use as a Callback function for sorting column addresses by column
 	 *
-	 * @param   string   $a  First column to test (e.g. 'AA')
-	 * @param   string   $b  Second column to test (e.g. 'Z')
+	 * @param   string   $a  First column to .test (e.g. 'AA')
+	 * @param   string   $b  Second column to .test (e.g. 'Z')
 	 * @return  integer
 	 */
 	public static function columnSort($a, $b) {
@@ -84,8 +84,8 @@ class PHPExcel_ReferenceHelper
 	 * Compare two column addresses
 	 * Intended for use as a Callback function for reverse sorting column addresses by column
 	 *
-	 * @param   string   $a  First column to test (e.g. 'AA')
-	 * @param   string   $b  Second column to test (e.g. 'Z')
+	 * @param   string   $a  First column to .test (e.g. 'AA')
+	 * @param   string   $b  Second column to .test (e.g. 'Z')
 	 * @return  integer
 	 */
 	public static function columnReverseSort($a, $b) {
@@ -96,8 +96,8 @@ class PHPExcel_ReferenceHelper
 	 * Compare two cell addresses
 	 * Intended for use as a Callback function for sorting cell addresses by column and row
 	 *
-	 * @param   string   $a  First cell to test (e.g. 'AA1')
-	 * @param   string   $b  Second cell to test (e.g. 'Z1')
+	 * @param   string   $a  First cell to .test (e.g. 'AA1')
+	 * @param   string   $b  Second cell to .test (e.g. 'Z1')
 	 * @return  integer
 	 */
 	public static function cellSort($a, $b) {
@@ -114,8 +114,8 @@ class PHPExcel_ReferenceHelper
 	 * Compare two cell addresses
 	 * Intended for use as a Callback function for sorting cell addresses by column and row
 	 *
-	 * @param   string   $a  First cell to test (e.g. 'AA1')
-	 * @param   string   $b  Second cell to test (e.g. 'Z1')
+	 * @param   string   $a  First cell to .test (e.g. 'AA1')
+	 * @param   string   $b  Second cell to .test (e.g. 'Z1')
 	 * @return  integer
 	 */
 	public static function cellReverseSort($a, $b) {

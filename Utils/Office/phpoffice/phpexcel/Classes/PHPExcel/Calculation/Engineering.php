@@ -2207,7 +2207,7 @@ class PHPExcel_Calculation_Engineering {
 	 *	Use this function to filter a set of values. For example, by summing several GESTEP
 	 *	functions you calculate the count of values that exceed a threshold.
 	 *
-	 *	@param	float		$number		The value to test against step.
+	 *	@param	float		$number		The value to .test against step.
 	 *	@param	float		$step		The threshold value.
 	 *									If you omit a value for step, GESTEP uses zero.
 	 *	@return	int

@@ -48,7 +48,7 @@ class PHPExcel_Calculation_DateTime {
 	/**
 	 * Identify if a year is a leap year or not
 	 *
-	 * @param	integer	$year	The year to test
+	 * @param	integer	$year	The year to .test
 	 * @return	boolean			TRUE if the year is a leap year, otherwise FALSE
 	 */
 	public static function _isLeapYear($year) {

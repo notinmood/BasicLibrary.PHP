@@ -26,19 +26,4 @@ class WebHelperTest extends TestCase
 
         self::assertEquals(true, true);
     }
-
-    // public function testJsonp()
-    // {
-    //
-    // }
-    //
-    // public function testGetWebApp()
-    // {
-    //
-    // }
-    //
-    // public function testServerReturn()
-    // {
-    //
-    // }
 }

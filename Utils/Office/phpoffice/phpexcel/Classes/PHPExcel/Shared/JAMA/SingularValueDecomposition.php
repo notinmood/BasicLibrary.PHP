@@ -242,7 +242,7 @@ class SingularValueDecomposition  {
 		$eps  = pow(2.0, -52.0);
 
 		while ($p > 0) {
-			// Here is where a test for too many iterations would go.
+			// Here is where a .test for too many iterations would go.
 			// This section of the program inspects for negligible
 			// elements in the s and e arrays.  On completion the
 			// variables kase and k are set as follows:

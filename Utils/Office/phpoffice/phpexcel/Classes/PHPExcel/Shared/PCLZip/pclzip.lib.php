@@ -2317,11 +2317,11 @@
     $this->privSwapBackMagicQuotes();
 
     // ----- Delete the zip file
-    // TBC : I should test the result ...
+    // TBC : I should .test the result ...
     @unlink($this->zipname);
 
     // ----- Rename the temporary file
-    // TBC : I should test the result ...
+    // TBC : I should .test the result ...
     //@rename($v_zip_temp_name, $this->zipname);
     PclZipUtilRename($v_zip_temp_name, $this->zipname);
 
@@ -4946,11 +4946,11 @@
         $this->privCloseFd();
 
         // ----- Delete the zip file
-        // TBC : I should test the result ...
+        // TBC : I should .test the result ...
         @unlink($this->zipname);
 
         // ----- Rename the temporary file
-        // TBC : I should test the result ...
+        // TBC : I should .test the result ...
         //@rename($v_zip_temp_name, $this->zipname);
         PclZipUtilRename($v_zip_temp_name, $this->zipname);
     
@@ -5210,11 +5210,11 @@
     @fclose($v_zip_temp_fd);
 
     // ----- Delete the zip file
-    // TBC : I should test the result ...
+    // TBC : I should .test the result ...
     @unlink($this->zipname);
 
     // ----- Rename the temporary file
-    // TBC : I should test the result ...
+    // TBC : I should .test the result ...
     //@rename($v_zip_temp_name, $this->zipname);
     PclZipUtilRename($v_zip_temp_name, $this->zipname);
 

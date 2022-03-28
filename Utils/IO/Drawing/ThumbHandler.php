@@ -20,13 +20,13 @@ namespace Hiland\Utils\IO\Drawing;
  * 使用方法:
  * 自动裁切:
  * 程序会按照图片的尺寸从中部裁切最大的正方形，并按目标尺寸进行缩略
- * $t->setSrcImg("img/test.jpg");
+ * $t->setSrcImg("img/.test.jpg");
  * $t->setCutType(1);//这一句就OK了
  * $t->setDstImg("tmp/new_test.jpg");
  * $t->createImg(60,60);
  * 手工裁切:
  * 程序会按照指定的位置从源图上取图
- * $t->setSrcImg("img/test.jpg");
+ * $t->setSrcImg("img/.test.jpg");
  * $t->setCutType(2);//指明为手工裁切
  * $t->setSrcCutPosition(100, 100);// 源图起点坐标
  * $t->setRectangleCut(300, 200);// 裁切尺寸
@@ -36,9 +36,9 @@ namespace Hiland\Utils\IO\Drawing;
  * < ?php
  * require_once('lib/thumb.class.php');
  * $t = new ThumbHandler();
- * $t->setSrcImg("img/test.jpg");
+ * $t->setSrcImg("img/.test.jpg");
  * $t->setDstImg("tmp/new_test.jpg");
- * $t->setMaskImg("img/test.gif");
+ * $t->setMaskImg("img/.test.gif");
  * $t->setMaskPosition(1);
  * $t->setMaskImgPct(80);
  * $t->setDstImgBorder(4,"#dddddd");
@@ -49,8 +49,8 @@ namespace Hiland\Utils\IO\Drawing;
  * require_once('lib/thumb.class.php');
  * $t = new ThumbHandler();
  * // 基本使用
- * $t->setSrcImg("img/test.jpg");
- * $t->setMaskWord("test");
+ * $t->setSrcImg("img/.test.jpg");
+ * $t->setMaskWord(".test");
  * $t->setDstImgBorder(10,"#dddddd");
  * // 指定缩放比例
  * $t->createImg(50);
@@ -59,24 +59,24 @@ namespace Hiland\Utils\IO\Drawing;
  * equire_once('lib/thumb.class.php');
  * $t = new ThumbHandler();
  * // 基本使用
- * $t->setSrcImg("img/test.jpg");
- * $t->setMaskWord("test");
+ * $t->setSrcImg("img/.test.jpg");
+ * $t->setMaskWord(".test");
  * // 指定固定宽高
  * $t->createImg(200,200);
  * ?>
  * < ?php
  * require_once('lib/thumb.class.php');
  * $t = new ThumbHandler();
- * $t->setSrcImg("img/test.jpg");
+ * $t->setSrcImg("img/.test.jpg");
  * $t->setDstImg("tmp/new_test.jpg");
- * $t->setMaskWord("test");
+ * $t->setMaskWord(".test");
  * // 指定固定宽高
  * $t->createImg(200,200);
  * ?>
  * < ?php
  * require_once('lib/thumb.class.php');
  * $t = new ThumbHandler();
- * $t->setSrcImg("img/test.jpg");
+ * $t->setSrcImg("img/.test.jpg");
  * // 指定字体文件地址
  * $t->setMaskFont("c:/winnt/fonts/arial.ttf");
  * $t->setMaskFontSize(20);
@@ -88,7 +88,7 @@ namespace Hiland\Utils\IO\Drawing;
  * < ?php
  * require_once('lib/thumb.class.php');
  * $t = new ThumbHandler();
- * $t->setSrcImg("img/test.jpg");
+ * $t->setSrcImg("img/.test.jpg");
  * $t->setMaskOffsetX(55);
  * $t->setMaskOffsetY(55);
  * $t->setMaskPosition(1);
@@ -96,14 +96,14 @@ namespace Hiland\Utils\IO\Drawing;
  * //$t->setMaskPosition(3);
  * //$t->setMaskPosition(4);
  * $t->setMaskFontColor("#ffff00");
- * $t->setMaskWord("test");
+ * $t->setMaskWord(".test");
  * // 指定固定宽高
  * $t->createImg(50);
  * ?>
  * < ?php
  * require_once('lib/thumb.class.php');
  * $t = new ThumbHandler();
- * $t->setSrcImg("img/test.jpg");
+ * $t->setSrcImg("img/.test.jpg");
  * $t->setMaskFont("c:/winnt/fonts/simyou.ttf");
  * $t->setMaskFontSize(20);
  * $t->setMaskFontColor("#ffffff");
@@ -112,7 +112,7 @@ namespace Hiland\Utils\IO\Drawing;
  * $text = "中文";
  * $str = mb_convert_encoding($text, "UTF-8", "gb2312");
  * $t->setMaskWord($str);
- * $t->setMaskWord("test");
+ * $t->setMaskWord(".test");
  * // 指定固定宽高
  * $t->createImg(50);
  */
