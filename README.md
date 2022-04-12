@@ -1,4 +1,12 @@
-# 企业级的 php 类库
+# 企业级的 PHP 类库
+
+```shell
+@creator: ShanDong Xiedali
+@emailto: 9727005@qq.com
+@company: HiLand & RainyTop
+```
+
+
 
 ## 配置注意事项
 
