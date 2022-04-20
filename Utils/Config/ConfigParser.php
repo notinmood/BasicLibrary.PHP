@@ -24,7 +24,8 @@ abstract class ConfigParser
      * 从存储系统载入配置文件,并形成array数组返回
      * @param $fileFullName
      */
-    public function loadFileToArray($fileFullName){
-
+    public function loadFileToArray($fileFullName)
+    {
+        //
     }
 }

@@ -16,7 +16,7 @@ use Hiland\Utils\Data\StringHelper;
 
 /**
  * ini配置文件解析器
- * 参考 https://www.php.net/manual/zh/function.parse-ini-file.php
+ * 参考: https://www.php.net/manual/zh/function.parse-ini-file.php
  */
 class ConfigParserIni extends ConfigParser
 {

@@ -28,7 +28,7 @@ class ConfigMate
 
     private function __construct()
     {
-        //do nothing;
+        // do nothing;
     }
 
     /**

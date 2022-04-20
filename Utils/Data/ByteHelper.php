@@ -29,7 +29,7 @@ class ByteHelper
     }
 
     /**
-     * 转换一个String字符串为 byte 数组
+     * 转换一个 string 字符串为 byte 数组
      * @param string $stringData 需要转换的字符串
      * @return array 目标 byte 数组
      * @author Zikie

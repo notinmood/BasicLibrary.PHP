@@ -30,7 +30,6 @@ class CipherHelper
                 $signStr .= "&key=" . $key;
             }
 
-            // return strtoupper(md5($signStr));
             return strtoupper(call_user_func($algorithm, $signStr));
         } catch (Exception $e) {
             die($e->getMessage());

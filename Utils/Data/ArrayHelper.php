@@ -46,7 +46,7 @@ class ArrayHelper
     }
 
     /**
-     * 在数组的开头添加新的元素(新元素的key是数字形式索引)
+     * 在数组的开头添加新的元素(新元素的 key 是数字形式索引)
      * @param $array
      * @param ...$items
      * @return mixed
@@ -58,7 +58,7 @@ class ArrayHelper
     }
 
     /**
-     * 为数组添加Key/Value形式的item
+     * 为数组添加 Key/Value 形式的 item
      * @param $array
      * @param $key
      * @param $value
@@ -75,8 +75,8 @@ class ArrayHelper
     }
 
     /**
-     * 在数组的末尾添加新的元素(新元素的key是数字形式索引)
-     * 方法push和方法addTail功能相同,互为别名
+     * 在数组的末尾添加新的元素(新元素的 key 是数字形式索引)
+     * 方法 push 和方法 addTail 功能相同,互为别名
      * @param $array
      * @param ...$items
      * @return array
@@ -100,7 +100,7 @@ class ArrayHelper
 
     /**
      * 在数组的末尾添加新的元素(新元素的key是数字形式索引)
-     * 方法push和方法addTail功能相同,互为别名
+     * 方法 push 和方法 addTail 功能相同,互为别名
      * @param array $array
      * @param mixed ...$items
      * @return array
@@ -128,6 +128,11 @@ class ArrayHelper
         return $array;
     }
 
+    /**
+     * @param $array
+     * @param $index
+     * @return mixed
+     */
     public static function removeIndex($array, $index)
     {
         if (ObjectHelper::getTypeName($array) == ObjectTypes::ARRAYS) {

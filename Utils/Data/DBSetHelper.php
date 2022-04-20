@@ -57,8 +57,8 @@ class DBSetHelper
      *            第二维度是对本字段的取值进行友好显示的函数，
      *            此函数仅支持一个参数，即将数据库内的值作为本函数的参数
      *            1、如果是全局函数可以直接写函数的名称，
-     *            2、如果是类的方法，请使用如下格式进行书写 nameSpace/className|methodName,
-     *            其中如果是直接使用调用方类内的其他某个方法,nameSpace/className可以直接用__CLASS__表示
+     *            2、如果是类的方法，请使用如下格式进行书写 nameSpace/className|methodName，
+     *            其中如果是直接使用调用方类内的其他某个方法，nameSpace/className可以直接用__CLASS__表示
      * @return array 友好显示的数据集信息
      * @throws ReflectionException
      */

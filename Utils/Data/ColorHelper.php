@@ -5,9 +5,9 @@ namespace Hiland\Utils\Data;
 class ColorHelper
 {
     /**
-     * 将16进制的颜色值转变为RGB数组
+     * 将 16进制的颜色值转变为 RGB 数组
      * @param string $dexColor 十六进制颜色,例如 #ffffff
-     * @return array 包含了RGB3个元素的一维数组
+     * @return array 包含了 RGB 3个元素的一维数组
      */
     public static function Hex2RGB(string $dexColor): array
     {

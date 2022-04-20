@@ -29,7 +29,7 @@ class DateHelper
     }
 
     /**
-     * 20380101的时间表示格式
+     * 20380101 的时间表示格式
      * @return DateTime
      */
     private static function get20380101DateTime(): DateTime

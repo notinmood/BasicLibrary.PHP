@@ -15,7 +15,7 @@ use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Environment\EnvHelper;
 
 /**
- * .env文件读取器
+ * .env 文件读取器
  * ════════════════════════
  * 参考
  * https://blog.csdn.net/weixin_38125045/article/details/109100324

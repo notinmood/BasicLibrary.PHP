@@ -19,7 +19,7 @@ class ConfigClient
     /**
      * 加载配置文件
      * @param string $fileName 配置文件(携带有相对于网站根目录的相对路径,缺省情况下加载项目根目录下的 config.***)
-     *                         (目前支持的文件类型有:.php(内部返回Array)、.ini和.json等多种格式)
+     *                         (目前支持的文件类型有：.php(内部返回Array)、.ini 和 .json 等多种格式)
      * @return void
      */
     public static function loadFile(string $fileName = "")

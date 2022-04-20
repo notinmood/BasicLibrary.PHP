@@ -11,7 +11,6 @@
 /**
  * 以下内容全部为单元测试的数据。正式项目的时候，可以(连同本句注释)全部删除。
  */
-
 use Hiland\Utils\Config\ConfigClient;
 
 return [

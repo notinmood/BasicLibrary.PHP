@@ -7,7 +7,7 @@ class ChineseHelper
     /**
      * 将中文字符串转成拼音
      * @param string $chineseString 待转换的中文字符串
-     * @param string $charCoding    中文编码（GBK页面可改为gb2312，其他随意填写为UTF8）
+     * @param string $charCoding    中文编码（GBK 页面可改为 gb2312，其他随意填写为 UTF8）
      * @return string 转换后的拼音
      */
     static function getPinyin(string $chineseString, string $charCoding = 'UTF8'): string

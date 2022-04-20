@@ -151,6 +151,12 @@ class Calendar
     var int $ten    = 0;
     var int $twelve = 0;
 
+    /**
+     * @param $Year
+     * @param $Month
+     * @param $Day
+     * @return array
+     */
     public function Calc($Year, $Month, $Day): array
     {
         $Par = $this->myPub($Year, $Month, $Day);

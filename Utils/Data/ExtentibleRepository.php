@@ -66,7 +66,7 @@ class ExtentibleRepository
      * 将序列化进入keys和values的数据，转换为名值对数组
      * @param string $keys
      * @param mixed  $values
-     * @return string
+     * @return array
      * @example string keys = "key1:S:0:3:key2:S:3:2:";
      *          string values = "12345";
      *          This would result in a NameValueCollection with two keys (Key1 and Key2) with the values 123 and 45

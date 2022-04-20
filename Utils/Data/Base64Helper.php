@@ -9,7 +9,7 @@
 namespace Hiland\Utils\Data;
 
 /**
- * 可以参考base64原理 http://www.cnblogs.com/diligenceday/p/6002382.html
+ * 可以参考 base64 原理 http://www.cnblogs.com/diligenceday/p/6002382.html
  * Class Base64Helper
  * @package Vendor\Hiland\Utils\Data
  */

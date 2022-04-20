@@ -228,7 +228,7 @@ class CalendarHelper
     /**
      * 根据阴历年获取生肖
      * @param int $year 阴历年
-     * @return mixed
+     * @return string
      */
     private static function getYearZodiac(int $year)
     {

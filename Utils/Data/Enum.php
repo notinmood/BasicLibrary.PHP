@@ -130,7 +130,7 @@ abstract class Enum
      * If enum was created with $strict = true, then strict comparison applies
      * here also.
      * @param mixed $object
-     * @return bool True if enums are equal
+     * @return bool True if enums are equal.
      */
     public function equals($object): bool
     {

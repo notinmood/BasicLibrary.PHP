@@ -18,23 +18,23 @@ class ByteHelperTest extends TestCase
 
     public function testDisplayFriendly()
     {
-        $value = 1048;
-        $actual = ByteHelper::displayFriendly($value);
+        $value    = 1048;
+        $actual   = ByteHelper::displayFriendly($value);
         $expected = "1.02KB";
-        self::assertEquals($expected,$actual);
+        self::assertEquals($expected, $actual);
 
-        $value = 9635865;
-        $actual = ByteHelper::displayFriendly($value," ");
+        $value    = 9635865;
+        $actual   = ByteHelper::displayFriendly($value, " ");
         $expected = "9.19 MB";
-        self::assertEquals($expected,$actual);
+        self::assertEquals($expected, $actual);
     }
 
     public function testConvert()
     {
-        $value= "I love qingdao city!";
-        $actual = $value;
+        $value    = "I love qingdao city!";
+        $actual   = $value;
         $expected = ByteHelper::convertFromString($value);
         $expected = ByteHelper::convertToString($expected);
-        self::assertEquals($expected,$actual);
+        self::assertEquals($expected, $actual);
     }
 }

@@ -12,7 +12,7 @@ namespace Hiland\Utils\Data;
 class BoolHelper
 {
     /**
-     * 判断变量是否为真实的布尔型true
+     * 判断变量是否为真实的布尔型 true
      * @param $value
      * @return bool
      */

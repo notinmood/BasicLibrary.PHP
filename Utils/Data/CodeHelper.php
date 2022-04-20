@@ -3,7 +3,7 @@
 namespace Hiland\Utils\Data;
 
 /**
- * PHP代码处理逻辑
+ * PHP 代码处理逻辑
  * @author  然
  * @version 20131226
  */
