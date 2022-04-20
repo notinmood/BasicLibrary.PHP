@@ -11,7 +11,6 @@ use Hiland\Utils\Web\WebHelper;
 
 class WxPacket
 {
-
     var $parameters;
 
     public function getParameter($parameter)

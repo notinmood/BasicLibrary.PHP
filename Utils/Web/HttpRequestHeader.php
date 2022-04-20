@@ -2,6 +2,9 @@
 
 namespace Hiland\Utils\Web;
 
+/**
+ *
+ */
 class HttpRequestHeader
 {
     public static function getUserAgent()

@@ -18,7 +18,7 @@ use Hiland\Utils\Data\StringHelper;
 
 /**
  * 内部方法之所以不设置静态，是为了扩展多种的数据库类型
- * (目前仅仅支持Mysql数据库类型)
+ * (目前仅仅支持 Mysql 数据库类型)
  */
 class ModelDDL
 {

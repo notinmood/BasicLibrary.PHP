@@ -13,6 +13,9 @@ use Hiland\Biz\Tencent\MiniProgram\MiniProgramConfig;
 use Hiland\Biz\Tencent\MiniProgram\WXBizDataCrypt;
 use Hiland\Utils\Web\NetHelper;
 
+/**
+ *
+ */
 class MiniProgramHelper
 {
     private static $userSessionData = '';

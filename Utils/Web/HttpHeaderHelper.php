@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Hiland\Utils\Web;
 
 
@@ -28,7 +27,7 @@ class HttpHeaderHelper
 
 
     /**
-     * 设置一个404头: 404文件找不到错误
+     * 设置一个 404 头: 404 文件找不到错误
      */
     public static function setPage404()
     {
@@ -36,7 +35,7 @@ class HttpHeaderHelper
     }
 
     /**
-     * 设置地址被永久的重定向 301重定向
+     * 设置地址被永久的重定向 301 重定向
      */
     public static function setPage301()
     {

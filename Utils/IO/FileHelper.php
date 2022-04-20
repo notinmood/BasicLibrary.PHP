@@ -4,6 +4,9 @@ namespace Hiland\Utils\IO;
 
 use Hiland\Utils\Data\StringHelper;
 
+/**
+ *
+ */
 class FileHelper
 {
     /**

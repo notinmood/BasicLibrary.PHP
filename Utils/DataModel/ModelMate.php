@@ -15,7 +15,7 @@ use think\facade\Db;
 use Think\Model;
 
 /**
- * 模型辅助器(需要ThinkPHP或者ThinkORM支持)
+ * 模型辅助器(需要 ThinkPHP 或者 ThinkORM 支持)
  * 封装模型与数据库交互的常用操作
  * ════════════════════════
  * 使用说明：

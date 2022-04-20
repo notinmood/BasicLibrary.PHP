@@ -5,6 +5,9 @@ namespace Hiland\Biz\Stock;
 use Hiland\Biz\Stock\StockDataSource\StockDataSourceSina;
 use Hiland\Utils\IO\PathHelper;
 
+/**
+ *
+ */
 class StockMate
 {
     private $stockDataSource = null;

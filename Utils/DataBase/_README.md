@@ -1,4 +1,5 @@
+# 说明
 本目录下文件尚未完全验证。
-数据访问，建议通过ModelMate使用ThinkORM来实现。
+数据访问，建议通过 ModelMate 使用 ThinkORM 来实现。
 
 在合适的情形下，本目录将被删除。

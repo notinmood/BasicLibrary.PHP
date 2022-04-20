@@ -12,7 +12,7 @@ use Hiland\Utils\Data\ReflectionHelper;
  * User: xiedali
  * Date: 2016/6/30
  * Time: 7:31
- * 说明: 如果启用第三方的loger，请在配置文件中设置LogProviderName
+ * 说明: 如果启用第三方的 logger，请在配置文件中设置 LogProviderName
  * C("SYSTEM_LOG_LEVEL") 请配置日志记录级别
  */
 class CommonLogger

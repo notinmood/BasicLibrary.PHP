@@ -11,7 +11,7 @@ use Hiland\Utils\Web\WebHelper;
  * Date: 2016/5/9
  * Time: 17:22
  */
-//TODO  本逻辑尚未完成
+//TODO 本逻辑尚未完成
 
 class ShortenUrl
 {

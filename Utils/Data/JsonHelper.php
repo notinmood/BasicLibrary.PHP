@@ -13,7 +13,7 @@ namespace Hiland\Utils\Data;
 class JsonHelper
 {
     /**
-     * 将json字符串转换成 array 数组
+     * 将 json 字符串转换成 array 数组
      * @param string $jsonString
      * @return mixed
      */
@@ -23,7 +23,7 @@ class JsonHelper
     }
 
     /**
-     * 将json字符串转换成object对象
+     * 将 json 字符串转换成 object 对象
      * @param $jsonString
      * @return mixed
      */

@@ -11,6 +11,9 @@ namespace Hiland\Biz\ThinkAddon;
 
 use Hiland\Utils\Data\ThinkHelper;
 
+/**
+ *
+ */
 class TPCompatibleHelper
 {
     /**读取配置节点的信息

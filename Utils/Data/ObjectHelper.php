@@ -12,10 +12,8 @@ class ObjectHelper
      * 将带有名值对类型数组的各成员，赋值给复杂对象的属性上
      * 如果对象已经拥有该属性，那么数组成员的值将会覆盖对象原有的属性值
      * 如果对象没有该属性，那么将会为对象创建改属性，并赋数组成员的的值
-     * @param array       $array
-     *            名值对类型的原数组
-     * @param object|null $object
-     *            目标对象
+     * @param array       $array  名值对类型的原数组
+     * @param object|null $object 目标对象
      * @return object 赋值后的对象
      */
     public static function appendArrayToObject(array $array, object $object = null)

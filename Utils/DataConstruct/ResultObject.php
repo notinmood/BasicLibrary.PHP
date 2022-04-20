@@ -10,9 +10,9 @@ use stdClass;
  * 返回值对象
  * ────────────────────────
  * 类型包括 3个常用的属性和一个备用属性
- * 1. status, bool类型,表示返回的结果是成功还是失败
- * 2. message, string类型,表示返回信息的文本描述
- * 3. data, mixed类型,表示返回信息的具体信息
+ * 1. status, bool 类型,表示返回的结果是成功还是失败
+ * 2. message, string 类型,表示返回信息的文本描述
+ * 3. data, mixed 类型,表示返回信息的具体信息
  * 4. 其他要返回的信息，统一通过动态成员的方式放入标准对象misc里面，如下：
  *  $r = new Returns(true, "very good!", "这个人还不错");
  *  $r->misc->pa = 'something';(其中 pa 就是 misc 的动态成员)

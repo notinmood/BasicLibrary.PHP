@@ -1,7 +1,9 @@
 <?php
 
 namespace Hiland\Utils\Web;
-
+/**
+ *
+ */
 class JavaScriptHelper
 {
     /**

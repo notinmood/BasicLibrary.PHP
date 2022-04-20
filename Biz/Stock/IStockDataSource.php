@@ -7,7 +7,6 @@ namespace Hiland\Biz\Stock;
  */
 interface IStockDataSource
 {
-
     /**
      * 获取股票的实时报价
      * @param ...$stockCodes

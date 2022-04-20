@@ -13,6 +13,9 @@ namespace Hiland\Utils\IO;
 use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\StringHelper;
 
+/**
+ *
+ */
 class PathHelper
 {
     /**

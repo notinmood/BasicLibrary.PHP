@@ -8,7 +8,9 @@
 
 namespace Hiland\Utils\Web;
 
-
+/**
+ * 
+ */
 class PageHelper
 {
     public static function renderHeader($coding = 'utf-8')

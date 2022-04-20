@@ -8,7 +8,6 @@
 //
 // namespace Hiland\Utils\DataModel;
 //
-//
 // use Think\Model\RelationModel;
 //
 // /**

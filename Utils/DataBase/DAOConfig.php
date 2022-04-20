@@ -1,7 +1,9 @@
 <?php
 
 namespace Hiland\Utils\DataBase;
-
+/**
+ *
+ */
 class DAOConfig
 {
     const DBHOSTNAME = SAE_MYSQL_HOST_M;

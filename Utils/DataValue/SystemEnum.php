@@ -16,13 +16,13 @@ namespace Hiland\Utils\DataValue;
 class SystemEnum
 {
     //-- 随机数类型 -- Utils/Data/RandHelper.php
-    const RandCategory_LETTER = "LETTER";
-    const RandCategory_NUMBER = "NUMBER";
+    const RandCategory_LETTER  = "LETTER";
+    const RandCategory_NUMBER  = "NUMBER";
     const RandCategory_SPECIAL = "SPECIAL";
-    const RandCategory_ALL = "ALL";
-    const RandCategory_OTHER = "OTHER";
+    const RandCategory_ALL     = "ALL";
+    const RandCategory_OTHER   = "OTHER";
 
     //-- Where条件的连接字符 -- Utils/DataModel/ModelMate.php
     const WhereConnector_AND = "__WHERE_AND__";
-    const WhereConnector_OR = "__WHERE_OR__";
+    const WhereConnector_OR  = "__WHERE_OR__";
 }

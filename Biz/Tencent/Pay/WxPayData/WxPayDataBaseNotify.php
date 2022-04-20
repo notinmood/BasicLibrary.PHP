@@ -10,7 +10,6 @@ namespace Hiland\Biz\Tencent\Pay\WxPayData;
  */
 class WxPayDataBaseNotify extends WxPayDataBase
 {
-
     /**
      *
      * 设置错误码 FAIL 或者 SUCCESS

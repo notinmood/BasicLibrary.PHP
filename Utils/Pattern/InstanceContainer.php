@@ -53,8 +53,8 @@ class InstanceContainer
     }
 
     /**
-     * @param string $classFullName
-     * @param array  $constructArgs
+     * @param string $classFullName 类型全名称
+     * @param array  $constructArgs 构造函数的参数
      * @return string
      */
     protected static function builderQueryKey(string $classFullName, ...$constructArgs): string

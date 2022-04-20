@@ -3,9 +3,7 @@
 namespace Hiland\Utils\DataBase;
 
 /**
- *
- * @author devel
- *
+ * @author devel *
  */
 class Mysql extends DAO
 {
@@ -95,7 +93,7 @@ class Mysql extends DAO
 
         $result = '';
         for ($i = 0; $i < $total; $i++) {
-            $fieldInfo = mysql_fetch_field($queryResult, $i);
+            $fieldInfo  = mysql_fetch_field($queryResult, $i);
             $result[$i] = $fieldInfo;
         }
         return $result;

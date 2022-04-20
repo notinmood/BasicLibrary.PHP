@@ -130,7 +130,7 @@ class ConstMate
     }
 
     /**
-     * 获取某前缀构成的数组，Key为不带_TEXT常量的值，Value为带_TEXT常量的值
+     * 获取某前缀构成的数组，Key 为不带 _TEXT 常量的值，Value 为带 _TEXT 常量的值
      * @param string $prefix
      * @param string $textPostFix            文本后缀
      * @param bool   $keyValueModeForElement 组成数组的元素是否使用KeyValue模式，默认为true

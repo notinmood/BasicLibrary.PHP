@@ -12,7 +12,7 @@ namespace Hiland\Utils\Data;
 class HtmlHelper
 {
     /**
-     *清除html中的注释
+     *清除 html 中的注释
      * @param string $htmlString
      * @return string
      */

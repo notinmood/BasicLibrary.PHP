@@ -13,7 +13,7 @@ use Hiland\Biz\ThinkAddon\TPCompatibleHelper;
 use Hiland\Utils\Data\StringHelper;
 
 /**
- * Class HttpResponseHeader
+ * Http 响应头
  * @package Vendor\Hiland\Utils\Web
  */
 class HttpResponseHeader

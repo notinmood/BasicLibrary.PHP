@@ -7,7 +7,6 @@ use Hiland\Utils\Data\StringHelper;
 
 class StockHelper
 {
-
     /**
      * @param        $stockCode
      * @param string $prefix  前缀信息(带[]或者不带[]).

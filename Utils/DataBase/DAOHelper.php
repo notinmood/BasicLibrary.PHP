@@ -1,7 +1,9 @@
 <?php
 
 namespace Hiland\Utils\DataBase;
-
+/**
+ *
+ */
 class DAOHelper
 {
     public static function Instance($driver = 'mysqli')

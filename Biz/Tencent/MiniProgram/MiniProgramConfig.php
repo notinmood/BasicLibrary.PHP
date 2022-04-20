@@ -15,7 +15,6 @@ use Hiland\Utils\Data\ObjectHelper;
  * 说明，需要在项目的主配置文件内设置以下两个节点
  * "mimiprogram-appid"对应为小程序的appid
  * "mimiprogram-secret"对应为小程序的secret
- *
  * Class MiniProgramConfig
  * @package Hiland\Biz\Tencent\MiniProgram
  */

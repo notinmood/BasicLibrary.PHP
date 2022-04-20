@@ -8,7 +8,6 @@
  * @company: HiLand & RainyTop
  */
 
-
 // +--------------------------------------------------------------------------
 // |::说明·| 系统常用的功能性函数
 // |::一一·| 将经常使用到的类型中的方法进行提取出来形成函数,便于使用.
@@ -22,7 +21,7 @@ use Hiland\Utils\IO\ConsoleHelper;
 use Hiland\Utils\Web\ServerHelper;
 
 
-if (!function_exists('dump') && ThinkHelper::isThinkPHP() == false) {
+if (!function_exists('dump') && !ThinkHelper::isThinkPHP()) {
     /**
      * 将var_dump进行简短表示
      * @param      $value
@@ -31,7 +30,7 @@ if (!function_exists('dump') && ThinkHelper::isThinkPHP() == false) {
     function dump($value, bool $appendNewLineSymbol = true)
     {
         var_dump($value);
-        if ($appendNewLineSymbol == true) {
+        if ($appendNewLineSymbol) {
             echo EnvHelper::getNewLineSymbol();
         }
     }
@@ -87,7 +86,7 @@ if (!function_exists('fixUrl')) {
     function fixUrl(string $mcaUrl, string $entry = "index.php"): string
     {
         $webRoot = ServerHelper::getWebRoot();
-        if (StringHelper::isStartWith($webRoot, "/") == false) {
+        if (!StringHelper::isStartWith($webRoot, "/")) {
             $webRoot = "/" . $webRoot;
         }
 
@@ -105,7 +104,7 @@ if (!function_exists('fixUrl')) {
             $targetUrl = $mcaUrl;
         }
 
-        if (StringHelper::isStartWith($targetUrl, $enterUrl) == false) {
+        if (!StringHelper::isStartWith($targetUrl, $enterUrl)) {
             $webRootLength = StringHelper::getLength($webRoot);
             $targetUrl     = StringHelper::subString($targetUrl, $webRootLength);
             $targetUrl     = $enterUrl . $targetUrl;

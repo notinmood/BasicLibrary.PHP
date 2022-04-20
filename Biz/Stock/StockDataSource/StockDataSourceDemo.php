@@ -6,6 +6,9 @@ use Hiland\Biz\Stock\IStockDataSource;
 use Hiland\Utils\Web\NetHelper;
 use Hiland\Utils\Web\RequestHelper;
 
+/**
+ *
+ */
 class StockDataSourceDemo implements IStockDataSource
 {
 

@@ -4,6 +4,9 @@ namespace Hiland\Utils\DataBase;
 
 use Hiland\Utils\Web\ClientHelper;
 
+/**
+ *
+ */
 class DAO
 {
     // 数据库主机名称
@@ -48,13 +51,13 @@ class DAO
      */
     public function __construct($dbHostName, $dbHostPort, $dbUserName, $dbPassword, $dbDataBase, $connectionType = '', $coding = 'UTF8')
     {
-        $this->dbHostName = $dbHostName;
-        $this->dbHostPort = $dbHostPort;
-        $this->dbUserName = $dbUserName;
-        $this->dbPassword = $dbPassword;
-        $this->dbDataBase = $dbDataBase;
+        $this->dbHostName     = $dbHostName;
+        $this->dbHostPort     = $dbHostPort;
+        $this->dbUserName     = $dbUserName;
+        $this->dbPassword     = $dbPassword;
+        $this->dbDataBase     = $dbDataBase;
         $this->connectionType = $connectionType;
-        $this->coding = $coding;
+        $this->coding         = $coding;
         $this->connect();
     }
 
@@ -105,7 +108,7 @@ class DAO
 
         $result = '';
         foreach ($tables as $key => $value) {
-            $columnName = "Tables_in_" . $dataBaseName;
+            $columnName   = "Tables_in_" . $dataBaseName;
             $result[$key] = $value[$columnName];
         }
 
@@ -125,7 +128,7 @@ class DAO
             $dataBaseName = $this->dbDataBase;
         }
 
-        $i = 0;
+        $i      = 0;
         $result = '';
 
         $rs = $this->query("show tables");
@@ -188,12 +191,12 @@ class DAO
             echo "<font color='red'><pre>" . $sql . "</pre></font>";
             $ip = ClientHelper::getOnlineIP(); // $this->getip();
             if ($this->isLogError) {
-                $time = date("Y-m-d H:i:s");
+                $time    = date("Y-m-d H:i:s");
                 $message = $message . "\r\n$this->sql" . "\r\n客户IP:$ip" . "\r\n时间 :$time" . "\r\n\r\n";
 
-                $server_date = date("Y-m-d");
-                $filename = $server_date . ".txt";
-                $file_path = "error/" . $filename;
+                $server_date   = date("Y-m-d");
+                $filename      = $server_date . ".txt";
+                $file_path     = "error/" . $filename;
                 $error_content = $message;
                 // $error_content="错误的数据库，不可以链接";
                 $file = "error"; // 设置文件保存目录
@@ -344,7 +347,7 @@ class DAO
     public function getFieldNames($tableName)
     {
         $queryResult = $this->getFields($tableName);
-        $total = count($queryResult);
+        $total       = count($queryResult);
 
         $result = '';
         for ($i = 0; $i < $total; $i++) {

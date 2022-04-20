@@ -39,7 +39,8 @@ class ClientHelper
         }
     }
 
-    /**判断是不是微信浏览器
+    /**
+     * 判断是不是微信浏览器
      * @return bool
      */
     public static function isWeixinBrowser(): bool

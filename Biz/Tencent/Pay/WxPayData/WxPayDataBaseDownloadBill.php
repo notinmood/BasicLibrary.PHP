@@ -3,14 +3,12 @@ namespace Hiland\Biz\Tencent\Pay\WxPayData;
 
 /**
  *
- * 下载对账单输入对象
- *
+ * 下载对账单输入对象 *
  * @author widyhu
  *
  */
 class WxPayDataBaseDownloadBill extends WxPayDataBase
 {
-
     /**
      * 设置微信分配的公众账号ID
      *

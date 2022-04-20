@@ -25,7 +25,6 @@
  *
  */
 const floatObject = function () {
-
     /*
      * 判断obj是否为一个整数
      */
@@ -46,19 +45,19 @@ const floatObject = function () {
             return result
         }
         const strNumber = floatNumber + '';
-        const dotPos = strNumber.indexOf('.');
-        const len = strNumber.substr(dotPos + 1).length;
-        const times = Math.pow(10, len);
+        const dotPos    = strNumber.indexOf('.');
+        const len       = strNumber.substr(dotPos + 1).length;
+        const times     = Math.pow(10, len);
         const intNumber = parseInt(floatNumber * times + 0.5, 10);
-        result.times = times;
-        result.num = intNumber;
+        result.times    = times;
+        result.num      = intNumber;
         return result
     }
 
     function toFixed(num, s) {
         const times = Math.pow(10, s);
-        let des = num * times + 0.5;
-        des = parseInt(des, 10) / times;
+        let des     = num * times + 0.5;
+        des         = parseInt(des, 10) / times;
         return des + ''
     }
 
@@ -81,7 +80,7 @@ const floatObject = function () {
         const t1 = o1.times;
         const t2 = o2.times;
 
-        const max = t1 > t2 ? t1 : t2;
+        const max  = t1 > t2 ? t1 : t2;
         let result = null;
 
         switch (op) {
@@ -140,9 +139,9 @@ const floatObject = function () {
 
     // exports
     return {
-        add: add,
+        add     : add,
         subtract: subtract,
         multiply: multiply,
-        divide: divide
+        divide  : divide
     }
 }();

@@ -5,7 +5,7 @@ namespace Hiland\Utils\DataConstruct;
 class Stack extends SimpleLinearConstruct
 {
     /**
-     * （尾部）出队*
+     * （尾部）出队
      * @return Null|mixed
      */
     public function pop()
@@ -14,7 +14,7 @@ class Stack extends SimpleLinearConstruct
     }
 
     /**
-     * （尾部）入队*
+     * （尾部）入队
      * @param mixed $value
      * @return int
      */

@@ -9,6 +9,7 @@ use Hiland\Utils\IO\FileHelper;
 
 /**
  * @TODO:这个文件需要修改和验证，里面不能出现 WechatException.
+ *      // TODO:xiedali@2022/4/20 
  */
 class NetHelper
 {

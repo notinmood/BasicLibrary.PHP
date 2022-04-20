@@ -13,7 +13,7 @@ use Hiland\Utils\Web\WebHelper;
 
 /**
  * 关于线程调用的常用方法
- * 方法asyncRun调用的参数为一个url地址
+ * 方法 asyncRun 调用的参数为一个 url 地址
  * 方法
  */
 class ThreadHelper
@@ -144,7 +144,7 @@ class ThreadHelper
     public static function hook(callable $callback, array $params)
     {
         self::$hook_list[] = array('callback' => $callback, 'params' => $params);
-        if (self::$hooked == false) {
+        if (!self::$hooked) {
             self::$hooked = true;
             register_shutdown_function(array(__CLASS__, '__run'));
         }

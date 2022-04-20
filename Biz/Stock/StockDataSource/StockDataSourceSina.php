@@ -9,6 +9,9 @@ use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\StringHelper;
 use Hiland\Utils\Web\NetHelper;
 
+/**
+ *
+ */
 class StockDataSourceSina implements IStockDataSource
 {
 

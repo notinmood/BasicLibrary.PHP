@@ -7,7 +7,7 @@ use Hiland\Utils\Environment\EnvHelper;
 use think\facade\Db;
 
 /**
- * Class MateContainer Mate的容器，可以在一个请求之内重复利用已经创建的Mate，节省内存和效率
+ * Class MateContainer Mate的容器，可以在一个请求之内重复利用已经创建的 Mate，节省内存和效率
  * @package Hiland\Utils\DataModel
  */
 class MateContainer

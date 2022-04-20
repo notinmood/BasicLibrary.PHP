@@ -3,7 +3,7 @@
 namespace Hiland\Utils\Syntax;
 
 /**
- * Class Arrow 本类型仅仅适用于Linux系统。（在windows下不可以使用）
+ * Class Arrow 本类型仅仅适用于 Linux 系统。（在 windows 下不可以使用）
  * @package Hiland\Utils\Syntax
  */
 class Arrow

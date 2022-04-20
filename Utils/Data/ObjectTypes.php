@@ -8,7 +8,9 @@
 
 namespace Hiland\Utils\Data;
 
-
+/**
+ *
+ */
 class ObjectTypes
 {
     const STRING   = "string";

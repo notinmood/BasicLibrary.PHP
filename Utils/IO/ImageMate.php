@@ -7,7 +7,7 @@ use Hiland\Utils\Data\FontHelper;
 
 /**
  *图像处理基础类
- * @author  devel
+ * @author  山东解大劦
  * @example 使用说明 分为三个步骤
  *          1、生成实例$image = new Images($url);
  *          2、设置各种信息$image->setMaskWord()等

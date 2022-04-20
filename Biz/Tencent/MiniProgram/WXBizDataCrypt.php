@@ -8,7 +8,9 @@
 
 namespace Hiland\Biz\Tencent\MiniProgram;
 
-
+/**
+ *
+ */
 class WXBizDataCrypt
 {
     private $appid;

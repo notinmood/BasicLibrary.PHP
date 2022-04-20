@@ -2,6 +2,9 @@
 
 namespace Hiland\Utils\Data;
 
+/**
+ *
+ */
 class XmlHelper
 {
     /**

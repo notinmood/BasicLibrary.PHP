@@ -3,8 +3,7 @@ namespace Hiland\Biz\Tencent\Pay\WxPayData;
 
 /**
  *
- * 测速上报输入对象
- *
+ * 测速上报输入对象 *
  * @author widyhu
  *
  */

@@ -8,15 +8,14 @@ class RandHelper
 {
     /**
      * 生成随机字符串
-     * @param int    $length
-     *            字符串长度
+     * @param int    $length 字符串长度
      * @param string $category
-     *            可以出现在字符串中的字符类别，取值分别为
-     *            ALL 包括大写小写字符、数字、特殊字符
-     *            LETTER 大写小写字符
-     *            NUMBER 数字
-     *            SPECIAL 特殊字符
-     *            [任意值] 大写小写字符、数字（不包含特殊字符）
+     *                       可以出现在字符串中的字符类别，取值分别为
+     *                       ALL 包括大写小写字符、数字、特殊字符
+     *                       LETTER 大写小写字符
+     *                       NUMBER 数字
+     *                       SPECIAL 特殊字符
+     *                       [任意值] 大写小写字符、数字（不包含特殊字符）
      * @return string
      */
     public static function get(int $length = 8, string $category = SystemEnum::RandCategory_ALL): string

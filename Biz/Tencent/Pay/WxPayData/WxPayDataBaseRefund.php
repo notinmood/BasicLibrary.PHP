@@ -10,7 +10,6 @@ namespace Hiland\Biz\Tencent\Pay\WxPayData;
  */
 class WxPayDataBaseRefund extends WxPayDataBase
 {
-
     /**
      * 设置微信分配的公众账号ID
      *

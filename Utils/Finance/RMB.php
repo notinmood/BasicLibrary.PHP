@@ -4,7 +4,7 @@ namespace Hiland\Utils\Finance;
 
 /**
  * 人民币操作类
- * @author 然
+ * @author 山东解大劦
  */
 class RMB
 {

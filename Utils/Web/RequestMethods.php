@@ -10,7 +10,9 @@
 
 
 namespace Hiland\Utils\Web;
-
+/**
+ *
+ */
 class RequestMethods
 {
     const ALL     = "all";

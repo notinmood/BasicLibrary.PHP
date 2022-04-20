@@ -11,7 +11,7 @@ namespace Hiland\Utils\DataValue;
 use Hiland\Utils\DataConstruct\ConstMate;
 
 /**
- * 常量命名有3部分（或4部分组成）
+ * 常量命名有 3部分（或 4部分组成）
  *  第一部分为业务领域，比如订单、比如员工等
  *  第二部分为业务属性，比如订单配送状态、员工性别等
  *  第三部分为业务属性的取值，比如订单已经配送，订单已经取消等

@@ -1,6 +1,0 @@
-1、各数据源命名的时候，命名规则如下
-StockDataSource***.php,其中***表示具体的数据源名称,构建StockMate实例的时候,需要传入这个***名称.
-如下：
-StockDataSourceSina.php内Sina就表示上述的***,创建StockMate实例的时候 new StockMate("Sina");
-
-2、各数据源需实现IStockDataSource接口

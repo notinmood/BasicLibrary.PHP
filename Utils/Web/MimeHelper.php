@@ -4,6 +4,9 @@ namespace Hiland\Utils\Web;
 
 use Hiland\Utils\IO\FileHelper;
 
+/**
+ *
+ */
 class MimeHelper
 {
     /**

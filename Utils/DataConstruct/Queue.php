@@ -2,6 +2,9 @@
 
 namespace Hiland\Utils\DataConstruct;
 
+/**
+ *
+ */
 class Queue extends SimpleLinearConstruct
 {
     /**

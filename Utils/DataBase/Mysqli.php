@@ -2,6 +2,9 @@
 
 namespace Hiland\Utils\DataBase;
 
+/**
+ *
+ */
 class Mysqli extends DAO
 {
     protected function connectInner()

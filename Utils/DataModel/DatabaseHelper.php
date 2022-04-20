@@ -15,6 +15,9 @@ use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\ObjectTypes;
 use Hiland\Utils\Data\StringHelper;
 
+/**
+ *
+ */
 class DatabaseHelper
 {
     /**

@@ -51,7 +51,7 @@ abstract class SimpleLinearConstruct
     }
 
     /**
-     * 清空队列*
+     * 清空队列
      */
     public function makeEmpty()
     {
@@ -59,7 +59,7 @@ abstract class SimpleLinearConstruct
     }
 
     /**
-     * 获取长度 *
+     * 获取长度
      */
     public function getLength(): int
     {

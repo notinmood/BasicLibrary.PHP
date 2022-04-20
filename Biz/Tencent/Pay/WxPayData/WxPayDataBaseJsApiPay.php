@@ -3,14 +3,12 @@ namespace Hiland\Biz\Tencent\Pay\WxPayData;
 
 /**
  *
- * 提交JSAPI输入对象
- *
+ * 提交JSAPI输入对象 *
  * @author widyhu
  *
  */
 class WxPayDataBaseJsApiPay extends WxPayDataBase
 {
-
     /**
      * 设置微信分配的公众账号ID
      *

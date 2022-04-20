@@ -28,9 +28,9 @@ class StringHelper
      * 获取内容的编码
      * @param string $stringData
      * @return bool|string
-     * 备注1：php中用mb_detect_encoding测出来的euc-cn是gb2312编码：
-     * EUC-CN是GB2312最常用的表示方法。浏览器编码表上的“GB2312”，通常都是指“EUC-CN”表示法。
-     * 备注2：用mb_detect_encoding函数进行编码识别时，很多人都碰到过识别编码有误问题的说明
+     * 备注1：php中用 mb_detect_encoding 测出来的 euc-cn 是 gb2312 编码：
+     * EUC-CN是 GB2312 最常用的表示方法。浏览器编码表上的 “GB2312”，通常都是指 “EUC-CN” 表示法。
+     * 备注2：用 mb_detect_encoding 函数进行编码识别时，很多人都碰到过识别编码有误问题的说明
      * https://www.jb51.net/article/27282.htm
      */
     public static function getEncoding(string $stringData = "")

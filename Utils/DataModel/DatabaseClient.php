@@ -17,7 +17,7 @@ class DatabaseClient
 {
     /**
      * 获取数据库操作 Mate(对数据库表内的数据进行操作)
-     * (目前直接是从Container 获取数据；以后加入多类型数据库的时候，会加入数据库类型的判断与加载)
+     * (目前直接是从 Container 获取数据；以后加入多类型数据库的时候，会加入数据库类型的判断与加载)
      * @param $tableName
      * @return ModelMate
      */

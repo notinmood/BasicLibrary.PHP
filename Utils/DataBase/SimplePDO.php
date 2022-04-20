@@ -8,11 +8,10 @@
 
 namespace Hiland\Utils\DataBase;
 
-/*!
+/**
  * Medoo database framework
  * http://medoo.in
- * Version 1.0.2
- *
+ * Version 1.0.2 *
  * Copyright 2016, Angel Lai
  * Released under the MIT license
  */
@@ -54,7 +53,7 @@ class SimplePDO
     {
         try {
             $commands = array();
-            $dsn = '';
+            $dsn      = '';
 
             if (is_array($options)) {
                 foreach ($options as $option => $value) {
@@ -71,7 +70,7 @@ class SimplePDO
                 $port = $this->port;
             }
 
-            $type = strtolower($this->database_type);
+            $type    = strtolower($this->database_type);
             $is_port = isset($port);
 
             if (isset($options['prefix'])) {
@@ -119,7 +118,7 @@ class SimplePDO
                     break;
 
                 case 'sqlite':
-                    $dsn = $type . ':' . $this->database_file;
+                    $dsn            = $type . ':' . $this->database_file;
                     $this->username = null;
                     $this->password = null;
                     break;
@@ -173,7 +172,7 @@ class SimplePDO
 
     protected function select_context($table, $join, &$columns = null, $where = null, $column_fn = null)
     {
-        $table = '"' . $this->prefix . $table . '"';
+        $table    = '"' . $this->prefix . $table . '"';
         $join_key = is_array($join) ? array_keys($join) : null;
 
         if (
@@ -183,10 +182,10 @@ class SimplePDO
             $table_join = array();
 
             $join_array = array(
-                '>' => 'LEFT',
-                '<' => 'RIGHT',
+                '>'  => 'LEFT',
+                '<'  => 'RIGHT',
                 '<>' => 'FULL',
-                '><' => 'INNER'
+                '><' => 'INNER',
             );
 
             foreach ($join as $sub_table => $relation) {
@@ -233,18 +232,18 @@ class SimplePDO
                         is_array($join) &&
                         isset($column_fn)
                     ) {
-                        $where = $join;
+                        $where   = $join;
                         $columns = null;
                     } else {
-                        $where = null;
+                        $where   = null;
                         $columns = $join;
                     }
                 } else {
-                    $where = $join;
+                    $where   = $join;
                     $columns = null;
                 }
             } else {
-                $where = $columns;
+                $where   = $columns;
                 $columns = $join;
             }
         }
@@ -259,7 +258,7 @@ class SimplePDO
             } else {
                 if (empty($columns)) {
                     $columns = '*';
-                    $where = $join;
+                    $where   = $join;
                 }
 
                 $column = $column_fn . '(' . $this->column_push($columns) . ')';
@@ -307,8 +306,8 @@ class SimplePDO
 
         if (is_array($where)) {
             $where_keys = array_keys($where);
-            $where_AND = preg_grep("/^AND\s*#?$/i", $where_keys);
-            $where_OR = preg_grep("/^OR\s*#?$/i", $where_keys);
+            $where_AND  = preg_grep("/^AND\s*#?$/i", $where_keys);
+            $where_OR   = preg_grep("/^OR\s*#?$/i", $where_keys);
 
             $single_condition = array_diff_key($where, array_flip(
                 explode(' ', 'AND OR GROUP ORDER HAVING LIMIT LIKE MATCH')
@@ -323,12 +322,12 @@ class SimplePDO
             }
 
             if (!empty($where_AND)) {
-                $value = array_values($where_AND);
+                $value        = array_values($where_AND);
                 $where_clause = ' WHERE ' . $this->data_implode($where[$value[0]], ' AND');
             }
 
             if (!empty($where_OR)) {
-                $value = array_values($where_OR);
+                $value        = array_values($where_OR);
                 $where_clause = ' WHERE ' . $this->data_implode($where[$value[0]], ' OR');
             }
 
@@ -472,7 +471,7 @@ class SimplePDO
                         $like_clauses = array();
 
                         foreach ($value as $item) {
-                            $item = strval($item);
+                            $item   = strval($item);
                             $suffix = mb_substr($item, -1, 1);
 
                             if ($suffix === '_') {
@@ -574,7 +573,7 @@ class SimplePDO
         }
 
         foreach ($datas as $data) {
-            $values = array();
+            $values  = array();
             $columns = array();
 
             foreach ($data as $key => $value) {
@@ -688,7 +687,7 @@ class SimplePDO
             }
 
             $replace_query = implode(', ', $replace_query);
-            $where = $search;
+            $where         = $search;
         } else {
             if (is_array($search)) {
                 $replace_query = array();
@@ -698,7 +697,7 @@ class SimplePDO
                 }
 
                 $replace_query = implode(', ', $replace_query);
-                $where = $replace;
+                $where         = $replace;
             } else {
                 $replace_query = $columns . ' = REPLACE(' . $this->column_quote($columns) . ', ' . $this->quote($search) . ', ' . $this->quote($replace) . ')';
             }
@@ -832,11 +831,11 @@ class SimplePDO
     public function info()
     {
         $output = array(
-            'server' => 'SERVER_INFO',
-            'driver' => 'DRIVER_NAME',
-            'client' => 'CLIENT_VERSION',
-            'version' => 'SERVER_VERSION',
-            'connection' => 'CONNECTION_STATUS'
+            'server'     => 'SERVER_INFO',
+            'driver'     => 'DRIVER_NAME',
+            'client'     => 'CLIENT_VERSION',
+            'version'    => 'SERVER_VERSION',
+            'connection' => 'CONNECTION_STATUS',
         );
 
         foreach ($output as $key => $value) {

@@ -33,6 +33,11 @@ class Node
      */
     public $next;
 
+    /**
+     * @param $value
+     * @param $next
+     * @param $isNullNode
+     */
     public function __construct($value = null, $next = null, $isNullNode = false)
     {
         $this->value      = $value;

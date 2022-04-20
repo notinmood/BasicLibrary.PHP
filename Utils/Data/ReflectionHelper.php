@@ -110,7 +110,7 @@ class ReflectionHelper
 
     /**
      * 通过属性名称获取属性值(通常用于获取私有属性的场景)
-     * (参数$instance 和 $constructArgs 设置其一即可)
+     * (参数 $instance 和 $constructArgs 设置其一即可)
      * @param string     $className     类型名称字符串(通常使用 <Class>::class这样的形式简便获得)
      * @param string     $propertyName  待获取属性值的属性名称
      * @param null       $instance      对象实例

@@ -2,7 +2,7 @@
 
 namespace Hiland\Utils\Data;
 
-if (defined("TWOZEROZEROZEROYEAR") == false) {
+if (!defined("TWOZEROZEROZEROYEAR")) {
     /**
      * 946656000 表示1970年1月1日到2000年1月1日间总的秒数
      */
@@ -24,7 +24,7 @@ class GuidHelper
     {
         $guid = "00000000-0000-0000-0000-000000000000";
 
-        if ($isBracket == true) {
+        if ($isBracket) {
             $guid = chr(123) . $guid . chr(125); // "{" // "}"
         }
 

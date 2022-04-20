@@ -12,7 +12,6 @@ use Hiland\Biz\Tencent\Common\WechatException;
  */
 class WxPayDataBaseResults extends WxPayDataBase
 {
-
     /**
      *
      * 使用数组初始化对象

@@ -5,6 +5,9 @@ namespace Hiland\Biz\Stock;
 use ArrayAccess;
 use Hiland\Utils\Data\ObjectHelper;
 
+/**
+ *
+ */
 class StockRealTimeQuote implements ArrayAccess
 {
     public string $stockCode     = "";

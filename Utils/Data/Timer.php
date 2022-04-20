@@ -59,7 +59,6 @@ class Timer
         $this->elapsed = 0;
     }
 
-    #### PRIVATE METHODS ####
 
     # Get Current Time
     private function _getTime()

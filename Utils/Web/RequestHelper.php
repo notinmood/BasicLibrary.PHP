@@ -9,13 +9,13 @@ use think\Container;
 use think\Request;
 
 /**
- * 请求辅助工具
+ * 请求辅助类
  */
 class RequestHelper
 {
     /**
      * 判断当前是否为post请求
-     * @return int|mixed
+     * @return int
      */
     public static function isPost()
     {
@@ -29,7 +29,7 @@ class RequestHelper
 
     /**
      * 判断当前是否为get请求
-     * @return bool|mixed
+     * @return bool
      */
     public static function isGet()
     {

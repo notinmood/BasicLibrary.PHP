@@ -3,14 +3,12 @@ namespace Hiland\Biz\Tencent\Pay\WxPayData;
 
 /**
  *
- * 关闭订单输入对象
- *
+ * 关闭订单输入对象 *
  * @author widyhu
  *
  */
 class WxPayDataBaseCloseOrder extends WxPayDataBase
 {
-
     /**
      * 设置微信分配的公众账号ID
      *

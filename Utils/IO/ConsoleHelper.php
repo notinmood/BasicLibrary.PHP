@@ -8,7 +8,7 @@ use Hiland\Utils\Environment\EnvHelper;
 /**
  * 控制台操作类
  * 处理用户界面的输入输出逻辑
- * @author  解然
+ * @author  山东解大劦
  * @version v20131224
  */
 class ConsoleHelper

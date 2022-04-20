@@ -4,7 +4,6 @@ namespace Hiland\Biz\Tencent\Pay;
 use Hiland\Biz\Tencent\Pay\WxPayData\WxPayDataBaseNotify;
 
 /**
- *
  * 回调基础类
  *
  * @author widyhu

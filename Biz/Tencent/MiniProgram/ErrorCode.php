@@ -5,8 +5,8 @@
  * Date: 2018/11/10
  * Time: 15:45
  */
-namespace Hiland\Biz\Tencent\MiniProgram;
 
+namespace Hiland\Biz\Tencent\MiniProgram;
 
 /**
  * error code 说明.

@@ -21,7 +21,7 @@ use Hiland\Utils\Environment\EnvHelper;
 class ServerHelper
 {
     /**
-     * 获取Web服务器名称（IIS还是apache等）
+     * 获取 Web 服务器名称（IIS 还是 apache 等）
      * @return mixed
      */
     public static function getWebServerSoftName()

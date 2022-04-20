@@ -13,7 +13,7 @@ namespace Hiland\Utils\DataConstruct;
 /**
  * 单向链表结构
  * 参考 https://www.cnblogs.com/followyou/p/11162030.html(里面有不少错误,本地已经修正)
- * 关于双向链表等数据结构,请参考spl内信息 https://www.php.net/manual/zh/spl.datastructures.php
+ * 关于双向链表等数据结构,请参考 spl 内信息 https://www.php.net/manual/zh/spl.datastructures.php
  */
 class LinkedList
 {

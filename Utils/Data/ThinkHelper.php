@@ -5,7 +5,7 @@ namespace Hiland\Utils\Data;
 
 
 /**
- * 对thinkphp的包装，主要用于thinkphp各个版本的兼容
+ * 对 thinkphp 的包装，主要用于 thinkphp 各个版本的兼容
  * Class ThinkHelper
  * @package Hiland\Utils\Data
  */

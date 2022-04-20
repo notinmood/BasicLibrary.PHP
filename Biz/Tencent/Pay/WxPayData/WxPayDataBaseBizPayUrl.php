@@ -3,14 +3,12 @@ namespace Hiland\Biz\Tencent\Pay\WxPayData;
 
 /**
  *
- * 扫码支付模式一生成二维码参数
- *
+ * 扫码支付模式一生成二维码参数 *
  * @author widyhu
  *
  */
 class WxPayDataBaseBizPayUrl extends WxPayDataBase
 {
-
     /**
      * 设置微信分配的公众账号ID
      *

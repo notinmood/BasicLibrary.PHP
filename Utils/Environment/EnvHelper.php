@@ -8,6 +8,9 @@ use Hiland\Utils\Data\RegexHelper;
 use Hiland\Utils\Data\StringHelper;
 use Hiland\Utils\Data\ThinkHelper;
 
+/**
+ *
+ */
 class EnvHelper
 {
     /**获取系统信息

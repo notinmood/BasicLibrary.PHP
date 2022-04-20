@@ -105,7 +105,7 @@ class MorseHelper
         return join($option[0], $morse);
     }
 
-    //按utf分割字符串
+    //按 utf 分割字符串
 
     /**
      * @param array|null $option
