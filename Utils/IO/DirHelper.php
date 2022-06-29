@@ -8,6 +8,8 @@
 
 namespace Hiland\Utils\IO;
 
+use Hiland\Utils\Data\StringHelper;
+
 /**
  *
  */
@@ -57,5 +59,19 @@ class DirHelper
         }
 
         return $count;
+    }
+
+    /**
+     * 确保目录以路径分隔符结尾
+     * @param $dir
+     * @return mixed|string
+     */
+    public static function ensureEndWithPathSeparator($dir)
+    {
+        if (!StringHelper::isEndWith($dir, DIRECTORY_SEPARATOR)) {
+            $dir = $dir . DIRECTORY_SEPARATOR;
+        }
+
+        return $dir;
     }
 }

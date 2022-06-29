@@ -32,8 +32,8 @@
 
 ### 关于"判断"动作的命名
 
-1. 判断某件事情的时候用单词 determine [dɪ'tɜːrmɪn]
-2. 是非判断的时候，用 is****
+1. 用于判断类型的方法名称时用单词 determine [dɪ'tɜːrmɪn]
+2. 用于判断类型的属性名称时用单词 is****
 
 ### 关于枚举的定义
 
@@ -48,3 +48,7 @@
 3. 通常 ***Mate 类型不直接用 new() 构建:
    1. 用 Container.get(名称) 实现单例调用(得到的同一个实例可以在项目内复用)。比如(MateContainer.get).
    2. 包装在 ***Client 里面，调用静态方法。(比如 ConfigClient、DatabaseClient).
+
+### 关于目录类型的路径定义
+所有目录都要以路径分隔符结尾，这样在项目中使用的时候，可以不用做二次判断；
+如果使用第三方的路径，要使用 `DirHelper.ensureEndWithPathSeparator` 进行确保。

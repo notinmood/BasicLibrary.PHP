@@ -42,4 +42,14 @@ class PathHelper
 
         return $result;
     }
+
+    /**
+     * 确保目录以路径分隔符结尾
+     * @param $dir
+     * @return mixed|string
+     */
+    public function ensureEndWithPathSeparator($dir)
+    {
+        return DirHelper::ensureEndWithPathSeparator($dir);
+    }
 }
