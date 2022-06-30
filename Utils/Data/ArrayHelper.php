@@ -189,18 +189,28 @@ class ArrayHelper
      */
     public static function isAssociateArray($array): bool
     {
+        // if (ObjectHelper::isEmpty($array)) {
+        //     return false;
+        // }
+        //
+        // $result = array_keys($array);
+        // if ($result && isset($result[0])) {
+        //     if (ObjectHelper::getTypeName($result[0]) == ObjectTypes::STRING) {
+        //         return true;
+        //     }
+        // }
+        //
+        // return false;
+
         if (ObjectHelper::isEmpty($array)) {
             return false;
         }
 
-        $result = array_keys($array);
-        if ($result && isset($result[0])) {
-            if (ObjectHelper::getTypeName($result[0]) == ObjectTypes::STRING) {
-                return true;
-            }
+        if (key($array) != 0) {
+            return true;
+        } else {
+            return false;
         }
-
-        return false;
     }
 
     /**
@@ -210,18 +220,28 @@ class ArrayHelper
      */
     public static function isIndexArray($array): bool
     {
+        // if (ObjectHelper::isEmpty($array)) {
+        //     return false;
+        // }
+        //
+        // $result = array_keys($array);
+        // if ($result && isset($result[0])) {
+        //     if (ObjectHelper::getTypeName($result[0]) == ObjectTypes::INTEGER) {
+        //         return true;
+        //     }
+        // }
+        //
+        // return false;
+
         if (ObjectHelper::isEmpty($array)) {
             return false;
         }
 
-        $result = array_keys($array);
-        if ($result && isset($result[0])) {
-            if (ObjectHelper::getTypeName($result[0]) == ObjectTypes::INTEGER) {
-                return true;
-            }
+        if (key($array) == 0) {
+            return true;
+        } else {
+            return false;
         }
-
-        return false;
     }
 
     /**
