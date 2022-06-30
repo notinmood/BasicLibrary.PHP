@@ -206,7 +206,7 @@ class ArrayHelper
             return false;
         }
 
-        if (key($array) != 0) {
+        if (key($array) !== 0) {
             return true;
         } else {
             return false;
@@ -237,7 +237,7 @@ class ArrayHelper
             return false;
         }
 
-        if (key($array) == 0) {
+        if (key($array) === 0) {
             return true;
         } else {
             return false;
