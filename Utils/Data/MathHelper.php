@@ -18,7 +18,7 @@ class MathHelper
      * @param $data string 百分比字符串（可以带 % 也可以不带）
      * @return float
      */
-    public static function convertPercentToFloat(string $data)
+    public static function convertPercentToFloat(string $data): float
     {
         return (float)$data / 100;
     }

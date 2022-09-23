@@ -24,10 +24,10 @@ class JsonHelper
 
     /**
      * 将 json 字符串转换成 object 对象
-     * @param $jsonString
+     * @param string $jsonString
      * @return mixed
      */
-    public static function convertToObject($jsonString)
+    public static function convertToObject(string $jsonString)
     {
         return json_decode($jsonString, false);
     }
