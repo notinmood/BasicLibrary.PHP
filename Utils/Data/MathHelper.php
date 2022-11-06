@@ -11,6 +11,9 @@ namespace Hiland\Utils\Data;
 
 use Hiland\Utils\DataConstruct\Queue;
 
+/**
+ * 数学工具辅助器
+ */
 class MathHelper
 {
     /**
