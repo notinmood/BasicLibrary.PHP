@@ -10,7 +10,7 @@ use Hiland\Utils\Data\StringHelper;
 use Hiland\Utils\Web\NetHelper;
 
 /**
- *
+ * 新浪的证券数据源
  */
 class StockDataSourceSina implements IStockDataSource
 {

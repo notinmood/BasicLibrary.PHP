@@ -5,6 +5,9 @@ namespace Hiland\Biz\Stock;
 use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\StringHelper;
 
+/**
+ * 证券辅助器
+ */
 class StockHelper
 {
     /**

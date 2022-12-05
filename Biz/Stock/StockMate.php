@@ -6,7 +6,7 @@ use Hiland\Biz\Stock\StockDataSource\StockDataSourceSina;
 use Hiland\Utils\IO\PathHelper;
 
 /**
- *
+ * 证券类
  */
 class StockMate
 {

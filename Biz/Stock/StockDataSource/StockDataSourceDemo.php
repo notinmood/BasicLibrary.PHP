@@ -16,7 +16,7 @@ class StockDataSourceDemo implements IStockDataSource
      * @param mixed ...$stockCodes
      * @return string
      */
-    function getRealTimeQuote(...$stockCodes)
+    function getRealTimeQuote(...$stockCodes): string
     {
         return "in demo";
     }
