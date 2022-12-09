@@ -1,6 +1,6 @@
 <?php
 /**
- * @file   : demo.config.php
+ * @file   : .default.config.php
  * @time   : 12:15
  * @date   : 2021/9/5
  * @mail   : 9727005@qq.com
