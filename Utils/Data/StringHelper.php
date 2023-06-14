@@ -445,7 +445,7 @@ class StringHelper
     /**
      * 驼峰转下划线
      * @param string $value
-     * @param string $delimiter
+     * @param string $delimiter 分隔符
      * @return string
      */
     public static function snake(string $value, string $delimiter = '_'): string
