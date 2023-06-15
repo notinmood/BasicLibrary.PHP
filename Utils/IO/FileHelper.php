@@ -11,42 +11,43 @@ class FileHelper
 {
     /**
      * 获取文件所在的目录信息
-     * @param string $fileName
-     *            带路径的全文件名
+     * @param string $fileFullName 带路径的全文件名
+     * @return string 返回文件所在的目录信息
      */
-    public static function getDirName(string $fileName)
+    public static function getDirName(string $fileFullName): string
     {
-        $path = pathinfo($fileName);
+        $path = pathinfo($fileFullName);
         return $path['dirname'];
     }
 
     /**
      * 获取文件的基本名称信息（不带路径的文件名称）
-     * @param string $fileName 带路径的全文件名
+     * @param string $fileFullName 带路径的全文件名
+     * @return string 返回文件的基本名称信息（不带路径的文件名称）
      */
-    public static function getBaseName(string $fileName)
+    public static function getBaseName(string $fileFullName): string
     {
-        $path = pathinfo($fileName);
+        $path = pathinfo($fileFullName);
         return $path['basename'];
     }
 
     /**
      * 获取文件的基本名称信息（不带路径不带扩张名的文件名称）
-     * @param string $fileName 带路径的全文件名
+     * @param string $fileFullName 带路径的全文件名
      */
-    public static function getBaseNameWithoutExtension(string $fileName)
+    public static function getBaseNameWithoutExtension(string $fileFullName)
     {
-        $path = pathinfo($fileName);
+        $path = pathinfo($fileFullName);
         return $path['filename'];
     }
 
     /**
      * 获取文件扩展名称信息（扩展名不带点（“.”））
-     * @param string $fileName 带路径的全文件名
+     * @param string $fileFullName 带路径的全文件名
      */
-    public static function getExtensionName(string $fileName)
+    public static function getExtensionName(string $fileFullName)
     {
-        $path = pathinfo($fileName);
+        $path = pathinfo($fileFullName);
         return $path['extension'];
     }
 
@@ -70,9 +71,9 @@ class FileHelper
             return false;
         } else {
             $result["fullName"] = $_FILES[$submitControlName]["tmp_name"];
-            $result["name"]     = $_FILES[$submitControlName]["name"];
-            $result["type"]     = $_FILES[$submitControlName]["type"];
-            $result["size"]     = $_FILES[$submitControlName]["size"];
+            $result["name"] = $_FILES[$submitControlName]["name"];
+            $result["type"] = $_FILES[$submitControlName]["type"];
+            $result["size"] = $_FILES[$submitControlName]["size"];
 
             return $result;
         }
@@ -80,24 +81,24 @@ class FileHelper
 
     /**
      * 获取文件编码名称
-     * @param $fileName
+     * @param $fileFullName
      * @return bool|string
      */
-    public static function getEncoding($fileName)
+    public static function getEncoding($fileFullName)
     {
-        $content = file_get_contents($fileName);
+        $content = file_get_contents($fileFullName);
         return StringHelper::getEncoding($content);
     }
 
     /**
      * 获取目标编码类型的文本
-     * @param        $fileName
+     * @param        $fileFullName
      * @param string $targetEncoding
      * @return false|string|string[]|null
      */
-    public static function getEncodingContent($fileName, string $targetEncoding = 'UTF-8')
+    public static function getEncodingContent($fileFullName, string $targetEncoding = 'UTF-8')
     {
-        $content = file_get_contents($fileName);
+        $content = file_get_contents($fileFullName);
         return StringHelper::getEncodingContent($content, $targetEncoding);
     }
 }

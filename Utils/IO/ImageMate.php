@@ -33,6 +33,12 @@ use Hiland\Utils\Data\FontHelper;
  *          $destImage = $image->createImage(600, 500);
  *          ImageHelper::display($destImage, 'jpg', 80);
  */
+
+//TODO:xiedali@2023-06-15 这个类型名称应该改为大写开头，并写单元测试
+
+/**
+ *
+ */
 class imageMate
 {
     // 原图资源信息

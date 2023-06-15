@@ -14,7 +14,7 @@ class ImageHelper
      * @param $fileName
      * @return bool
      */
-    public static function isImage($fileName)
+    public static function isImage($fileName): bool
     {
         $result = getimagesize($fileName);
         if ($result) {
@@ -26,10 +26,10 @@ class ImageHelper
 
     /**
      * 获取图片的宽度
-     * @param $image 图片路径或者图片资源
+     * @param $image mixed 图片路径或者图片资源
      * @return int
      */
-    public static function getWidth($image)
+    public static function getWidth($image): int
     {
         if (is_string($image)) {
             $image = self::loadImage($image);
@@ -39,39 +39,39 @@ class ImageHelper
 
     /**
      * 根据给定的图片全路径，将图片载入内存
-     * @param string $imageFileName 图片全路径
+     * @param string $imageFileFullName 图片全路径名称
      * @param string $imageType     图片类型（jpg,png等，默认为空的时候系统自动推断图片类型，或者设置一个未知的类型的时候系统使用file_get_contents载入图片）
      * @return resource 内存中的图片资源
      */
-    public static function loadImage(string $imageFileName, string $imageType = ''): bool
+    public static function loadImage(string $imageFileFullName, string $imageType = ''): bool
     {
         if (empty($imageType)) {
-            $imageType = self::getImageType($imageFileName);
+            $imageType = self::getImageType($imageFileFullName);
         }
 
         switch ($imageType) {
             case 'png':
-                $image = imagecreatefrompng($imageFileName);
+                $image = imagecreatefrompng($imageFileFullName);
                 break;
             case 'wbmp':
-                $image = imagecreatefromwbmp($imageFileName);
+                $image = imagecreatefromwbmp($imageFileFullName);
                 break;
             case 'gif':
-                $image = imagecreatefromgif($imageFileName);
+                $image = imagecreatefromgif($imageFileFullName);
                 break;
             case 'jpg':
-                $image = imagecreatefromjpeg($imageFileName);
+                $image = imagecreatefromjpeg($imageFileFullName);
                 break;
             case 'bmp':
-                $image = self::imageCreateFromBMP($imageFileName);
+                $image = self::imageCreateFromBMP($imageFileFullName);
                 break;
             default:
                 // file_get_contents函数要求php版本>4.3.0
                 $srcData = '';
                 if (function_exists("file_get_contents")) {
-                    $srcData = file_get_contents($imageFileName);
+                    $srcData = file_get_contents($imageFileFullName);
                 } else {
-                    $handle = fopen($imageFileName, "r");
+                    $handle = fopen($imageFileFullName, "r");
                     while (!feof($handle)) {
                         $srcData .= fgets($handle, 4096);
                     }
@@ -88,15 +88,15 @@ class ImageHelper
 
     /**
      * 获取图片的类型
-     * @param string $imageFileName 文件全路径
+     * @param string $imageFileFullName 文件全路径
      * @return string
      */
-    public static function getImageType(string $imageFileName): string
+    public static function getImageType(string $imageFileFullName): string
     {
         if (extension_loaded('exif')) {
-            return self::getImageTypeFromExif($imageFileName);
+            return self::getImageTypeFromExif($imageFileFullName);
         } else {
-            return self::getImageTypeFromImageSize($imageFileName);
+            return self::getImageTypeFromImageSize($imageFileFullName);
         }
     }
 
@@ -106,13 +106,13 @@ class ImageHelper
      *  php.ini中需要开通这个两个扩展模块
      *     - extension=php_mbstring.dll
      *     - extension=php_exif.dll
-     * @param string $imageFileName 文件全路径
+     * @param string $imageFileFullName 文件全路径
      * @return string
      */
-    private static function getImageTypeFromExif(string $imageFileName): string
+    private static function getImageTypeFromExif(string $imageFileFullName): string
     {
         $result = 'jpg';
-        $out    = exif_imagetype($imageFileName);
+        $out    = exif_imagetype($imageFileFullName);
 
         switch ($out) {
             case 1:// IMAGE-TYPE_GIF
@@ -170,12 +170,12 @@ class ImageHelper
 
     /**
      * 获取图片的类型
-     * @param string $imageFileName 文件全路径
+     * @param string $imageFileFullName 文件全路径
      * @return string
      */
-    private static function getImageTypeFromImageSize(string $imageFileName): string
+    private static function getImageTypeFromImageSize(string $imageFileFullName): string
     {
-        $array = getimagesize($imageFileName);
+        $array = getimagesize($imageFileFullName);
         // 索引 2 给出的是图像的类型，返回的是数字，
         // 其中1 = GIF，2 = JPG，3 = PNG，4 = SWF，5 = PSD，
         // 6 = BMP，7 = TIFF(intel byte order)，
@@ -222,12 +222,12 @@ class ImageHelper
     /**
      * 加载bmb格式的图片进入内存成为资源
      * 此方法谨慎使用，有bug容易内存溢出
-     * @param $fileName
+     * @param $fileFullName
      * @return bool|resource
      */
-    public static function imageCreateFromBMP($fileName): bool
+    public static function imageCreateFromBMP($fileFullName): bool
     {
-        if (!$f1 = fopen($fileName, "rb")) {
+        if (!$f1 = fopen($fileFullName, "rb")) {
             return FALSE;
         }
 
@@ -528,8 +528,7 @@ class ImageHelper
      */
     public static function getImageCreateFunction(string $imageExtensionFileNameWithoutDot): string
     {
-        $result = self::getImageFunctionInfo($imageExtensionFileNameWithoutDot, 'create');
-        return $result;
+        return self::getImageFunctionInfo($imageExtensionFileNameWithoutDot, 'create');
     }
 
     /**
@@ -572,8 +571,7 @@ class ImageHelper
      */
     public static function getImageOutputFunctionParamCount($imageExtensionFileNameWithoutDot): string
     {
-        $result = self::getImageFunctionInfo($imageExtensionFileNameWithoutDot, 'outputParamCount');
-        return $result;
+        return self::getImageFunctionInfo($imageExtensionFileNameWithoutDot, 'outputParamCount');
     }
 
     public static function fillText2Image($backGroundImage, $fontSize, $angle, $startX, $startY, $lineWidth, $textColor, $fontFileName, $content, $linesDistance, $firstLineIndent = 0)
