@@ -35,19 +35,19 @@ class ArrayHelperTest extends TestCase
     {
         $myArray = [
             [
-                "地区"    => "河南",
+                "地区" => "河南",
                 "2010年" => 5437.1,
                 "2011年" => 5542.5,
                 "2012年" => 5638.6,
             ],
             [
-                "地区"    => "黑龙江",
+                "地区" => "黑龙江",
                 "2010年" => 5012.8,
                 "2011年" => 5570.6,
                 "2012年" => 5761.5,
             ],
             [
-                "地区"    => "山东",
+                "地区" => "山东",
                 "2010年" => 4335.7,
                 "2011年" => 4426.3,
                 "2012年" => 4511.4,
@@ -83,19 +83,19 @@ class ArrayHelperTest extends TestCase
     {
         $targetArray = $this->prepareAssociateArray1();
         $actual      = ArrayHelper::isAssociateArray($targetArray);
-        self::assertEquals(true, $actual);
+        self::assertTrue($actual);
 
         $targetArray = $this->prepareIndexArray();
         $actual      = ArrayHelper::isAssociateArray($targetArray);
-        self::assertEquals(false, $actual);
+        self::assertFalse($actual);
 
         $targetArray = [];
         $actual      = ArrayHelper::isAssociateArray($targetArray);
-        self::assertEquals(false, $actual);
+        self::assertFalse($actual);
 
         $targetArray = null;
         $actual      = ArrayHelper::isAssociateArray($targetArray);
-        self::assertEquals(false, $actual);
+        self::assertFalse($actual);
     }
 
     private function prepareAssociateArray1(): array
@@ -110,19 +110,19 @@ class ArrayHelperTest extends TestCase
     {
         $targetArray = $this->prepareIndexArray();
         $actual      = ArrayHelper::isIndexArray($targetArray);
-        self::assertEquals(true, $actual);
+        self::assertTrue($actual);
 
         $targetArray = $this->prepareAssociateArray1();
         $actual      = ArrayHelper::isIndexArray($targetArray);
-        self::assertEquals(false, $actual);
+        self::assertFalse($actual);
 
         $targetArray = [];
         $actual      = ArrayHelper::isIndexArray($targetArray);
-        self::assertEquals(false, $actual);
+        self::assertFalse($actual);
 
         $targetArray = null;
         $actual      = ArrayHelper::isIndexArray($targetArray);
-        self::assertEquals(false, $actual);
+        self::assertFalse($actual);
     }
 
     public function testRemoveHead()
@@ -273,9 +273,9 @@ class ArrayHelperTest extends TestCase
     public function testGetNode()
     {
         $array = [
-            'mysql'   => ['host' => '1', 'user' => 'reddit.com'],
+            'mysql' => ['host' => '1', 'user' => 'reddit.com'],
             'mongodb' => ['host' => 2, 'url' => 'twitter.com'],
-            'mssql'   => ['id' => 3, 'address' => ["state" => "WA", "city" => "Redmond"]],
+            'mssql' => ['id' => 3, 'address' => ["state" => "WA", "city" => "Redmond"]],
         ];
 
         $actual   = ArrayHelper::getNode($array, 'mysql');
@@ -315,13 +315,13 @@ class ArrayHelperTest extends TestCase
     {
         $array =
             [
-                "id"      => "82",
-                "remark"  => 'hello',
-                "time"    => "2016-06-15 15:23:21",
+                "id" => "82",
+                "remark" => 'hello',
+                "time" => "2016-06-15 15:23:21",
                 "contact" =>
                     [
-                        "id"    => "182",
-                        "name"  => "解然",
+                        "id" => "182",
+                        "name" => "解然",
                         "phone" => "18888888888",
                     ],
             ];
