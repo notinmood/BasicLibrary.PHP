@@ -46,6 +46,7 @@ class DateHelper
     /**
      * 统一设置时区为 PRC
      * @return DateTimeZone
+     * @throws Exception
      */
     private static function getDateTimeZone(): DateTimeZone
     {
@@ -406,7 +407,7 @@ class DateHelper
     }
 
     /**
-     * 获取某个制定的日期是星期几
+     * 获取某个指定的日期是星期几
      * @param int|null $timestamp 指定的日期（默认为当前日期）
      * @param string   $format    返回星期几的格式
      *                            （默认（或者number,N,n）为数组0-7；
