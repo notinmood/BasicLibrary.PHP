@@ -9,7 +9,7 @@ interface IStockDataSource
 {
     /**
      * 获取股票的实时报价
-     * @param ...$stockCodes
+     * @param ...$stockCodes 股票代码
      * @return mixed
      */
     function getRealTimeQuote(...$stockCodes);
