@@ -20,8 +20,8 @@ class StockMate
     private static function getDataSource($sourceName)
     {
         /** @noinspection all */
-        $targetParserType = "StockDataSource{$sourceName}";
-        $targetParserClass = "Hiland\\Biz\\Stock\\StockDataSource\\$targetParserType";
+        $targetParserType   = "StockDataSource{$sourceName}";
+        $targetParserClass  = "Hiland\\Biz\\Stock\\StockDataSource\\$targetParserType";
         $targetFileBaseName = "$targetParserType.php";
         $targetFileFullName = PathHelper::combine(__DIR__, "StockDataSource", $targetFileBaseName);
         if (file_exists($targetFileFullName)) {
