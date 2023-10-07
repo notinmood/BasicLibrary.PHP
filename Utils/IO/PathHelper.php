@@ -14,7 +14,7 @@ use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\StringHelper;
 
 /**
- *
+ * 文句路径操作工具类
  */
 class PathHelper
 {

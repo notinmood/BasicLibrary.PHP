@@ -5,7 +5,7 @@ namespace Hiland\Utils\IO;
 use Hiland\Utils\Data\StringHelper;
 
 /**
- *
+ * 文件操作工具类
  */
 class FileHelper
 {

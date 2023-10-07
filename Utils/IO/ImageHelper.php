@@ -5,7 +5,7 @@ namespace Hiland\Utils\IO;
 use Hiland\Utils\Web\MimeHelper;
 
 /**
- * @author 山东解大劦
+ * 图片操作工具类
  */
 class ImageHelper
 {

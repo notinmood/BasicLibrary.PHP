@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: xiedalie
+ * User: xiedali
  * Date: 2016/12/5
  * Time: 17:53
  */
@@ -11,7 +11,7 @@ namespace Hiland\Utils\IO;
 use Hiland\Utils\Data\StringHelper;
 
 /**
- *
+ * 目录操作工具类
  */
 class DirHelper
 {

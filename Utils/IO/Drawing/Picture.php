@@ -7,7 +7,6 @@ namespace Hiland\Utils\IO\Drawing;
  *  处理并保存历史记录的思路：当有图片有改动时自动生成一张新图片，
  *  命名方式可以考虑在原图片的基础上加上步骤，例如：图片名称+__第几步
  */
-
 class Picture
 {
     var $PICTURE_URL;               // 要处理的图片

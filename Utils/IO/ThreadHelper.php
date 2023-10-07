@@ -12,7 +12,7 @@ namespace Hiland\Utils\IO;
 use Hiland\Utils\Web\WebHelper;
 
 /**
- * 关于线程调用的常用方法
+ * 关于线程调用的常用方法操作工具类
  * 方法 asyncRun 调用的参数为一个 url 地址
  * 方法
  */
