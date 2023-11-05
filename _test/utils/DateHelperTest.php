@@ -69,7 +69,7 @@ class DateHelperTest extends TestCase
     {
         $dateString = "";
         $actual     = DateHelper::parseDateTimeSafely($dateString);
-        self::assertEquals(false, $actual);
+        self::assertFalse($actual);
 
         $dateString = 2145888000;
         $actual     = DateHelper::parseDateTimeSafely($dateString);

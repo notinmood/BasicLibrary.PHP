@@ -144,6 +144,7 @@ class DateHelper
      * 将 timestamp 转换成日期
      * @param null $timestamp
      * @return DateTime
+     * @throws Exception
      */
     public static function getDateTime($timestamp = null)
     {
@@ -174,6 +175,7 @@ class DateHelper
      * @param        $dateSecondary
      * @param string $intervalType “s”表示秒；“ms”表示毫秒
      * @return float|int
+     * @throws Exception
      */
     public static function getIntervalSeconds($dateMain, $dateSecondary, string $intervalType = "s")
     {
@@ -199,6 +201,7 @@ class DateHelper
      * @param $startValue DateTime|int|float 开始时间(即可以是DateTime类型也可以是timestamp类型)
      * @param $endValue   DateTime|int|float 结束时间(即可以是DateTime类型也可以是timestamp类型)
      * @return DateInterval
+     * @throws Exception
      */
     public static function getInterval($startValue, $endValue): ?DateInterval
     {
@@ -244,6 +247,7 @@ class DateHelper
      * 获取从1970年1月1日以来总共的毫秒数
      * @param null $dateValue
      * @return float
+     * @throws Exception
      */
     public static function getTotalMilliSeconds($dateValue = null)
     {
@@ -254,6 +258,7 @@ class DateHelper
      * 获取一个指定时间点的timestamp(即从1970年1月1日以来总共的秒数)
      * @param mixed $dateValue 指定的时间点 ，可以是“201603161312”格式，也可以是“2016-03-16 13:12:25”
      * @return int
+     * @throws Exception
      */
     public static function getTimestamp($dateValue = null)
     {
@@ -299,8 +304,8 @@ class DateHelper
 
     /**
      * 对日期进行时间间隔处理
-     * @param int|DateTime $originalValue int类型的时间戳或者是DateTime时间
-     * @param string       $intervalType
+     * @param null $originalValue int类型的时间戳或者是DateTime时间
+     * @param string $intervalType
      *                                    时间间隔类型，具体如下：
      *                                    y:年
      *                                    M:月
@@ -310,9 +315,10 @@ class DateHelper
      *                                    h:小时
      *                                    m或者i:分钟
      *                                    s:秒钟
-     * @param int          $intervalValue 时间间隔值
-     * @param string       $returnType    返回值类型--dt:返回DateTime时间类型；ts(默认):返回timestamp类型。
+     * @param int $intervalValue 时间间隔值
+     * @param string $returnType 返回值类型--dt:返回DateTime时间类型；ts(默认):返回timestamp类型。
      * @return int|DateTime int类型的时间戳或者是DateTime时间
+     * @throws Exception
      */
     public static function addInterval($originalValue = null, string $intervalType = "d", int $intervalValue = 1, string $returnType = "ts")
     {
@@ -394,9 +400,10 @@ class DateHelper
 
     /**
      * 对数字表示的timestamp进行格式化友好显示
-     * @param int|null $time         timestamp格式的时间
-     * @param string   $formatString 格式化字符串
+     * @param int|null $time timestamp格式的时间
+     * @param string $formatString 格式化字符串
      * @return string
+     * @throws Exception
      */
     public static function format(int $time = null, string $formatString = 'Y-m-d H:i:s'): string
     {
