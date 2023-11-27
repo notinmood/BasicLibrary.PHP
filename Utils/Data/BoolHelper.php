@@ -8,7 +8,9 @@
 
 namespace Hiland\Utils\Data;
 
-
+/**
+ * 布尔逻辑辅助器
+ */
 class BoolHelper
 {
     /**
@@ -18,7 +20,7 @@ class BoolHelper
      */
     public static function isRealTrue($value): bool
     {
-        if (is_bool($value) && $value == true) {
+        if (is_bool($value) && $value) {
             return true;
         } else {
             return false;
@@ -32,7 +34,7 @@ class BoolHelper
      */
     public static function isRealFalse($value): bool
     {
-        if (is_bool($value) && $value == false) {
+        if (is_bool($value) && !$value) {
             return true;
         } else {
             return false;
