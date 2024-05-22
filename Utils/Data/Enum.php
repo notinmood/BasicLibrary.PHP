@@ -40,8 +40,8 @@ abstract class Enum
      */
     const __default = null;
     private static array $constants = array();
-    private              $value;
-    private bool         $strict;
+    private $value;
+    private bool $strict;
 
     /**
      * Creates new enum object.
@@ -50,7 +50,7 @@ abstract class Enum
      * class to work as expected.
      * @param mixed $initialValue
      *            Any value that is exists in defined constants
-     * @param bool  $strict
+     * @param bool $strict
      *            If set to true, type and value must be equal
      * @throws UnexpectedValueException If value is not valid enum value
      */

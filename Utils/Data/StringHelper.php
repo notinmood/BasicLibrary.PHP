@@ -61,8 +61,8 @@ class StringHelper
     /**
      * 截取全角和半角（汉字和英文）混合的字符串以避免乱码
      * @param string $originalStringData 要截取的字符串
-     * @param int    $startPosition      开始位置(第一个字符的位置为0)
-     * @param int    $length             要截取的长度(超过总长度 按总长度计算)
+     * @param int $startPosition 开始位置(第一个字符的位置为0)
+     * @param int $length 要截取的长度(超过总长度 按总长度计算)
      * @param string $charset
      * @return string
      * @author 小墨 244349067@qq.com
@@ -101,7 +101,7 @@ class StringHelper
 
     /**
      * 从字符串的开头位置移除 n 个长度的字符,或者截去某个子字符串
-     * @param string     $wholeStringData
+     * @param string $wholeStringData
      * @param int|string $lengthOrTail
      * @return string
      */
@@ -120,7 +120,7 @@ class StringHelper
 
     /**
      * 从字符串的末尾位置移除 n 个长度的字符,或者截去某个子字符串
-     * @param string     $wholeStringData
+     * @param string $wholeStringData
      * @param int|string $lengthOrTail
      * @return string
      */
@@ -146,7 +146,7 @@ class StringHelper
 
     /**
      * @param string $paddingStringData 待测试的结尾字符
-     * @param string $wholeStringData   全句
+     * @param string $wholeStringData 全句
      * @return bool
      */
     public static function isEndWith(string $wholeStringData, string $paddingStringData): bool
@@ -163,7 +163,7 @@ class StringHelper
 
     /**
      * @param string $paddingStringData 待测试的开始字符
-     * @param string $wholeStringData   全句
+     * @param string $wholeStringData 全句
      * @return bool
      */
     public static function isStartWith(string $wholeStringData, string $paddingStringData): bool
@@ -178,7 +178,7 @@ class StringHelper
 
     /**
      * 判断一个字符串是否被包含在另外一个字符串内
-     * @param string $subStringData   被查找的子字符串
+     * @param string $subStringData 被查找的子字符串
      * @param string $wholeStringData 查找的母体字符串
      * @return boolean
      */
@@ -230,7 +230,7 @@ class StringHelper
      * @param string $wholeStringData
      * @param string $oldStringDataOrRegex
      * @param string $newStringData
-     * @param bool   $useRegex
+     * @param bool $useRegex
      * @return array|string|string[]
      */
     public static function replace(string $wholeStringData, string $oldStringDataOrRegex, string $newStringData, bool $useRegex = false)
@@ -267,7 +267,7 @@ class StringHelper
     /**
      * 将一个字符串按照字符个数分组进行格式化
      * @param string $stringData string
-     * @param string $formatter  string 字符串字符个数分组的格式，同一个分组内字符的个数用{}包围，各个分组之间可以自定义分隔符，例如
+     * @param string $formatter string 字符串字符个数分组的格式，同一个分组内字符的个数用{}包围，各个分组之间可以自定义分隔符，例如
      *                           '{4}-{2}-{2}'，或者'{4} {2} {2}'(中间用空格表示);
      * @return string
      */
@@ -318,9 +318,9 @@ class StringHelper
     /**
      * 获取某个子字符串在全字符串中出现的各个位置
      * (因为一个全串可以包含多个子串，所以返回是一个有各个位置组成的一维数组)
-     * @param string $wholeStringData     被查找的全字符串
-     * @param string $subStringData       要查找的子字符串
-     * @param bool   $ignoreCaseSensitive 忽略字符大小写
+     * @param string $wholeStringData 被查找的全字符串
+     * @param string $subStringData 要查找的子字符串
+     * @param bool $ignoreCaseSensitive 忽略字符大小写
      * @return array 子字符串在全字符串中出现的各个位置的数组
      */
     public static function getPositions(string $wholeStringData, string $subStringData, bool $ignoreCaseSensitive = false): array
@@ -348,10 +348,10 @@ class StringHelper
 
     /**
      * 获取子字符串第一次出现的位置
-     * @param string $wholeStringData     被查找的全字符串
-     * @param string $subStringData       要查找的子字符串
-     * @param bool   $ignoreCaseSensitive 忽略字符大小写
-     * @param bool   $inverseSearch       从后向前反向查找
+     * @param string $wholeStringData 被查找的全字符串
+     * @param string $subStringData 要查找的子字符串
+     * @param bool $ignoreCaseSensitive 忽略字符大小写
+     * @param bool $inverseSearch 从后向前反向查找
      * @return int|mixed 子字符串第一次出现的位置
      */
     public static function getFirstPosition(string $wholeStringData, string $subStringData, bool $ignoreCaseSensitive = false, bool $inverseSearch = false)
@@ -371,7 +371,7 @@ class StringHelper
     /**
      * 对带有占位符的字符串信息，进行格式化填充，形成完整的字符串。
      * 现在推荐直接使用 PHP系统自带的格式化方式,例如:"k的值为{$k}；v的值为{$v}"
-     * @param string   $stringData    带有占位符的字符串信息（占位符用{?}表示），例如 "i like this {?},do you known {?}"
+     * @param string $stringData 带有占位符的字符串信息（占位符用{?}表示），例如 "i like this {?},do you known {?}"
      * @param string[] $realValueList 待填入的真实信息，用字符串数组表示，例如["qingdao","beijing"];
      *                                或者使用用逗号分隔的各个独立的字符串表示,比如"qingdao","beijing"
      * @return string
@@ -438,8 +438,8 @@ class StringHelper
     }
 
 
-    protected static array $snakeCache  = [];
-    protected static array $camelCache  = [];
+    protected static array $snakeCache = [];
+    protected static array $camelCache = [];
     protected static array $studlyCache = [];
 
     /**
@@ -500,7 +500,7 @@ class StringHelper
     /**
      * 在字符串的结尾填充其他字符(或字符串)
      * @param string $stringData 需要进行补充的原始字符串
-     * @param int    $length
+     * @param int $length
      * @param string $pad
      * @return string
      */
@@ -512,7 +512,7 @@ class StringHelper
     /**
      * 在字符串的开头填充其他字符(或字符串)
      * @param string $stringData 需要进行补充的原始字符串
-     * @param int    $length
+     * @param int $length
      * @param string $pad
      * @return string
      */

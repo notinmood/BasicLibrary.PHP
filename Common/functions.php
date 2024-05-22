@@ -40,8 +40,8 @@ if (!function_exists('dump') && !ThinkHelper::isThinkPHP()) {
 if (!function_exists("el")) {
     /**
      * 带换行功能的echo(方法echoLine的别名)
-     * @param mixed $data               待输出信息
-     * @param bool  $bothBeforeAndAfter 如果true就在$data这一行前后都加入新行标志;
+     * @param mixed $data 待输出信息
+     * @param bool $bothBeforeAndAfter 如果true就在$data这一行前后都加入新行标志;
      *                                  如果false就只在$data这一行后加入新行标志.
      */
     function el($data = "", bool $bothBeforeAndAfter = false)
@@ -80,7 +80,7 @@ if (!function_exists("getLength")) {
 if (!function_exists('fixUrl')) {
     /**
      * @param string $mcaUrl 普通 url 或者 MCA 格式表示的 url("Module/Controller/Action")
-     * @param string $entry  入口页面
+     * @param string $entry 入口页面
      * @return string
      */
     function fixUrl(string $mcaUrl, string $entry = "index.php"): string

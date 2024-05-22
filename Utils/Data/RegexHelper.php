@@ -9,7 +9,7 @@
 namespace Hiland\Utils\Data;
 
 /**
- *
+ * 正则表达式辅助类
  */
 class RegexHelper
 {
