@@ -10,23 +10,23 @@
 
 ## 配置注意事项
 
-0. 因为功能经常更新和增强，使用的时候请注意版本信息。
+1. 因为功能经常更新和增强，使用的时候请注意版本信息。
 
-1. 里面发送短信使用的 aliyun 的短信接口，其中 composer.json 里面引入了 "alibabacloud/sdk": "^1.8"
+2. 里面发送短信使用的 aliyun 的短信接口，其中 composer.json 里面引入了 "alibabacloud/sdk": "^1.8"
    ，这个库还会引入其他的库，被引入的库 guzzle 如果是 7.X 版本，需要手动修改为 6.3。因为 7.X 版本是 php7 的语法。
    （先删除掉 guzzlehttp 目录，然后把 composer.json,composer.lock 中涉及的 guzzle 从 6.3|7.0,改为 6.3；最后在composer update）
 
    或者暂时先把这个功能去掉
 
-```shell
-"require": {
-  "alibabacloud/sdk": "^1.8"
-},
-```
+    ```shell
+    "require": {
+      "alibabacloud/sdk": "^1.8"
+    },
+    ```
 
-2. 进行单元测试时候，请按照文件 test/_README.md的内容进行简单配置。
-3. 使用数据库访问的时候，请按照文件 Utils/Config/_README.md 的内容进行配置。
-4. 涉及时间问题的时候，需要在 php.ini 内设置 date.timezone 为 Asia/Shanghai
+3. 进行单元测试时候，请按照文件 test/_README.md的内容进行简单配置。
+4. 使用数据库访问的时候，请按照文件 Utils/Config/_README.md 的内容进行配置。
+5. 涉及时间问题的时候，需要在 php.ini 内设置 date.timezone 为 Asia/Shanghai
 
 ## 开发注意事项
 

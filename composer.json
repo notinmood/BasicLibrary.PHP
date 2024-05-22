@@ -10,7 +10,7 @@
   "type": "string",
   "license": "Apache-2.0",
   "require": {
-    "php": "^7.4",
+    "php": "^8.0",
     "ext-mbstring": "*",
     "topthink/think-orm": "2.*",
     "symfony/options-resolver": "^5.4",
