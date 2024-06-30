@@ -2,8 +2,6 @@
 
 namespace Hiland\Utils\Data;
 
-use ReflectionException;
-
 class ArrayHelper
 {
     /**
@@ -12,7 +10,7 @@ class ArrayHelper
      * @param $item      mixed
      * @return bool
      */
-    public static function isContains(array $arrayData, $item): bool
+    public static function isContains(array $arrayData, mixed $item): bool
     {
         return in_array($item, $arrayData);
     }
@@ -51,7 +49,7 @@ class ArrayHelper
      * @param ...$items
      * @return mixed
      */
-    public static function addHead($array, ...$items)
+    public static function addHead($array, ...$items): mixed
     {
         array_unshift($array, ...$items);
         return $array;
@@ -64,7 +62,7 @@ class ArrayHelper
      * @param $value
      * @return array|mixed
      */
-    public static function addItem($array, $key, $value)
+    public static function addItem($array, $key, $value): mixed
     {
         if ($array == null) {
             $array = [];
@@ -93,7 +91,7 @@ class ArrayHelper
      * @param $defaultValue
      * @return mixed|null
      */
-    public static function getItem($array, $key, $defaultValue = null)
+    public static function getItem($array, $key, $defaultValue = null): mixed
     {
         return $array[$key] ?? $defaultValue;
     }
@@ -133,7 +131,7 @@ class ArrayHelper
      * @param $index
      * @return mixed
      */
-    public static function removeIndex($array, $index)
+    public static function removeIndex($array, $index): mixed
     {
         if (ObjectHelper::getTypeName($array) == ObjectTypes::ARRAYS) {
             array_splice($array, $index, 1);
@@ -147,7 +145,7 @@ class ArrayHelper
      * @param $array
      * @return mixed|null
      */
-    public static function removeHead($array)
+    public static function removeHead($array): mixed
     {
         if (ObjectHelper::getTypeName($array) == ObjectTypes::ARRAYS) {
             array_shift($array);
@@ -161,7 +159,7 @@ class ArrayHelper
      * @param $array
      * @return mixed|null
      */
-    public static function removeTail($array)
+    public static function removeTail($array): mixed
     {
         if (ObjectHelper::getTypeName($array) == ObjectTypes::ARRAYS) {
             $length    = self::getLength($array);
@@ -232,7 +230,7 @@ class ArrayHelper
      * @param $object
      * @return mixed
      */
-    public static function convertFromObject($object)
+    public static function convertFromObject($object): mixed
     {
         return ObjectHelper::convertTOArray($object);
     }
@@ -382,7 +380,7 @@ class ArrayHelper
 
     /**
      * 友好地显示数据集信息
-     * @param array      $dbSet
+     * @param array $dbSet
      *            数据集
      * @param array|null $mapArray
      *            转换数组（多维数组，第一维度表示要匹配的数据集字段名称，
@@ -395,12 +393,11 @@ class ArrayHelper
      *            1、如果是全局函数可以直接写函数的名称，
      *            2、如果是类的方法，请使用如下格式进行书写 nameSpace/className|methodName,
      *            其中如果是直接使用调用方类内的其他某个方法,nameSpace/className可以直接用__CLASS__表示
-     * @return array 友好显示的数据集信息
-     * @throws ReflectionException
+     * @return array|null 友好显示的数据集信息
      */
     public static function displayDbSetFriendly(array &$dbSet, array $mapArray = null, array $funcArray = null): ?array
     {
-        if ($dbSet == false || $dbSet === null) {
+        if (!$dbSet || $dbSet === null) {
             return $dbSet;
         }
 
@@ -413,7 +410,7 @@ class ArrayHelper
 
     /**
      * 友好地显示数据集信息
-     * @param array      $dataEntity
+     * @param array $dataEntity
      *            数据实体
      * @param array|null $mapArray
      *            转换数组（多维数组，第一维度表示要匹配的数据集字段名称，
@@ -426,12 +423,11 @@ class ArrayHelper
      *            1、如果是全局函数可以直接写函数的名称，
      *            2、如果是类的方法，请使用如下格式进行书写 nameSpace/className|methodName,
      *            其中如果是直接使用调用方类内的其他某个方法,nameSpace/className可以直接用__CLASS__表示
-     * @return array 友好显示的数据实体
-     * @throws ReflectionException
+     * @return array|null 友好显示的数据实体
      */
     public static function displayEntityFriendly(array &$dataEntity, array $mapArray = null, array $funcArray = null): ?array
     {
-        if ($dataEntity == false || $dataEntity === null) {
+        if (!$dataEntity || $dataEntity === null) {
             return $dataEntity;
         }
 
@@ -629,10 +625,10 @@ class ArrayHelper
      * (结果可能为一个子数组，也可以为一个具体数值)
      * @param array  $arrayData
      * @param string $key 节点的名称(可以包含多级别的名称，多级别间用 "." 连接)
-     * @param mixed  $defaultValue
+     * @param mixed|null $defaultValue
      * @return mixed|null|array
      */
-    public static function getNode(array $arrayData, string $key, $defaultValue = null)
+    public static function getNode(array $arrayData, string $key, mixed $defaultValue = null): mixed
     {
         $keyNodes = explode(".", $key);
 
