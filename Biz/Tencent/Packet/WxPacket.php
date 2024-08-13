@@ -8,6 +8,7 @@ use Hiland\Utils\Data\ArrayHelper;
 use Hiland\Utils\Data\CipherHelper;
 use Hiland\Utils\Web\NetHelper;
 use Hiland\Utils\Web\WebHelper;
+use SimpleXMLElement;
 
 class WxPacket
 {
@@ -22,9 +23,10 @@ class WxPacket
      * 发送红包
      *
      * @param array $paraArray
-     * @return \SimpleXMLElement[]
+     * @return SimpleXMLElement[]
+     * @throws WechatException
      */
-    public function send($paraArray)
+    public function send(array $paraArray): array
     {
         foreach ($paraArray as $k => $v) {
             $this->parameters[$k] = $v;

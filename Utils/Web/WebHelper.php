@@ -6,6 +6,7 @@ use Hiland\Biz\ThinkAddon\TPCompatibleHelper;
 use Hiland\Utils\Data\ObjectHelper;
 use Hiland\Utils\Data\StringHelper;
 use Hiland\Utils\IO\FileHelper;
+use JetBrains\PhpStorm\NoReturn;
 
 /**
  * @TODO   本类需要重构,将具体的实现方法分别分布到其他类型 helper中,
@@ -17,7 +18,7 @@ class WebHelper
     /**
      * 下载文件
      * 说明 Controller的Action方法中，调用本方法后不能再出现 dump(); display();这样的向浏览器页面刷信息的方法。
-     * @param mixed       $data        可以是带全路径的文件名称，也可以数组，字符串或者内存数据流
+     * @param mixed $data 可以是带全路径的文件名称，也可以数组，字符串或者内存数据流
      * @param string|null $newFileName 在客户浏览器弹出下载对话框中显示的默认文件名
      */
     public static function download($data, string $newFileName = null)
@@ -81,9 +82,9 @@ class WebHelper
 
     /**
      * 给url附加参数信息
-     * @param string       $url         原url
-     * @param array|string $paraData    将要作为url参数被附加在url后面，的带名值对类型的数组或者已经排列好的参数名值对字符串
-     * @param bool         $isUrlEncode 是否对参数的值进行url编码
+     * @param string $url 原url
+     * @param array|string $paraData 将要作为url参数被附加在url后面，的带名值对类型的数组或者已经排列好的参数名值对字符串
+     * @param bool $isUrlEncode 是否对参数的值进行url编码
      * @return string 附加了参数信息的url
      */
     public static function attachUrlParameter(string $url, $paraData, bool $isUrlEncode = false): string
@@ -105,49 +106,42 @@ class WebHelper
 
     /**
      * 对一个名值对数组格式化为url的参数
-     * @param array      $paraArray        需要格式化的名值对数组
-     * @param bool       $isUrlEncode      是否对参数的值进行url编码
+     * @param array $paraArray 需要格式化的名值对数组
+     * @param bool $isUrlEncode 是否对参数的值进行url编码(暂时不可使用)
      * @param array|null $excludeParaArray 不编制在url参数列表中的参数名数组（只有参数名称的一维数组）
-     * @param bool       $isSortPara       是否对参数进行排序
+     * @param bool $isSortPara 是否对参数进行排序
      * @return string
      */
     public static function convertArrayToUrlParameter(array $paraArray, bool $isUrlEncode = false, array $excludeParaArray = null, bool $isSortPara = true): string
     {
-        $buffString = "";
-
         if ($isSortPara) {
             ksort($paraArray);
         }
 
-        foreach ($paraArray as $k => $v) {
-            if (in_array($k, $excludeParaArray)) {
-                continue;
-            }
-
-            if (empty($v)) {
-                $v = '';
-            }
-
-            if ($isUrlEncode) {
-                $v = urlencode($v);
-            }
-
-            $buffString .= $k . "=" . $v . "&";
+        if ($excludeParaArray) {
+            $paraArray = array_diff_key($paraArray, array_flip($excludeParaArray));
         }
-        $result = '';
-        if (strlen($buffString) > 0) {
-            $result = substr($buffString, 0, strlen($buffString) - 1);
-        }
-        return $result;
+
+        return static::buildQueryString($paraArray);
+    }
+
+    /**
+     * 对一个名值对数组格式化为url的参数
+     * @param array|object $data
+     * @return string
+     */
+    public static function buildQueryString(array|object $data): string
+    {
+        return http_build_query($data);
     }
 
     /**
      * 服务器端返回JSONP类型数据
-     * @param mixed  $data                   发送到客户浏览器的数据
+     * @param mixed $data 发送到客户浏览器的数据
      * @param string $callbackClientFuncName 回调的用户浏览器的函数名称
-     * @param int    $jsonOption             传递给json_encode的option参数(为避免中文转码请使用JSON_UNESCAPED_UNICODE)
+     * @param int $jsonOption 传递给json_encode的option参数(为避免中文转码请使用JSON_UNESCAPED_UNICODE)
      */
-    public static function jsonp($data, string $callbackClientFuncName = "", int $jsonOption = 0)
+    #[NoReturn] public static function jsonp(mixed $data, string $callbackClientFuncName = "", int $jsonOption = 0): void
     {
         self::serverReturn($data, "JSONP", $jsonOption, $callbackClientFuncName);
     }
@@ -155,13 +149,13 @@ class WebHelper
     /**
      * Ajax方式返回数据到客户端
      * @access protected
-     * @param mixed  $data                   要返回的数据
-     * @param string $type                   AJAX返回数据格式,默认值为JSON
-     * @param int    $jsonOption             传递给json_encode的option参数(为避免中文转码请使用JSON_UNESCAPED_UNICODE)
+     * @param mixed $data 要返回的数据
+     * @param string $type AJAX返回数据格式,默认值为JSON
+     * @param int $jsonOption 传递给json_encode的option参数(为避免中文转码请使用JSON_UNESCAPED_UNICODE)
      * @param string $callbackClientFuncName 如果是jsonp的时候，此处为回调函数的名称(或者为回调函数名称的形参名称)
      * @return void
      */
-    public static function serverReturn($data, string $type = '', int $jsonOption = 0, string $callbackClientFuncName = "")
+    #[NoReturn] public static function serverReturn(mixed $data, string $type = '', int $jsonOption = 0, string $callbackClientFuncName = ""): void
     {
         if (empty($type)) {
             $type = 'JSON';
