@@ -65,7 +65,7 @@ class FileHelper
      *                                  $result["type"] 文件类型;
      *                                  $result["size"] 文件大小
      */
-    public static function getUploadedFileInfo(string $submitControlName = 'file')
+    public static function getUploadedFileInfo(string $submitControlName = 'file'): mixed
     {
         if ($_FILES[$submitControlName]["error"] > 0) {
             return false;
@@ -84,19 +84,29 @@ class FileHelper
      * @param $fileFullName
      * @return bool|string
      */
-    public static function getEncoding($fileFullName)
+    public static function getEncoding($fileFullName): bool|string
     {
         $content = file_get_contents($fileFullName);
         return StringHelper::getEncoding($content);
     }
 
     /**
-     * 获取目标编码类型的文本
+     * 获取文件内容
+     * @param string $fileFullName
+     * @return string
+     */
+    public function getContent(string $fileFullName): string
+    {
+        return file_get_contents($fileFullName);
+    }
+
+    /**
+     * 获取编码类型的目标文本
      * @param        $fileFullName
      * @param string $targetEncoding
      * @return false|string|string[]|null
      */
-    public static function getEncodingContent($fileFullName, string $targetEncoding = 'UTF-8')
+    public static function getEncodingContent($fileFullName, string $targetEncoding = 'UTF-8'): array|bool|string|null
     {
         $content = file_get_contents($fileFullName);
         return StringHelper::getEncodingContent($content, $targetEncoding);

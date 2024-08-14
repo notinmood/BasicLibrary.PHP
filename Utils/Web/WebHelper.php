@@ -61,7 +61,7 @@ class WebHelper
      * @param string $tagName 网页上的meta的tag名称,缺省为空的时候返回所有tag的内容
      * @return array|false|mixed
      */
-    public static function getWebMetas($url, string $tagName = "")
+    public static function getWebMetas($url, string $tagName = ""): mixed
     {
         $result = get_meta_tags($url);
         if ($tagName) {
@@ -75,7 +75,7 @@ class WebHelper
      * 网页跳转
      * @param string $targetUrl 待跳转的页面
      */
-    public static function redirectUrl(string $targetUrl)
+    public static function redirectUrl(string $targetUrl): void
     {
         header('location:' . $targetUrl);
     }
@@ -126,7 +126,7 @@ class WebHelper
     }
 
     /**
-     * 对一个名值对数组格式化为url的参数
+     * 构建一个url参数查询字符串（将http_build_query的功能分组到类型内部，为了记忆方便。）
      * @param array|object $data
      * @return string
      */
@@ -210,5 +210,22 @@ class WebHelper
     public static function getHostName(): string
     {
         return $_SERVER['HTTP_X_FORWARDED_HOST'] ?? ($_SERVER['HTTP_HOST'] ?? '');
+    }
+
+
+    /**
+     * 获取给定url的内容
+     * @param string $url
+     * @param bool $isUseZlib 是否使用zlib压缩(默认使用zlib,即便是未经过压缩的网页使用本设置也不会出错)
+     * @return string
+     */
+    public static function getContent(string $url, bool $isUseZlib = true): string
+    {
+        $compressType = "";
+        if ($isUseZlib) {
+            $compressType = "compress.zlib://";
+        }
+
+        return file_get_contents($compressType . $url);
     }
 }

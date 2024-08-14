@@ -24,7 +24,7 @@ class ServerHelper
      * 获取 Web 服务器名称（IIS 还是 apache 等）
      * @return mixed
      */
-    public static function getWebServerSoftName()
+    public static function getWebServerSoftName(): mixed
     {
         return $_SERVER['SERVER_SOFTWARE'];
     }
@@ -72,7 +72,7 @@ class ServerHelper
      * @param $url
      * @return false|mixed
      */
-    public static function getCompressType($url)
+    public static function getCompressType($url): mixed
     {
         return HttpResponseHeader::get($url, "Content-Encoding");
     }
@@ -105,7 +105,7 @@ class ServerHelper
      * 获取应用程序的名称
      * @return mixed|string
      */
-    public static function getAppName()
+    public static function getAppName(): mixed
     {
         return EnvHelper::getAppName();
     }

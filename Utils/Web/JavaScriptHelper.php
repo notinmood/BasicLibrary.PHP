@@ -71,7 +71,7 @@ class JavaScriptHelper
      * @param string $content
      * @param bool   $isExit
      */
-    private static function javaScriptWrapper(string $content, bool $isExit)
+    private static function javaScriptWrapper(string $content, bool $isExit): void
     {
         echo "<script type='text/javascript'>{$content}</script>";
         if ($isExit) {
