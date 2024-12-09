@@ -52,3 +52,14 @@
 ### 关于目录类型的路径定义
 所有目录都要以路径分隔符结尾，这样在项目中使用的时候，可以不用做二次判断；
 如果使用第三方的路径，要使用 `DirHelper.ensureEndWithPathSeparator` 进行确保。
+
+## 发布与使用
+### 发布到packagist
+因为 BL.PHP 库在Github上，对packagist进行了自动同步，所以发布到packagist不需要做任何操作。
+
+### 使用 BL.PHP库
+因为BL.PHP更新频度比较高，第三方项目使用本库，建议在必要的时候，执行下面的命令更新此库(打开PHPStorm最下的终端窗口执行).
+```shell
+composer require hiland/basiclibrary.php
+composer update hiland/basiclibrary.php
+```
