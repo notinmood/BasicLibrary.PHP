@@ -51,7 +51,8 @@ class FileHelper
         return $path['extension'];
     }
 
-    /**在页面通过form上传文件后，服务器获得的文件信息。
+    /**
+     * 在页面通过form上传文件后，服务器获得的文件信息。
      * 页面提交的方式，基本如下
      * <form action="" method="post" enctype="multipart/form-data">
      * <label for="file">选择文件：</label>
@@ -71,9 +72,9 @@ class FileHelper
             return false;
         } else {
             $result["fullName"] = $_FILES[$submitControlName]["tmp_name"];
-            $result["name"] = $_FILES[$submitControlName]["name"];
-            $result["type"] = $_FILES[$submitControlName]["type"];
-            $result["size"] = $_FILES[$submitControlName]["size"];
+            $result["name"]     = $_FILES[$submitControlName]["name"];
+            $result["type"]     = $_FILES[$submitControlName]["type"];
+            $result["size"]     = $_FILES[$submitControlName]["size"];
 
             return $result;
         }
@@ -91,13 +92,14 @@ class FileHelper
     }
 
     /**
-     * 获取文件内容
+     * 获取文件内容（getEncodingContent的别名）
      * @param string $fileFullName
-     * @return string
+     * @param string $targetEncoding 目标编码，默认原文件编码不改变
+     * @return array|bool|string|null
      */
-    public function getContent(string $fileFullName): string
+    public function getContent(string $fileFullName, string $targetEncoding = ''): array|bool|string|null
     {
-        return file_get_contents($fileFullName);
+        return self::getEncodingContent($fileFullName, $targetEncoding);
     }
 
     /**
@@ -109,6 +111,11 @@ class FileHelper
     public static function getEncodingContent($fileFullName, string $targetEncoding = 'UTF-8'): array|bool|string|null
     {
         $content = file_get_contents($fileFullName);
+
+        if (empty($targetEncoding)) {
+            return $content;
+        }
+
         return StringHelper::getEncodingContent($content, $targetEncoding);
     }
 }
