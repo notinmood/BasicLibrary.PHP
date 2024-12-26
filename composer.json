@@ -26,11 +26,11 @@
   },
   "autoload": {
     "psr-4": {
-      "Hiland\\Test\\": "_test",
-      "Hiland\\": ""
+      "Hiland\\Test\\": "tests",
+      "Hiland\\": "src"
     },
     "files": [
-      "Common/functions.php"
+      "src/Common/functions.php"
     ]
   }
 }
