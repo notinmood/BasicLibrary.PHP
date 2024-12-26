@@ -22,7 +22,7 @@ class Container
      * @param null   $defaultValue
      * @return mixed
      */
-    public static function get(string $name, $defaultValue = Null)
+    public static function get(string $name, $defaultValue = Null): mixed
     {
         foreach (self::$mates as $k => $v) {
             if ($k === $name) {
@@ -33,7 +33,7 @@ class Container
         return $defaultValue;
     }
 
-    public static function set($name, $value)
+    public static function set($name, $value): void
     {
         self::$mates[$name] = $value;
     }

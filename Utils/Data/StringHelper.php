@@ -201,6 +201,10 @@ class StringHelper
      */
     public static function getStringBeforeSeparator(string $wholeStringData, string $separator): string
     {
+        if ($separator == "") {
+            return $wholeStringData;
+        }
+
         if (self::isContains($wholeStringData, $separator)) {
             $array = explode($separator, $wholeStringData);
             return $array[0];
@@ -217,12 +221,16 @@ class StringHelper
      */
     public static function getStringAfterSeparator(string $wholeStringData, string $separator): string
     {
+        if ($separator == "") {
+            return $wholeStringData;
+        }
+
         if (self::isContains($wholeStringData, $separator)) {
             $array = explode($separator, $wholeStringData);
             return $array[1];
-        } else {
-            return $wholeStringData;
         }
+
+        return $wholeStringData;
     }
 
     /**
@@ -233,7 +241,7 @@ class StringHelper
      * @param bool $useRegex
      * @return array|string|string[]
      */
-    public static function replace(string $wholeStringData, string $oldStringDataOrRegex, string $newStringData, bool $useRegex = false)
+    public static function replace(string $wholeStringData, string $oldStringDataOrRegex, string $newStringData, bool $useRegex = false): array|string
     {
         if ($useRegex) {
             return preg_replace($oldStringDataOrRegex, $newStringData, $wholeStringData);

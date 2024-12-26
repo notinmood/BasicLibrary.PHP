@@ -247,4 +247,66 @@ class StringHelperTest extends TestCase
         $expected = "i love China!";
         self::assertEquals($expected, $actual);
     }
+
+    /**
+     * 测试 getStringBeforeSeparator 方法 - 正常情况
+     */
+    public function testGetStringBeforeSeparatorNormal()
+    {
+        $this->assertEquals('测试', StringHelper::getStringBeforeSeparator('测试_字符串', '_'));
+        $this->assertEquals('hello', StringHelper::getStringBeforeSeparator('hello world', ' world'));
+    }
+
+    /**
+     * 测试 getStringBeforeSeparator 方法 - 分隔符不存在情况
+     */
+    public function testGetStringBeforeSeparatorSeparatorNotFound()
+    {
+        $this->assertEquals('测试字符串', StringHelper::getStringBeforeSeparator('测试字符串', '_'));
+    }
+
+    /**
+     * 测试 getStringBeforeSeparator 方法 - 空字符情况
+     */
+    public function testGetStringBeforeSeparatorEmpty()
+    {
+        $this->assertEquals('', StringHelper::getStringBeforeSeparator('', '_'));
+        $this->assertEquals('', StringHelper::getStringBeforeSeparator('测试字符串', '测试字符串'));
+    }
+
+    /**
+     * 测试 getStringAfterSeparator 方法 - 正常情况
+     */
+    public function testGetStringAfterSeparatorNormal()
+    {
+        $this->assertEquals('字符串', StringHelper::getStringAfterSeparator('测试_字符串', '_'));
+        $this->assertEquals('world', StringHelper::getStringAfterSeparator('hello world', ' '));
+    }
+
+    /**
+     * 测试 getStringAfterSeparator 方法 - 分隔符不存在情况
+     */
+    public function testGetStringAfterSeparatorSeparatorNotFound()
+    {
+        $this->assertEquals('测试字符串', StringHelper::getStringAfterSeparator('测试字符串', '_'));
+    }
+
+    /**
+     * 测试 getStringAfterSeparator 方法 - 空字符情况
+     */
+    public function testGetStringAfterSeparatorEmpty()
+    {
+        $this->assertEquals('', StringHelper::getStringAfterSeparator('', '_'));
+        $this->assertEquals('测试字符串', StringHelper::getStringAfterSeparator('测试字符串', ''));
+    }
+
+    /**
+     * 测试 getStringAfterSeparator 方法 - 分隔符为空字符串情况
+     */
+    public function testGetStringAfterSeparatorEmptySeparator()
+    {
+        $this->assertEquals('测试字符串', StringHelper::getStringAfterSeparator('测试字符串', ''));
+    }
+
+
 }
