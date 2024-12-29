@@ -12,7 +12,7 @@ class StringHelper
      * @param string $targetEncoding
      * @return false|string|string[]|null
      */
-    public static function getEncodingContent(string $stringData, string $targetEncoding = 'UTF-8')
+    public static function getEncodingContent(string $stringData, string $targetEncoding = 'UTF-8'): array|false|string|null
     {
         $originalEncoding = self::getEncoding($stringData);
 
@@ -53,8 +53,12 @@ class StringHelper
      * @param string $encoding
      * @return false|int
      */
-    public static function getLength(string $stringData, string $encoding = "utf-8")
+    public static function getLength(string $stringData, string $encoding = "utf-8"): false|int
     {
+        if ($stringData == null) {
+            return false;
+        }
+
         return mb_strlen($stringData, $encoding);
     }
 

@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 class DatabaseHelperTest extends TestCase
 {
-    public function testWrapData()
+    public function testWrapData(): void
     {
         $actual   = DatabaseHelper::wrapSqlValue("qingdao");
         $expected = "'qingdao'";
@@ -26,7 +26,7 @@ class DatabaseHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testBuildInsertClause()
+    public function testBuildInsertClause(): void
     {
         $entity1["id"]   = 1;
         $entity1["name"] = "zhangsan";

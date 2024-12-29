@@ -17,9 +17,11 @@ use think\Model;
 class CommonModel extends Model
 {
     /**
-     *
+     * 构造函数
+     * @param string $modelName 模型名称
+     * @param array $data 数据
      */
-    public function __construct($modelName, $data = [])
+    public function __construct(string $modelName, array $data = [])
     {
         $this->name = $modelName;
         parent::__construct($data);

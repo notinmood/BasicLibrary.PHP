@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 
 class ModelDDLTest extends TestCase
 {
-    public function testGetTableDefinition()
+    public function testGetTableDefinition(): void
     {
         $ddl = DatabaseClient::getDDL();
         $tableName = "user";
@@ -26,7 +26,7 @@ class ModelDDLTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testIsExistTable()
+    public function testIsExistTable(): void
     {
         $ddl = DatabaseClient::getDDL();
         $tableName = "user";
@@ -41,7 +41,7 @@ class ModelDDLTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testGetContentSql()
+    public function testGetContentSql(): void
     {
         $ddl = DatabaseClient::getDDL();
         $tableName = "user";
@@ -58,7 +58,7 @@ class ModelDDLTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testDuplicateTableAndDropTable()
+    public function testDuplicateTableAndDropTable(): void
     {
         $ddl = DatabaseClient::getDDL();
         $tableName = "user";

@@ -20,7 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ModelMateTest extends TestCase
 {
-    public function testIndex()
+    public function testIndex(): void
     {
         $actual = 1;
         $expected = 1;
@@ -30,7 +30,7 @@ class ModelMateTest extends TestCase
     /**
      * @return void
      */
-    public function testWhere()
+    public function testWhere(): void
     {
         $mate = DatabaseClient::getMate("user");
         $queryObject = ReflectionHelper::getInstanceProperty(ModelMate::class, "queryObject", $mate);

@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
 
 class DatabaseUnitTestTest extends TestCase
 {
-    public function test_is_exist_table()
+    public function test_is_exist_table(): void
     {
         $table_name = "user";
         $biz        = new DatabaseUnitTest($table_name, 2, false);
@@ -47,7 +47,7 @@ class DatabaseUnitTestTest extends TestCase
         return $new_table_name;
     }
 
-    public function test_is_exist_table3()
+    public function test_is_exist_table3(): void
     {
         /**
          * test_is_exist_table2创建完成biz的时候，数据库内有 DatabaseUnitTest 创建的表 ***_user_***;
@@ -59,7 +59,7 @@ class DatabaseUnitTestTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testGet1()
+    public function testGet1(): void
     {
         $table_name = "user";
         $biz        = new DatabaseUnitTest($table_name);
@@ -71,7 +71,7 @@ class DatabaseUnitTestTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testGet2()
+    public function testGet2(): void
     {
         $table_name = "user";
         $biz        = new DatabaseUnitTest($table_name);
@@ -90,7 +90,7 @@ class DatabaseUnitTestTest extends TestCase
     /**
      * @return void
      */
-    public function testWhere1()
+    public function testWhere1(): void
     {
         $table_name = "student";
         $biz        = new DatabaseUnitTest($table_name);
@@ -107,7 +107,7 @@ class DatabaseUnitTestTest extends TestCase
     /**
      * @return void
      */
-    public function testWhere2()
+    public function testWhere2(): void
     {
         $table_name = "student";
         $biz        = new DatabaseUnitTest($table_name);
@@ -120,7 +120,7 @@ class DatabaseUnitTestTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testWhere3()
+    public function testWhere3(): void
     {
         $table_name = "student";
         $biz        = new DatabaseUnitTest($table_name);
@@ -133,7 +133,7 @@ class DatabaseUnitTestTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testWhere4()
+    public function testWhere4(): void
     {
         $table_name = "student";
         $biz        = new DatabaseUnitTest($table_name);
@@ -146,7 +146,7 @@ class DatabaseUnitTestTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testWhere5()
+    public function testWhere5(): void
     {
         $table_name = "student";
         $biz        = new DatabaseUnitTest($table_name);
@@ -159,7 +159,7 @@ class DatabaseUnitTestTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testWhere6()
+    public function testWhere6(): void
     {
         $table_name = "student";
         $biz        = new DatabaseUnitTest($table_name);
@@ -181,7 +181,7 @@ class DatabaseUnitTestTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testMock()
+    public function testMock(): void
     {
         $mock             = new UserMocker();
         $result1          = $mock->getMocker();
@@ -192,7 +192,7 @@ class DatabaseUnitTestTest extends TestCase
         self::assertEquals($result1, $result2);
     }
 
-    public function testInteract1()
+    public function testInteract1(): void
     {
         $table_name = "user";
         $biz        = new DatabaseUnitTest($table_name);
@@ -220,7 +220,7 @@ class DatabaseUnitTestTest extends TestCase
         self::assertEquals($expected, $entity);
     }
 
-    public function testInteract2()
+    public function testInteract2(): void
     {
         $table_name = "user";
         $biz        = new DatabaseUnitTest($table_name);
@@ -241,7 +241,7 @@ class DatabaseUnitTestTest extends TestCase
     }
 
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $table_name = "user";
         $biz        = new DatabaseUnitTest($table_name);
@@ -253,7 +253,7 @@ class DatabaseUnitTestTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testGetCount()
+    public function testGetCount(): void
     {
         $table_name = "user";
         $biz        = new DatabaseUnitTest($table_name);
@@ -266,7 +266,7 @@ class DatabaseUnitTestTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testGetValue()
+    public function testGetValue(): void
     {
         $table_name = "user";
         $biz        = new DatabaseUnitTest($table_name);
@@ -280,7 +280,7 @@ class DatabaseUnitTestTest extends TestCase
     /**
      * @return void
      */
-    public function testSetValue()
+    public function testSetValue(): void
     {
         $table_name = "user";
         $biz        = new DatabaseUnitTest($table_name);
@@ -304,7 +304,7 @@ class DatabaseUnitTestTest extends TestCase
      * 测试WHERE条件设置的幂等性(即，多次调用WHERE条件的效果不会累计)
      * @return void
      */
-    public function testWhereIdempotence()
+    public function testWhereIdempotence(): void
     {
         $table_name = "user";
         $biz        = new DatabaseUnitTest($table_name);

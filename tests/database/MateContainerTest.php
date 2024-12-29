@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 class MateContainerTest extends TestCase
 {
-    public function testGet()
+    public function testGet(): void
     {
         $mate = MateContainer::get("user");
         $entity = $mate->get(1);

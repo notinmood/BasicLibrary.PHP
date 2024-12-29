@@ -11,20 +11,21 @@
 namespace Hiland\DataModel;
 
 /**
- *
+ * 容器类，用于存放数据
  */
 class Container
 {
-    private static array $mates = [];
+    private static array $items = [];
 
     /**
+     * 获取指定名称的项目
      * @param string $name
      * @param null   $defaultValue
      * @return mixed
      */
     public static function get(string $name, $defaultValue = Null): mixed
     {
-        foreach (self::$mates as $k => $v) {
+        foreach (self::$items as $k => $v) {
             if ($k === $name) {
                 return $v;
             }
@@ -33,8 +34,14 @@ class Container
         return $defaultValue;
     }
 
+    /**
+     * 设置指定名称的项目
+     * @param $name
+     * @param $value
+     * @return void
+     */
     public static function set($name, $value): void
     {
-        self::$mates[$name] = $value;
+        self::$items[$name] = $value;
     }
 }

@@ -73,6 +73,7 @@ class DatabaseHelper
     }
 
     /**
+     * 将给定的数据包装成SQL中的可以使用的值
      * @param $data
      * @return string
      */

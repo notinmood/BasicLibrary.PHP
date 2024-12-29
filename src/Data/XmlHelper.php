@@ -38,7 +38,7 @@ class XmlHelper
      * @param string $charset
      * @return boolean|string
      */
-    public static function convertFromJson(string $jsonString, string $charset = 'utf8')
+    public static function convertFromJson(string $jsonString, string $charset = 'utf8'): bool|string
     {
         if (empty($jsonString)) {
             return false;

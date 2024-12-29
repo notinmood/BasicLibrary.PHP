@@ -29,7 +29,7 @@ class ThinkHelper
         return false;
     }
 
-    private static function getSomeSubVersion($index)
+    private static function getSomeSubVersion($index): int|string
     {
         $result = 0;
 

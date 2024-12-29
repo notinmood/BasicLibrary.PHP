@@ -17,7 +17,7 @@ class UserMocker
     /**
      * @var array
      */
-    private $option;
+    private array $option;
 
     public function __construct($option = [])
     {
@@ -40,7 +40,7 @@ class UserMocker
         $this->option = $resolver->resolve($option);
     }
 
-    public function getMocker()
+    public function getMocker(): array
     {
         return $this->option;
     }

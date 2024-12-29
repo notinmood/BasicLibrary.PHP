@@ -34,7 +34,7 @@ class ModelMate
     /**
      * @var string
      */
-    private $tableRealName;
+    private string $tableRealName;
 
     /**
      * 构造函数
@@ -43,19 +43,20 @@ class ModelMate
      *            也可以是一个继承至Think\Model的类型
      * @TODO Think\Model的类型未严格验证
      */
-    public function __construct($model)
+    public function __construct(string|Model $model)
     {
         if (is_string($model)) {
             $this->modelObject = new CommonModel($model);
 
+            /** @noinspection all */
             $className = "\\think\\facade\\Db";
-            $exist     = class_exists("$className");
+            $exist     = class_exists((string)$className);
             if ($exist) {
                 /** @noinspection all */
-                $this->queryObject = Db::name($model);
+                $this->queryObject = \think\facade\Db::name($model);
             } else {
                 $className = "\\think\\Db";
-                $exist     = class_exists("$className");
+                $exist     = class_exists((string)$className);
                 if ($exist) {
                     /** @noinspection all */
                     $this->queryObject = \think\Db::name($model);
@@ -82,11 +83,11 @@ class ModelMate
 
     /**
      * 按照主键获取信息
-     * @param int|string $key     查询信息的主键值
-     * @param string     $keyName 查询信息的主键名称
+     * @param int|string $key 查询信息的主键值
+     * @param string $keyName 查询信息的主键名称
      * @return array|null 模型实体数据
      */
-    public function get($key, string $keyName = 'id'): ?array
+    public function get(int|string $key, string $keyName = 'id'): ?array
     {
         try {
             return self::getQueryObjectWithGet($key, $keyName)->find();
@@ -97,7 +98,7 @@ class ModelMate
 
     /**
      * 根据条件获取一条记录
-     * @param array  $condition 过滤条件
+     * @param array $condition 过滤条件
      * @param string $orderBy
      * @return mixed 符合条件的结果，一维数组
      * @example
@@ -106,7 +107,7 @@ class ModelMate
      *                          $where['openID'] = $openId;
      *                          $result = $buyerShopMate->find($where);
      */
-    public function find(array $condition = array(), string $orderBy = '')
+    public function find(array $condition = array(), string $orderBy = ''): mixed
     {
         $query = $this->getQueryObjectWithWhere($condition);
         try {
@@ -118,24 +119,24 @@ class ModelMate
 
     /**
      * 根据条件获取多条记录
-     * @param array  $condition
-     * @param string $orderBy          排序信息
-     * @param int    $pageIndex        页面序号
-     * @param int    $itemCountPerPage 每页显示的信息条目数
-     * @param int    $limit            查询信息的条目数
-     * @param string $fields           需要在查询结果中显示的字段信息，缺省情况下显示全部字段
+     * @param array $condition
+     * @param string $orderBy 排序信息
+     * @param int $pageIndex 页面序号
+     * @param int $itemCountPerPage 每页显示的信息条目数
+     * @param int $limit 查询信息的条目数
+     * @param string $fields 需要在查询结果中显示的字段信息，缺省情况下显示全部字段
      * @return mixed 符合条件的结果，多维数组
      * @example
-     *                                 $where= array();
-     *                                 $where['shopID'] = $merchantScannedID;
-     *                                 $where['openID'] = $openId;
-     *                                 $relation = $buyerShopMate->select($where);
+     *     $where= array();
+     *     $where['shopID'] = $merchantScannedID;
+     *     $where['openID'] = $openId;
+     *     $relation = $buyerShopMate->select($where);
      */
-    public function select(array $condition = array(), string $orderBy = "", int $pageIndex = 0, int $itemCountPerPage = 0, int $limit = 0, string $fields = '')
+    public function select(array $condition = array(), string $orderBy = "", int $pageIndex = 0, int $itemCountPerPage = 0, int $limit = 0, string $fields = ''): mixed
     {
-        if (empty($orderBy)) {
-            $orderBy = "id desc";
-        }
+        //        if (empty($orderBy)) {
+        //            $orderBy = "id desc";
+        //        }
 
         $query = $this->getQueryObjectWithSelect($condition, $orderBy, $pageIndex, $itemCountPerPage, $limit);
 
@@ -167,11 +168,11 @@ class ModelMate
 
     /**
      * 跟数据库的信息交互(insert 或者 update)
-     * @param array|null $data    待跟数据库交互的模型实体数据
-     * @param string     $keyName 当前模型的数据库表的主键名称
+     * @param array|null $data 待跟数据库交互的模型实体数据
+     * @param string $keyName 当前模型的数据库表的主键名称
      * @return boolean|number
      */
-    public function interact(array $data = null, string $keyName = 'id')
+    public function interact(array $data = null, string $keyName = 'id'): bool|int
     {
         if (empty($data)) {
             /* 获取数据对象 */
@@ -212,10 +213,10 @@ class ModelMate
         // TODO:需要并研究添加hook机制
         // hook('documentSaveComplete', array('model_id'=>$data['model_id']));
 
-        // 行为记录
-        if ($recordID && $isAddOperation) {
-            // action_log('add_role', 'role', $recordID, UID);
-        }
+        //        // 行为记录
+        //        if ($recordID && $isAddOperation) {
+        //            action_log('add_role', 'role', $recordID, UID);
+        //        }
 
         // 内容添加或更新完成
         return $recordID;
@@ -239,11 +240,11 @@ class ModelMate
     /**
      * 获取某记录的字段的值
      * @param int|string $key
-     * @param string     $fieldName
-     * @param string     $keyName
+     * @param string $fieldName
+     * @param string $keyName
      * @return mixed 字段的值
      */
-    public function getValue($key, string $fieldName, string $keyName = 'id')
+    public function getValue(int|string $key, string $fieldName, string $keyName = 'id'): mixed
     {
         $condition[$keyName] = $key;
         $query               = $this->getQueryObjectWithWhere($condition);
@@ -258,16 +259,16 @@ class ModelMate
     /**
      * 设置某记录的字段的值
      * @param int|string $key
-     * @param string     $fieldName
-     * @param mixed      $fieldValue
-     * @param string     $keyName
+     * @param string $fieldName
+     * @param mixed $fieldValue
+     * @param string $keyName
      * @return int|bool 成功时返回受影响的行数，失败时返回false
      */
-    public function setValue($key, string $fieldName, $fieldValue, string $keyName = 'id'): int
+    public function setValue(int|string $key, string $fieldName, mixed $fieldValue, string $keyName = 'id'): int|bool
     {
-        $condition[$keyName] = $key;
-        $query               = $this->getQueryObjectWithWhere($condition);
-        $data["$fieldName"]  = $fieldValue;
+        $condition[$keyName]      = $key;
+        $query                    = $this->getQueryObjectWithWhere($condition);
+        $data[(string)$fieldName] = $fieldValue;
         try {
             return $query->update($data);
         } catch (DbException $e) {
@@ -284,15 +285,15 @@ class ModelMate
      * @param string $sql
      * @return mixed
      */
-    public function directlyQuery(string $sql)
+    public function directlyQuery(string $sql): mixed
     {
         $tableName = $this->queryObject->getTable();
 
-        if (strstr($sql, '__MODELTABLENAME__')) {
+        if (str_contains($sql, '__MODELTABLENAME__')) {
             $sql = str_replace('__MODELTABLENAME__', $tableName, $sql);
         }
 
-        if (strstr($sql, '__MTN__')) {
+        if (str_contains($sql, '__MTN__')) {
             $sql = str_replace('__MTN__', $tableName, $sql);
         }
 
@@ -304,7 +305,7 @@ class ModelMate
      * @param string $sql
      * @return false|int
      */
-    public function directlyExecute(string $sql)
+    public function directlyExecute(string $sql): false|int
     {
         return $this->queryObject->getConnection()->execute($sql);
     }
@@ -340,11 +341,11 @@ class ModelMate
 
     /**
      * 获取get数据时候需要的 Query
-     * @param mixed  $key
+     * @param mixed $key
      * @param string $keyName
-     * @return Query
+     * @return Db|BaseQuery|Query
      */
-    protected function getQueryObjectWithGet($key, string $keyName = 'id')
+    protected function getQueryObjectWithGet($key, string $keyName = 'id'): Db|BaseQuery|Query
     {
         $condition[$keyName] = $key;
         return self::getQueryObjectWithWhere($condition);
@@ -352,14 +353,14 @@ class ModelMate
 
     /**
      * 根据条件获取Select需要的model
-     * @param array  $condition
-     * @param string $orderBy          排序信息
-     * @param int    $pageIndex        页面序号
-     * @param int    $itemCountPerPage 每页显示的信息条目数
-     * @param int    $limit            查询信息的条目数
-     * @return Model
+     * @param array $condition
+     * @param string $orderBy 排序信息
+     * @param int $pageIndex 页面序号
+     * @param int $itemCountPerPage 每页显示的信息条目数
+     * @param int $limit 查询信息的条目数
+     * @return Db|BaseQuery|Model|Query
      */
-    protected function getQueryObjectWithSelect(array $condition = array(), string $orderBy = "id desc", int $pageIndex = 0, int $itemCountPerPage = 0, int $limit = 0)
+    protected function getQueryObjectWithSelect(array $condition = array(), string $orderBy = "id desc", int $pageIndex = 0, int $itemCountPerPage = 0, int $limit = 0): Db|BaseQuery|Model|Query
     {
         $query = $this->getQueryObjectWithWhere($condition);
 
@@ -383,9 +384,9 @@ class ModelMate
     /**
      * 获取加入where过滤条件的 Query
      * @param array $condition
-     * @return Query
+     * @return Db|BaseQuery|Query
      */
-    protected function getQueryObjectWithWhere(array $condition = array())
+    protected function getQueryObjectWithWhere(array $condition = array()): Db|BaseQuery|Query
     {
         if ($this->queried) {
             $this->queryObject = $this->queryObject->newQuery();
@@ -400,7 +401,7 @@ class ModelMate
      * @param array $conditions
      * @return void
      */
-    private function _parseWhereCondition(array $conditions = [])
+    private function _parseWhereCondition(array $conditions = []): void
     {
         foreach ($conditions as $key => $value) {
             switch ($key) {
@@ -416,18 +417,18 @@ class ModelMate
         }
     }
 
-    private function _parseWhereOrCondition($conditions)
+    private function _parseWhereOrCondition($conditions): void
     {
         foreach ($conditions as $key => $value) {
             $this->_parseWhereOrConditionDetail($key, $value);
         }
     }
 
-    private function _parseWhereOrConditionDetail($key, $value)
+    private function _parseWhereOrConditionDetail($key, $value): void
     {
         $queryObject = $this->queryObject;
-        if (ObjectHelper::getTypeName($value) == ObjectTypes::ARRAYS) {
-            if (ArrayHelper::getLevel($value) == 1) {
+        if (ObjectHelper::getTypeName($value) === ObjectTypes::ARRAYS) {
+            if (ArrayHelper::getLevel($value) === 1) {
                 $queryObject->whereOr($key, array_keys($value)[0], array_values($value)[0]);
             } else {
                 foreach ($value as $secondKey => $secondValue) {
@@ -439,18 +440,18 @@ class ModelMate
         }
     }
 
-    private function _parseWhereAndCondition($conditions)
+    private function _parseWhereAndCondition($conditions): void
     {
         foreach ($conditions as $key => $value) {
             $this->_parseWhereAndConditionDetail($key, $value);
         }
     }
 
-    private function _parseWhereAndConditionDetail($key, $value)
+    private function _parseWhereAndConditionDetail($key, $value): void
     {
         $queryObject = $this->queryObject;
-        if (ObjectHelper::getTypeName($value) == ObjectTypes::ARRAYS) {
-            if (ArrayHelper::getLevel($value) == 1) {
+        if (ObjectHelper::getTypeName($value) === ObjectTypes::ARRAYS) {
+            if (ArrayHelper::getLevel($value) === 1) {
                 $queryObject->where($key, array_keys($value)[0], array_values($value)[0]);
             } else {
                 foreach ($value as $secondItem) {
