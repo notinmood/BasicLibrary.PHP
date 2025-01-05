@@ -10,7 +10,9 @@
 
 namespace Hiland\Test\utils;
 
+use DateMalformedStringException;
 use DateTime;
+use DateTimeZone;
 use Exception;
 use Hiland\Data\DateHelper;
 use PHPUnit\Framework\TestCase;
@@ -43,6 +45,9 @@ class DateHelperTest extends TestCase
         self::assertEquals(1, $actual->invert);
     }
 
+    /**
+     * @throws DateMalformedStringException
+     */
     public function testGetDateTime()
     {
 
@@ -52,7 +57,7 @@ class DateHelperTest extends TestCase
             $actual = DateHelper::getDateTime($timespan);
         } catch (Exception $e) {
         }
-        $expected = new DateTime("2038-1-1 0:0:0");
+        $expected = new DateTime("2038-1-1 0:0:0", new DateTimeZone("UTC"));
         self::assertEquals($expected, $actual);
 
         $timespan = 2145888002;

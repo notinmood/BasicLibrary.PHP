@@ -40,6 +40,7 @@ class DateHelper
         try {
             $result = new DateTime("2038-1-1 0:0:0", self::getDateTimeZone());
         } catch (Exception $e) {
+            //do nothing;
         }
 
         return $result;
@@ -56,12 +57,10 @@ class DateHelper
         if (!$zoneName) {
             return new DateTimeZone("UTC");
         } else {
-            switch ($zoneName) {
-                case "Asia/Shanghai":
-                    return new DateTimeZone("PRC");
-                default:
-                    return new DateTimeZone($zoneName);
-            }
+            return match ($zoneName) {
+                "Asia/Shanghai" => new DateTimeZone("PRC"),
+                default => new DateTimeZone($zoneName),
+            };
         }
     }
 
