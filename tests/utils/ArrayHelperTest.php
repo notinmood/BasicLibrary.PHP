@@ -157,7 +157,7 @@ class ArrayHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testRemove()
+    public function testRemove(): void
     {
         /**
          * 目标数组中没有符合条件元素的情况
@@ -178,6 +178,14 @@ class ArrayHelperTest extends TestCase
         $expect1['c'] = "1C";
 
         self::assertEquals($expect1, $actual);
+
+
+        $data         = $this->prepareAssociateArray1();
+        $actual       = ArrayHelper::removeItem($data, "1A");
+        $expect2['b'] = "1B";
+        $expect2['c'] = "1C";
+
+        self::assertEquals($expect2, $actual);
 
         /**
          * 目标数组中有多个元素符合的情况(把多个值中第一个清除掉)

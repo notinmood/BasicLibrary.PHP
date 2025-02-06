@@ -12,7 +12,7 @@ class ArrayHelper
      */
     public static function isContains(array $arrayData, mixed $item): bool
     {
-        return in_array($item, $arrayData);
+        return in_array($item, $arrayData, true);
     }
 
     /**
@@ -35,7 +35,7 @@ class ArrayHelper
     public static function isContainsValue($array, $value): bool
     {
         foreach ($array as $v) {
-            if ($v == $value) {
+            if ($v === $value) {
                 return true;
             }
         }
@@ -64,7 +64,7 @@ class ArrayHelper
      */
     public static function addItem($array, $key, $value): mixed
     {
-        if ($array == null) {
+        if ($array === null) {
             $array = [];
         }
 
@@ -97,6 +97,22 @@ class ArrayHelper
     }
 
     /**
+     * 获取item在索引数组的索引位置或者关联数组的键值
+     * @param $array
+     * @param $item
+     * @return int|string
+     */
+    public static function getIndex($array, $item): int|string
+    {
+        $index = array_search($item, $array, true);
+        if ($index === false) {
+            return -1;
+        } else {
+            return $index;
+        }
+    }
+
+    /**
      * 在数组的末尾添加新的元素(新元素的key是数字形式索引)
      * 方法 push 和方法 addTail 功能相同,互为别名
      * @param array $array
@@ -117,8 +133,9 @@ class ArrayHelper
      */
     public static function removeItem($array, $item): array
     {
-        if (ObjectHelper::getTypeName($array) == ObjectTypes::ARRAYS) {
-            if ($idx = array_search($item, $array, true)) {
+        if (ObjectHelper::getTypeName($array) === ObjectTypes::ARRAYS) {
+            if (self::isContains($array, $item)) {
+                $idx = array_search($item, $array, true);
                 unset($array[$idx]);
             }
         }
@@ -133,7 +150,7 @@ class ArrayHelper
      */
     public static function removeIndex($array, $index): mixed
     {
-        if (ObjectHelper::getTypeName($array) == ObjectTypes::ARRAYS) {
+        if (ObjectHelper::getTypeName($array) === ObjectTypes::ARRAYS) {
             array_splice($array, $index, 1);
         }
 
@@ -147,7 +164,7 @@ class ArrayHelper
      */
     public static function removeHead($array): mixed
     {
-        if (ObjectHelper::getTypeName($array) == ObjectTypes::ARRAYS) {
+        if (ObjectHelper::getTypeName($array) === ObjectTypes::ARRAYS) {
             array_shift($array);
         }
 
@@ -161,7 +178,7 @@ class ArrayHelper
      */
     public static function removeTail($array): mixed
     {
-        if (ObjectHelper::getTypeName($array) == ObjectTypes::ARRAYS) {
+        if (ObjectHelper::getTypeName($array) === ObjectTypes::ARRAYS) {
             $length    = self::getLength($array);
             $lastIndex = $length - 1;
             array_splice($array, $lastIndex, 1);
@@ -191,11 +208,7 @@ class ArrayHelper
             return false;
         }
 
-        if (key($array) !== 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return key($array) !== 0;
     }
 
     /**
@@ -249,10 +262,10 @@ class ArrayHelper
 
     /**
      * 将数组转变为xml数据
-     * @param array  $array         有名值对类型的数组
-     * @param string $charset       xml数据的编码（缺省情况下为utf-8）
-     * @param string $rootName      xml数据的跟节点名称
-     * @param bool   $includeHeader 是否在生成的xml文档中包含xml头部声明
+     * @param array $array 有名值对类型的数组
+     * @param string $charset xml数据的编码（缺省情况下为utf-8）
+     * @param string $rootName xml数据的跟节点名称
+     * @param bool $includeHeader 是否在生成的xml文档中包含xml头部声明
      * @return string
      */
     public static function convertToXml(array $array, string $rootName = 'myXml', bool $includeHeader = true, string $charset = 'utf8'): string
@@ -307,7 +320,7 @@ class ArrayHelper
 
     /**
      * 从(类似表结构的)二维数组中抽取信息转换为一维数组
-     * @param array  $originalArray
+     * @param array $originalArray
      *            原始的二维数组
      * @param string $newKeyName
      *            二维数组中的某个元素的名称，其对应的值将作为一维数组的key
@@ -443,11 +456,11 @@ class ArrayHelper
             }
         }
 
-        if ($funcArray != null && is_array($funcArray)) {
+        if ($funcArray !== null && is_array($funcArray)) {
             foreach ($funcArray as $col => $func) {
                 if (isset($row[$col])) {
                     if (strpos($func, '|') < 0) {
-                        $result = call_user_func($func, $row[$col]);
+                        $result = $func($row[$col]);
                     } else {
                         $className  = StringHelper::getStringBeforeSeparator($func, '|');
                         $methodName = StringHelper::getStringAfterSeparator($func, '|');
@@ -473,7 +486,9 @@ class ArrayHelper
     public static function getLevel(array $array): int
     {
         // scalar value has depth 0
-        if (!is_array($array)) return 0;
+        if (!is_array($array)) {
+            return 0;
+        }
 
         // array has min depth of 1
         $depth = 1;
@@ -507,9 +522,9 @@ class ArrayHelper
     }
 
     /** 在二维数组中，根据某一个维度的名称进行排序
-     * @param array  $array      目标数组
+     * @param array $array 目标数组
      * @param string $columnName 目标维度名称
-     * @param int    $sortType   排序类型 SORT_ASC 或者 SORT_DESC
+     * @param int $sortType 排序类型 SORT_ASC 或者 SORT_DESC
      * @return array
      * @example 对类似如下数组中，根据“2010年”年排序
      *                           $myArray = [
@@ -555,9 +570,9 @@ class ArrayHelper
      * Select方法的别名,Laravel内相同功能的方法名称就为pluck.
      * 像CSS选择器一样,从多维数组内获取符合XPath的信息
      * ════════════════════════
-     * @param array  $arrayData
+     * @param array $arrayData
      * @param string $selector
-     * @param bool   $withIndexKey 查询路径里面是否包含索引数组的数字key,默认false
+     * @param bool $withIndexKey 查询路径里面是否包含索引数组的数字key,默认false
      * @return array
      * @example
      *                             1、目标数组 $array = [
@@ -578,9 +593,9 @@ class ArrayHelper
     /**
      * 像CSS选择器一样,从多维数组内获取符合XPath的信息
      * ════════════════════════
-     * @param array  $arrayData
+     * @param array $arrayData
      * @param string $selector
-     * @param bool   $withIndexKey 查询路径里面是否包含索引数组的数字key,默认false
+     * @param bool $withIndexKey 查询路径里面是否包含索引数组的数字key,默认false
      * @return array
      * @example
      *                             1、目标数组 $array = [
@@ -612,7 +627,7 @@ class ArrayHelper
                 $currentKey = StringHelper::replace($currentKey, "/$indexKeyPrefix\d*\./", "", true);
             }
 
-            if ($selector == $currentKey) {
+            if ($selector === $currentKey) {
                 $result[] = $values[$i];
             }
         }
@@ -623,7 +638,7 @@ class ArrayHelper
     /**
      * 获取节点的值
      * (结果可能为一个子数组，也可以为一个具体数值)
-     * @param array  $arrayData
+     * @param array $arrayData
      * @param string $key 节点的名称(可以包含多级别的名称，多级别间用 "." 连接)
      * @param mixed|null $defaultValue
      * @return mixed|null|array
@@ -657,10 +672,10 @@ class ArrayHelper
 
     /**
      * 将多维数组平面化
-     * @param iterable $arrayData      待转换的多维数组
-     * @param string   $separator      平面化后各个维度Key之间的分隔符,缺省为"."
-     * @param string   $prepend        平面化后的key前缀,缺省为空
-     * @param string   $indexKeyPrefix 如果是索引性质的数组,想给索引key加一个前缀的名称,缺省为空
+     * @param iterable $arrayData 待转换的多维数组
+     * @param string $separator 平面化后各个维度Key之间的分隔符,缺省为"."
+     * @param string $prepend 平面化后的key前缀,缺省为空
+     * @param string $indexKeyPrefix 如果是索引性质的数组,想给索引key加一个前缀的名称,缺省为空
      * @return array
      */
     public static function flatten(iterable $arrayData, string $separator = ".", string $prepend = '', string $indexKeyPrefix = ""): array
@@ -668,7 +683,7 @@ class ArrayHelper
         $results = [];
 
         foreach ($arrayData as $key => $value) {
-            if (ObjectHelper::getTypeName($key) == ObjectTypes::INTEGER) {
+            if (ObjectHelper::getTypeName($key) === ObjectTypes::INTEGER) {
                 $key = $indexKeyPrefix . $key;
             }
 
@@ -697,7 +712,7 @@ class ArrayHelper
     public static function zip(...$arrayData): array
     {
         $arraysCount = count($arrayData);
-        $arrayLength = array_map(function ($item) {
+        $arrayLength = array_map(static function ($item) {
             return count($item);
         }, $arrayData);
 
