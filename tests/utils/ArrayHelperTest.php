@@ -15,6 +15,39 @@ use PHPUnit\Framework\TestCase;
 
 class ArrayHelperTest extends TestCase
 {
+    public function testIsContains(): void
+    {
+        // 验证索引数组
+        $this->assertTrue(ArrayHelper::isContains([1, 2, 3], 2));
+        $this->assertFalse(ArrayHelper::isContains([1, 2, 3], 4));
+        $this->assertTrue(ArrayHelper::isContains(['a', 'b', 'c'], 'a'));
+        $this->assertFalse(ArrayHelper::isContains(['a', 'b', 'c'], 'd'));
+        $this->assertTrue(ArrayHelper::isContains([1.5, 2.5, 3.5], 2.5));
+        $this->assertFalse(ArrayHelper::isContains([1.5, 2.5, 3.5], 4.5));
+
+        // 验证关联数组
+        $this->assertTrue(ArrayHelper::isContains(['key1' => 'value1', 'key2' => 'value2'], 'value1'));
+        $this->assertFalse(ArrayHelper::isContains(['key1' => 'value1', 'key2' => 'value2'], 'value3'));
+    }
+
+    public function testIsContainsKey(): void
+    {
+        $this->assertTrue(ArrayHelper::isContainsKey(['key1' => 'value1', 'key2' => 'value2'], 'key1'));
+        $this->assertFalse(ArrayHelper::isContainsKey(['key1' => 'value1', 'key2' => 'value2'], 'key3'));
+    }
+
+    public function testIsContainsValue(): void
+    {
+        $this->assertTrue(ArrayHelper::isContainsValue(['key1' => 'value1', 'key2' => 'value2'], 'value1'));
+        $this->assertFalse(ArrayHelper::isContainsValue(['key1' => 'value1', 'key2' => 'value2'], 'value3'));
+        $this->assertTrue(ArrayHelper::isContainsValue([1, 2, 3], 2));
+        $this->assertFalse(ArrayHelper::isContainsValue([1, 2, 3], 4));
+        $this->assertTrue(ArrayHelper::isContainsValue(['a', 'b', 'c'], 'a'));
+        $this->assertFalse(ArrayHelper::isContainsValue(['a', 'b', 'c'], 'd'));
+        $this->assertTrue(ArrayHelper::isContainsValue([1.5, 2.5, 3.5], 2.5));
+        $this->assertFalse(ArrayHelper::isContainsValue([1.5, 2.5, 3.5], 4.5));
+    }
+
     public function testGetItem(): void
     {
         // @formatter:off
@@ -61,7 +94,7 @@ class ArrayHelperTest extends TestCase
         self::assertEquals("黑龙江", $actual[2]["地区"]);
     }
 
-    public function testPush()
+    public function testPush(): void
     {
         $targetArray = $this->prepareIndexArray();
         $actual      = ArrayHelper::push($targetArray, "X");
@@ -79,7 +112,7 @@ class ArrayHelperTest extends TestCase
         return ['A', 'B', 'C', 'D'];
     }
 
-    public function testIsAssociateArray()
+    public function testIsAssociateArray(): void
     {
         $targetArray = $this->prepareAssociateArray1();
         $actual      = ArrayHelper::isAssociateArray($targetArray);
@@ -106,7 +139,7 @@ class ArrayHelperTest extends TestCase
         return $array1;
     }
 
-    public function testIsIndexArray()
+    public function testIsIndexArray(): void
     {
         $targetArray = $this->prepareIndexArray();
         $actual      = ArrayHelper::isIndexArray($targetArray);
@@ -125,7 +158,7 @@ class ArrayHelperTest extends TestCase
         self::assertFalse($actual);
     }
 
-    public function testRemoveHead()
+    public function testRemoveHead(): void
     {
         $data          = $this->prepareAssociateArray1();
         $expected['b'] = "1B";
@@ -135,7 +168,7 @@ class ArrayHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testRemoveTail()
+    public function testRemoveTail(): void
     {
         $data          = $this->prepareAssociateArray1();
         $expected['a'] = "1A";
@@ -146,7 +179,7 @@ class ArrayHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testRemoveIndex()
+    public function testRemoveIndex(): void
     {
         $data          = $this->prepareAssociateArray1();
         $expected['a'] = "1A";
@@ -200,7 +233,7 @@ class ArrayHelperTest extends TestCase
         self::assertEquals($expect1, $actual);
     }
 
-    public function testMerge()
+    public function testMerge(): void
     {
         /**
          * 验证有重复key的合并情况
@@ -237,7 +270,7 @@ class ArrayHelperTest extends TestCase
         return $array2;
     }
 
-    public function testExchangeKeyValue()
+    public function testExchangeKeyValue(): void
     {
         $data           = $this->prepareAssociateArray1();
         $expected["1A"] = "a";
@@ -247,7 +280,7 @@ class ArrayHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testSelect1()
+    public function testSelect1(): void
     {
         $array = [
             ['website' => ['id' => 1, 'url' => 'reddit.com']],
@@ -261,7 +294,7 @@ class ArrayHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testSelect2()
+    public function testSelect2(): void
     {
         $array = [
             ['website' => [['id' => 1], ['url' => 'reddit.com']]],
@@ -278,7 +311,7 @@ class ArrayHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testGetNode()
+    public function testGetNode(): void
     {
         $array = [
             'mysql' => ['host' => '1', 'user' => 'reddit.com'],
@@ -303,7 +336,10 @@ class ArrayHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testFlatten1()
+    /**
+     *
+     */
+    public function testFlatten1(): void
     {
         $array = [
             ['website' => ['id' => 1, 'url' => 'reddit.com']],
@@ -312,14 +348,16 @@ class ArrayHelperTest extends TestCase
         ];
 
         $actual = ArrayHelper::flatten($array);
-        $actual = json_encode($actual);
+        /** @noinspection all */
+        $actual = json_encode($actual, JSON_THROW_ON_ERROR);
+
 
         $expected = '{"0.website.id":1,"0.website.url":"reddit.com","1.website.id":2,"1.website.url":"twitter.com","2.website.id":3,"2.website.url":"dev.to"}';
 
         self::assertEquals($expected, $actual);
     }
 
-    public function testFlatten2()
+    public function testFlatten2(): void
     {
         $array =
             [
@@ -336,28 +374,30 @@ class ArrayHelperTest extends TestCase
 
 
         $actual = ArrayHelper::flatten($array, '.');
-        $actual = json_encode($actual);
+        /** @noinspection all */
+        $actual = json_encode($actual, JSON_THROW_ON_ERROR);
 
         $expected = '{"id":"82","remark":"hello","time":"2016-06-15 15:23:21","contact.id":"182","contact.name":"\u89e3\u7136","contact.phone":"18888888888"}';
 
         self::assertEquals($expected, $actual);
     }
 
-    public function testFlatten3()
+    public function testFlatten3(): void
     {
         $array = [
             ['website' => [['id' => 1], ['url' => 'reddit.com']]],
         ];
 
         $actual = ArrayHelper::flatten($array, ".", "", "I_");
-        $actual = json_encode($actual);
+        /** @noinspection all */
+        $actual = json_encode($actual, JSON_THROW_ON_ERROR);
 
         $expected = '{"I_0.website.I_0.id":1,"I_0.website.I_1.url":"reddit.com"}';
 
         self::assertEquals($expected, $actual);
     }
 
-    public function testZip()
+    public function testZip(): void
     {
         $a = [1, 3, 5, 7, 9];
         $b = [2, 4, 6, 8];
@@ -374,27 +414,23 @@ class ArrayHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testContainsValue()
+    public function testContainsValue(): void
     {
         $array1          = ["age" => 20];
         $array1["email"] = "9727005@qq.com";
         $array1["name"]  = "zhangsan";
 
         $actual   = ArrayHelper::isContainsValue($array1, "zhangsan");
-        $expected = true;
-        self::assertEquals($expected, $actual);
+        self::assertTrue($actual);
 
         $actual   = ArrayHelper::isContainsValue($array1, "张三");
-        $expected = false;
-        self::assertEquals($expected, $actual);
+        self::assertFalse($actual);
 
         $array2   = ["beijing", "shanghai", "qingdao"];
         $actual   = ArrayHelper::isContainsValue($array2, "qingdao");
-        $expected = true;
-        self::assertEquals($expected, $actual);
+        self::assertTrue($actual);
 
         $actual   = ArrayHelper::isContainsValue($array2, "guangzhou");
-        $expected = false;
-        self::assertEquals($expected, $actual);
+        self::assertFalse($actual);
     }
 }

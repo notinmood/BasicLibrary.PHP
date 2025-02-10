@@ -5,7 +5,8 @@ namespace Hiland\Data;
 class ArrayHelper
 {
     /**
-     * 判断一个项目是否存在array中。(其实是判断这个item的value是否存在于$array内)
+     * 判断一个项目是否存在array中。(其实是判断这个item的value是否存在于$array内，不管key是否存在。)
+     * (本方法和isContainsValue方法功能相同,互为别名)
      * @param $arrayData array
      * @param $item      mixed
      * @return bool
@@ -28,19 +29,14 @@ class ArrayHelper
 
     /**
      * 判断某个值是否存在于某个数组内
-     * @param $array
+     * (本方法和isContains方法功能相同,互为别名)
+     * @param $arrayData
      * @param $value
      * @return bool
      */
-    public static function isContainsValue($array, $value): bool
+    public static function isContainsValue($arrayData, $value): bool
     {
-        foreach ($array as $v) {
-            if ($v === $value) {
-                return true;
-            }
-        }
-
-        return false;
+        return in_array($value, $arrayData, true);
     }
 
     /**
