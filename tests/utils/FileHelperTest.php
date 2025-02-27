@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 
 class FileHelperTest extends TestCase
 {
-    public function testGetFileEncoding()
+    public function testGetFileEncoding(): void
     {
         $fileName = PathHelper::combine(__DIR__, "../_res/utf-8.txt");
         $actual   = FileHelper::getEncoding($fileName);
@@ -28,7 +28,7 @@ class FileHelperTest extends TestCase
     }
 
 
-    public function testGetFileExtensionName()
+    public function testGetFileExtensionName(): void
     {
         $fileName = "E:\\myworkspace\\MyStudy\\WebPackStudy\\index.js";
         $actual   = FileHelper::getExtensionName($fileName);

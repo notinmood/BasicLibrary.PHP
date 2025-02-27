@@ -76,7 +76,7 @@ class ThreadHelper
     /**
      * @param ...$urls
      */
-    public static function multiRun(...$urls)
+    public static function multiRun(...$urls): void
     {
         //设置缓冲为0(也可以去php.ini设置)
         ini_set('output_buffering', 0);

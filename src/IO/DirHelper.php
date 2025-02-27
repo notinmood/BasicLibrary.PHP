@@ -66,10 +66,10 @@ class DirHelper
      * @param $dir
      * @return mixed|string
      */
-    public static function ensureEndWithPathSeparator($dir)
+    public static function ensureEndWithPathSeparator($dir): mixed
     {
         if (!StringHelper::isEndWith($dir, DIRECTORY_SEPARATOR)) {
-            $dir = $dir . DIRECTORY_SEPARATOR;
+            $dir .= DIRECTORY_SEPARATOR;
         }
 
         return $dir;

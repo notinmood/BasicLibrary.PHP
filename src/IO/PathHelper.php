@@ -26,7 +26,7 @@ class PathHelper
     public static function combine(...$paths): string
     {
         $result = "";
-        for ($i = 0; $i < count($paths); $i++) {
+        for ($i = 0, $iMax = count($paths); $i < $iMax; $i++) {
             $currentNode = $paths[$i];
             if (StringHelper::isEndWith($currentNode, "\\") || StringHelper::isEndWith($currentNode, "/")) {
                 $len         = ObjectHelper::getLength($currentNode);

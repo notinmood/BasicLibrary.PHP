@@ -60,24 +60,24 @@ class FileHelper
      * <input type="submit" name="submit" value="提交">
      * </form>
      * @param string $submitControlName <input type="file" name="file" id="file">的name值
-     * @return bool|mixed 失败返回false，成功返回文件在服务器上的信息，其中
+     * @return array|bool 失败返回false，成功返回文件在服务器上的信息，其中
      *                                  $result["fullName"] 带路径的全文件名称（临时路径和临时文件）
      *                                  $result["name"] 文件名称;
      *                                  $result["type"] 文件类型;
      *                                  $result["size"] 文件大小
      */
-    public static function getUploadedFileInfo(string $submitControlName = 'file'): mixed
+    public static function getUploadedFileInfo(string $submitControlName = 'file'): array|bool
     {
         if ($_FILES[$submitControlName]["error"] > 0) {
             return false;
-        } else {
-            $result["fullName"] = $_FILES[$submitControlName]["tmp_name"];
-            $result["name"]     = $_FILES[$submitControlName]["name"];
-            $result["type"]     = $_FILES[$submitControlName]["type"];
-            $result["size"]     = $_FILES[$submitControlName]["size"];
-
-            return $result;
         }
+
+        $result["fullName"] = $_FILES[$submitControlName]["tmp_name"];
+        $result["name"]     = $_FILES[$submitControlName]["name"];
+        $result["type"]     = $_FILES[$submitControlName]["type"];
+        $result["size"]     = $_FILES[$submitControlName]["size"];
+
+        return $result;
     }
 
     /**

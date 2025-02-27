@@ -29,7 +29,7 @@ class ImageHelper
      * @param $image mixed 图片路径或者图片资源
      * @return int
      */
-    public static function getWidth($image): int
+    public static function getWidth(mixed $image): int
     {
         if (is_string($image)) {
             $image = self::loadImage($image);
@@ -40,7 +40,7 @@ class ImageHelper
     /**
      * 根据给定的图片全路径，将图片载入内存
      * @param string $imageFileFullName 图片全路径名称
-     * @param string $imageType     图片类型（jpg,png等，默认为空的时候系统自动推断图片类型，或者设置一个未知的类型的时候系统使用file_get_contents载入图片）
+     * @param string $imageType 图片类型（jpg,png等，默认为空的时候系统自动推断图片类型，或者设置一个未知的类型的时候系统使用file_get_contents载入图片）
      * @return resource 内存中的图片资源
      */
     public static function loadImage(string $imageFileFullName, string $imageType = ''): bool
@@ -338,9 +338,9 @@ class ImageHelper
     /**
      * 实现等比例不失真缩放图片缩放
      * (在本函数调用的地方，使用完成后请使用 imagedestroy($newimage) 对新资源进行销毁)
-     * @param resource $sourceImage     原来的图片资源
-     * @param int      $targetMaxWidth  图片放缩后允许的最多宽度
-     * @param int      $targetMaxHeight 图片放缩后允许的最多高度
+     * @param resource $sourceImage 原来的图片资源
+     * @param int $targetMaxWidth 图片放缩后允许的最多宽度
+     * @param int $targetMaxHeight 图片放缩后允许的最多高度
      * @return resource 按比例放缩后的图片
      */
     public static function resizeImage($sourceImage, int $targetMaxWidth, int $targetMaxHeight)
@@ -395,14 +395,14 @@ class ImageHelper
      * 裁剪图片
      * @param resource $sourceImage
      *            待操作的图片资源
-     * @param int      $topRemoveValue
-     *            图片上部清除的数值（像素）
-     * @param int      $bottomRemoveValue
-     *            图片下部清除的数值（像素）
-     * @param int      $leftRemoveValue
-     *            图片左部清除的数值（像素）
-     * @param int      $rightRemoveValue
-     *            图片右部清除的数值（像素）
+     * @param int $topRemoveValue
+     *            清除图片上部的数值（像素）
+     * @param int $bottomRemoveValue
+     *            清除图片下部的数值（像素）
+     * @param int $leftRemoveValue
+     *            清除图片左部的数值（像素）
+     * @param int $rightRemoveValue
+     *            清除图片右部的数值（像素）
      * @return resource
      */
     public static function cropImage($sourceImage, int $topRemoveValue, int $bottomRemoveValue = 0, int $leftRemoveValue = 0, int $rightRemoveValue = 0)
@@ -438,8 +438,8 @@ class ImageHelper
     /**
      * 在浏览器中显示图片
      * @param resource $image
-     * @param string   $imageType
-     * @param int      $imageDisplayQuality 图片质量，jpg格式适用。取值范围0-100，默认为100
+     * @param string $imageType
+     * @param int $imageDisplayQuality 图片质量，jpg格式适用。取值范围0-100，默认为100
      */
     public static function display($image, string $imageType = 'jpg', int $imageDisplayQuality = 100)
     {
@@ -476,8 +476,7 @@ class ImageHelper
     {
         $arrayFunctions = self::ImageFunctionArray();
         $extFunctions   = $arrayFunctions[$imageExtensionFileNameWithoutDot];
-        $result         = $extFunctions[$functionType];
-        return $result;
+        return $extFunctions[$functionType];
     }
 
     /**
@@ -487,35 +486,35 @@ class ImageHelper
     private static function ImageFunctionArray(): array
     {
         return array(
-            'jpg'  => array(
-                'output'           => 'imagejpeg',
+            'jpg' => array(
+                'output' => 'imagejpeg',
                 'outputParamCount' => 3,
-                'create'           => 'imagecreatefromjpeg',
+                'create' => 'imagecreatefromjpeg',
             ),
             'jpeg' => array(
-                'output'           => 'imagejpeg',
+                'output' => 'imagejpeg',
                 'outputParamCount' => 3,
-                'create'           => 'imagecreatefromjpeg',
+                'create' => 'imagecreatefromjpeg',
             ),
-            'png'  => array(
-                'output'           => 'imagepng',
+            'png' => array(
+                'output' => 'imagepng',
                 'outputParamCount' => 2,
-                'create'           => 'imagecreatefrompng',
+                'create' => 'imagecreatefrompng',
             ),
-            'gif'  => array(
-                'output'           => 'imagegif',
+            'gif' => array(
+                'output' => 'imagegif',
                 'outputParamCount' => 2,
-                'create'           => 'imagecreatefromgif',
+                'create' => 'imagecreatefromgif',
             ),
-            'bmp'  => array(
-                'output'           => 'imagejpeg',
+            'bmp' => array(
+                'output' => 'imagejpeg',
                 'outputParamCount' => 3,
-                'create'           => 'imagecreatefromwbmp' //这个方法有问题
+                'create' => 'imagecreatefromwbmp' //这个方法有问题
             ),
             'wbmp' => array(
-                'output'           => 'image2wbmp',
+                'output' => 'image2wbmp',
                 'outputParamCount' => 2,
-                'create'           => 'imagecreatefromwbmp',
+                'create' => 'imagecreatefromwbmp',
             ),
         );
     }
@@ -534,8 +533,8 @@ class ImageHelper
     /**
      * 保存到物理绝对路径中
      * @param resource $image
-     * @param int      $imageDisplayQuality  图片质量，jpg格式适用。取值范围0-100，默认为100
-     * @param string   $filePhysicalFullName 要保存的图片的物理路径全名称（物理路径、文件名和扩展名）
+     * @param int $imageDisplayQuality 图片质量，jpg格式适用。取值范围0-100，默认为100
+     * @param string $filePhysicalFullName 要保存的图片的物理路径全名称（物理路径、文件名和扩展名）
      * @return string 被保存的图片的物理路径全名称（物理路径、文件名和扩展名）
      */
     public static function save($image, string $filePhysicalFullName, int $imageDisplayQuality = 80): string
@@ -629,9 +628,9 @@ class ImageHelper
 
     public static function imagebmp(&$im, $filename = '', $bit = 8, $compression = 0)
     {
-        if (!in_array($bit, array(1, 4, 8, 16, 24, 32))) {
+        if (!in_array($bit, array(1, 4, 8, 16, 24, 32), true)) {
             $bit = 8;
-        } else if ($bit == 32) // todo:32 bit
+        } else if ($bit === 32) // todo:32 bit
         {
             $bit = 24;
         }
@@ -656,7 +655,7 @@ class ImageHelper
             $bmp_data = '';
 
             // 非压缩
-            if ($compression == 0 || $bit < 8) {
+            if ($compression === 0 || $bit < 8) {
                 if (!in_array($bit, array(1, 4, 8))) {
                     $bit = 8;
                 }
