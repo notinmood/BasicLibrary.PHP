@@ -27,7 +27,7 @@ if (!function_exists('dump') && !ThinkHelper::isThinkPHP()) {
      * @param      $value
      * @param bool $appendNewLineSymbol 是在末尾添加一个换行标志(缺省true)
      */
-    function dump($value, bool $appendNewLineSymbol = true)
+    function dump($value, bool $appendNewLineSymbol = true): void
     {
         var_dump($value);
         if ($appendNewLineSymbol) {
@@ -39,14 +39,14 @@ if (!function_exists('dump') && !ThinkHelper::isThinkPHP()) {
 
 if (!function_exists("el")) {
     /**
-     * 带换行功能的echo(方法echoLine的别名)
+     * 带换行功能的echo
      * @param mixed $data 待输出信息
-     * @param bool $bothBeforeAndAfter 如果true就在$data这一行前后都加入新行标志;
-     *                                  如果false就只在$data这一行后加入新行标志.
+     * @param bool $insertStartNewLine 如果true就在$data这一行开始前页加入一个新行标志；
+     *                                 否则就只在$data这一行后加入一个新行标志。
      */
-    function el($data = "", bool $bothBeforeAndAfter = false)
+    function el(mixed $data = null, bool $insertStartNewLine = false): void
     {
-        ConsoleHelper::el($data, $bothBeforeAndAfter);
+        ConsoleHelper::el($data, $insertStartNewLine);
     }
 }
 
@@ -71,6 +71,18 @@ if (!function_exists("getLength")) {
      * @return int
      */
     function getLength($data): int
+    {
+        return ObjectHelper::getLength($data);
+    }
+}
+
+if (!function_exists("len")) {
+    /**
+     * 显示目标对象的长度(内部调用ObjectHelper::getLength()方法实现)
+     * @param $data
+     * @return int
+     */
+    function len($data): int
     {
         return ObjectHelper::getLength($data);
     }
