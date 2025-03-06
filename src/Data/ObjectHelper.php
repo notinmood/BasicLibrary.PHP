@@ -290,7 +290,7 @@ class ObjectHelper
             switch ($type) {
                 case ObjectTypes::OBJECT:
                     $emptyObject = new stdClass();
-                    if ($data == $emptyObject) {
+                    if ($data === $emptyObject) {
                         $result = true;
                     }
                     break;
@@ -338,7 +338,7 @@ class ObjectHelper
         // return is_numeric($data);
 
         $type = self::getTypeName($data);
-        if ($type == ObjectTypes::INTEGER || $type == ObjectTypes::DOUBLE || $type == ObjectTypes::FLOAT) {
+        if ($type === ObjectTypes::INTEGER || $type === ObjectTypes::DOUBLE || $type === ObjectTypes::FLOAT) {
             return true;
         } else {
             return false;
@@ -375,7 +375,7 @@ class ObjectHelper
      * @param $defaultValue
      * @return mixed|null
      */
-    public static function getMember($targetObject, $memberName, $defaultValue = null)
+    public static function getMember($targetObject, $memberName, $defaultValue = null): mixed
     {
         if ($targetObject) {
             if (self::isMember($targetObject, $memberName)) {
@@ -434,5 +434,19 @@ class ObjectHelper
         }
 
         return $result;
+    }
+
+    /**
+     * 判断一个函数是否存在
+     * @param string $functionName 函数名称
+     * @return bool true:存在 false:不存在
+     */
+    public static function isFunction(string $functionName): bool
+    {
+        if (function_exists($functionName)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

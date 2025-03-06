@@ -103,9 +103,9 @@ class ArrayHelper
         $index = array_search($item, $array, true);
         if ($index === false) {
             return -1;
-        } else {
-            return $index;
         }
+
+        return $index;
     }
 
     /**
@@ -220,9 +220,9 @@ class ArrayHelper
 
         if (key($array) === 0) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -631,6 +631,22 @@ class ArrayHelper
         return $result;
     }
 
+
+    /**
+     * 按照节点的成员信息进行过滤
+     * @param $array
+     * @param string $memberName
+     * @param mixed $memberValue
+     * @return array
+     */
+    public static function filterByNodeMember($array, string $memberName = '', $memberValue = null): array
+    {
+        $result = [];
+        //TODO:xiedali@2025/02/28 待完成。
+
+        return $result;
+    }
+
     /**
      * 获取节点的值
      * (结果可能为一个子数组，也可以为一个具体数值)
@@ -684,7 +700,8 @@ class ArrayHelper
             }
 
             if (is_array($value) && !empty($value)) {
-                $results = array_merge($results, static::flatten($value, $separator, $prepend . $key . $separator, $indexKeyPrefix));
+                $results += static::flatten($value, $separator, $prepend . $key . $separator, $indexKeyPrefix);
+                //$results = array_merge($results, static::flatten($value, $separator, $prepend . $key . $separator, $indexKeyPrefix));
             } else {
                 $results[$prepend . $key] = $value;
             }
