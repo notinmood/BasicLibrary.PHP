@@ -8,7 +8,7 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Test\utils;
+namespace Hiland\Test\data;
 
 use Hiland\Config\ConfigMate;
 use Hiland\Data\ReflectionHelper;

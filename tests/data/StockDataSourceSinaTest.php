@@ -1,6 +1,6 @@
 <?php
 
-namespace Hiland\Test\utils;
+namespace Hiland\Test\data;
 
 use Hiland\Biz\Stock\StockDataSource\StockDataSourceSina;
 use Hiland\Biz\Stock\StockRealTimeQuote;

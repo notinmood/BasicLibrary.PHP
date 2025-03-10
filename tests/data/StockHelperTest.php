@@ -1,6 +1,6 @@
 <?php
 
-namespace Hiland\Test\utils;
+namespace Hiland\Test\data;
 
 use Hiland\Biz\Stock\StockHelper;
 use PHPUnit\Framework\TestCase;
