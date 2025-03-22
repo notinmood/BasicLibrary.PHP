@@ -41,8 +41,8 @@ class MathHelper
 
     /**
      * 获取一个数列的移动平均值
-     * @param array  $sourceArray     待计算的原始数组
-     * @param int    $windowPeriod    滑动窗口的窗口大小(即时间周期,比如每5天作为一个周期做一次计算)
+     * @param array $sourceArray 待计算的原始数组
+     * @param int $windowPeriod 滑动窗口的窗口大小(即时间周期,比如每5天作为一个周期做一次计算)
      * @param string $targetFieldName 如果是一维数组可以忽略本参数；如果是二维数组，请指定需要进行计算的字段名称。
      * @return array
      */
@@ -53,9 +53,9 @@ class MathHelper
 
     /**
      * 对数组进行窗口滑动计算
-     * @param array    $sourceArray             待计算的原始数组
-     * @param int      $windowPeriod            滑动窗口的窗口大小(即时间周期,比如每5天作为一个周期做一次计算)
-     * @param string   $targetFieldName         如果是一维数组可以忽略本参数；如果是二维数组，请指定需要进行计算的字段名称。
+     * @param array $sourceArray 待计算的原始数组
+     * @param int $windowPeriod 滑动窗口的窗口大小(即时间周期,比如每5天作为一个周期做一次计算)
+     * @param string $targetFieldName 如果是一维数组可以忽略本参数；如果是二维数组，请指定需要进行计算的字段名称。
      * @param callable $everyWindowCallbackFunc 对每个窗口周期进行计算的回调函数(传递出1个参数：包含当前窗口内的各个元素的array)
      * @return array
      */
@@ -104,8 +104,8 @@ class MathHelper
     /**
      * 数学中各种进制之间的相互转换,返回字符串表示的数据(convertBase的别名缩写)
      * @param string $numberString 待转换的(字符串格式的)目标数字
-     * @param int    $fromBase     从**进制转换
-     * @param int    $toBase       转换到**进制
+     * @param int $fromBase 从**进制转换
+     * @param int $toBase 转换到**进制
      * @return string
      */
     public function convert(string $numberString, int $fromBase, int $toBase): string
@@ -116,8 +116,8 @@ class MathHelper
     /**
      * 数学中各种进制之间的相互转换,返回字符串表示的数据
      * @param string $numberString 待转换的(字符串格式的)目标数字
-     * @param int    $fromBase     从**进制转换
-     * @param int    $toBase       转换到**进制
+     * @param int $fromBase 从**进制转换
+     * @param int $toBase 转换到**进制
      * @return string
      */
     public static function convertBase(string $numberString, int $fromBase, int $toBase): string

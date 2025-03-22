@@ -58,5 +58,17 @@ class Convertor
         }
     }
 
+    /**
+     * 数学中各种进制之间的相互转换,返回字符串表示的数据
+     * @param string $numberString 待转换的(字符串格式的)目标数字
+     * @param int $fromBase 从**进制转换
+     * @param int $toBase 转换到**进制
+     * @return string
+     */
+    public static function convertBase(string $numberString, int $fromBase, int $toBase): string
+    {
+        return MathHelper::convertBase($numberString, $fromBase, $toBase);
+    }
+
 
 }
