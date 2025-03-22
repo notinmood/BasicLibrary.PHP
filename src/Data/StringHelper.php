@@ -396,7 +396,7 @@ class StringHelper
         // 替换字符的数组下标
         $i = 0;
 
-        if (ObjectHelper::getLength($realValueList) == 1 && ObjectHelper::getTypeName($realValueList[0]) == ObjectTypes::ARRAYS) {
+        if (ObjectHelper::getLength($realValueList) == 1 && ObjectHelper::getTypeName($realValueList[0]) == ObjectTypes::ARRAY) {
             $realValueList = $realValueList[0];
         }
 

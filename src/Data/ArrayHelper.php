@@ -129,7 +129,7 @@ class ArrayHelper
      */
     public static function removeItem($array, $item): array
     {
-        if (ObjectHelper::getTypeName($array) === ObjectTypes::ARRAYS) {
+        if (ObjectHelper::getTypeName($array) === ObjectTypes::ARRAY) {
             if (self::isContains($array, $item)) {
                 $idx = array_search($item, $array, true);
                 unset($array[$idx]);
@@ -146,7 +146,7 @@ class ArrayHelper
      */
     public static function removeIndex($array, $index): mixed
     {
-        if (ObjectHelper::getTypeName($array) === ObjectTypes::ARRAYS) {
+        if (ObjectHelper::getTypeName($array) === ObjectTypes::ARRAY) {
             array_splice($array, $index, 1);
         }
 
@@ -160,7 +160,7 @@ class ArrayHelper
      */
     public static function removeHead($array): mixed
     {
-        if (ObjectHelper::getTypeName($array) === ObjectTypes::ARRAYS) {
+        if (ObjectHelper::getTypeName($array) === ObjectTypes::ARRAY) {
             array_shift($array);
         }
 
@@ -174,7 +174,7 @@ class ArrayHelper
      */
     public static function removeTail($array): mixed
     {
-        if (ObjectHelper::getTypeName($array) === ObjectTypes::ARRAYS) {
+        if (ObjectHelper::getTypeName($array) === ObjectTypes::ARRAY) {
             $length    = self::getLength($array);
             $lastIndex = $length - 1;
             array_splice($array, $lastIndex, 1);
@@ -740,5 +740,16 @@ class ArrayHelper
         }
 
         return $result;
+    }
+
+    /**
+     * 计算移动平均值
+     * @param int[]|float[] $arrayData 待计算的数组
+     * @param int $windowSize 窗口大小
+     * @return array 移动平均值数组
+     */
+    public static function getMovingAverage(array $arrayData, int $windowSize): array
+    {
+        return NumberHelper::getMovingAverage($arrayData, $windowSize);
     }
 }

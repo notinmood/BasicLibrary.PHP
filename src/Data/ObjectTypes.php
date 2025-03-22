@@ -13,15 +13,17 @@ namespace Hiland\Data;
  */
 class ObjectTypes
 {
-    const STRING   = "string";
-    const INTEGER  = "integer";
-    const BOOLEAN  = "boolean";
-    const DOUBLE   = "double";
-    const FLOAT    = "float";
-    const RESOURCE = "resource";
-    const ARRAYS   = "array";
-    const OBJECT   = "object";
-    const NULL     = "null";
-    const DATETIME = "datetime";
-    const CLOSURE  = "Closure";
+    public const STRING   = "string";
+    public const INTEGER  = "integer";
+    public const BOOLEAN  = "boolean";
+
+    //double是float的别名，为了兼容php5.x
+    public const DOUBLE   = "double";
+    public const FLOAT    = "float";
+    public const RESOURCE = "resource";
+    public const ARRAY   = "array";
+    public const OBJECT   = "object";
+    public const NULL     = "null";
+    public const DATETIME = "datetime";
+    public const CLOSURE  = "Closure";
 }

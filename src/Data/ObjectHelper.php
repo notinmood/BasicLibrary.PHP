@@ -143,13 +143,14 @@ class ObjectHelper
         }
 
         if (is_array($data)) {
-            return ObjectTypes::ARRAYS;
+            return ObjectTypes::ARRAY;
         }
 
         if (is_float($data)) {
             return ObjectTypes::FLOAT;
         }
 
+        // double是float的别名，为了兼容一些老旧的版本
         if (is_double($data)) {
             return ObjectTypes::DOUBLE;
         }
@@ -176,7 +177,7 @@ class ObjectHelper
     public static function getClassName($object): ?string
     {
         $typeName = self::getTypeName($object);
-        if ($typeName != ObjectTypes::OBJECT) {
+        if ($typeName !== ObjectTypes::OBJECT) {
             return $typeName;
         }
 
@@ -199,15 +200,19 @@ class ObjectHelper
         $type = self::getTypeName($data);
         switch ($type) {
             case ObjectTypes::BOOLEAN:
-                if ($data == true) {
+                if ($data === true) {
                     $result = 'true';
                 } else {
                     $result = 'false';
                 }
                 break;
-            case ObjectTypes::ARRAYS:
+            case ObjectTypes::ARRAY:
             case ObjectTypes::OBJECT:
-                $result = json_encode($data);
+                try {
+                    $result = json_encode($data, JSON_THROW_ON_ERROR);
+                } catch (\JsonException $e) {
+                    $result = '';
+                }
                 break;
             case ObjectTypes::NULL:
                 $result = '';
@@ -226,8 +231,13 @@ class ObjectHelper
      */
     public static function isJson($data): bool
     {
-        if (self::getTypeName($data) == ObjectTypes::STRING) {
-            $data = json_decode($data);
+        if (self::getTypeName($data) === ObjectTypes::STRING) {
+            try {
+                $data = json_decode($data, false, 512, JSON_THROW_ON_ERROR);
+            } catch (\JsonException $e) {
+                return false;
+            }
+
             if ($data && is_object($data)) {
                 return true;
             }
@@ -267,7 +277,7 @@ class ObjectHelper
             return true;
         }
 
-        if ($data == null) {
+        if ($data === null) {
             return true;
         }
 
@@ -355,7 +365,7 @@ class ObjectHelper
     {
         $type = self::getTypeName($targetObject);
         switch ($type) {
-            case ObjectTypes::ARRAYS:
+            case ObjectTypes::ARRAY:
                 $result = array_key_exists($memberName, $targetObject);
                 break;
             case ObjectTypes::OBJECT:
@@ -381,7 +391,7 @@ class ObjectHelper
             if (self::isMember($targetObject, $memberName)) {
                 $type = self::getTypeName($targetObject);
                 switch ($type) {
-                    case ObjectTypes::ARRAYS:
+                    case ObjectTypes::ARRAY:
                         $result = $targetObject[$memberName];
                         break;
                     case ObjectTypes::OBJECT:
@@ -406,7 +416,7 @@ class ObjectHelper
      * @param $classFullName string 带命名空间的类型名称全名（调用的时候，获取某个类型的全名称可以使用::class关键字，即AAA::class）
      * @return bool
      * @example
-     *                       ObjectHelper::isInstance($entity1,ActiveCode::class);
+     *  ObjectHelper::isInstance($entity1,ActiveCode::class);
      */
     public static function isInstance($entity, string $classFullName): bool
     {
@@ -423,7 +433,7 @@ class ObjectHelper
         $type = self::getTypeName($data);
 
         switch ($type) {
-            case ObjectTypes::ARRAYS:
+            case ObjectTypes::ARRAY:
                 $result = ArrayHelper::getLength($data);
                 break;
             case ObjectTypes::STRING:
@@ -448,5 +458,16 @@ class ObjectHelper
         } else {
             return false;
         }
+    }
+
+    /**
+     * 转换数据类型
+     * @param $value mixed 要转换的数据
+     * @param string $targetType 目标数据类型的字符串名字（建议使用ObjectTypes::XXX表示）
+     * @return array|bool|float|int|mixed|object|stdClass|string
+     */
+    public static function convertType(mixed $value, string $targetType): mixed
+    {
+        return Convertor::changeType($value, $targetType);
     }
 }

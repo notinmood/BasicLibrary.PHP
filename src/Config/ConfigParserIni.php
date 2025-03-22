@@ -47,7 +47,7 @@ class ConfigParserIni extends ConfigParser
             }
 
             // overwrite / set current namespace values
-            if (ObjectHelper::getTypeName($properties) == ObjectTypes::ARRAYS) {
+            if (ObjectHelper::getTypeName($properties) == ObjectTypes::ARRAY) {
                 foreach ($properties as $prop => $val) {
                     $config[$name][$prop] = $val;
                 }

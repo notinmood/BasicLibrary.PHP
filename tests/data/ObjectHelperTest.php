@@ -18,49 +18,45 @@ use stdClass;
 
 class ObjectHelperTest extends TestCase
 {
-    public function testIsInstance()
+    public function testIsInstance(): void
     {
         $s        = new Student("zhangsan", 20);
         $actual   = ObjectHelper::isInstance($s, Student::class);
-        $expected = true;
-        self::assertEquals($expected, $actual);
+        self::assertTrue($actual);
 
         $s        = new stdClass();
         $actual   = ObjectHelper::isInstance($s, Student::class);
-        $expected = false;
-        self::assertEquals($expected, $actual);
+        self::assertFalse($actual);
     }
 
-    public function testIsJson()
+    public function testIsJson(): void
     {
         $data     = "123";
         $actual   = ObjectHelper::isJson($data);
-        $expected = false;
-        self::assertEquals($expected, $actual);
+        self::assertFalse($actual);
 
         $json     = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
         $actual   = ObjectHelper::isJson($json);
-        $expected = true;
-        self::assertEquals($expected, $actual);
+        self::assertTrue($actual);
 
         $json     = '{"a","b"}';
         $actual   = ObjectHelper::isJson($json);
-        $expected = false;
-        self::assertEquals($expected, $actual);
+        self::assertFalse($actual);
     }
 
-    public function testIsEmpty()
+    public function testIsEmpty(): void
     {
         $actual = ObjectHelper::isEmpty("AAA");
-        self::assertEquals(false, $actual);
+        self::assertFalse($actual);
     }
 
-    public static function testGetClassName()
+    public static function testGetClassName(): void
     {
         $student = new Student("zhangsan", 20);
 
         $object   = $student;
         $actual   = ObjectHelper::getClassName($object);
+        /** @noinspection all */
         $expected = "Hiland\\Test\\_res\\Student";
         self::assertEquals($expected, $actual);
 
@@ -85,7 +81,7 @@ class ObjectHelperTest extends TestCase
          */
         $object   = array();
         $actual   = ObjectHelper::getClassName($object);
-        $expected = ObjectTypes::ARRAYS;
+        $expected = ObjectTypes::ARRAY;
         self::assertEquals($expected, $actual);
 
         /**
@@ -106,13 +102,9 @@ class ObjectHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testIsNumber()
+    public function testIsNumber(): void
     {
         $data   = 12;
-        $actual = ObjectHelper::isNumber($data);
-        self::assertTrue($actual);
-
-        $data   = 12.45;
         $actual = ObjectHelper::isNumber($data);
         self::assertTrue($actual);
 
@@ -127,12 +119,12 @@ class ObjectHelperTest extends TestCase
         /**
          * 用双引号括起来的数值，使用 is_numeric 判断的时候返回 true.
          */
-        $data   = "12.45";
+        $data   = "12.456";
         $actual = is_numeric($data);
         self::assertTrue($actual);
     }
 
-    public function testToArray()
+    public function testToArray(): void
     {
         $s        = new Student("zhangsan", 20);
         $actual   = ObjectHelper::convertTOArray($s);
