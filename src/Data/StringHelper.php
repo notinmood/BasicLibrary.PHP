@@ -274,9 +274,9 @@ class StringHelper
      * 将一个字符串按照某个分隔符分隔成数组
      * @param $wholeStringData     string 字符串全串
      * @param $delimiter           string 分隔符
-     * @return false|string[]
+     * @return string[]
      */
-    public static function explode(string $wholeStringData, string $delimiter)
+    public static function explode(string $wholeStringData, string $delimiter): array
     {
         return explode($delimiter, $wholeStringData);
     }
@@ -314,8 +314,8 @@ class StringHelper
                 $separatorLength                   = strlen($separator);
                 $formatter                         = substr($formatter, $matchedWithQuotationLength + $separatorLength);
 
-                $matchedNumber = StringHelper::getStringAfterSeparator($matchedWithQuotation, '{');
-                $matchedNumber = StringHelper::getStringBeforeSeparator($matchedNumber, '}');
+                $matchedNumber = self::getStringAfterSeparator($matchedWithQuotation, '{');
+                $matchedNumber = self::getStringBeforeSeparator($matchedNumber, '}');
                 $matchedNumber = (int)$matchedNumber;
                 $dataLength    = strlen($stringData);
                 if ($dataLength >= $matchedNumber) {
@@ -382,7 +382,7 @@ class StringHelper
      * @param bool $inverseSearch 从后向前反向查找
      * @return int|mixed 子字符串第一次出现的位置
      */
-    public static function getFirstPosition(string $wholeStringData, string $subStringData, bool $ignoreCaseSensitive = false, bool $inverseSearch = false)
+    public static function getFirstPosition(string $wholeStringData, string $subStringData, bool $ignoreCaseSensitive = false, bool $inverseSearch = false): mixed
     {
         $positions = static::getPositions($wholeStringData, $subStringData, $ignoreCaseSensitive);
         if (ObjectHelper::isEmpty($positions)) {
@@ -399,12 +399,12 @@ class StringHelper
     /**
      * 对带有占位符的字符串信息，进行格式化填充，形成完整的字符串。
      * 现在推荐直接使用 PHP系统自带的格式化方式,例如:"k的值为{$k}；v的值为{$v}"
-     * @param string $stringData 带有占位符的字符串信息（占位符用{?}表示），例如 "i like this {?},do you known {?}"
+     * @param string $stringData 带有占位符的字符串信息（占位符用{?}表示），例如 "I like this {?},do you known {?}"
      * @param string[] $realValueList 待填入的真实信息，用字符串数组表示，例如["qingdao","beijing"];
      *                                或者使用用逗号分隔的各个独立的字符串表示,比如"qingdao","beijing"
      * @return string
      */
-    public static function format(string $stringData, ...$realValueList): string
+    public static function format(string $stringData, string ...$realValueList): string
     {
         $needle = "{?}";
         // 查找?位置
@@ -412,7 +412,7 @@ class StringHelper
         // 替换字符的数组下标
         $i = 0;
 
-        if (ObjectHelper::getLength($realValueList) == 1 && ObjectHelper::getTypeName($realValueList[0]) == ObjectTypes::ARRAY) {
+        if (ObjectHelper::getLength($realValueList) === 1 && ObjectHelper::getTypeName($realValueList[0]) === ObjectTypes::ARRAY) {
             $realValueList = $realValueList[0];
         }
 
@@ -610,7 +610,7 @@ class StringHelper
      */
     public static function convertUnicodeToUTF8(string $unicodeChar): string
     {
-        $code = intval(hexdec($unicodeChar));
+        $code = (int)hexdec($unicodeChar);
         //这里注意转换出来的code一定得是整形，这样才会正确的按位操作
         $ord_1 = decbin(0xe0 | ($code >> 12));
         $ord_2 = decbin(0x80 | (($code >> 6) & 0x3f));

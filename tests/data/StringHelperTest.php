@@ -120,7 +120,7 @@ class StringHelperTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testGrouping()
+    public function testGrouping(): void
     {
         $data      = "13573290346";
         $formatter = "{3}-{4}-{4}";
@@ -129,7 +129,7 @@ class StringHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testUpperWordsFirstChar()
+    public function testUpperWordsFirstChar(): void
     {
         $data     = "I like this game!";
         $actual   = StringHelper::upperWordsFirstChar($data);
@@ -137,7 +137,7 @@ class StringHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testPaddingEnd()
+    public function testPaddingEnd(): void
     {
         $data     = "qingdao";
         $actual   = StringHelper::paddingEnd($data, 10, "-");
@@ -146,7 +146,7 @@ class StringHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testPaddingBegin()
+    public function testPaddingBegin(): void
     {
         $data     = "qingdao";
         $actual   = StringHelper::paddingBegin($data, 10);
@@ -155,7 +155,7 @@ class StringHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testReplace()
+    public function testReplace(): void
     {
         $data     = "我是一个中国人,我骄傲!";
         $actual   = StringHelper::replace($data, "我", "你");
@@ -173,7 +173,7 @@ class StringHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testConvertFromUTF8ToUnicode()
+    public function testConvertFromUTF8ToUnicode(): void
     {
         $data     = "我";
         $actual   = StringHelper::convertUTF8ToUnicode($data);
@@ -182,7 +182,7 @@ class StringHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testConvertFromUnicodeToUTF8()
+    public function testConvertFromUnicodeToUTF8(): void
     {
         $data     = "6211";
         $actual   = StringHelper::convertUnicodeToUTF8($data);
@@ -191,7 +191,7 @@ class StringHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testRemoveHead()
+    public function testRemoveHead(): void
     {
         $whole    = "i love china!";
         $actual   = StringHelper::removeHead($whole, 3);
