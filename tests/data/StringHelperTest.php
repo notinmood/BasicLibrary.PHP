@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 class StringHelperTest extends TestCase
 {
-    public function testGetPositions()
+    public function testGetPositions(): void
     {
         $whole    = "山东省枣庄市滕州市城市建设纲要";
         $sub      = "滕州市";
@@ -54,7 +54,7 @@ class StringHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testGetFirstPosition()
+    public function testGetFirstPosition(): void
     {
         $whole    = "StringHelper::getPosition";
         $sub      = "p";
@@ -75,7 +75,24 @@ class StringHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testIsEndWith()
+
+    public function testIsContains(): void
+    {
+        $whole   = "吴军信息传";
+        $padding = "信息1";
+        $result  = StringHelper::isContains($whole, $padding);
+        $this->assertFalse($result);
+
+        $padding = "军信";
+        $result  = StringHelper::isContains($whole, $padding);
+        $this->assertTrue($result);
+
+        $padding = ["信1息", "息传"];
+        $result  = StringHelper::contains($whole, ...$padding);
+        $this->assertTrue($result);
+    }
+
+    public function testIsEndWith(): void
     {
         $whole   = "吴军信息传";
         $padding = "信息";
@@ -85,9 +102,13 @@ class StringHelperTest extends TestCase
         $padding = "息传";
         $result  = StringHelper::isEndWith($whole, $padding);
         $this->assertTrue($result);
+
+        $padding = ["信息", "息传"];
+        $result  = StringHelper::isEndWith($whole, ...$padding);
+        $this->assertTrue($result);
     }
 
-    public function testIsStartWith()
+    public function testIsStartWith(): void
     {
         $whole   = "吴军信息传";
         $padding = "1吴军";
@@ -194,7 +215,7 @@ class StringHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testRemoveTail()
+    public function testRemoveTail(): void
     {
         $whole    = "i love china!";
         $actual   = StringHelper::removeTail($whole, 3);
@@ -225,14 +246,14 @@ class StringHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testFormat()
+    public function testFormat(): void
     {
         $actual   = StringHelper::format("{?}喜欢{?}.", "解大劦", "qingdao");
         $expected = "解大劦喜欢qingdao.";
         self::assertEquals($expected, $actual);
     }
 
-    public function testSplice()
+    public function testSplice(): void
     {
         $data     = "i love China.";
         $od       = " ";
@@ -251,7 +272,7 @@ class StringHelperTest extends TestCase
     /**
      * 测试 getStringBeforeSeparator 方法 - 正常情况
      */
-    public function testGetStringBeforeSeparatorNormal()
+    public function testGetStringBeforeSeparatorNormal(): void
     {
         $this->assertEquals('测试', StringHelper::getStringBeforeSeparator('测试_字符串', '_'));
         $this->assertEquals('hello', StringHelper::getStringBeforeSeparator('hello world', ' world'));
@@ -260,7 +281,7 @@ class StringHelperTest extends TestCase
     /**
      * 测试 getStringBeforeSeparator 方法 - 分隔符不存在情况
      */
-    public function testGetStringBeforeSeparatorSeparatorNotFound()
+    public function testGetStringBeforeSeparatorSeparatorNotFound(): void
     {
         $this->assertEquals('测试字符串', StringHelper::getStringBeforeSeparator('测试字符串', '_'));
     }
@@ -268,7 +289,7 @@ class StringHelperTest extends TestCase
     /**
      * 测试 getStringBeforeSeparator 方法 - 空字符情况
      */
-    public function testGetStringBeforeSeparatorEmpty()
+    public function testGetStringBeforeSeparatorEmpty(): void
     {
         $this->assertEquals('', StringHelper::getStringBeforeSeparator('', '_'));
         $this->assertEquals('', StringHelper::getStringBeforeSeparator('测试字符串', '测试字符串'));
@@ -277,7 +298,7 @@ class StringHelperTest extends TestCase
     /**
      * 测试 getStringAfterSeparator 方法 - 正常情况
      */
-    public function testGetStringAfterSeparatorNormal()
+    public function testGetStringAfterSeparatorNormal(): void
     {
         $this->assertEquals('字符串', StringHelper::getStringAfterSeparator('测试_字符串', '_'));
         $this->assertEquals('world', StringHelper::getStringAfterSeparator('hello world', ' '));
@@ -286,7 +307,7 @@ class StringHelperTest extends TestCase
     /**
      * 测试 getStringAfterSeparator 方法 - 分隔符不存在情况
      */
-    public function testGetStringAfterSeparatorSeparatorNotFound()
+    public function testGetStringAfterSeparatorSeparatorNotFound(): void
     {
         $this->assertEquals('测试字符串', StringHelper::getStringAfterSeparator('测试字符串', '_'));
     }
@@ -294,7 +315,7 @@ class StringHelperTest extends TestCase
     /**
      * 测试 getStringAfterSeparator 方法 - 空字符情况
      */
-    public function testGetStringAfterSeparatorEmpty()
+    public function testGetStringAfterSeparatorEmpty(): void
     {
         $this->assertEquals('', StringHelper::getStringAfterSeparator('', '_'));
         $this->assertEquals('测试字符串', StringHelper::getStringAfterSeparator('测试字符串', ''));
@@ -303,7 +324,7 @@ class StringHelperTest extends TestCase
     /**
      * 测试 getStringAfterSeparator 方法 - 分隔符为空字符串情况
      */
-    public function testGetStringAfterSeparatorEmptySeparator()
+    public function testGetStringAfterSeparatorEmptySeparator(): void
     {
         $this->assertEquals('测试字符串', StringHelper::getStringAfterSeparator('测试字符串', ''));
     }

@@ -130,8 +130,8 @@ class StringHelper
      */
     public static function removeTail(string $wholeStringData, $lengthOrTail): string
     {
-        if (ObjectHelper::getTypeName($lengthOrTail) == ObjectTypes::STRING) {
-            if (StringHelper::isEndWith($wholeStringData, $lengthOrTail)) {
+        if (ObjectHelper::getTypeName($lengthOrTail) === ObjectTypes::STRING) {
+            if (self::isEndWith($wholeStringData, $lengthOrTail)) {
                 return self::getStringBeforeSeparator($wholeStringData, $lengthOrTail);
             } else {
                 return $wholeStringData;
@@ -149,52 +149,68 @@ class StringHelper
     }
 
     /**
-     * @param string $paddingStringData 待测试的结尾字符
      * @param string $wholeStringData 全句
+     * @param string ...$paddingStringData 待测试的结尾字符
      * @return bool
      */
-    public static function isEndWith(string $wholeStringData, string $paddingStringData): bool
+    public static function isEndWith(string $wholeStringData, string ...$paddingStringData): bool
     {
-        $paddingLength = strlen($paddingStringData);
-        $fullLength    = strlen($wholeStringData);
-        $subString     = substr($wholeStringData, $fullLength - $paddingLength);
-        if ($subString == $paddingStringData) {
-            return true;
-        } else {
-            return false;
+        foreach ($paddingStringData as $padding) {
+            $paddingLength = strlen($padding);
+            $subString     = substr($wholeStringData, -$paddingLength);
+            if ($subString === $padding) {
+                return true;
+            }
         }
+
+        return false;
     }
 
     /**
-     * @param string $paddingStringData 待测试的开始字符
      * @param string $wholeStringData 全句
+     * @param string ...$paddingStringData 待测试的开始字符
      * @return bool
      */
-    public static function isStartWith(string $wholeStringData, string $paddingStringData): bool
+    public static function isStartWith(string $wholeStringData, string ...$paddingStringData): bool
     {
-        $before = self::getStringBeforeSeparator($wholeStringData, $paddingStringData);
-        if ($before == '') {
-            return true;
-        } else {
-            return false;
+        foreach ($paddingStringData as $padding) {
+            $paddingLength = strlen($padding);
+            $subString     = substr($wholeStringData, 0, $paddingLength);
+            if ($subString === $padding) {
+                return true;
+            }
         }
+
+        return false;
+    }
+
+
+    /**
+     * 判断一个字符串是否被包含在另外一个字符串内
+     * @param string $wholeStringData 查找的母体字符串
+     * @param string ...$subStringData 被查找的子字符串
+     * @return boolean
+     */
+    public static function isContains(string $wholeStringData, string ...$subStringData): bool
+    {
+        foreach ($subStringData as $subString) {
+            if (str_contains($wholeStringData, $subString)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
      * 判断一个字符串是否被包含在另外一个字符串内
-     * @param string $subStringData 被查找的子字符串
      * @param string $wholeStringData 查找的母体字符串
+     * @param string ...$subStringData 被查找的子字符串
      * @return boolean
      */
-    public static function isContains(string $wholeStringData, string $subStringData): bool
+    public static function contains(string $wholeStringData, string ...$subStringData): bool
     {
-        $result = strstr($wholeStringData, $subStringData);
-
-        if ($result === false) {
-            return false;
-        } else {
-            return true;
-        }
+        return self::isContains($wholeStringData, ...$subStringData);
     }
 
     /**
