@@ -8,11 +8,11 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Test\data;
+namespace Hiland\Test\pattern;
 
+use Hiland\Pattern\InstanceContainer;
 use Hiland\Test\_res\Student;
 use Hiland\Test\_res\Teacher;
-use Hiland\Pattern\InstanceContainer;
 use PHPUnit\Framework\TestCase;
 
 class InstanceContainerTest extends TestCase

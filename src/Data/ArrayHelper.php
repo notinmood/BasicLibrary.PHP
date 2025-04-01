@@ -711,7 +711,7 @@ class ArrayHelper
     }
 
     /**
-     * 分别提取每个数组的第n个元素组成新的二维数组(内层纬度为每个传入数组的第n个元素组成的数组；外层纬度为传入的最短数组的长度)
+     * 分别提取每个数组的第n个元素组成新的二维数组(内层维度为每个传入数组的第n个元素组成的数组；外层维度为传入的最短数组的长度)
      * @param ...$arrayData
      * @return array
      * @example
@@ -739,6 +739,25 @@ class ArrayHelper
             $result[] = $indexArray;
         }
 
+        return $result;
+    }
+
+    /**
+     * 计算多个数组的笛卡尔积
+     * @param array ...$arrays
+     * @return array
+     */
+    public static function product(array ...$arrays): array {
+        $result = [[]];
+        foreach ($arrays as $array) {
+            $temp = [];
+            foreach ($result as $product) {
+                foreach ($array as $item) {
+                    $temp[] = array_merge($product, [$item]);
+                }
+            }
+            $result = $temp;
+        }
         return $result;
     }
 

@@ -414,23 +414,37 @@ class ArrayHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
+    public function testProduct1(): void
+    {
+        $actual = ArrayHelper::product([1, 2, 3], ["a", "b"]);
+        $expect = [[1, "a"], [1, "b"], [2, "a"], [2, "b"], [3, "a"], [3, "b"]];
+        self::assertEquals($expect, $actual);
+    }
+
+    public function testProduct2(): void
+    {
+        $actual = ArrayHelper::product([1, 2, 3], ["a", "b"], [true, false]);
+        $expect = [[1, "a", true], [1, "a", false], [1, "b", true], [1, "b", false], [2, "a", true], [2, "a", false], [2, "b", true], [2, "b", false], [3, "a", true], [3, "a", false], [3, "b", true], [3, "b", false]];
+        self::assertEquals($expect, $actual);
+    }
+
     public function testContainsValue(): void
     {
         $array1          = ["age" => 20];
         $array1["email"] = "9727005@qq.com";
         $array1["name"]  = "zhangsan";
 
-        $actual   = ArrayHelper::isContainsValue($array1, "zhangsan");
+        $actual = ArrayHelper::isContainsValue($array1, "zhangsan");
         self::assertTrue($actual);
 
-        $actual   = ArrayHelper::isContainsValue($array1, "张三");
+        $actual = ArrayHelper::isContainsValue($array1, "张三");
         self::assertFalse($actual);
 
-        $array2   = ["beijing", "shanghai", "qingdao"];
-        $actual   = ArrayHelper::isContainsValue($array2, "qingdao");
+        $array2 = ["beijing", "shanghai", "qingdao"];
+        $actual = ArrayHelper::isContainsValue($array2, "qingdao");
         self::assertTrue($actual);
 
-        $actual   = ArrayHelper::isContainsValue($array2, "guangzhou");
+        $actual = ArrayHelper::isContainsValue($array2, "guangzhou");
         self::assertFalse($actual);
     }
 }
