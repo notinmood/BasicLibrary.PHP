@@ -10,7 +10,7 @@ use Exception;
 abstract class SimpleLinearConstruct
 {
 
-    protected $dataArray = array();
+    protected mixed $dataArray = array();
 
     public function __construct($data = null)
     {
@@ -53,7 +53,7 @@ abstract class SimpleLinearConstruct
     /**
      * 清空队列
      */
-    public function makeEmpty()
+    public function makeEmpty(): void
     {
         unset($this->dataArray);
     }
@@ -70,7 +70,7 @@ abstract class SimpleLinearConstruct
      * 转换为普通Array
      * @return array|mixed
      */
-    public function convertToArray()
+    public function convertToArray(): mixed
     {
         return $this->dataArray;
     }
