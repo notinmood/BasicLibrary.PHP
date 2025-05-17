@@ -475,7 +475,17 @@ class ArrayHelper
     }
 
     /**
-     * 返回数组的维度
+     * 获取数组的维度（getLevel的别名）
+     * @param array $array
+     * @return int
+     */
+    public static function getDimensionCount(array $array): int
+    {
+        return self::getLevel($array);
+    }
+
+    /**
+     * 获取数组的维度
      * @param array $array [description]
      * @return int      [description]
      */
@@ -747,7 +757,8 @@ class ArrayHelper
      * @param array ...$arrays
      * @return array
      */
-    public static function product(array ...$arrays): array {
+    public static function product(array ...$arrays): array
+    {
         $result = [[]];
         foreach ($arrays as $array) {
             $temp = [];

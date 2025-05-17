@@ -11,7 +11,7 @@ namespace Hiland\Biz\Tencent;
 use Hiland\Biz\Logger\CommonLogger;
 use Hiland\Biz\Tencent\MiniProgram\MiniProgramConfig;
 use Hiland\Biz\Tencent\MiniProgram\WXBizDataCrypt;
-use Hiland\Web\NetHelper;
+use Hiland\Web\HttpClientHelper;
 
 /**
  *
@@ -44,7 +44,7 @@ class MiniProgramHelper
         $APPID = MiniProgramConfig::getAPPID();
         $SECRET = MiniProgramConfig::getSECRET();
         $url = "https://api.weixin.qq.com/sns/jscode2session?appid=$APPID&secret=$SECRET&js_code=$code&grant_type=authorization_code";
-        $result = NetHelper::request($url);
+        $result = HttpClientHelper::request($url);
         self::$userSessionData = $result;
     }
 

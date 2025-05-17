@@ -3,7 +3,7 @@
 namespace Hiland\Biz\Stock\StockDataSource;
 
 use Hiland\Biz\Stock\IStockDataSource;
-use Hiland\Web\NetHelper;
+use Hiland\Web\HttpClientHelper;
 use Hiland\Web\RequestHelper;
 
 /**

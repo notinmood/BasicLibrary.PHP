@@ -16,7 +16,7 @@ use Hiland\Biz\Tencent\Pay\WxPayData\WxPayDataBaseResults;
 use Hiland\Biz\Tencent\Pay\WxPayData\WxPayDataBaseReverse;
 use Hiland\Biz\Tencent\Pay\WxPayData\WxPayDataBaseShortUrl;
 use Hiland\Biz\Tencent\Pay\WxPayData\WxPayDataBaseUnifiedOrder;
-use Hiland\Web\NetHelper;
+use Hiland\Web\HttpClientHelper;
 
 /**
  *
@@ -83,7 +83,7 @@ class WxPayApi
         $startTimeStamp = self::getMillisecond(); // 请求开始时间
         //$response = self::postXmlCurl($xml, $url, false, $timeOut);
 
-        $response = NetHelper::request($url, $xml, $timeOut);
+        $response = HttpClientHelper::request($url, $xml, $timeOut);
 
         $result = WxPayDataBaseResults::Init($response);
         self::reportCostTime($url, $startTimeStamp, $result); // 上报请求花费时间
@@ -224,7 +224,7 @@ class WxPayApi
 
         $startTimeStamp = self::getMillisecond(); // 请求开始时间
         //$response = self::postXmlCurl($xml, $url, false, $timeOut);
-        $response = NetHelper::request($url, $xml, $timeOut);
+        $response = HttpClientHelper::request($url, $xml, $timeOut);
         return $response;
     }
 
@@ -254,7 +254,7 @@ class WxPayApi
 
         $startTimeStamp = self::getMillisecond(); // 请求开始时间
         //$response = self::postXmlCurl($xml, $url, false, $timeOut);
-        $response = NetHelper::request($url, $xml, $timeOut);
+        $response = HttpClientHelper::request($url, $xml, $timeOut);
         $result = WxPayDataBaseResults::Init($response);
         self::reportCostTime($url, $startTimeStamp, $result); // 上报请求花费时间
 
@@ -287,7 +287,7 @@ class WxPayApi
 
         $startTimeStamp = self::getMillisecond(); // 请求开始时间
         //$response = self::postXmlCurl($xml, $url, false, $timeOut);
-        $response = NetHelper::request($url, $xml, $timeOut);
+        $response = HttpClientHelper::request($url, $xml, $timeOut);
         $result = WxPayDataBaseResults::Init($response);
         self::reportCostTime($url, $startTimeStamp, $result); // 上报请求花费时间
 
@@ -344,7 +344,7 @@ class WxPayApi
         );
 
 
-        $response = NetHelper::request($url, $xml, $timeOut, true, array(), $certfilearray);
+        $response = HttpClientHelper::request($url, $xml, $timeOut, true, array(), $certfilearray);
 
         $result = WxPayDataBaseResults::Init($response);
         self::reportCostTime($url, $startTimeStamp, $result); // 上报请求花费时间
@@ -381,7 +381,7 @@ class WxPayApi
 
         $startTimeStamp = self::getMillisecond(); // 请求开始时间
         //$response = self::postXmlCurl($xml, $url, false, $timeOut);
-        $response = NetHelper::request($url, $xml, $timeOut);
+        $response = HttpClientHelper::request($url, $xml, $timeOut);
         $result = WxPayDataBaseResults::Init($response);
         self::reportCostTime($url, $startTimeStamp, $result); // 上报请求花费时间
 
@@ -412,7 +412,7 @@ class WxPayApi
         $xml = $inputObj->ToXml();
 
         //$response = self::postXmlCurl($xml, $url, false, $timeOut);
-        $response = NetHelper::request($url, $xml, $timeOut);
+        $response = HttpClientHelper::request($url, $xml, $timeOut);
         if (substr($response, 0, 5) == "<xml>") {
             return "";
         }
@@ -461,7 +461,7 @@ class WxPayApi
 
         $startTimeStamp = self::getMillisecond(); // 请求开始时间
         //$response = self::postXmlCurl($xml, $url, false, $timeOut);
-        $response = NetHelper::request($url, $xml, $timeOut);
+        $response = HttpClientHelper::request($url, $xml, $timeOut);
         $result = WxPayDataBaseResults::Init($response);
         self::reportCostTime($url, $startTimeStamp, $result); // 上报请求花费时间
 
@@ -502,7 +502,7 @@ class WxPayApi
             $path . 'apiclient_key.pem',
         );
 
-        $response = NetHelper::request($url, $xml, $timeOut, true, array(), $certfilearray);
+        $response = HttpClientHelper::request($url, $xml, $timeOut, true, array(), $certfilearray);
         $result = WxPayDataBaseResults::Init($response);
         self::reportCostTime($url, $startTimeStamp, $result); // 上报请求花费时间
 
@@ -563,7 +563,7 @@ class WxPayApi
 
         $startTimeStamp = self::getMillisecond(); // 请求开始时间
         //$response = self::postXmlCurl($xml, $url, false, $timeOut);
-        $response = NetHelper::request($url, $xml, $timeOut);
+        $response = HttpClientHelper::request($url, $xml, $timeOut);
         $result = WxPayDataBaseResults::Init($response);
         self::reportCostTime($url, $startTimeStamp, $result); // 上报请求花费时间
 

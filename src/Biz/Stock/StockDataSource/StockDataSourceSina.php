@@ -7,7 +7,7 @@ use Hiland\Biz\Stock\StockHelper;
 use Hiland\Biz\Stock\StockRealTimeQuote;
 use Hiland\Data\ObjectHelper;
 use Hiland\Data\StringHelper;
-use Hiland\Web\NetHelper;
+use Hiland\Web\HttpClientHelper;
 
 /**
  * 新浪的证券数据源
@@ -27,7 +27,7 @@ class StockDataSourceSina implements IStockDataSource
         }
 
         $baseUrl = "http://hq.sinajs.cn/list={$stockCodeString}";
-        $content = NetHelper::get($baseUrl);
+        $content = HttpClientHelper::get($baseUrl);
 
         /**
          * 新浪传递过来的编码是GB18030,通过类似PostManAPI这样的工具可以查看到新浪Response的编码格式

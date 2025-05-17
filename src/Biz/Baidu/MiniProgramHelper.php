@@ -7,7 +7,7 @@
  */
 namespace Hiland\Biz\Baidu;
 
-use Hiland\Web\NetHelper;
+use Hiland\Web\HttpClientHelper;
 
 class MiniProgramHelper
 {
@@ -38,7 +38,7 @@ class MiniProgramHelper
         $SECRET = MiniProgramConfig::getSECRET();
         $url = "https://openapi.baidu.com/nalogin/getSessionKeyByCode?code=$code&client_id=$APPKEY&sk=$SECRET";
 
-        $result = NetHelper::request($url);
+        $result = HttpClientHelper::request($url);
         self::$userSessionData = $result;
     }
 

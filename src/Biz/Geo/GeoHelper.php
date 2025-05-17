@@ -1,7 +1,7 @@
 <?php
 namespace Hiland\Biz\Geo;
 
-use Hiland\Web\NetHelper;
+use Hiland\Web\HttpClientHelper;
 
 /**
  * Created by PhpStorm.
@@ -128,7 +128,7 @@ class GeoHelper
 
         $url= "http://restapi.amap.com/v3/geocode/regeo?key=$appKey&location=$lng,$lat";
 
-        $jsonString = NetHelper::request($url);
+        $jsonString = HttpClientHelper::request($url);
         $jsonArray = json_decode($jsonString, true);
 
         //return $jsonArray;
@@ -172,7 +172,7 @@ class GeoHelper
 
         $url = "http://api.map.baidu.com/geocoder/v2/?ak=$appKey&location=$lat,$lng&output=json&pois=0";
 
-        $jsonString = NetHelper::request($url);
+        $jsonString = HttpClientHelper::request($url);
         $jsonArray = json_decode($jsonString, true);
 
         if ($jsonArray) {

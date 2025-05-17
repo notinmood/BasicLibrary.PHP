@@ -56,12 +56,12 @@ class DateHelper
         $zoneName = ini_get("date.timezone");
         if (!$zoneName) {
             return new DateTimeZone("UTC");
-        } else {
-            return match ($zoneName) {
-                "Asia/Shanghai" => new DateTimeZone("PRC"),
-                default => new DateTimeZone($zoneName),
-            };
         }
+
+        return match ($zoneName) {
+            "Asia/Shanghai" => new DateTimeZone("PRC"),
+            default => new DateTimeZone($zoneName),
+        };
     }
 
 
@@ -76,19 +76,19 @@ class DateHelper
         $dateMain      = self::parseDateTimeSafely($dateMain);
         $dateSecondary = self::parseDateTimeSafely($dateSecondary);
 
-        if ($dateMain == false || $dateSecondary == false) {
+        if (!$dateMain || !$dateSecondary) {
             return 0;
-        } else {
-            if ($dateMain == $dateSecondary) {
-                return 0;
-            }
-
-            if ($dateMain > $dateSecondary) {
-                return 1;
-            } else {
-                return -1;
-            }
         }
+
+        if ($dateMain == $dateSecondary) {
+            return 0;
+        }
+
+        if ($dateMain > $dateSecondary) {
+            return 1;
+        }
+
+        return -1;
     }
 
     /**
@@ -132,7 +132,7 @@ class DateHelper
 
     /**
      * 将 timestamp 转换成日期字符串( format 函数的别名)
-     * @param null   $timestamp
+     * @param null $timestamp
      * @param string $format
      * @return string
      */
@@ -144,12 +144,11 @@ class DateHelper
     /**
      * 将 timestamp 转换成日期
      * @param null $timestamp
-     * @return DateTime
-     * @throws Exception
+     * @return float|DateTime|int|null
      */
-    public static function getDateTime($timestamp = null)
+    public static function getDateTime($timestamp = null): float|DateTime|int|null
     {
-        $timestamp = $timestamp === null ? time() : floatval($timestamp);
+        $timestamp = $timestamp === null ? time() : (float)$timestamp;
 
         if ($timestamp <= self::get20380101Timestamp()) {
             $targetArray = getdate($timestamp);
@@ -157,16 +156,21 @@ class DateHelper
             $targetString = "{$targetArray['year']}-{$targetArray['mon']}-{$targetArray['mday']} {$targetArray['hours']}:{$targetArray['minutes']}:{$targetArray['seconds']}";
             try {
                 return new DateTime($targetString, self::getDateTimeZone());
-            } catch (Exception $e) {
+            } catch (Exception) {
+                return null;
             }
         } else {
-            $ts2038    = self::get20380101Timestamp();
-            $diffArray = self::getInterval($ts2038, $timestamp);
+            try {
+                $ts2038    = self::get20380101Timestamp();
+                $diffArray = self::getInterval($ts2038, $timestamp);
 
-            $targetDateTime = self::addInterval($ts2038, 'd', $diffArray->d, 'dt');
-            $targetDateTime = self::addInterval($targetDateTime, 'h', $diffArray->h, 'dt');
-            $targetDateTime = self::addInterval($targetDateTime, 'm', $diffArray->i, 'dt');
-            return self::addInterval($targetDateTime, 's', $diffArray->s, 'dt');
+                $targetDateTime = self::addInterval($ts2038, 'd', $diffArray->d, 'dt');
+                $targetDateTime = self::addInterval($targetDateTime, 'h', $diffArray->h, 'dt');
+                $targetDateTime = self::addInterval($targetDateTime, 'm', $diffArray->i, 'dt');
+                return self::addInterval($targetDateTime, 's', $diffArray->s, 'dt');
+            } catch (Exception) {
+                return null;
+            }
         }
     }
 
@@ -178,39 +182,34 @@ class DateHelper
      * @return float|int
      * @throws Exception
      */
-    public static function getIntervalSeconds($dateMain, $dateSecondary, string $intervalType = "s")
+    public static function getIntervalSeconds($dateMain, $dateSecondary, string $intervalType = "s"): float|int
     {
         $ms4Main      = self::getTotalMilliSeconds($dateMain);
         $ms4Secondary = self::getTotalMilliSeconds($dateSecondary);
 
         $ms4Diff = $ms4Main - $ms4Secondary;
 
-        switch ($intervalType) {
-            case "ms":
-                $result = $ms4Diff;
-                break;
-            default :
-                $result = $ms4Diff / 1000;
-        }
-
-        return $result;
+        return match ($intervalType) {
+            "ms" => $ms4Diff,
+            default => $ms4Diff / 1000,
+        };
     }
 
 
     /**
      * 获取两个日期之间的差额(如果后一个日期比前一个日期小,那么返回的DateInterval的属性invert的值为1)
-     * @param $startValue DateTime|int|float 开始时间(即可以是DateTime类型也可以是timestamp类型)
-     * @param $endValue   DateTime|int|float 结束时间(即可以是DateTime类型也可以是timestamp类型)
-     * @return DateInterval
+     * @param $startValue float|DateTime|int 开始时间(即可以是DateTime类型也可以是timestamp类型)
+     * @param $endValue   float|DateTime|int 结束时间(即可以是DateTime类型也可以是timestamp类型)
+     * @return DateInterval|null
      * @throws Exception
      */
-    public static function getInterval($startValue, $endValue): ?DateInterval
+    public static function getInterval(float|DateTime|int $startValue, float|DateTime|int $endValue): ?DateInterval
     {
-        if (ObjectHelper::getTypeName($startValue) == ObjectTypes::DATETIME) {
+        if (ObjectHelper::getTypeName($startValue) === ObjectTypes::DATETIME) {
             $startValue = self::getTimestamp($startValue);
         }
 
-        if (ObjectHelper::getTypeName($endValue) == ObjectTypes::DATETIME) {
+        if (ObjectHelper::getTypeName($endValue) === ObjectTypes::DATETIME) {
             $endValue = self::getTimestamp($endValue);
         }
 
@@ -222,12 +221,11 @@ class DateHelper
             $timeDiff = 0 - $timeDiff;
         }
 
-
-        $days    = intval($timeDiff / 86400);
+        $days    = (int)($timeDiff / 86400);
         $remain  = $timeDiff % 86400;
-        $hours   = intval($remain / 3600);
-        $remain  = $remain % 3600;
-        $minutes = intval($remain / 60);
+        $hours   = (int)($remain / 3600);
+        $remain  %= 3600;
+        $minutes = (int)($remain / 60);
         $seconds = $remain % 60;
 
         /**
@@ -247,27 +245,27 @@ class DateHelper
     /**
      * 获取从1970年1月1日以来总共的毫秒数
      * @param null $dateValue
-     * @return float
+     * @return float|int
      * @throws Exception
      */
-    public static function getTotalMilliSeconds($dateValue = null)
+    public static function getTotalMilliSeconds($dateValue = null): float|int
     {
         return self::getTimestamp($dateValue) * 1000;
     }
 
     /**
      * 获取一个指定时间点的timestamp(即从1970年1月1日以来总共的秒数)
-     * @param mixed $dateValue 指定的时间点 ，可以是“201603161312”格式，也可以是“2016-03-16 13:12:25”
-     * @return int
+     * @param mixed|null $dateValue 指定的时间点 ，可以是“201603161312”格式，也可以是“2016-03-16 13:12:25”
+     * @return float|int
      * @throws Exception
      */
-    public static function getTimestamp($dateValue = null)
+    public static function getTimestamp(mixed $dateValue = null): float|int
     {
         if (ObjectHelper::isEmpty($dateValue)) {
             $dateValue = new DateTime();
         }
 
-        if (ObjectHelper::getTypeName($dateValue) == ObjectTypes::STRING) {
+        if (ObjectHelper::getTypeName($dateValue) === ObjectTypes::STRING) {
             try {
                 $dateValue = new DateTime($dateValue);
             } catch (Exception $e) {
@@ -282,8 +280,8 @@ class DateHelper
             $result = $dateValue->getTimestamp();
         } else {
             $dateDiff     = $dateValue->diff($year20380101);
-            $days         = floatval($dateDiff->days);
-            $totalSeconds = floatval($days * 86400)
+            $days         = (float)$dateDiff->days;
+            $totalSeconds = $days * 86400
                 + $dateDiff->h * 3600 + $dateDiff->i * 60 + $dateDiff->s;
 
             $year20380101Seconds = $year20380101->getTimestamp();
@@ -296,9 +294,9 @@ class DateHelper
 
     /**
      * 获取当前时间的毫秒数信息
-     * @return float
+     * @return float|int
      */
-    public static function getCurrentMilliSecond()
+    public static function getCurrentMilliSecond(): float|int
     {
         return microtime(true) * 1000;
     }
@@ -318,12 +316,12 @@ class DateHelper
      *                                    s:秒钟
      * @param int $intervalValue 时间间隔值
      * @param string $returnType 返回值类型--dt:返回DateTime时间类型；ts(默认):返回timestamp类型。
-     * @return int|DateTime int类型的时间戳或者是DateTime时间
+     * @return float|DateTime|int int类型的时间戳或者是DateTime时间
      * @throws Exception
      */
-    public static function addInterval($originalValue = null, string $intervalType = "d", int $intervalValue = 1, string $returnType = "ts")
+    public static function addInterval($originalValue = null, string $intervalType = "d", int $intervalValue = 1, string $returnType = "ts"): float|DateTime|int
     {
-        if (ObjectHelper::getTypeName($originalValue) == ObjectTypes::DATETIME) {
+        if (ObjectHelper::getTypeName($originalValue) === ObjectTypes::DATETIME) {
             $source = $originalValue;
         } else {
             if ($originalValue) {
@@ -392,11 +390,11 @@ class DateHelper
 
         $target = $source->add($interval);
 
-        if ($returnType == "timestamp" || $returnType == "ts") {
+        if ($returnType === "timestamp" || $returnType === "ts") {
             return self::getTimestamp($target);
-        } else {
-            return $target;
         }
+
+        return $target;
     }
 
     /**
@@ -404,20 +402,19 @@ class DateHelper
      * @param int|null $time timestamp格式的时间
      * @param string $formatString 格式化字符串
      * @return string
-     * @throws Exception
      */
     public static function format(int $time = null, string $formatString = 'Y-m-d H:i:s'): string
     {
-        $time = $time === null ? time() : floatval($time);
+        $time = $time === null ? time() : (float)$time;
+        //$time??= time();
 
-        $targetDateTime = self::getDateTime($time);
-        return $targetDateTime->format($formatString);
+        return self::getDateTime($time)->format($formatString);
     }
 
     /**
      * 获取某个指定的日期是星期几
      * @param int|null $timestamp 指定的日期（默认为当前日期）
-     * @param string   $format    返回星期几的格式
+     * @param string $format 返回星期几的格式
      *                            （默认（或者number,N,n）为数组0-7；
      *                            chinese,C,c:汉字 一，。。。日；
      *                            chinesefull,CF,cf:汉字全称 星期一。。。星期天）
@@ -464,67 +461,39 @@ class DateHelper
                 break;
         }
 
-        switch ($format) {
-            case "n":
-                return $week;
-            case 'c':
-                return $result;
-            case 'cf':
-            default:
-                return '星期' . $result;
-        }
+        return match ($format) {
+            "n" => $week,
+            'c' => $result,
+            default => '星期' . $result,
+        };
     }
 
     /**
      * 获取日期中月份的中文叫法
      * @param int|null $month
-     * @param string   $postfixes 后缀信息
+     * @param string $postfixes 后缀信息
      * @return string
      */
     public static function getMonthChineseName(int $month = null, string $postfixes = ''): string
     {
-        if ($month == null) {
+        if ($month === null) {
             $month = date("n");
         }
 
-        switch ($month) {
-            case 1:
-                $result = '一';
-                break;
-            case 2:
-                $result = '二';
-                break;
-            case 3:
-                $result = '三';
-                break;
-            case 4:
-                $result = '四';
-                break;
-            case 5:
-                $result = '五';
-                break;
-            case 6:
-                $result = '六';
-                break;
-            case 7:
-                $result = '七';
-                break;
-            case 8:
-                $result = '八';
-                break;
-            case 9:
-                $result = '九';
-                break;
-            case 10:
-                $result = '十';
-                break;
-            case 11:
-                $result = '十一';
-                break;
-            default:
-                $result = '十二';
-                break;
-        }
+        $result = match ($month) {
+            1 => '一',
+            2 => '二',
+            3 => '三',
+            4 => '四',
+            5 => '五',
+            6 => '六',
+            7 => '七',
+            8 => '八',
+            9 => '九',
+            10 => '十',
+            11 => '十一',
+            default => '十二',
+        };
 
         return $result . $postfixes;
     }

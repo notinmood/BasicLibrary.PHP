@@ -6,7 +6,7 @@ use Hiland\Biz\Tencent\Common\WechatConfig;
 use Hiland\Biz\ThinkAddon\TPCompatibleHelper;
 use Hiland\Data\RandHelper;
 use Hiland\DataModel\ModelMate;
-use Hiland\Web\NetHelper;
+use Hiland\Web\HttpClientHelper;
 
 class WechatHelper
 {
@@ -52,7 +52,7 @@ class WechatHelper
         }
 
         $url = 'https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=' . $accessToken;
-        $result = NetHelper::request($url, $qrrequest);//NetHelper::Post($url, $qrrequest);
+        $result = HttpClientHelper::request($url, $qrrequest);//NetHelper::Post($url, $qrrequest);
         //return $result;
         $jsoninfo = json_decode($result);
         $ticket = $jsoninfo->ticket;
@@ -104,7 +104,7 @@ class WechatHelper
 
         $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appID&secret=$appSecret";
 
-        $output = NetHelper::request($url);
+        $output = HttpClientHelper::request($url);
         // 检查错误、你可以加一段检查错误的语句（虽然这并不是必需的）
         if ($output === FALSE) {
             // 不解析返回的json信息
@@ -149,7 +149,7 @@ class WechatHelper
         }
 
         $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$accessToken&openid=$openID&lang=zh_CN";
-        $output = NetHelper::request($url);
+        $output = HttpClientHelper::request($url);
         $jsoninfo = json_decode($output);
         return $jsoninfo;
     }
@@ -176,7 +176,7 @@ class WechatHelper
         if (version_compare(PHP_VERSION, '5.6.0', '>') && version_compare(PHP_VERSION, '7.0.0', '<')){
             $isForceUnSafe= true;
         }
-        $result = NetHelper::request($url, $mediajson,0,false,null,null,$isForceUnSafe);
+        $result = HttpClientHelper::request($url, $mediajson,0,false,null,null,$isForceUnSafe);
 
         $row = json_decode($result);
         $mediaId= $row->media_id;
@@ -244,7 +244,7 @@ class WechatHelper
         }
 
         $MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=" . $accessToken;
-        $info = NetHelper::request($MENU_URL, $menuJson);
+        $info = HttpClientHelper::request($MENU_URL, $menuJson);
         $result = json_decode($info, true);
         $result = $result["errcode"];
         // return $result;
@@ -411,7 +411,7 @@ class WechatHelper
         }
 
         $url = sprintf("https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code", $appID, $appSecret, $code);
-        $output = NetHelper::request($url);
+        $output = HttpClientHelper::request($url);
 
         // $result = $output;
         // 检查错误、你可以加一段检查错误的语句（虽然这并不是必需的）
@@ -486,7 +486,7 @@ class WechatHelper
     public static function getOAuth2UserInfo($openID, $oauth2AccessToken)
     {
         $url = "https://api.weixin.qq.com/sns/userinfo?access_token=$oauth2AccessToken&openid=$openID";
-        $output = NetHelper::request($url);
+        $output = HttpClientHelper::request($url);
         $jsoninfo = json_decode($output);
         return $jsoninfo;
     }
@@ -587,7 +587,7 @@ class WechatHelper
         }
         $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=$accessToken";
 
-        $res = json_decode(NetHelper::request($url));
+        $res = json_decode(HttpClientHelper::request($url));
         //return $_res;
         $ticket = $res->ticket;
 
@@ -627,7 +627,7 @@ class WechatHelper
         }
 
         $url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=$accessToken";
-        $result = NetHelper::request($url, $data);
+        $result = HttpClientHelper::request($url, $data);
 
         $result = json_decode($result);
         $errorCode = $result->errcode;
@@ -682,7 +682,7 @@ class WechatHelper
         $url = "https://api.weixin.qq.com/cgi-bin/shorturl?access_token=$accessToken";
         $data = "{\"action\":\"long2short\",\"long_url\":\"$longUrl\"}";
 
-        $out = NetHelper::request($url, $data);
+        $out = HttpClientHelper::request($url, $data);
         $result = json_decode($out, true);
         if ($result['errcode'] == 0) {
             return $result['short_url'];

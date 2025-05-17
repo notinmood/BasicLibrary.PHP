@@ -21,6 +21,6 @@ class ConfigParserJson extends ConfigParser
     public function loadFileToArray($fileFullName)
     {
         $content = FileHelper::getEncodingContent($fileFullName);
-        return JsonHelper::convertToArray($content);
+        return JsonHelper::string2Array($content);
     }
 }

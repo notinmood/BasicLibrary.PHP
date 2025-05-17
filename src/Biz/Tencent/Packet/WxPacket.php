@@ -6,7 +6,7 @@ use Hiland\Biz\Tencent\Common\WechatConfig;
 use Hiland\Biz\Tencent\Common\WechatException;
 use Hiland\Data\ArrayHelper;
 use Hiland\Data\CipherHelper;
-use Hiland\Web\NetHelper;
+use Hiland\Web\HttpClientHelper;
 use Hiland\Web\WebHelper;
 use SimpleXMLElement;
 
@@ -43,7 +43,7 @@ class WxPacket
             $path . 'rootca.pem'
         );
 
-        $responseXml = NetHelper::request($url, $postXml, 30, false, array(), $certfilearray);
+        $responseXml = HttpClientHelper::request($url, $postXml, 30, false, array(), $certfilearray);
         //CommonLoger::log('hongbao-allResult',$responseXml);
 
         $responseObj = simplexml_load_string($responseXml, 'SimpleXMLElement', LIBXML_NOCDATA);

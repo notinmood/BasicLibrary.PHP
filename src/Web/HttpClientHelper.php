@@ -3,15 +3,13 @@
 namespace Hiland\Web;
 
 use Exception;
-use Hiland\Biz\Tencent\Common\WechatException;
 use Hiland\Data\StringHelper;
 use Hiland\IO\FileHelper;
 
 /**
- * @TODO:这个文件需要修改和验证，里面不能出现 WechatException.
- *      // TODO:xiedali@2022/4/20
+ * 无论是get还是post请求都推荐使用request方法，因为request方法更靠近底层，可以更精确的控制请求信息。
  */
-class NetHelper
+class HttpClientHelper
 {
     /**
      * 模拟网络POST请求
@@ -35,11 +33,11 @@ class NetHelper
         $ctx = stream_context_create($params);
         $fp  = @fopen($url, 'rb', false, $ctx);
         if (!$fp) {
-            throw new Exception("Problem with $url");
+            throw new RuntimeException("Problem with $url");
         }
         $response = @stream_get_contents($fp);
         if ($response === false) {
-            throw new Exception("Problem reading data from $url");
+            throw new RuntimeException("Problem reading data from $url");
         }
         return $response;
     }
@@ -82,7 +80,7 @@ class NetHelper
      *            key证书命名格式为 *****key.pem
      *            ca证书命名格式为 *****ca.pem
      * @return bool|string
-     * @throws WechatException
+     * @throws Exception
      */
     public static function request(string $url, mixed $data = null, int $timeOutSeconds = 0, bool $isSSLVerify = false,
                                    array  $headerArray = array(), array $certificateFileArray = array(),
@@ -149,10 +147,10 @@ class NetHelper
         if ($output) {
             curl_close($curl);
             return $output;
-        } else {
-            $error = curl_errno($curl);
-            curl_close($curl);
-            throw new WechatException("curl出错，错误码:$error");
         }
+
+        $error = curl_errno($curl);
+        curl_close($curl);
+        throw new RuntimeException("curl出错，错误码:$error");
     }
 }

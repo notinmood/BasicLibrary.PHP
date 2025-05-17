@@ -10,7 +10,6 @@
 
 namespace Hiland\Test\data;
 
-use DateMalformedStringException;
 use DateTime;
 use DateTimeZone;
 use Exception;
@@ -46,11 +45,10 @@ class DateHelperTest extends TestCase
     }
 
     /**
-     * @throws DateMalformedStringException
+     *
      */
     public function testGetDateTime()
     {
-
         $timespan = 2145888000;
         $actual   = "";
         try {
