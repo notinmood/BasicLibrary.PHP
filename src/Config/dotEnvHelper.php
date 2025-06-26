@@ -23,8 +23,8 @@ use Hiland\Environment\EnvHelper;
  */
 class dotEnvHelper
 {
-    static bool  $loaded      = false;
-    static array $loadedArray = [];
+    private static bool $loaded = false;
+    private static array $loadedArray = [];
 
     /**
      * 加载配置文件
@@ -32,7 +32,7 @@ class dotEnvHelper
      * @param string $filePath 配置文件路径
      * @return void
      */
-    public static function loadFile(string $filePath)
+    public static function loadFile(string $filePath): void
     {
         self::$loaded = true;
 
@@ -44,11 +44,11 @@ class dotEnvHelper
     /**
      * 获取环境变量值
      * @access public
-     * @param string $name    环境变量名（支持二级 . 号分割）
-     * @param null   $default 默认值
+     * @param string $name 环境变量名（支持二级 . 号分割）
+     * @param null $default 默认值
      * @return array|bool|string|null
      */
-    public static function get(string $name, $default = null)
+    public static function get(string $name, $default = null): bool|array|string|null
     {
         if (!self::$loaded) {
             $root    = EnvHelper::getPhysicalRootPath();

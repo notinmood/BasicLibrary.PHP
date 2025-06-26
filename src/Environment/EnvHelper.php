@@ -272,7 +272,7 @@ class EnvHelper
         if (StringHelper::isEndWith($rootPath, DIRECTORY_SEPARATOR . "vendor")) {
             $pos          = StringHelper::getPositions($current_path, DIRECTORY_SEPARATOR . "vendor");
             $lastPosition = 0;
-            $count        = getLength($pos);
+            $count        = ObjectHelper::getLength($pos);
 
             if ($pos && $count > 0) {
                 $lastPosition = $pos[$count - 1];
@@ -315,7 +315,7 @@ class EnvHelper
         $pageWebRelativePathArray = StringHelper::explode($pageWebRelativePath, "/");
         $pageWebRelativePathArray = array_reverse($pageWebRelativePathArray);
 
-        $rootPhysicalPath = EnvHelper::getPhysicalRootPath();
+        $rootPhysicalPath = self::getPhysicalRootPath();
         $rootPhysicalPath = StringHelper::replace($rootPhysicalPath, "/", "\\");
 
         $filePhysicalFullPath     = $_SERVER["SCRIPT_FILENAME"];

@@ -38,30 +38,12 @@ class DateHelper
     {
         $result = null;
         try {
-            $result = new DateTime("2038-1-1 0:0:0", self::getDateTimeZone());
+            $result = new DateTime("2038-1-1 0:0:0", self::getTimeZoneObject());
         } catch (Exception $e) {
             //do nothing;
         }
 
         return $result;
-    }
-
-    /**
-     * 统一设置时区为 PRC
-     * @return DateTimeZone
-     * @throws Exception
-     */
-    private static function getDateTimeZone(): DateTimeZone
-    {
-        $zoneName = ini_get("date.timezone");
-        if (!$zoneName) {
-            return new DateTimeZone("UTC");
-        }
-
-        return match ($zoneName) {
-            "Asia/Shanghai" => new DateTimeZone("PRC"),
-            default => new DateTimeZone($zoneName),
-        };
     }
 
 
@@ -106,7 +88,7 @@ class DateHelper
         switch ($type) {
             case ObjectTypes::STRING:
                 try {
-                    $result = new DateTime($data, self::getDateTimeZone());
+                    $result = new DateTime($data, self::getTimeZoneObject());
                 } catch (Exception $e) {
                     $result = false;
                 }
@@ -155,7 +137,7 @@ class DateHelper
 
             $targetString = "{$targetArray['year']}-{$targetArray['mon']}-{$targetArray['mday']} {$targetArray['hours']}:{$targetArray['minutes']}:{$targetArray['seconds']}";
             try {
-                return new DateTime($targetString, self::getDateTimeZone());
+                return new DateTime($targetString, self::getTimeZoneObject());
             } catch (Exception) {
                 return null;
             }
@@ -271,7 +253,7 @@ class DateHelper
             } catch (Exception $e) {
             }
         }
-        $dateValue->setTimezone(self::getDateTimeZone());
+        $dateValue->setTimezone(self::getTimeZoneObject());
 
         //以下代码修复php中2038年问题（32位php的int无法表示2038年01月19日星期二凌晨03:14:07之后的时间秒数。
         //超过 2^31 – 1，2^31 – 1 就是0x7FFFFFFF）
@@ -333,7 +315,7 @@ class DateHelper
                 $source = new DateTime($originalValue);
             } catch (Exception $e) {
             }
-            $source->setTimezone(self::getDateTimeZone());
+            $source->setTimezone(self::getTimeZoneObject());
         }
 
 
@@ -496,5 +478,47 @@ class DateHelper
         };
 
         return $result . $postfixes;
+    }
+
+    /**
+     * 系统默认会读取php.ini中的date.timezone配置，如果没有配置，则会使用UTC时间。
+     * 该方法可以改写系统默认使用的时区（尤其是在无法修改php.ini的环境下使用）。
+     * @param string $timezone
+     * @return void
+     */
+    public static function setTimeZone(string $timezone = 'Asia/Shanghai'): void
+    {
+        // 1. 校验时区有效性
+        if (!in_array($timezone, timezone_identifiers_list(), false)) {
+            // 2. 熔断机制：使用UTC兜底
+            $timezone = "UTC";
+        }
+
+        // 3. 设置时区并添加日志
+        date_default_timezone_set($timezone);
+    }
+
+    /**
+     * 获取系统当前使用的时区字符串
+     * @return string
+     */
+    public static function getTimeZoneString(): string
+    {
+        return date_default_timezone_get();
+    }
+
+    /**
+     * 获取时区对象
+     * @return DateTimeZone
+     */
+    public static function getTimeZoneObject(): DateTimeZone
+    {
+        $zoneName = self::getTimeZoneString();
+
+        try {
+            return new DateTimeZone($zoneName);
+        } catch (Exception) {
+            return new DateTimeZone("UTC");
+        }
     }
 }
