@@ -447,4 +447,81 @@ class ArrayHelperTest extends TestCase
         $actual = ArrayHelper::isContainsValue($array2, "guangzhou");
         self::assertFalse($actual);
     }
+
+    /**
+     * 测试 generateNameValueItems 方法的正常情况
+     */
+    public function testGenerateNameValueItemsHappyPath(): void
+    {
+        $sourceArray = [
+            ['name' => 'Name1', 'value' => 'Value1'],
+            ['name' => 'Name2', 'value' => 'Value2'],
+        ];
+        $expected = [
+            '' => '请选择...',
+            'Value1' => 'Name1',
+            'Value2' => 'Name2',
+        ];
+        $this->assertEquals($expected, ArrayHelper::generateNameValueItems($sourceArray, 'name', 'value'));
+    }
+
+    /**
+     * 测试 generateNameValueItems 方法的空数组情况
+     */
+    public function testGenerateNameValueItemsEmptyArray(): void
+    {
+        $sourceArray = [];
+        $expected = [
+            '' => '请选择...',
+        ];
+        $this->assertEquals($expected, ArrayHelper::generateNameValueItems($sourceArray, 'name', 'value'));
+    }
+
+    /**
+     * 测试 generateNameValueItems 方法的不插入空白项情况
+     */
+    public function testGenerateNameValueItemsWithoutBlank(): void
+    {
+        $sourceArray = [
+            ['name' => 'Name1', 'value' => 'Value1'],
+            ['name' => 'Name2', 'value' => 'Value2'],
+        ];
+        $expected = [
+            'Value1' => 'Name1',
+            'Value2' => 'Name2',
+        ];
+        $this->assertEquals($expected, ArrayHelper::generateNameValueItems($sourceArray, 'name', 'value', false));
+    }
+
+    /**
+     * 测试 generateNameValueItems 方法的缺少列名情况
+     */
+    public function testGenerateNameValueItemsMissingColumnName(): void
+    {
+        $sourceArray = [
+            ['name' => 'Name1', 'value' => 'Value1'],
+            ['name' => 'Name2'], // 缺少 'value' 列
+        ];
+        $expected = [
+            '' => '请选择...',
+            'Value1' => 'Name1',
+        ];
+        $this->assertEquals($expected, ArrayHelper::generateNameValueItems($sourceArray, 'name', 'value'));
+    }
+
+    /**
+     * 测试 generateNameValueItems 方法的空字符串列值情况
+     */
+    public function testGenerateNameValueItemsEmptyColumnValue(): void
+    {
+        $sourceArray = [
+            ['name' => 'Name1', 'value' => ''],
+            ['name' => 'Name2', 'value' => 'Value2'],
+        ];
+        $expected = [
+            '' => '请选择...',
+            'Value2' => 'Name2',
+        ];
+        $this->assertEquals($expected, ArrayHelper::generateNameValueItems($sourceArray, 'name', 'value'));
+    }
 }
