@@ -782,4 +782,37 @@ class ArrayHelper
     {
         return NumberHelper::getMovingAverage($arrayData, $windowSize);
     }
+
+    /**
+     * 在数组中根据指定的列名生成键值对数组（通常用于生成下拉列表的列表项使用）
+     * @param array $sourceArray 原始数组(原始数组的每个元素是都是一个关联数组)
+     * @param string $columnNameAsName 作为名称的列名，其值作为显示给用户的名称
+     * @param string $columnNameAsValue 作为值的列名，其值作为实际的值
+     * @param bool $insertBlankItem 是否插入空白项
+     * @param string $blankName 空白项的显示的名称
+     * @param string $blankValue 空白项的实际的值
+     * @return array
+     */
+    public static function generateNameValueItems(array $sourceArray, string $columnNameAsName='name', string $columnNameAsValue='value', bool $insertBlankItem = true, string $blankName = '请选择...', string $blankValue = ''): array
+    {
+        $allWorkLevelsFixed = [];
+
+        foreach ($sourceArray as $item) {
+            $name  = $item[$columnNameAsName] ?? '';
+            $value = $item[$columnNameAsValue] ?? '';
+
+            // 跳过空白项
+            if (empty($name) && empty($value)) {
+                continue;
+            }
+
+            $allWorkLevelsFixed[$value] = $name;
+        }
+
+        if ($insertBlankItem) {
+            $allWorkLevelsFixed = [$blankValue => $blankName] + $allWorkLevelsFixed;
+        }
+
+        return $allWorkLevelsFixed;
+    }
 }
