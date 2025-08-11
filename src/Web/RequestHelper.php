@@ -29,7 +29,7 @@ class RequestHelper
 
     /**
      * 判断当前是否为get请求
-     * @return bool
+     * @return bool|null
      */
     public static function isGet(): ?bool
     {

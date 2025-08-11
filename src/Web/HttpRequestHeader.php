@@ -17,7 +17,7 @@ class HttpRequestHeader
         $key     = strtoupper($key);
         $headers = self::getAll();
         foreach ($headers as $k => $v) {
-            if ($k == $key) {
+            if ($k === $key) {
                 return $v;
             }
         }

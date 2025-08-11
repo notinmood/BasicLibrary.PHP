@@ -23,13 +23,13 @@ class HttpResponseHeader
      * @param $key
      * @return false|mixed
      */
-    public static function get($url, $key)
+    public static function get($url, $key): mixed
     {
         $key     = strtoupper($key);
         $headers = self::getAll($url);
         foreach ($headers as $k => $v) {
             $k = strtoupper($k);
-            if ($k == $key) {
+            if ($k === $key) {
                 return $v;
             }
         }
@@ -41,7 +41,7 @@ class HttpResponseHeader
      * @param string $url
      * @return array|mixed
      */
-    public static function getAll(string $url)
+    public static function getAll(string $url): mixed
     {
         $cacheKey   = "HttpResponseHeader20160709-url-$url";
         $dataCached = TPCompatibleHelper::cache($cacheKey);

@@ -69,7 +69,7 @@ class MathHelper
         $queue = new Queue();
 
         foreach ($data as $k => $v) {
-            if ($level == 1) {
+            if ($level === 1) {
                 $currentValue = $v;
             } else {
                 $currentValue = $v[$targetFieldName];

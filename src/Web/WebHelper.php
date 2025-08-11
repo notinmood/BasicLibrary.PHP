@@ -21,7 +21,7 @@ class WebHelper
      * @param mixed $data 可以是带全路径的文件名称，也可以数组，字符串或者内存数据流
      * @param string|null $newFileName 在客户浏览器弹出下载对话框中显示的默认文件名
      */
-    public static function download($data, string $newFileName = null)
+    public static function download(mixed $data, string $newFileName = null): void
     {
         header("Expires: 0");
         header("Cache-Control:must-revalidate,post-check=0,pre-check=0");
@@ -141,7 +141,8 @@ class WebHelper
      * @param string $callbackClientFuncName 回调的用户浏览器的函数名称
      * @param int $jsonOption 传递给json_encode的option参数(为避免中文转码请使用JSON_UNESCAPED_UNICODE)
      */
-    #[NoReturn] public static function jsonp(mixed $data, string $callbackClientFuncName = "", int $jsonOption = 0): void
+    #[NoReturn]
+    public static function jsonp(mixed $data, string $callbackClientFuncName = "", int $jsonOption = 0): void
     {
         self::serverReturn($data, "JSONP", $jsonOption, $callbackClientFuncName);
     }
@@ -155,7 +156,8 @@ class WebHelper
      * @param string $callbackClientFuncName 如果是jsonp的时候，此处为回调函数的名称(或者为回调函数名称的形参名称)
      * @return void
      */
-    #[NoReturn] public static function serverReturn(mixed $data, string $type = '', int $jsonOption = 0, string $callbackClientFuncName = ""): void
+    #[NoReturn]
+    public static function serverReturn(mixed $data, string $type = '', int $jsonOption = 0, string $callbackClientFuncName = ""): void
     {
         if (empty($type)) {
             $type = 'JSON';
