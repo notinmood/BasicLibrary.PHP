@@ -31,7 +31,16 @@ class EasyExcel
         header("Content-Type: text/csv");
         header("Content-Disposition:filename=" . $filename);
         $fp = fopen('php://output', 'w');
-        fwrite($fp, chr(0xEF) . chr(0xBB) . chr(0xBF));//转码 防止乱码(比如微信昵称(乱七八糟的))
+
+        // +--------------------------------------------------------------------------
+        // |::说明·| 给文件加个 UTF-8 签名，让下游软件认出这是 UTF-8。
+        // +--------------------------------------------------------------------------
+        // |生成的新文件以 BOM 头开始，Windows 下用记事本等程序打开时会被识别为 UTF-8；
+        // |无 BOM 时某些软件（Excel、老旧编辑器）可能把中文当成 ANSI 导致乱码。
+        // |三个字节 0xEF 0xBB 0xBF 就是 UTF-8 的 BOM。
+        // +--------------------------------------------------------------------------
+        fwrite($fp, chr(0xEF) . chr(0xBB) . chr(0xBF));
+
         fputcsv($fp, $titleArray);
         $index = 0;
         foreach ($dataArray as $item) {

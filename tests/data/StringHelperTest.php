@@ -106,6 +106,9 @@ class StringHelperTest extends TestCase
         $padding = ["信息", "息传"];
         $result  = StringHelper::isEndWith($whole, ...$padding);
         $this->assertTrue($result);
+
+        $result  = StringHelper::isEndWith($whole, "信息", "息传");
+        $this->assertTrue($result);
     }
 
     public function testIsStartWith(): void
