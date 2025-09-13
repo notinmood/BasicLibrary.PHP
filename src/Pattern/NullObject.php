@@ -21,12 +21,12 @@ use Exception;
  */
 class NullObject
 {
-    const NON       = "non";
-    const ERROR     = "error";
-    const TIP       = "tip";
-    const EXCEPTION = "exception";
+    public const NON       = "non";
+    public const ERROR     = "error";
+    public const TIP       = "tip";
+    public const EXCEPTION = "exception";
 
-    private $actionLevel = 0;
+    private mixed $actionLevel = 0;
 
     public function __construct($actionLevel = self::NON)
     {
@@ -51,7 +51,7 @@ class NullObject
             case self::ERROR:
             case self::EXCEPTION:
             default:
-                throw new Exception($message);
+                throw new \RuntimeException($message);
         }
     }
 }
