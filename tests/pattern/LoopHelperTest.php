@@ -84,6 +84,23 @@ class LoopHelperTest extends TestCase
         };
 
         LoopHelper::dealLargeDataUsingBatch($largeData, $batchSize, $dealBatch);
+        $expected = "";
+        $this->assertEquals($expected, $output);
+    }
+
+    /**
+     * 测试 dealLargeDataUsingBatch 方法当 batchSize 为 0 时的情况
+     */
+    public function testDealLargeDataUsingBatchWithOneBatchSize(): void
+    {
+        $largeData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        $batchSize = 1;
+        $output = '';
+        $dealBatch = static function($batchData) use (&$output){
+            $output .= "处理批次数据：" . implode(",", $batchData) . "\n";
+        };
+
+        LoopHelper::dealLargeDataUsingBatch($largeData, $batchSize, $dealBatch);
         $expected = "处理批次数据：1\n处理批次数据：2\n处理批次数据：3\n处理批次数据：4\n处理批次数据：5\n处理批次数据：6\n处理批次数据：7\n处理批次数据：8\n处理批次数据：9\n处理批次数据：10\n";
         $this->assertEquals($expected, $output);
     }
