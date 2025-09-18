@@ -48,7 +48,7 @@ class PathHelper
      * @param $dir
      * @return mixed|string
      */
-    public function ensureEndWithPathSeparator($dir)
+    public function ensureEndWithPathSeparator($dir): mixed
     {
         return DirHelper::ensureEndWithPathSeparator($dir);
     }

@@ -2,6 +2,7 @@
 
 namespace Hiland\IO;
 
+use Closure;
 use Hiland\Data\StringHelper;
 
 /**
@@ -17,7 +18,7 @@ class FileHelper
     public static function getDirName(string $fileFullName): string
     {
         $path = pathinfo($fileFullName);
-        return $path['dirname'];
+        return $path['dirname'] ?? '';
     }
 
     /**
@@ -48,7 +49,7 @@ class FileHelper
     public static function getExtensionName(string $fileFullName)
     {
         $path = pathinfo($fileFullName);
-        return $path['extension'];
+        return $path['extension'] ?? '';
     }
 
     /**
@@ -87,6 +88,10 @@ class FileHelper
      */
     public static function getEncoding($fileFullName): bool|string
     {
+        if (!file_exists($fileFullName)) {
+            return false;
+        }
+
         $content = file_get_contents($fileFullName);
         return StringHelper::getEncoding($content);
     }
@@ -97,7 +102,7 @@ class FileHelper
      * @param string $targetEncoding 目标编码，默认原文件编码不改变
      * @return array|bool|string|null
      */
-    public function getContent(string $fileFullName, string $targetEncoding = ''): array|bool|string|null
+    public static function getContent(string $fileFullName, string $targetEncoding = ''): array|bool|string|null
     {
         return self::getEncodingContent($fileFullName, $targetEncoding);
     }
@@ -110,6 +115,10 @@ class FileHelper
      */
     public static function getEncodingContent($fileFullName, string $targetEncoding = 'UTF-8'): array|bool|string|null
     {
+        if (!file_exists($fileFullName)) {
+            return false;
+        }
+
         $content = file_get_contents($fileFullName);
 
         if (empty($targetEncoding)) {
@@ -117,5 +126,25 @@ class FileHelper
         }
 
         return StringHelper::getEncodingContent($content, $targetEncoding);
+    }
+
+    /**
+     * 逐行处理文件内容
+     * @param string $fileFullName 文件全路径
+     * @param Closure $dealLineFunc 处理每行的函数，参数为每行内容
+     * @return void
+     */
+    public static function dealWithLineByLine(string $fileFullName, Closure $dealLineFunc): void
+    {
+        if(!file_exists($fileFullName)){
+            return;
+        }
+
+        $handle = fopen($fileFullName, 'r');
+        while (($line = fgets($handle)) !== false) {
+            // 处理每行的内容
+            $dealLineFunc($line);
+        }
+        fclose($handle);
     }
 }

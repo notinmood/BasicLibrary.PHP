@@ -8,6 +8,7 @@
 
 namespace Hiland\IO;
 
+use Closure;
 use Hiland\Data\StringHelper;
 
 /**
@@ -16,29 +17,16 @@ use Hiland\Data\StringHelper;
 class DirHelper
 {
     /**
+     * 确保目录存在
      * @param $fullPath
      * @return bool
      */
     public static function ensurePathExist($fullPath): bool
     {
-        return self::makeDir($fullPath);
-    }
-
-    private static function makeDir($path)
-    {
-        $arr = array();
-        while (!is_dir($path)) {
-            $arr[] = $path;          //把路径中的各级父目录压入到数组中去，直接有父目录存在为止（即上面一行is_dir判断出来有目录，条件为假退出while循环）
-            $path  = dirname($path); //父目录
+        if (!is_dir($fullPath) && !mkdir($fullPath, 0777, true) && !is_dir($fullPath)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $fullPath));
         }
-        if (empty($arr)) {//arr为空证明上面的while循环没有执行，即目录已经存在
-            //echo $path,'已经存在';
-            return true;
-        }
-        while (count($arr)) {
-            $parentDir = array_pop($arr);//弹出最后一个数组单元
-            mkdir($parentDir);           //从父目录往下创建
-        }
+        return $fullPath;
     }
 
     /**
@@ -48,17 +36,12 @@ class DirHelper
      */
     public static function getFileCount($dir): int
     {
-        $files = scandir($dir);
-        $count = 0;
-        foreach ($files as $file) {
-            if ($file == '.' || $file == '..' || is_dir($dir . '/' . $file)) {
-                //print_r($file.'|');
-            } else {
-                $count++;
-            }
-        }
+        $fileCount = 0;
+        self::walkFiles($dir, static function ($file) use (&$fileCount) {
+            $fileCount++;
+        });
 
-        return $count;
+        return $fileCount;
     }
 
     /**
@@ -73,5 +56,44 @@ class DirHelper
         }
 
         return $dir;
+    }
+
+    public static function removeDir($dir): void
+    {
+        self::walk($dir, static function ($item) {
+            if (is_dir($item)) {
+                rmdir($item);
+            } else {
+                unlink($item);
+            }
+        }, true);
+    }
+
+    /**
+     * 遍历目录下的子目录和文件
+     * (顺序为：先处理子目录，再处理文件)
+     * @param $dir
+     * @param Closure $dealItemFunction 回调函数，参数为文件或子目录的绝对路径（具体为子目录还是文件，需要开发人员自行判断）
+     * @param bool $isRecursive 是否递归遍历子目录
+     * @return void
+     */
+    public static function walk($dir, Closure $dealItemFunction, bool $isRecursive = false): void
+    {
+        if (!is_dir($dir)) {
+            return;
+        }
+
+        $items = scandir($dir);
+        foreach ($items as $item) {
+            if ($item == '.' || $item == '..') {
+                continue;
+            }
+
+            if (is_dir($dir . '/' . $item) && $isRecursive) {
+                self::walk($dir . '/' . $item, $dealItemFunction, $isRecursive);
+            }
+
+            $dealItemFunction($dir . '/' . $item);
+        }
     }
 }
