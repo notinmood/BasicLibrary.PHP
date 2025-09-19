@@ -37,8 +37,10 @@ class DirHelper
     public static function getFileCount($dir): int
     {
         $fileCount = 0;
-        self::walkFiles($dir, static function ($file) use (&$fileCount) {
-            $fileCount++;
+        self::walk($dir, static function ($item) use (&$fileCount) {
+            if (is_file($item)) {
+                $fileCount++;
+            }
         });
 
         return $fileCount;
@@ -60,6 +62,12 @@ class DirHelper
 
     public static function removeDir($dir): void
     {
+        //0-> 确保目录存在
+        if (!is_dir($dir)) {
+            return;
+        }
+
+        //1-> 删除指定目录下的所有子目录和文件
         self::walk($dir, static function ($item) {
             if (is_dir($item)) {
                 rmdir($item);
@@ -67,6 +75,9 @@ class DirHelper
                 unlink($item);
             }
         }, true);
+
+        //2-> 删除指定目录本身
+        rmdir($dir);
     }
 
     /**
@@ -89,11 +100,12 @@ class DirHelper
                 continue;
             }
 
-            if (is_dir($dir . '/' . $item) && $isRecursive) {
-                self::walk($dir . '/' . $item, $dealItemFunction, $isRecursive);
+            $itemFullName = $dir . DIRECTORY_SEPARATOR . $item;
+            if ($isRecursive && is_dir($itemFullName)) {
+                self::walk($itemFullName, $dealItemFunction, $isRecursive);
             }
 
-            $dealItemFunction($dir . '/' . $item);
+            $dealItemFunction($itemFullName);
         }
     }
 }
