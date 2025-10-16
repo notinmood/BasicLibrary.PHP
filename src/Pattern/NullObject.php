@@ -26,7 +26,7 @@ class NullObject
     public const TIP       = "tip";
     public const EXCEPTION = "exception";
 
-    private mixed $actionLevel = 0;
+    private mixed $actionLevel;
 
     public function __construct($actionLevel = self::NON)
     {

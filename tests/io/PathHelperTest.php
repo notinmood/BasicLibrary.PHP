@@ -8,7 +8,7 @@
  * @company: HiLand & RainyTop
  */
 
-namespace Hiland\Test\data;
+namespace Hiland\Test\io;
 
 use Hiland\Data\StringHelper;
 use Hiland\IO\PathHelper;
@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 
 class PathHelperTest extends TestCase
 {
-    public function testCombine()
+    public function testCombine(): void
     {
         $p1 = "aa\\";
         $p2 = "bb/";

@@ -221,7 +221,7 @@ class StringHelper
      */
     public static function getStringBeforeSeparator(string $wholeStringData, string $separator): string
     {
-        if ($separator == "") {
+        if ($separator === "") {
             return $wholeStringData;
         }
 
@@ -241,7 +241,7 @@ class StringHelper
      */
     public static function getStringAfterSeparator(string $wholeStringData, string $separator): string
     {
-        if ($separator == "") {
+        if ($separator === "") {
             return $wholeStringData;
         }
 
@@ -353,11 +353,12 @@ class StringHelper
      */
     public static function getPositions(string $wholeStringData, string $subStringData, bool $ignoreCaseSensitive = false): array
     {
+        $targetFunctionName = "mb_strpos";
         if ($ignoreCaseSensitive) {
-            return static::_getPositions($wholeStringData, $subStringData, "mb_stripos");
-        } else {
-            return static::_getPositions($wholeStringData, $subStringData, "mb_strpos");
+            $targetFunctionName = "mb_stripos";
         }
+
+        return static::_getPositions($wholeStringData, $subStringData, $targetFunctionName);
     }
 
     private static function _getPositions($wholeStringData, $subStringData, $getPosFuncName): array

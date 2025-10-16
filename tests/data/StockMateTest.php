@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class StockMateTest extends TestCase
 {
-    public function testGetRealTimeQuote()
+    public function testGetRealTimeQuote(): void
     {
         $mate     = new StockMate("Demo");
         $expected = "in demo";
