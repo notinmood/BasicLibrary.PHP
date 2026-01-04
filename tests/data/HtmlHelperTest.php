@@ -15,8 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 class HtmlHelperTest extends TestCase
 {
-
-    public function testCleanComment()
+    public function testCleanComment(): void
     {
         $myData = <<<myData
 <body><!--topTools Start --><a href="/" target="_blank">脚本之家</a>";

@@ -31,11 +31,9 @@ class BoolHelperTest extends TestCase
     //
     // }
 
-    public function testIsRealFalse()
+    public function testIsRealFalse(): void
     {
-        $value    = false;
-        $actual   = BoolHelper::isRealFalse($value);
-        $expected = true;
-        self::assertEquals($expected, $actual);
+        $actual = BoolHelper::isRealFalse(false);
+        self::assertTrue($actual);
     }
 }

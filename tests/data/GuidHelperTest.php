@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 class GuidHelperTest extends TestCase
 {
-    public function testNewGuid()
+    public function testNewGuid(): void
     {
         $actual   = getLength(GuidHelper::newGuid());
         $expected = 36;

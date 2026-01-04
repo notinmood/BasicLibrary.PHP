@@ -15,8 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 class ByteHelperTest extends TestCase
 {
-
-    public function testDisplayFriendly()
+    public function testDisplayFriendly(): void
     {
         $value    = 1048;
         $actual   = ByteHelper::displayFriendly($value);
@@ -29,7 +28,7 @@ class ByteHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testConvert()
+    public function testConvert(): void
     {
         $value    = "I love qingdao city!";
         $actual   = $value;

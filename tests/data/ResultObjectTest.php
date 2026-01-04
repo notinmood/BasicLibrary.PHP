@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 class ResultObjectTest extends TestCase
 {
-    public function testSetGetMiscItem()
+    public function testSetGetMiscItem(): void
     {
         $resultObject = $this->builderResultObject();
 
@@ -54,7 +54,7 @@ class ResultObjectTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testStringify()
+    public function testStringify(): void
     {
         $resultObject = $this->builderResultObject();
         $actual       = ResultObject::stringify($resultObject);
@@ -64,7 +64,7 @@ class ResultObjectTest extends TestCase
     }
 
 
-    public function testParse()
+    public function testParse(): void
     {
         $actual   = ResultObject::parse($this->jsonString);
         $expected = $this->builderResultObject();

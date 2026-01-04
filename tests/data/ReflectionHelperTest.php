@@ -14,14 +14,13 @@ use Hiland\Test\_res\Student;
 use Hiland\Data\ReflectionHelper;
 use PHPUnit\Framework\TestCase;
 
-
 class ReflectionHelperTest extends TestCase
 {
     /**
      * executeFunction 执行静态方法
      * @return void
      */
-    public function testExecuteFunction1()
+    public function testExecuteFunction1(): void
     {
         /**
          * 不带参数的静态方法
@@ -48,7 +47,7 @@ class ReflectionHelperTest extends TestCase
      * executeFunction 执行实例方法
      * @return void
      */
-    public function testExecuteFunction2()
+    public function testExecuteFunction2(): void
     {
         /**
          * 不带参数的实例方法
@@ -75,7 +74,7 @@ class ReflectionHelperTest extends TestCase
      * executeFunction 执行带命名空间的函数
      * @return void
      */
-    public function testExecuteFunction3()
+    public function testExecuteFunction3(): void
     {
         /**
          * 函数 helloBar 是定义在 Common/functions.php 内一个段逻辑，本函数仅仅用于单元测试
@@ -89,7 +88,7 @@ class ReflectionHelperTest extends TestCase
     /**
      *
      */
-    public function testExecuteInstanceMethod()
+    public function testExecuteInstanceMethod(): void
     {
         $student = new Student("zhangsan", 20);
         $actual  = ReflectionHelper::executeInstanceMethod(Student::class, "getUserName", $student);
@@ -103,7 +102,7 @@ class ReflectionHelperTest extends TestCase
         self::assertEquals($expect, $actual);
     }
 
-    public function testExecuteStaticMethod()
+    public function testExecuteStaticMethod(): void
     {
         $actual = ReflectionHelper::executeStaticMethod(Student::class, "getTypeName");
         $expect = "这是一个学生";
@@ -117,7 +116,7 @@ class ReflectionHelperTest extends TestCase
     /**
      * @return void
      */
-    public function testGetInstanceProperty()
+    public function testGetInstanceProperty(): void
     {
         $student  = new Student("zhangsan", 20);
         $actual   = ReflectionHelper::getInstanceProperty(Student::class, "userName", $student);

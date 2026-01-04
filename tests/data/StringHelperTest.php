@@ -331,6 +331,4 @@ class StringHelperTest extends TestCase
     {
         $this->assertEquals('测试字符串', StringHelper::getStringAfterSeparator('测试字符串', ''));
     }
-
-
 }

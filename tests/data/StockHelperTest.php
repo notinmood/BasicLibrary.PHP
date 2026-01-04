@@ -8,8 +8,7 @@ use function PHPUnit\Framework\assertEquals;
 
 class StockHelperTest extends TestCase
 {
-
-    public function testFormatStockCode()
+    public function testFormatStockCode(): void
     {
         $data     = "600690";
         $expected = "sh600690";
@@ -37,7 +36,7 @@ class StockHelperTest extends TestCase
         assertEquals($expected, $actual);
     }
 
-    public function testGetStockExchangeName()
+    public function testGetStockExchangeName(): void
     {
         $data     = "600690";
         $expected = "SH";
@@ -65,7 +64,7 @@ class StockHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testGetStandardStockCode()
+    public function testGetStandardStockCode(): void
     {
         $data     = "000917";
         $expected = "000917";

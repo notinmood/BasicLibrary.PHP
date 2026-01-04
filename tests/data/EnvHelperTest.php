@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 class EnvHelperTest extends TestCase
 {
-    public function testGetPhysicalRootPath()
+    public function testGetPhysicalRootPath(): void
     {
         $actual   = EnvHelper::getPhysicalRootPath();
         $expected = dirname(__DIR__, 2);

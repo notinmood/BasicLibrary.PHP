@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 class NumberHelperTest extends TestCase
 {
-    public function testFormat()
+    public function testFormat(): void
     {
         $number   = "1234567.890";
         $actual   = NumberHelper::format($number, 1);

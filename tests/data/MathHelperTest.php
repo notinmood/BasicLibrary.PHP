@@ -20,7 +20,7 @@ class MathHelperTest extends TestCase
         return max($windowArray);
     }
 
-    public function testFloat2Percent()
+    public function testFloat2Percent(): void
     {
         $data = 2.78536;
         $r1   = MathHelper::convertFloatToPercent($data);
@@ -32,14 +32,14 @@ class MathHelperTest extends TestCase
         $this->assertEquals("278.5%", $r3);
     }
 
-    public function testPercent2Float()
+    public function testPercent2Float(): void
     {
         $data = "278.54%";
         $r1   = MathHelper::convertPercentToFloat($data);
         $this->assertEquals(2.7854, $r1);
     }
 
-    public function testConvertBase()
+    public function testConvertBase(): void
     {
         $actual   = MathHelper::convertBase("10", 2, 10);
         $expected = 2;
@@ -54,7 +54,7 @@ class MathHelperTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testMa()
+    public function testMa(): void
     {
         //测试一维数组
         $original1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -74,7 +74,7 @@ class MathHelperTest extends TestCase
         $this->assertEquals($expected2_height, $actual2_height);
     }
 
-    public function testRolling()
+    public function testRolling(): void
     {
         //测试一维数组
         $original1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];

@@ -71,8 +71,7 @@ class LoopHelper
     public static function dealLargeDataUsingBatch(array $largeData, int $batchSize, Closure $dealBatchFunc): void
     {
         // 批次大小不能为0，否则直接返回跳出，什么都不做
-        if($batchSize === 0)
-        {
+        if ($batchSize === 0) {
             return;
         }
 
