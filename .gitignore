@@ -1,3 +1,14 @@
 /vendor/
 /.idea
 /.phpunit.result.cache
+
+# 先排除整个目录
+.idea/*
+
+# 再把“有用”的目录/文件拉回白名单
+!.idea/codeStyles/
+!.idea/runConfigurations/
+!.idea/vcs.xml
+!.idea/modules.xml
+!.idea/.dictionaries/project.xml
+!*.iml
