@@ -29,17 +29,17 @@ class ResultObject implements ArrayAccess
         $this->misc    = new stdClass();
     }
 
-    public bool      $status  = true;
-    public string    $message = "";
-    public           $data    = null;
-    public ?stdClass $misc    = null;
+    public bool $status = true;
+    public string $message = "";
+    public mixed $data = null;
+    public ?stdClass $misc = null;
 
     /**
      * 设定属性 misc 的各个子属性
      * @param {*} name
      * @param {*} value
      */
-    public function setMiscItem($name, $value)
+    public function setMiscItem($name, $value): void
     {
         $this->misc->$name = $value;
     }
@@ -59,9 +59,13 @@ class ResultObject implements ArrayAccess
      * @param ResultObject $resultObject
      * @return string
      */
-    public static function stringify(ResultObject $resultObject): string
+    public static function stringify(self $resultObject): string
     {
-        return json_encode($resultObject);
+        try {
+            return json_encode($resultObject, JSON_THROW_ON_ERROR);
+        } catch (\JsonException $e) {
+            return "";
+        }
     }
 
 
@@ -72,7 +76,11 @@ class ResultObject implements ArrayAccess
      */
     public static function parse(string $stringData): ResultObject
     {
-        $jsonObject = json_decode($stringData);
+        try {
+            $jsonObject = json_decode($stringData, false, 512, JSON_THROW_ON_ERROR);
+        } catch (\JsonException $e) {
+
+        }
 
         $type    = $jsonObject->status;
         $message = $jsonObject->message;
@@ -102,7 +110,7 @@ class ResultObject implements ArrayAccess
      * @param $offset
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         $result = ObjectHelper::getMember($this, $offset);
         if (ObjectHelper::isNull($result)) {
@@ -117,7 +125,7 @@ class ResultObject implements ArrayAccess
      * @param $value
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $isMember = ObjectHelper::isMember($this, $offset);
         if ($isMember) {
@@ -131,7 +139,7 @@ class ResultObject implements ArrayAccess
      * @param $offset
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         $isMember = ObjectHelper::isMember($this, $offset);
         if ($isMember) {
