@@ -29,7 +29,8 @@
   "autoload": {
     "psr-4": {
       "Hiland\\Test\\": "tests",
-      "Hiland\\": "src"
+      "Hiland\\": "src",
+      "Hiland\\Tools\\": "tools"
     },
     "files": [
       "src/Common/functions.php"
